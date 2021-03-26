@@ -1,0 +1,190 @@
+:root {
+    --dark-darker: #222629;
+    --dark-dark: #31363C;
+    --base-color: #343A40;
+    --dark-mid: #414950;
+    --dark-light: #74818D;
+    --text: #E0E0E0;
+}
+
+body {
+    background-color: var(--dark-mid);
+    color: var(--text);
+}
+div.content {
+    background-color: var(--dark-dark);
+}
+.bg-light {
+    background-color: var(--dark-dark) !important;
+}
+
+.sidebar .nav-link {
+    color:var(--text);
+}
+
+.form-control {
+    background-color: var(--dark-mid);
+    color: var(--text);
+    border: 1px solid var(--dark-light);
+}
+
+.form-control:focus {
+    background-color: var(--dark-mid);
+    color: var(--text);
+}
+
+.modal-content {
+    background-color: var(--dark-dark);
+    border: 1px solid #ffffff5d;
+}
+
+.close {
+    color: var(--text);
+    text-shadow: none;
+}
+
+::placeholder {
+    color: var(--dark-light);
+}
+
+.text-muted {
+    color: var(--dark-light) !important;
+}
+.font-weight-light {
+    color: var(--dark-light) !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.28) !important;
+}
+
+/*code {
+    color: orange;
+}*/
+
+a:hover {
+    color: #268FFF;
+}
+
+#footer {
+    background-color: #343A40;
+}
+
+.dropdown-menu {
+    background-color: var(--dark-darker);
+}
+.dropdown-item {
+    color: var(--text);
+}
+.dropdown-item:hover {
+    background-color: #31363B;
+    color: var(--text);
+}
+.dropdown-divider {
+    border-top: 1px solid var(--dark-dark);
+}
+
+table, th, td {
+    border: 1px solid var(--text);
+}
+
+a.nav-link:hover {
+    background-color: #3D434B;
+}
+
+.modal-backdrop.show {
+    opacity: 0.8;
+}
+
+#editor {
+    background-color: var(--dark-dark);
+}
+
+#editorRibbon {
+    background-color: #3D434B;
+}
+
+.ProseMirror {
+    background-color: var(--dark-dark);
+    color: var(--text);
+}
+
+.ProseMirror-icon {
+    color: var(--text);
+}
+
+.ProseMirror-menu-active {
+    background-color: var(--dark-light);
+}
+
+.ProseMirror-menubar {
+    color: var(--text);
+}
+
+.ProseMirror-menu-dropdown-menu, .ProseMirror-menu-submenu {
+    background-color: var(--dark-mid);
+    color: lightg;
+}
+
+.ProseMirror-menu-dropdown-item:hover {
+    background-color: var(--dark-light);
+    color: white;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: var(--dark-mid);
+}
+
+.ProseMirror-menu-dropdown-item {
+    color: white;
+}
+
+table, th, td {
+    border: 1px solid #646E7A;
+    color: var(--text);
+}
+  
+tr:nth-child(even) {
+    background-color: #3D434B;
+}
+tr:nth-child(odd) {
+    background-color: #31363C;
+}
+
+.alert-warning {
+    background-color: var(--dark-dark);
+    color: #FFC91C;
+    border-color: #FFC91C;
+}
+
+.alert-warning hr {
+    border-top-color: #FFC91C;
+}
+
+.custom-control-label::before {
+    background-color: var(--dark-darker);
+    border: var(--dark-light) solid 1px;
+}
+
+.mybtn {
+	box-shadow:inset 0px 1px 0px 0px #74818D;
+	background:linear-gradient(to bottom, #74818D 5%, #414950 100%);
+	background-color: #414950;
+	border: 1px solid #222629;
+	color: #E0E0E0;
+	text-shadow: 0px 2px 0px #ffffff05;
+}
+.mybtn:hover {
+	background:linear-gradient(to bottom, #87929D 5%, #58626B 100%);
+    background-color:#58626B;
+    color: #E0E0E0;
+}
+.mybtn:active {
+	background:linear-gradient(to bottom, #414950 5%, #74818D 100%);
+    background-color:#74818D;
+    color: #E0E0E0;
+}
+
+a {
+    color: #3797FF;
+}

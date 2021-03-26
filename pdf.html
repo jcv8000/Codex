@@ -1,0 +1,35 @@
+<head>
+    <link rel="stylesheet" href="css/prosemirror.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link id="codeStyleLink" rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-dark.css">
+    <link id="darkStyleLink" rel="stylesheet" href="">
+
+    <style>
+    body {
+        tab-size: 4;
+        margin: 3em;
+    }
+
+    img {
+        max-width: 100%;
+    }
+    .codeSnippet {
+        page-break-inside: avoid;
+    }
+
+    </style>
+</head>
+<body></body>
+
+<script>
+    function enableBreaksOnH1() {
+        var style = document.createElement('style');
+        style.type='text/css';
+        if (style.styleSheet){
+            style.styleSheet.cssText='h1 { page-break-before: always; }';
+        } else {
+            style.appendChild(document.createTextNode('h1 { page-break-before: always; }'));
+        }
+        document.getElementsByTagName('head')[0].appendChild(style);
+    }
+</script>
