@@ -4,9 +4,13 @@ A free note-taking software for programmers and Computer Science students
 
 ## Usage
 
-**After cloning**, run  ``npm update`` to get the required packages, then run ``npm start`` to test.
+After cloning, run  ``npm update`` to get the required packages, then run ``npm start`` to test.
 
-**How to build:** Run ``npx electron-builder``
+## Building
+
+Run ``npx electron-builder`` to build.
+
+The package.json should already specify the building behavior for Windows and Linux, but macOS has not been tested.
 
 ## License
 
