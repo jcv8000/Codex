@@ -2,7 +2,7 @@
 
 A free note-taking software for programmers and Computer Science students
 
-Made by [Josh Vickery](https://jcv8000.github.io){:target="_blank"}
+Made by <a href="https://jcv8000.github.io" target="_blank">Josh Vickery</a>
 
 ## Usage
 
