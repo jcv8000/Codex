@@ -2,6 +2,8 @@
 
 A free note-taking software for programmers and Computer Science students
 
+Made by Josh Vickery
+
 ## Usage
 
 After cloning, run  ``npm update`` to get the required packages, then run ``npm start`` to test.
