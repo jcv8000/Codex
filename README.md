@@ -1,10 +1,10 @@
-<img  src="https://codexnotes.com/logo.png"  width="100%" />
+<img  src="https://codexnotes.com/logo.png"  width="400" />
 
 A free note-taking software for programmers and Computer Science students
 
 ## Usage
 
-**After cloning**, run  ``npm update`` to get the required packages.
+**After cloning**, run  ``npm update`` to get the required packages, then run ``npm start`` to test.
 
 **How to build:** Run ``npx electron-builder``
 
