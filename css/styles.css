@@ -28,10 +28,7 @@ label {
 
 code {
     color: #FF7B28;
-    /*TEST THIS!*/
     word-wrap: unset;
-    /*TEST THIS!*/
-    /*TEST THIS!*/
 }
 
 .form-control:focus {
@@ -43,164 +40,48 @@ code {
     margin-bottom: 2rem;
 }
 
-.was-validated .form-control:valid:focus, .form-control.is-valid:focus {
-    box-shadow: none;
-}
-
-.was-validated .custom-control-input:valid:focus~.custom-control-label::before, .custom-control-input.is-valid:focus~.custom-control-label::before {
-    box-shadow: none;
-}
-
-.was-validated .custom-file-input:valid:focus~.custom-file-label, .custom-file-input.is-valid:focus~.custom-file-label {
-    box-shadow: none;
-}
-
-.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
-    box-shadow: none;
-}
-
-.was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus {
-    box-shadow: none;
-}
-
-.was-validated .custom-control-input:invalid:focus~.custom-control-label::before, .custom-control-input.is-invalid:focus~.custom-control-label::before {
-    box-shadow: none;
-}
-
-.was-validated .custom-file-input:invalid:focus~.custom-file-label, .custom-file-input.is-invalid:focus~.custom-file-label {
-    box-shadow: none;
-}
-
-.btn:focus, .btn.focus {
-    box-shadow: none;
-}
-
-.btn-primary:focus, .btn-primary.focus {
-    box-shadow: none;
-}
-
-.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-secondary:focus, .btn-secondary.focus {
-    box-shadow: none;
-}
-
-.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-secondary.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-success:focus, .btn-success.focus {
-    box-shadow: none;
-}
-
-.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus, .show>.btn-success.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-info:focus, .btn-info.focus {
-    box-shadow: none;
-}
-
-.btn-info:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus, .show>.btn-info.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-warning:focus, .btn-warning.focus {
-    box-shadow: none;
-}
-
-.btn-warning:not(:disabled):not(.disabled):active:focus, .btn-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-warning.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-danger:focus, .btn-danger.focus {
-    box-shadow: none;
-}
-
-.btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-danger.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-light:focus, .btn-light.focus {
-    box-shadow: none;
-}
-
-.btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .show>.btn-light.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-dark:focus, .btn-dark.focus {
-    box-shadow: none;
-}
-
-.btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-dark.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-primary:focus, .btn-outline-primary.focus {
-    box-shadow: none;
-}
-
-.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-primary.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-secondary:focus, .btn-outline-secondary.focus {
-    box-shadow: none;
-}
-
-.btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-secondary.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-success:focus, .btn-outline-success.focus {
-    box-shadow: none;
-}
-
-.btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-success.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-info:focus, .btn-outline-info.focus {
-    box-shadow: none;
-}
-
-.btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-info.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-warning:focus, .btn-outline-warning.focus {
-    box-shadow: none;
-}
-
-.btn-outline-warning:not(:disabled):not(.disabled):active:focus, .btn-outline-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-warning.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-danger:focus, .btn-outline-danger.focus {
-    box-shadow: none;
-}
-
-.btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-danger.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-light:focus, .btn-outline-light.focus {
-    box-shadow: none;
-}
-
-.btn-outline-light:not(:disabled):not(.disabled):active:focus, .btn-outline-light:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-light.dropdown-toggle:focus {
-    box-shadow: none;
-}
-
-.btn-outline-dark:focus, .btn-outline-dark.focus {
-    box-shadow: none;
-}
-
+/* Disable box shadows on a bunch of stuff */
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus,
+.was-validated .custom-control-input:valid:focus~.custom-control-label::before, .custom-control-input.is-valid:focus~.custom-control-label::before,
+.was-validated .custom-file-input:valid:focus~.custom-file-label, .custom-file-input.is-valid:focus~.custom-file-label,
+.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus,
+.was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus,
+.was-validated .custom-control-input:invalid:focus~.custom-control-label::before, .custom-control-input.is-invalid:focus~.custom-control-label::before,
+.was-validated .custom-file-input:invalid:focus~.custom-file-label, .custom-file-input.is-invalid:focus~.custom-file-label,
+.btn:focus, .btn.focus,
+.btn-primary:focus, .btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus,
+.btn-secondary:focus, .btn-secondary.focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-secondary.dropdown-toggle:focus,
+.btn-success:focus, .btn-success.focus,
+.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus, .show>.btn-success.dropdown-toggle:focus,
+.btn-info:focus, .btn-info.focus,
+.btn-info:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus, .show>.btn-info.dropdown-toggle:focus,
+.btn-warning:focus, .btn-warning.focus,
+.btn-warning:not(:disabled):not(.disabled):active:focus, .btn-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-warning.dropdown-toggle:focus,
+.btn-danger:focus, .btn-danger.focus,
+.btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-danger.dropdown-toggle:focus,
+.btn-light:focus, .btn-light.focus,
+.btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .show>.btn-light.dropdown-toggle:focus,
+.btn-dark:focus, .btn-dark.focus,
+.btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-dark.dropdown-toggle:focus,
+.btn-outline-primary:focus, .btn-outline-primary.focus,
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-primary.dropdown-toggle:focus,
+.btn-outline-secondary:focus, .btn-outline-secondary.focus,
+.btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-secondary.dropdown-toggle:focus,
+.btn-outline-success:focus, .btn-outline-success.focus,
+.btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-success.dropdown-toggle:focus,
+.btn-outline-info:focus, .btn-outline-info.focus,
+.btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-info.dropdown-toggle:focus,
+.btn-outline-warning:focus, .btn-outline-warning.focus,
+.btn-outline-warning:not(:disabled):not(.disabled):active:focus, .btn-outline-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-warning.dropdown-toggle:focus,
+.btn-outline-danger:focus, .btn-outline-danger.focus,
+.btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-danger.dropdown-toggle:focus,
+.btn-outline-light:focus, .btn-outline-light.focus,
+.btn-outline-light:not(:disabled):not(.disabled):active:focus, .btn-outline-light:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-light.dropdown-toggle:focus,
+.btn-outline-dark:focus, .btn-outline-dark.focus,
 .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-dark.dropdown-toggle:focus {
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .fade {
@@ -230,70 +111,28 @@ code {
 
 .custom-control-input:focus:not(:checked)~.custom-control-label::before {
     border-color: unset;
-    /*TEST THIS*/
 }
 
 .custom-control-input:not(:disabled):active~.custom-control-label::before {
     background-color: unset;
-    /*TEST THIS*/
     border-color: unset;
-    /*TEST THIS*/
 }
 
-.custom-select:focus {
-    box-shadow: mone;
-}
-
-.custom-file-input:focus~.custom-file-label {
-    box-shadow: none;
-}
-
-.custom-range:focus::-webkit-slider-thumb {
-    box-shadow: none
-}
-
-.custom-range:focus::-moz-range-thumb {
-    box-shadow: none;
-}
-
-.custom-range:focus::-ms-thumb {
-    box-shadow: none;
-}
-
-.page-link:focus {
-    box-shadow: none;
-}
-
-a.badge-primary:focus, a.badge-primary.focus {
-    box-shadow: none;
-}
-
-a.badge-secondary:focus, a.badge-secondary.focus {
-    box-shadow: none;
-}
-
-a.badge-success:focus, a.badge-success.focus {
-    box-shadow: none;
-}
-
-a.badge-info:focus, a.badge-info.focus {
-    box-shadow: none;
-}
-
-a.badge-warning:focus, a.badge-warning.focus {
-    box-shadow: none;
-}
-
-a.badge-danger:focus, a.badge-danger.focus {
-    box-shadow: none;
-}
-
-a.badge-light:focus, a.badge-light.focus {
-    box-shadow: none;
-}
-
+.custom-select:focus,
+.custom-file-input:focus~.custom-file-label,
+.custom-range:focus::-webkit-slider-thumb,
+.custom-range:focus::-moz-range-thumb,
+.custom-range:focus::-ms-thumb,
+.page-link:focus,
+a.badge-primary:focus, a.badge-primary.focus,
+a.badge-secondary:focus, a.badge-secondary.focus,
+a.badge-success:focus, a.badge-success.focus,
+a.badge-info:focus, a.badge-info.focus,
+a.badge-warning:focus, a.badge-warning.focus,
+a.badge-danger:focus, a.badge-danger.focus,
+a.badge-light:focus, a.badge-light.focus,
 a.badge-dark:focus, a.badge-dark.focus {
-    box-shadow: none;
+    box-shadow: none !important;
 }
 
 .modal.fade .modal-dialog {
@@ -665,10 +504,6 @@ div.content {
     #editorRibbon {
         left: 0 !important;
     }
-}
-
-.ace_hidden-cursors, .ace_bracket {
-    opacity: 0;
 }
 
 ::selection {
