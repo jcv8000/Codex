@@ -58,7 +58,6 @@
     "dependencies": {
         "bootstrap": "4.5.3",
         "custom-electron-titlebar": "^3.2.6",
-        "electron": "^11.2.3",
         "electron-context-menu": "^2.4.0",
         "feather-icons": "^4.28.0",
         "highlight.js": "^10.6.0",
@@ -77,5 +76,8 @@
         "prosemirror-tables": "^1.1.1",
         "prosemirror-transform": "^1.2.11",
         "prosemirror-view": "^1.17.6"
+    },
+    "devDependencies": {
+        "electron": "^12.0.2"
     }
 }
