@@ -1,4 +1,6 @@
-<img  src="https://codexnotes.com/logo.png"  width="400" />
+<p align="center">
+	<img  src="https://codexnotes.com/logo.png"  width="400" />
+</p>
 
 A free note-taking software for programmers and Computer Science students
 
