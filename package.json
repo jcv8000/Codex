@@ -7,7 +7,6 @@
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "pack": "electron-builder --dir",
         "dist": "electron-builder"
     },
     "build": {
@@ -26,12 +25,7 @@
                 "zip"
             ],
             "icon": "./icons/icon.ico",
-            "certificateSubjectName": "Joshua Vickery",
-            "signingHashAlgorithms": [
-                "sha256"
-            ],
-            "publisherName": "Joshua Vickery",
-            "signAndEditExecutable": true
+            "publisherName": "Joshua Vickery"
         },
         "nsis": {
             "oneClick": "false",
@@ -56,6 +50,9 @@
         "email": "jcv8000@gmail.com"
     },
     "license": "CC-BY-NC-ND-4.0",
+	"devDependencies": {
+        "electron": "^12.0.2"
+    },
     "dependencies": {
         "bootstrap": "4.5.3",
         "custom-electron-titlebar": "^3.2.6",
@@ -77,8 +74,5 @@
         "prosemirror-tables": "^1.1.1",
         "prosemirror-transform": "^1.2.11",
         "prosemirror-view": "^1.17.6"
-    },
-    "devDependencies": {
-        "electron": "^12.0.2"
     }
 }
