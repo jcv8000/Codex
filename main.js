@@ -60,7 +60,8 @@ function createWindow() {
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
-                worldSafeExecuteJavaScript: true
+                worldSafeExecuteJavaScript: true,
+				contextIsolation: false
             },
             icon: __dirname + '/icons/icon.ico',
             show: false,
@@ -77,7 +78,8 @@ function createWindow() {
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
-                worldSafeExecuteJavaScript: true
+                worldSafeExecuteJavaScript: true,
+				contextIsolation: false
             },
             icon: __dirname + '/icons/64x64.png',
             show: false,
@@ -94,7 +96,8 @@ function createWindow() {
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
-                worldSafeExecuteJavaScript: true
+                worldSafeExecuteJavaScript: true,
+				contextIsolation: false
             },
             icon: __dirname + '/icons/icon.icns',
             show: false,
