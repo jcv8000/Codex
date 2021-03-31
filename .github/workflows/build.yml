@@ -1,0 +1,39 @@
+name: build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+        
+      - name: Install packages
+        run: npm ci
+
+      - name: Run Electron Builder
+        run: npx electron-builder --publish=never
+        
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: |
+            dist
+            !dist/*.blockmap
+            !dist/*.yml
+            !dist/win-unpacked
+            !dist/linux-unpacked
+            !dist/.icon-set
+            !dist/mac
+          retention-days: 1
