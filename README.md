@@ -8,7 +8,7 @@ Made by [Josh Vickery](https://jcv8000.github.io)
 
 ## Usage
 
-After cloning, run  ``npm update`` to get the required packages, then run ``npm start`` to test.
+After cloning, run  ``npm install`` to get the required packages, then run ``npm start`` to test.
 
 ## Building
 
