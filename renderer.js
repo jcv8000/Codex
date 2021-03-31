@@ -402,6 +402,8 @@ function init() {
     $('#revertToDefaultDataDirBtnTooltip').tooltip();
     $('#dataDirButton').tooltip();
 
+    document.getElementById('exampleCode').innerHTML = "//EXAMPLE CODE BLOCK\n#include &lt;iostream&gt;\n\nint main(int argc, char *argv[]) {\n\tfor (auto i = 0; i &lt; 0xFFFF; i++)\n\t\tcout &lt;&lt; \"Hello, World!\" &lt;&lt; endl;\n\treturn -2e3 + 12l;\n}";
+
     //HIGHLIGHT THE EXAMPLE CODE IN THE SETTINGS PAGE
     let hljs = require("highlight.js/lib/core");  // require only the core library
     // separately require languages
