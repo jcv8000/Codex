@@ -668,7 +668,7 @@ a.nav-link:hover {
     z-index: 1030 !important;
 }
 
-h5.settingTitle {
+.settingTitle {
     font-weight: 500;
     margin-bottom: 20px;
 }
@@ -719,4 +719,10 @@ label {
 
 ::marker {
     font-weight: 600;
+}
+
+.form-group {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 2rem;
 }

@@ -182,11 +182,12 @@
                 <!-- SETTINGS PAGE -->
                 <span id="settingsPage" class="unselectable" style="display: none;">
                     <div class="content shadow-sm">
-                        <h2>Settings</h2>
-                        <br>
+                        <center><h2>Appearance</h1></center>
+                        <hr>
+
                         <div class="form-group">
                             <h5 class="settingTitle">Theme</h5>
-                            <select class="form-control custom-select custom-select-lg" id="themeSelect"
+                            <select class="form-control custom-select" id="themeSelect"
                                 onchange="applyPrefsRuntime()">
                                 <option value="0">Light</option>
                                 <option value="1">Dark</option>
@@ -194,7 +195,18 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <h5 class="settingTitle">Code block theme</h5>
+                            <h5 class="settingTitle">Accent color</h5>
+                            <input class="form-control" type="color" id="accentColorPicker"
+                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px">
+                            <button class="btn mybtn" style="vertical-align: 7px; padding: 6px 8px; margin-left: 10px"
+                                onclick="revertAccentColor()">Revert to default</button>
+                        </div>
+
+                        <center><h2 class="mt-5">Code Blocks</h1></center>
+                        <hr>
+
+                        <div class="form-group">
+                            <h5 class="settingTitle">Code Block Theme</h5>
 
 
                             <center>
@@ -203,7 +215,7 @@
                             </center>
 
 
-                            <select class="form-control custom-select custom-select-lg" id="codeStyleSelect"
+                            <select class="form-control custom-select" id="codeStyleSelect"
                                 onchange="applyPrefsRuntime()">
                                 <optgroup label="Light themes">
                                     <option value="a11y-light">A 11 Y Light</option>
@@ -310,23 +322,19 @@
 
 
                         </div>
-                        <div class="form-group">
-                            <h5 class="settingTitle">Accent color</h5>
-                            <input class="form-control" type="color" id="accentColorPicker"
-                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px">
-                            <button class="btn mybtn" style="vertical-align: 7px; padding: 6px 8px; margin-left: 10px"
-                                onclick="revertAccentColor()">Revert to default</button>
-                        </div>
 
                         <div class="form-group">
-                            <h5 class="settingTitle">Code Block Tabs</h5>
-                            <label for="tabSizeSelect">Preferred tab size</label>
+                            <h5 class="settingTitle">Preferred Tab Size</h5>
+                            <!--<label for="tabSizeSelect">Preferred tab size</label>-->
                             <select class="form-control custom-select" id="tabSizeSelect"
                                 onchange="applyPrefsRuntime()">
                                 <option value="2">2 spaces</option>
                                 <option value="4">4 spaces</option>
                             </select>
                         </div>
+
+                        <center><h2 class="mt-5">Exporting</h1></center>
+                        <hr>
 
                         <div class="form-group">
 
@@ -361,13 +369,17 @@
                             </div>
 
                         </div>
+
+                        <center><h2 class="mt-5">Other</h1></center>
+                        <hr>
+
                         <div class="form-group mb-0">
                             <input type="file" id="dataDirInputDialog" webkitdirectory style="display:none">
-                            <h5 class="settingTitle">Choose save directory</h5>
+                            <h5 class="settingTitle">Save Location</h5>
                             <div class="input-group">
                                 <!--<input type="text" id="dataDirInput" class="form-control" spellcheck="false" readonly onclick="openDataDir()">-->
                                 <div class="form-control" readonly><a href="#" onclick="openDataDir()"
-                                        id="dataDirInput"></a></div>
+                                        id="dataDirInput" style="font-size: 14px; vertical-align: 1px;"></a></div>
                                 <div class="input-group-append" id="revertToDefaultDataDirBtnTooltip">
                                     <button id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()"
                                         class="btn mybtn-primary" type="button"
@@ -385,7 +397,7 @@
                 <button class="mybtn-primary" style="width: 100%" id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()">Revert to default save directory</button>
               </span>-->
                             <div class="alert alert-warning mb-0" role="alert" style="font-size: 14px">
-                                <i><b>Changing your save directory will immediately restart the application.</b><br>Make
+                                <i><b>Changing your save location will immediately restart the application.</b><br>Make
                                     sure it has its
                                     own folder to separate the files from others.<br><br>You will have to copy/replace
                                     the
