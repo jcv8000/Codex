@@ -536,7 +536,8 @@ option:hover {
     margin-top: 10px;
     margin-bottom: 10px;
     white-space: pre;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .inline-code {
