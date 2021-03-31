@@ -95,7 +95,7 @@ var nodes = {
 	parseDOM: [{tag: "div", preserveWhitespace: "full", getAttrs: function (node) { return (
         {params: node.getAttribute("data-params") || ""}
     ); }}],
-    toDOM: function toDOM(node) { return ["div", {"class": "codeSnippet hljs language-" + node.attrs.params, "data-params": node.attrs.params}, 0] }
+    toDOM: function toDOM(node) { return ["div", {"class": "codeSnippet hljs language-" + node.attrs.params, "data-params": node.attrs.params, "spellcheck": "false"}, 0] }
   },
 
   // :: NodeSpec The text node.
