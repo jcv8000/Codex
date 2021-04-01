@@ -1162,7 +1162,6 @@ function exampleSetup(options) {
                         for (let i = 0; i < options.tabSize; i++) {
                             tr.insertText(" ").scrollIntoView();
                         }
-                        //dispatch(state.tr.insertText("    ").scrollIntoView());
                         dispatch(tr);
                         return true;
                     }
@@ -1176,40 +1175,19 @@ function exampleSetup(options) {
                     goToNextCell(-1)(state, dispatch);
                     return true;
                 }
-                // else {
-                // 	if (dispatch) {
-
-                //     state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
-                //       let raw = node.textBetween(0, state.selection.$head.parentOffset);
-                //       let text = raw.substring(raw.lastIndexOf("\n"), raw.length);
-                //       console.log("poopy!");
-                //       let spaces = 0;
-                //       for (let i = 0; i < text.length; i++) {
-                //         if (text.charAt(i) == ' ') {
-                //           spaces++;
-                //         }
-                //         else if (text.charAt(i) == '\n') {
-
-                //         }
-                //         else
-                //           break;
-                //       }
-
-                //       let tr = state.tr;
-                //       if (spaces > options.tabSize) {
-                //         tr.delete(state.selection.from - 2, state.selection.to);
-                //       }
-                //       else if (spaces == 1) {
-                //         tr.delete(state.selection.from - 1, state.selection.to);
-                //       }
-
-                //       dispatch(tr);
-                //       break;
-
-                //     });
-                // 		return true;
-                // 	}
-                // }
+                else {
+                    if (dispatch) {
+                        let tr = state.tr;
+                        if (options.tabSize == 2) {
+                            tr.delete(state.selection.from - 2, state.selection.to).scrollIntoView();
+                        }
+                        else if (options.tabSize == 4) {
+                            tr.delete(state.selection.from - 4, state.selection.to).scrollIntoView();
+                        }
+                        dispatch(tr);
+                        return true;
+                    }
+                }
                 return false;
             }
         }),
