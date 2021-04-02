@@ -1060,8 +1060,8 @@ function codeBlockEnter(state, dispatch) {
 
     state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
         /*if (node.type == state.schema.nodes.list_item) {
-          prosemirrorSchemaList.splitListItem(state.schema.nodes.list_item)(state, dispatch);
-          return true;
+            prosemirrorSchemaList.splitListItem(state.schema.nodes.list_item)(state, dispatch);
+            return true;
         }*/
         if (node.type == state.schema.nodes.code_block || node.type != state.schema.nodes.text) {
             nodesInSelection++;
@@ -1178,12 +1178,37 @@ function exampleSetup(options) {
                 else {
                     if (dispatch) {
                         let tr = state.tr;
-                        if (options.tabSize == 2) {
-                            tr.delete(state.selection.from - 2, state.selection.to).scrollIntoView();
+
+                        if (state.selection.to - state.selection.from === 0) {
+
+                            let nodesInSelection = 0;
+                            let node = null;
+                            state.doc.nodesBetween(state.selection.from, state.selection.to, (_node, startPos) => {
+
+                                if (_node.type == state.schema.nodes.code_block) {
+                                    nodesInSelection++;
+                                    node = _node;
+                                }
+                            });
+
+                            if (nodesInSelection == 1 && node.type == state.schema.nodes.code_block) {
+
+                                let text = node.textBetween(0, state.selection.$head.parentOffset);
+
+                                let firstIndexOfLine = text.lastIndexOf("\n") || 0;
+
+                                text = node.textBetween(0, state.selection.$head.parentOffset + 1);
+
+                                let distToStart = text.length - firstIndexOfLine - 1;
+
+                                for (let i = 1; i <= options.tabSize; i++) {
+                                    if (text.charAt(firstIndexOfLine + 1) == " ") {
+                                        tr.delete(state.selection.from - distToStart + 1, state.selection.from - distToStart + 2).scrollIntoView();
+                                    }
+                                }
+                            }
                         }
-                        else if (options.tabSize == 4) {
-                            tr.delete(state.selection.from - 4, state.selection.to).scrollIntoView();
-                        }
+
                         dispatch(tr);
                         return true;
                     }
