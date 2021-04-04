@@ -1653,17 +1653,19 @@ function revertToDefaultDataDir() {
 
 function openAboutPage() {
     let about = new remote.BrowserWindow({
-        width: 360,
-        height: 480,
+        width: 480,
+        height: 360,
         resizable: false,
-        icon: 'codex.ico',
+        icon: __dirname + '/icons/icon.ico',
         title: "About Codex",
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: false,
-            worldSafeExecuteJavaScript: true
+            worldSafeExecuteJavaScript: true,
+            contextIsolation: false
         },
         parent: remote.getCurrentWindow(),
+        modal: true,
         show: false
     });
     about.once('ready-to-show', () => {
