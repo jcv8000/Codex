@@ -402,6 +402,8 @@ function init() {
     $('#revertToDefaultDataDirBtnTooltip').tooltip();
     $('#dataDirButton').tooltip();
 
+    document.getElementById('exampleCode').innerHTML = "//EXAMPLE CODE BLOCK\n#include &lt;iostream&gt;\n\nint main(int argc, char *argv[]) {\n\tfor (auto i = 0; i &lt; 0xFFFF; i++)\n\t\tcout &lt;&lt; \"Hello, World!\" &lt;&lt; endl;\n\treturn -2e3 + 12l;\n}";
+
     //HIGHLIGHT THE EXAMPLE CODE IN THE SETTINGS PAGE
     let hljs = require("highlight.js/lib/core");  // require only the core library
     // separately require languages
@@ -1054,8 +1056,10 @@ function addNotebookToList(index) {
         let cm = document.getElementById('notebook-context-menu');
         cm.style.display = "block";
         cm.style.left = `${e.clientX}px`;
-        if (remote.process.platform === 'win32') {
-            cm.style.top = `${e.clientY - 30}px`;
+        
+        // Put the menu above the cursor if it's going to go off screen
+        if (window.innerHeight - e.clientY < cm.clientHeight) {
+            cm.style.top = `${e.clientY - cm.clientHeight}px`;
         }
         else {
             cm.style.top = `${e.clientY}px`;
@@ -1209,7 +1213,15 @@ function addPageToAList(notebookIndex, index) {
         let cm = document.getElementById('page-context-menu');
         cm.style.display = "block";
         cm.style.left = `${e.clientX}px`;
-        cm.style.top = `${e.clientY - 30}px`;
+
+        // Put the menu above the cursor if it's going to go off screen
+        if (window.innerHeight - e.clientY < cm.clientHeight) {
+            cm.style.top = `${e.clientY - cm.clientHeight}px`;
+        }
+        else {
+            cm.style.top = `${e.clientY}px`;
+        }
+        
         rightClickedNotebookIndex = parseInt(this.getAttribute("notebook-index"));
         rightClickedPageIndex = parseInt(this.getAttribute("page-index"));
 
@@ -1651,17 +1663,19 @@ function revertToDefaultDataDir() {
 
 function openAboutPage() {
     let about = new remote.BrowserWindow({
-        width: 360,
-        height: 480,
+        width: 480,
+        height: 360,
         resizable: false,
-        icon: 'codex.ico',
+        icon: __dirname + '/icons/icon.ico',
         title: "About Codex",
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: false,
-            worldSafeExecuteJavaScript: true
+            worldSafeExecuteJavaScript: true,
+            contextIsolation: false
         },
         parent: remote.getCurrentWindow(),
+        modal: true,
         show: false
     });
     about.once('ready-to-show', () => {

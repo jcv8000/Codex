@@ -245,6 +245,9 @@ function cmdItem(cmd, options) {
     for (var prop in options) { passedOptions[prop] = options[prop]; }
     if ((!options.enable || options.enable === true) && !options.select) { passedOptions[options.enable ? "enable" : "select"] = function (state) { return cmd(state); }; }
 
+    passedOptions.enable = passedOptions.select;
+    passedOptions.select = function select(state) { return true; }
+
     return new prosemirrorMenu.MenuItem(passedOptions)
 }
 
@@ -261,7 +264,9 @@ function markActive(state, type) {
 function markItem(markType, options) {
     var passedOptions = {
         active: function active(state) { return markActive(state, markType) },
-        enable: true
+        select: function select(state) {
+            return !isCursorInCodeBlock(state);
+        }
     };
     for (var prop in options) { passedOptions[prop] = options[prop]; }
     return cmdItem(prosemirrorCommands.toggleMark(markType), passedOptions)
@@ -272,7 +277,12 @@ function linkItem(markType) {
         title: "Add or remove link",
         icon: prosemirrorMenu.icons.link,
         active: function active(state) { return markActive(state, markType) },
-        enable: function enable(state) { return !state.selection.empty },
+        enable: function enable(state) {
+            if (isCursorInCodeBlock(state)) {
+                return false;
+            }
+            return !state.selection.empty 
+        },
         run: function run(state, dispatch, view) {
             if (markActive(state, markType)) {
                 prosemirrorCommands.toggleMark(markType)(state, dispatch);
@@ -683,17 +693,26 @@ function buildMenuItems(schema) {
     r.alignLeft = new prosemirrorMenu.MenuItem({
         title: "Align text to left",
         icon: myIcons.leftAlign,
-        run: alignSelection("left")
+        run: alignSelection("left"),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
     });
     r.alignCenter = new prosemirrorMenu.MenuItem({
         title: "Align text to center",
         icon: myIcons.centerAlign,
-        run: alignSelection("center")
+        run: alignSelection("center"),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
     });
     r.alignRight = new prosemirrorMenu.MenuItem({
         title: "Align text to right",
         icon: myIcons.rightAlign,
-        run: alignSelection("right")
+        run: alignSelection("right"),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
     });
 
     var cut = function (arr) { return arr.filter(function (x) { return x; }); };
@@ -713,8 +732,8 @@ function buildMenuItems(schema) {
         ]), { label: "Heading" })]), { label: "Type..." });
 
     r.inlineMenu = [cut([prosemirrorMenu.undoItem, prosemirrorMenu.redoItem]), cut([r.toggleStrong, r.toggleEm, r.toggleUnderline, r.toggleCode, r.toggleLink])];
-    r.blockMenu = [cut([r.alignLeft, r.alignCenter, r.alignRight]), cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote/*, prosemirrorMenu.joinUpItem,
-                      prosemirrorMenu.liftItem, prosemirrorMenu.selectParentNodeItem*/])];
+    r.blockMenu = [cut([r.alignLeft, r.alignCenter, r.alignRight]), cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote,/*, prosemirrorMenu.joinUpItem,
+                      prosemirrorMenu.liftItem,*/ prosemirrorMenu.selectParentNodeItem])];
     r.fullMenu = r.inlineMenu.concat([[r.insertMenu, r.typeMenu]], r.blockMenu);
 
     return r
@@ -980,6 +999,7 @@ function buildInputRules(schema) {
 
 function item(label, cmd) { return new prosemirrorMenu.MenuItem({ label, select: cmd, run: cmd }) }
 let tableMenu = [
+    new prosemirrorMenu.MenuItem({ label: "Insert Table", select: function select(state) { return !isInTable(state) }, run: insertTable }),
     item("Insert column before", addColumnBefore),
     item("Insert column after", addColumnAfter),
     item("Delete column", deleteColumn),
@@ -1053,6 +1073,16 @@ function makeCodeBlock(language) {
     }
 }
 
+function isCursorInCodeBlock(state) {
+    let value = false;
+    state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
+        if (node.type.name == "code_block") {
+            value = true;
+        }
+    });
+    return value;
+}
+
 function codeBlockEnter(state, dispatch) {
 
     let nodesInSelection = 0;
@@ -1060,8 +1090,8 @@ function codeBlockEnter(state, dispatch) {
 
     state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
         /*if (node.type == state.schema.nodes.list_item) {
-          prosemirrorSchemaList.splitListItem(state.schema.nodes.list_item)(state, dispatch);
-          return true;
+            prosemirrorSchemaList.splitListItem(state.schema.nodes.list_item)(state, dispatch);
+            return true;
         }*/
         if (node.type == state.schema.nodes.code_block || node.type != state.schema.nodes.text) {
             nodesInSelection++;
@@ -1120,8 +1150,12 @@ function alignSelection(alignment) {
 
         state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
             if (node.attrs.class) {
-                tr.setNodeMarkup(startPos, null, { class: "pm-align--" + alignment }, null);
-
+                if (node.attrs.level) {
+                    tr.setNodeMarkup(startPos, null, { class: "pm-align--" + alignment, level: node.attrs.level }, null);
+                }
+                else {
+                    tr.setNodeMarkup(startPos, null, { class: "pm-align--" + alignment }, null);
+                }
             }
         });
 
@@ -1162,7 +1196,6 @@ function exampleSetup(options) {
                         for (let i = 0; i < options.tabSize; i++) {
                             tr.insertText(" ").scrollIntoView();
                         }
-                        //dispatch(state.tr.insertText("    ").scrollIntoView());
                         dispatch(tr);
                         return true;
                     }
@@ -1176,40 +1209,44 @@ function exampleSetup(options) {
                     goToNextCell(-1)(state, dispatch);
                     return true;
                 }
-                // else {
-                // 	if (dispatch) {
+                else {
+                    if (dispatch) {
+                        let tr = state.tr;
 
-                //     state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
-                //       let raw = node.textBetween(0, state.selection.$head.parentOffset);
-                //       let text = raw.substring(raw.lastIndexOf("\n"), raw.length);
-                //       console.log("poopy!");
-                //       let spaces = 0;
-                //       for (let i = 0; i < text.length; i++) {
-                //         if (text.charAt(i) == ' ') {
-                //           spaces++;
-                //         }
-                //         else if (text.charAt(i) == '\n') {
+                        if (state.selection.to - state.selection.from === 0) {
 
-                //         }
-                //         else
-                //           break;
-                //       }
+                            let nodesInSelection = 0;
+                            let node = null;
+                            state.doc.nodesBetween(state.selection.from, state.selection.to, (_node, startPos) => {
 
-                //       let tr = state.tr;
-                //       if (spaces > options.tabSize) {
-                //         tr.delete(state.selection.from - 2, state.selection.to);
-                //       }
-                //       else if (spaces == 1) {
-                //         tr.delete(state.selection.from - 1, state.selection.to);
-                //       }
+                                if (_node.type == state.schema.nodes.code_block) {
+                                    nodesInSelection++;
+                                    node = _node;
+                                }
+                            });
 
-                //       dispatch(tr);
-                //       break;
+                            if (nodesInSelection == 1 && node.type == state.schema.nodes.code_block) {
 
-                //     });
-                // 		return true;
-                // 	}
-                // }
+                                let text = node.textBetween(0, state.selection.$head.parentOffset);
+
+                                let firstIndexOfLine = text.lastIndexOf("\n") || 0;
+
+                                text = node.textBetween(0, state.selection.$head.parentOffset + 1);
+
+                                let distToStart = text.length - firstIndexOfLine - 1;
+
+                                for (let i = 1; i <= options.tabSize; i++) {
+                                    if (text.charAt(firstIndexOfLine + 1) == " ") {
+                                        tr.delete(state.selection.from - distToStart + 1, state.selection.from - distToStart + 2).scrollIntoView();
+                                    }
+                                }
+                            }
+                        }
+
+                        dispatch(tr);
+                        return true;
+                    }
+                }
                 return false;
             }
         }),

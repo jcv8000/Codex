@@ -5,7 +5,7 @@ app.commandLine.appendSwitch("disable-http-cache");
 
 var mainWindow = null;
 
-const currentVersion = "1.2.1";
+const currentVersion = "1.2.2";
 
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -149,7 +149,7 @@ function createWindow() {
     mainWindow.loadFile('index.html')
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
 
     Menu.setApplicationMenu(new Menu());
 

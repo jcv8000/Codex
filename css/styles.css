@@ -373,7 +373,7 @@ div.content {
     right: 0;
     background-color: #FAFBFC;
     transition: opacity 0.1s ease;
-    opacity: 0.6;
+    opacity: 0.75;
 }
 
 #editorRibbon:hover {
@@ -506,7 +506,7 @@ div.content {
     }
 }
 
-::selection {
+*:not(.ProseMirror-selectednode)::selection {
     background-color: var(--accent-color);
     color: white;
 }
@@ -536,6 +536,8 @@ option:hover {
     margin-top: 10px;
     margin-bottom: 10px;
     white-space: pre;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .inline-code {
@@ -667,7 +669,7 @@ a.nav-link:hover {
     z-index: 1030 !important;
 }
 
-h5.settingTitle {
+.settingTitle {
     font-weight: 500;
     margin-bottom: 20px;
 }
@@ -718,4 +720,10 @@ label {
 
 ::marker {
     font-weight: 600;
+}
+
+.form-group {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 2rem;
 }

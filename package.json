@@ -1,7 +1,7 @@
 {
     "name": "codex",
-    "version": "1.2.1",
-    "description": "Codex",
+    "version": "1.2.2",
+    "description": "Codex - Note-taking app for programmers and CS students",
     "homepage": "https://www.codexnotes.com/",
     "repository": "https://github.com/jcv8000/Codex",
     "main": "main.js",
@@ -12,8 +12,8 @@
     "build": {
         "appId": "io.github.jcv8000.codex",
         "productName": "Codex",
-        "copyright": "CC-BY-NC-ND-4.0",
-        "buildVersion": "1.2.1",
+        "copyright": "CC BY-NC 4.0",
+        "buildVersion": "1.2.2",
         "mac": {
             "target": "dmg",
             "icon": "./icons/icon.icns",
@@ -49,7 +49,7 @@
         "name": "Joshua Vickery",
         "email": "jcv8000@gmail.com"
     },
-    "license": "CC-BY-NC-ND-4.0",
+    "license": "CC BY-NC 4.0",
     "devDependencies": {
         "electron": "^12.0.2"
     },
@@ -63,7 +63,7 @@
         "prosemirror-commands": "^1.1.7",
         "prosemirror-dropcursor": "^1.3.3",
         "prosemirror-gapcursor": "^1.1.5",
-        "prosemirror-highlightjs": "^0.5.1",
+        "prosemirror-highlightjs": "^0.6.0",
         "prosemirror-history": "^1.1.3",
         "prosemirror-inputrules": "^1.1.3",
         "prosemirror-keymap": "^1.1.4",

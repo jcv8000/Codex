@@ -18,4 +18,4 @@ The package.json should already specify the building behavior for Windows and Li
 
 ## License
 
-This work is licensed under the [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0) license.
+This work is licensed under a [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
