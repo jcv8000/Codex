@@ -683,17 +683,26 @@ function buildMenuItems(schema) {
     r.alignLeft = new prosemirrorMenu.MenuItem({
         title: "Align text to left",
         icon: myIcons.leftAlign,
-        run: alignSelection("left")
+        run: alignSelection("left"),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
     });
     r.alignCenter = new prosemirrorMenu.MenuItem({
         title: "Align text to center",
         icon: myIcons.centerAlign,
-        run: alignSelection("center")
+        run: alignSelection("center"),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
     });
     r.alignRight = new prosemirrorMenu.MenuItem({
         title: "Align text to right",
         icon: myIcons.rightAlign,
-        run: alignSelection("right")
+        run: alignSelection("right"),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
     });
 
     var cut = function (arr) { return arr.filter(function (x) { return x; }); };
@@ -1051,6 +1060,16 @@ function makeCodeBlock(language) {
             return false;
         }
     }
+}
+
+function isCursorInCodeBlock(state) {
+    let value = false;
+    state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
+        if (node.type.name == "code_block") {
+            value = true;
+        }
+    });
+    return value;
 }
 
 function codeBlockEnter(state, dispatch) {
