@@ -187,7 +187,7 @@ var marks = {
   // :: MarkSpec Code font mark. Represented as a `<code>` element.
   code: {
     parseDOM: [{tag: "span"}],
-      toDOM: function toDOM() { return ["span", {"class": "hljs inline-code"}] }
+      toDOM: function toDOM() { return ["span", {"class": "hljs inline-code", "spellcheck": "false"}] }
   }
 };
 

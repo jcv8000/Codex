@@ -541,8 +541,12 @@ option:hover {
 }
 
 .inline-code {
-    font-size: 87.5%;
-    padding: 2px !important;
+    font-size: 13px;
+    font-weight: 600;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
     border: 1px solid #00000030;
     border-radius: 4px;
     font-family: Consolas, monospace;
