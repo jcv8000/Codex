@@ -1056,8 +1056,10 @@ function addNotebookToList(index) {
         let cm = document.getElementById('notebook-context-menu');
         cm.style.display = "block";
         cm.style.left = `${e.clientX}px`;
-        if (remote.process.platform === 'win32') {
-            cm.style.top = `${e.clientY - 30}px`;
+        
+        // Put the menu above the cursor if it's going to go off screen
+        if (window.innerHeight - e.clientY < cm.clientHeight) {
+            cm.style.top = `${e.clientY - cm.clientHeight}px`;
         }
         else {
             cm.style.top = `${e.clientY}px`;
@@ -1211,7 +1213,15 @@ function addPageToAList(notebookIndex, index) {
         let cm = document.getElementById('page-context-menu');
         cm.style.display = "block";
         cm.style.left = `${e.clientX}px`;
-        cm.style.top = `${e.clientY - 30}px`;
+
+        // Put the menu above the cursor if it's going to go off screen
+        if (window.innerHeight - e.clientY < cm.clientHeight) {
+            cm.style.top = `${e.clientY - cm.clientHeight}px`;
+        }
+        else {
+            cm.style.top = `${e.clientY}px`;
+        }
+        
         rightClickedNotebookIndex = parseInt(this.getAttribute("notebook-index"));
         rightClickedPageIndex = parseInt(this.getAttribute("page-index"));
 
