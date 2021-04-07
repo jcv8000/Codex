@@ -725,8 +725,8 @@ function buildMenuItems(schema) {
         ]), { label: "Heading" })]), { label: "Type..." });
 
     r.inlineMenu = [cut([prosemirrorMenu.undoItem, prosemirrorMenu.redoItem]), cut([r.toggleStrong, r.toggleEm, r.toggleUnderline, r.toggleCode, r.toggleLink])];
-    r.blockMenu = [cut([r.alignLeft, r.alignCenter, r.alignRight]), cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote/*, prosemirrorMenu.joinUpItem,
-                      prosemirrorMenu.liftItem, prosemirrorMenu.selectParentNodeItem*/])];
+    r.blockMenu = [cut([r.alignLeft, r.alignCenter, r.alignRight]), cut([r.wrapBulletList, r.wrapOrderedList, r.wrapBlockQuote,/*, prosemirrorMenu.joinUpItem,
+                      prosemirrorMenu.liftItem,*/ prosemirrorMenu.selectParentNodeItem])];
     r.fullMenu = r.inlineMenu.concat([[r.insertMenu, r.typeMenu]], r.blockMenu);
 
     return r
@@ -992,6 +992,7 @@ function buildInputRules(schema) {
 
 function item(label, cmd) { return new prosemirrorMenu.MenuItem({ label, select: cmd, run: cmd }) }
 let tableMenu = [
+    new prosemirrorMenu.MenuItem({ label: "Insert Table", select: function select(state) { return !isInTable(state) }, run: insertTable }),
     item("Insert column before", addColumnBefore),
     item("Insert column after", addColumnAfter),
     item("Delete column", deleteColumn),
