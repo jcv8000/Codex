@@ -486,7 +486,7 @@ function wrapItem(nodeType, options) {
       // FIXME if (options.attrs instanceof Function) options.attrs(state, attrs => wrapIn(nodeType, attrs)(state))
       return prosemirrorCommands.wrapIn(nodeType, options.attrs)(state, dispatch)
     },
-    select: function select(state) {
+    enable: function enable(state) {
       return prosemirrorCommands.wrapIn(nodeType, options.attrs instanceof Function ? null : options.attrs)(state)
     }
   };
