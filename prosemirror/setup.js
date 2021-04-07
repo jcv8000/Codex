@@ -1120,8 +1120,12 @@ function alignSelection(alignment) {
 
         state.doc.nodesBetween(state.selection.from, state.selection.to, (node, startPos) => {
             if (node.attrs.class) {
-                tr.setNodeMarkup(startPos, null, { class: "pm-align--" + alignment }, null);
-
+                if (node.attrs.level) {
+                    tr.setNodeMarkup(startPos, null, { class: "pm-align--" + alignment, level: node.attrs.level }, null);
+                }
+                else {
+                    tr.setNodeMarkup(startPos, null, { class: "pm-align--" + alignment }, null);
+                }
             }
         });
 
