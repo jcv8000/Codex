@@ -506,7 +506,7 @@ div.content {
     }
 }
 
-::selection {
+*:not(.ProseMirror-selectednode)::selection {
     background-color: var(--accent-color);
     color: white;
 }
