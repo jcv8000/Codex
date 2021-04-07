@@ -264,7 +264,9 @@ function markActive(state, type) {
 function markItem(markType, options) {
     var passedOptions = {
         active: function active(state) { return markActive(state, markType) },
-        enable: true
+        select: function select(state) {
+            return !isCursorInCodeBlock(state);
+        }
     };
     for (var prop in options) { passedOptions[prop] = options[prop]; }
     return cmdItem(prosemirrorCommands.toggleMark(markType), passedOptions)
@@ -275,7 +277,12 @@ function linkItem(markType) {
         title: "Add or remove link",
         icon: prosemirrorMenu.icons.link,
         active: function active(state) { return markActive(state, markType) },
-        enable: function enable(state) { return !state.selection.empty },
+        enable: function enable(state) {
+            if (isCursorInCodeBlock(state)) {
+                return false;
+            }
+            return !state.selection.empty 
+        },
         run: function run(state, dispatch, view) {
             if (markActive(state, markType)) {
                 prosemirrorCommands.toggleMark(markType)(state, dispatch);
