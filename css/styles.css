@@ -373,7 +373,7 @@ div.content {
     right: 0;
     background-color: #FAFBFC;
     transition: opacity 0.1s ease;
-    opacity: 0.6;
+    opacity: 0.75;
 }
 
 #editorRibbon:hover {
