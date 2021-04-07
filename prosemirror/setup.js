@@ -245,6 +245,9 @@ function cmdItem(cmd, options) {
     for (var prop in options) { passedOptions[prop] = options[prop]; }
     if ((!options.enable || options.enable === true) && !options.select) { passedOptions[options.enable ? "enable" : "select"] = function (state) { return cmd(state); }; }
 
+    passedOptions.enable = passedOptions.select;
+    passedOptions.select = function select(state) { return true; }
+
     return new prosemirrorMenu.MenuItem(passedOptions)
 }
 
