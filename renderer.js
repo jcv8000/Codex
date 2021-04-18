@@ -1452,6 +1452,8 @@ function showSettingsPage() {
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(normalMenu);
     }
+
+    document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
 /**
@@ -1467,6 +1469,8 @@ function showEditorPage() {
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(editingMenu);
     }
+
+    document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
 function showHelpPage() {
@@ -1480,6 +1484,8 @@ function showHelpPage() {
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(normalMenu);
     }
+
+    document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
 function loadHelpPage(filename) {
@@ -1553,6 +1559,7 @@ function loadPage(notebookIndex, pageIndex) {
         })
     })
 
+    document.getElementById("mainContainer").scrollTo(0, 0);
     //window.view.focus();
 }
 
