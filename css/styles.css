@@ -731,3 +731,28 @@ label {
     margin-right: 1.5rem;
     margin-top: 2rem;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #F2F4F6;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #D1D7DE;
+}
+
+.sidebar-sticky::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+}
+
+.sidebar-sticky::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-sticky::-webkit-scrollbar-track {
+    background-color: #F8F9FA;
+}
