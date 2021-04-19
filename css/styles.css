@@ -733,7 +733,7 @@ label {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -741,8 +741,12 @@ label {
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: #D1D7DE;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #AFB9C5;
 }
 
 .sidebar-sticky::-webkit-scrollbar-thumb {

@@ -200,3 +200,7 @@ a {
 ::-webkit-scrollbar-thumb {
     background-color: #565E69;
 }
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #6A7381;
+}
