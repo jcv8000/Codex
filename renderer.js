@@ -416,15 +416,20 @@ function init() {
 
     //get user preferences
     if (fs.existsSync(defaultDataDir + "/prefs.json")) {
+        let worked = false;
         try {
             let json = fs.readFileSync(defaultDataDir + "/prefs.json", 'utf8');
             prefs = JSON.parse(json);
-            fixPrefs();
-            applyPrefsFromFile();
-            canSavePrefs = true;
+            worked = true;
         }
         catch (err) {
             alert('Your preferences file could not be parsed correctly.', 'Please make sure your prefs.json JSON file is intact');
+        }
+
+        if (worked === true) {
+            fixPrefs();
+            applyPrefsFromFile();
+            canSavePrefs = true;
         }
     }
     else {
@@ -1605,12 +1610,16 @@ function defaultZoom() {
  */
 function updateZoom() {
     prefs.defaultZoom = zoomLevel;
-    let ec = document.getElementById('editorContent');
 
-    //ec.style.transform = `scale(${zoomLevel})`;
+    let ec = document.getElementById('editorContent');
+    let mainContainer = document.getElementById("mainContainer");
+
+    let oldScrollTop = mainContainer.scrollTop;
+    let oldScrollHeight = mainContainer.scrollHeight;
+
     ec.style.zoom = `${zoomLevel}`;
-    //let ep = document.getElementById('editorPage');
-    //ep.style.height = `${ep.style.height * zoomLevel}px`;
+
+    mainContainer.scrollTop = (oldScrollTop / oldScrollHeight) * mainContainer.scrollHeight;
 }
 
 /**
