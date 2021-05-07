@@ -25,6 +25,11 @@
                 "zip"
             ],
             "icon": "./icons/icon.ico",
+            "signingHashAlgorithms": [
+                "sha256",
+                "sha1"
+            ],
+            "signAndEditExecutable": true,
             "publisherName": "Joshua Vickery"
         },
         "nsis": {
