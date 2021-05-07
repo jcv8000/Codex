@@ -47,5 +47,5 @@ jobs:
             !dist/linux-unpacked
             !dist/.icon-set
             !dist/mac
-            !/dist/.cache
+            !dist/.cache
           retention-days: 1
