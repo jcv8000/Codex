@@ -760,3 +760,7 @@ label {
 .sidebar-sticky::-webkit-scrollbar-track {
     background-color: #F8F9FA;
 }
+
+button:focus {
+    outline: none !important;
+}
