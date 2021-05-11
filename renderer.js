@@ -398,9 +398,36 @@ function init() {
         titlebar.updateMenu(normalMenu);
     }
 
+    // TOOLTIPS
+
     document.getElementById('revertToDefaultDataDirBtnTooltip').title = "Revert to" + defaultDataDir;
-    $('#revertToDefaultDataDirBtnTooltip').tooltip();
-    $('#dataDirButton').tooltip();
+    $('#revertToDefaultDataDirBtnTooltip').tooltip({
+        trigger: 'hover'
+    });
+    $('#dataDirButton').tooltip({
+        trigger: 'hover'
+    });
+
+    $('#newNotebookBtn').tooltip({
+        boundary: 'window',
+        container: 'body',
+        placement: 'right',
+        trigger: 'hover'
+    });
+
+    $('#newNotebookColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom',
+        offset: 30
+    });
+
+    $('#editNotebookColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom',
+        offset: 30
+    });
+
+    // TOOLTIPS
 
     document.getElementById('exampleCode').innerHTML = "//EXAMPLE CODE BLOCK\n#include &lt;iostream&gt;\n\nint main(int argc, char *argv[]) {\n\tfor (auto i = 0; i &lt; 0xFFFF; i++)\n\t\tcout &lt;&lt; \"Hello, World!\" &lt;&lt; endl;\n\treturn -2e3 + 12l;\n}";
 

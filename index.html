@@ -90,7 +90,7 @@
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
                         style="margin-bottom: 8px !important;">
                         <span class="unselectable">Notebooks</span>
-                        <a class="d-flex align-items-center text-muted" href="#newNotebookModal" draggable="false"
+                        <a id="newNotebookBtn" class="d-flex align-items-center text-muted" href="#newNotebookModal" draggable="false"
                             data-toggle="modal" title="Create notebook">
                             <span data-feather="plus-circle"></span>
                         </a>
@@ -451,7 +451,7 @@
                         <div class="form-row">
                             <div class="col-auto">
                                 <input class="form-control" type="color" style="width: 50px"
-                                    id="newNotebookColorPicker">
+                                    id="newNotebookColorPicker" title="Choose color...">
                             </div>
                             <div class="col">
                                 <input class="form-control" type="text" id="newNotebookNameInput"
@@ -487,7 +487,7 @@
                         <div class="form-row">
                             <div class="col-auto">
                                 <input class="form-control" type="color" style="width: 50px"
-                                    id="editNotebookColorPicker">
+                                    id="editNotebookColorPicker" title="Choose color...">
                             </div>
                             <div class="col">
                                 <input class="form-control" type="text" id="editNotebookNameInput"
