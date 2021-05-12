@@ -520,6 +520,7 @@ function init() {
         try {
             let nbList = document.getElementById(`nb-${prefs.openedNotebooks[i]}-list`);
             nbList.classList.add('show');
+            document.getElementById(`nb-${prefs.openedNotebooks[i]}`).setAttribute('aria-expanded', "true");
         }
         catch (error) {
             console.error(error);
@@ -1049,6 +1050,7 @@ function addNotebookToList(index) {
 
     let el = document.createElement("li");
     el.classList.add("nav-item");
+    el.classList.add("my-sidebar-item");
     el.draggable = true;
     el.style.transition = "box-shadow 0.2s ease";
 
@@ -1056,13 +1058,25 @@ function addNotebookToList(index) {
     a.id = `nb-${index}`;
     a.title = notebook.name;
     a.setAttribute('notebook-index', index);
-    a.classList.add('nav-link', 'dropdown-toggle', 'notebook', 'unselectable');
+    a.classList.add('nav-link', /*'dropdown-toggle', */'notebook', 'unselectable');
     a.href = `#nb-${index}-list`;
     a.setAttribute('data-toggle', 'collapse');
     a.setAttribute('aria-expanded', 'false');
-    a.innerHTML = `
+    /*a.innerHTML = `
   <span data-feather="book" style="color: ${notebook.color}"></span><span class="notebook-title"> ${notebook.name} </span><span class="caret"></span>
-  `;
+  `;*/
+
+    a.innerHTML = `
+        <div class="row">
+            <div class="col-auto pr-0">
+                <span data-feather="book" style="color: ${notebook.color}"></span>
+            </div>
+            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${notebook.name}</div>
+            <div class="col-auto" style="padding-right: 20px">
+                <span class="caret"></span>
+            </div>
+        </div>
+    `;
     el.appendChild(a);
 
     let ul = document.createElement("ul");
@@ -1215,13 +1229,34 @@ function addPageToAList(notebookIndex, index) {
     a.id = `page-${index}`;
     a.title = `${page.title}`;
     a.href = "#";
-    a.classList.add('nav-link', 'my-sidebar-link', 'page', 'indent', 'unselectable');
-    a.innerHTML = `
+    a.classList.add('nav-link', 'my-sidebar-link', /*'page',*/ 'indent', 'unselectable');
+    /*a.innerHTML = `
   <span data-feather="file-text"></span><span class="page-title"> ${page.title} </span>
-  `;
+  `;*/
 
     if (page.favorite) {
-        a.innerHTML += '<span data-feather="star" style="width: 14px; height: 14px; color: orange"></span>'
+        //a.innerHTML += '<span data-feather="star" style="width: 14px; height: 14px; color: orange"></span>'
+        a.innerHTML = `
+        <div class="row">
+            <div class="col-auto pr-0">
+                <span data-feather="file-text"></span>
+            </div>
+            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
+            <div class="col-auto" style="padding-right: 13px">
+                <span data-feather="star" style="width: 14px; height: 14px; color: orange"></span>
+            </div>
+        </div>
+        `;
+    }
+    else {
+        a.innerHTML = `
+        <div class="row">
+            <div class="col-auto pr-0">
+                <span data-feather="file-text"></span>
+            </div>
+            <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
+        </div>
+        `;
     }
 
     a.setAttribute('notebook-index', `${notebookIndex}`);

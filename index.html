@@ -49,10 +49,24 @@
                             </a>
                         </li>
                         <li class="nav-item my-sidebar-item">
-                            <a id="helpTab" class="nav-link dropdown-toggle unselectable" href="#help-list"
-                                data-toggle="collapse" draggable="false" onclick="">
-                                <span data-feather="help-circle"></span><span class="notebook-title"> Help </span><span
+                            <!--<a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse"
+                                draggable="false" onclick="">
+                                <span data-feather="help-circle"></span>Help<span
                                     class="caret"></span>
+                            </a>-->
+                            <a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse"
+                                draggable="false" onclick="">
+                                <div class="row">
+                                    <div class="col-auto pr-0">
+                                        <span data-feather="help-circle"></span>
+                                    </div>
+                                    <div class="col pr-1"
+                                        style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                                        Help</div>
+                                    <div class="col-auto" style="padding-right: 20px">
+                                        <span class="caret"></span>
+                                    </div>
+                                </div>
                             </a>
                             <ul class="nav collapse" id="help-list">
                                 <li class="nav-item my-sidebar-item">
@@ -87,15 +101,26 @@
 
                     </ul>
 
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+                    <!--<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
                         style="margin-bottom: 8px !important;">
                         <span class="unselectable">Notebooks</span>
                         <a id="newNotebookBtn" class="d-flex align-items-center text-muted" href="#newNotebookModal" draggable="false"
                             data-toggle="modal" title="Create notebook">
                             <span data-feather="plus-circle"></span>
                         </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2" id="notebookList">
+                    </h6>-->
+                    <div class="row px-3 mt-4 mb-0 unselectable">
+                        <div class="col">
+                            <h6 class="sidebar-heading text-muted" style="margin-top: 3px">Notebooks</h6>
+                        </div>
+                        <div class="col-auto" style="padding-right: 16px;">
+                            <a id="newNotebookBtn" class="text-muted" href="#newNotebookModal" draggable="false"
+                                data-toggle="modal" title="Create notebook">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="nav flex-column mb-2 unselectable" id="notebookList">
                     </ul>
                 </div>
             </nav>
@@ -144,7 +169,8 @@
                             <!--<h6 class="sidebar-heading text-muted unselectable">Made by Josh Vickery (jcv8000)</h6>-->
                             <span style="font-size: 12px">Made by Josh Vickery</span><br>
                             <span style="font-size: 12px">This work is licensed under a <a rel="license" href="#"
-                                    onclick="shell.openExternal('https://creativecommons.org/licenses/by-nc/4.0/')">CC BY-NC 4.0 License</a>.</span>
+                                    onclick="shell.openExternal('https://creativecommons.org/licenses/by-nc/4.0/')">CC
+                                    BY-NC 4.0 License</a>.</span>
                         </center>
                     </div>
 
@@ -180,13 +206,14 @@
                 <!-- SETTINGS PAGE -->
                 <span id="settingsPage" class="unselectable" style="display: none;">
                     <div class="content shadow-sm">
-                        <center><h2>Appearance</h1></center>
+                        <center>
+                            <h2>Appearance</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group">
                             <h5 class="settingTitle">Theme</h5>
-                            <select class="form-control custom-select" id="themeSelect"
-                                onchange="applyPrefsRuntime()">
+                            <select class="form-control custom-select" id="themeSelect" onchange="applyPrefsRuntime()">
                                 <option value="0">Light</option>
                                 <option value="1">Dark</option>
                                 <option value="2">System default</option>
@@ -200,7 +227,9 @@
                                 onclick="revertAccentColor()">Revert to default</button>
                         </div>
 
-                        <center><h2 class="mt-5">Code Blocks</h1></center>
+                        <center>
+                            <h2 class="mt-5">Code Blocks</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group">
@@ -331,7 +360,9 @@
                             </select>
                         </div>
 
-                        <center><h2 class="mt-5">Exporting</h1></center>
+                        <center>
+                            <h2 class="mt-5">Exporting</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group">
@@ -368,7 +399,9 @@
 
                         </div>
 
-                        <center><h2 class="mt-5">Other</h1></center>
+                        <center>
+                            <h2 class="mt-5">Other</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group mb-0">
@@ -376,8 +409,8 @@
                             <h5 class="settingTitle">Save Location</h5>
                             <div class="input-group">
                                 <!--<input type="text" id="dataDirInput" class="form-control" spellcheck="false" readonly onclick="openDataDir()">-->
-                                <div class="form-control" readonly><a href="#" onclick="openDataDir()"
-                                        id="dataDirInput" style="font-size: 14px; vertical-align: 1px;"></a></div>
+                                <div class="form-control" readonly><a href="#" onclick="openDataDir()" id="dataDirInput"
+                                        style="font-size: 14px; vertical-align: 1px;"></a></div>
                                 <div class="input-group-append" id="revertToDefaultDataDirBtnTooltip">
                                     <button id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()"
                                         class="btn mybtn-primary" type="button"
@@ -450,8 +483,8 @@
                     <div class="modal-body">
                         <div class="form-row">
                             <div class="col-auto">
-                                <input class="form-control" type="color" style="width: 50px"
-                                    id="newNotebookColorPicker" title="Choose color...">
+                                <input class="form-control" type="color" style="width: 50px" id="newNotebookColorPicker"
+                                    title="Choose color...">
                             </div>
                             <div class="col">
                                 <input class="form-control" type="text" id="newNotebookNameInput"
