@@ -153,7 +153,8 @@ var zoomLevel = 1.000;
 var titlebar;
 var normalMenu;
 var editingMenu;
-var sidebarOpen = true;
+
+var sidebarWidth = 275;
 
 var favoritePages = [];
 
@@ -206,7 +207,7 @@ function init() {
             {
                 label: 'Toggle Sidebar',
                 accelerator: 'CmdOrCtrl+D',
-                click: () => toggleSidebar()
+                click: () => toggleSidebar(null)
             }/*,
       {
         label: 'Open Dev Tools',
@@ -334,7 +335,7 @@ function init() {
             {
                 label: 'Toggle Sidebar',
                 accelerator: 'CmdOrCtrl+D',
-                click: () => toggleSidebar()
+                click: () => toggleSidebar(null)
             },
             {
                 label: 'Toggle Editor Toolbar',
@@ -398,36 +399,6 @@ function init() {
         titlebar.updateMenu(normalMenu);
     }
 
-    // TOOLTIPS
-
-    document.getElementById('revertToDefaultDataDirBtnTooltip').title = "Revert to" + defaultDataDir;
-    $('#revertToDefaultDataDirBtnTooltip').tooltip({
-        trigger: 'hover'
-    });
-    $('#dataDirButton').tooltip({
-        trigger: 'hover'
-    });
-
-    $('#newNotebookBtn').tooltip({
-        boundary: 'window',
-        container: 'body',
-        placement: 'right',
-        trigger: 'hover'
-    });
-
-    $('#newNotebookColorPicker').tooltip({
-        trigger: 'hover',
-        placement: 'bottom',
-        offset: 30
-    });
-
-    $('#editNotebookColorPicker').tooltip({
-        trigger: 'hover',
-        placement: 'bottom',
-        offset: 30
-    });
-
-    // TOOLTIPS
 
     document.getElementById('exampleCode').innerHTML = "//EXAMPLE CODE BLOCK\n#include &lt;iostream&gt;\n\nint main(int argc, char *argv[]) {\n\tfor (auto i = 0; i &lt; 0xFFFF; i++)\n\t\tcout &lt;&lt; \"Hello, World!\" &lt;&lt; endl;\n\treturn -2e3 + 12l;\n}";
 
@@ -502,11 +473,28 @@ function init() {
 
     window.addEventListener('resize', () => {
 
+        document.getElementById('notebook-context-menu').style.display = "none";
+        document.getElementById('page-context-menu').style.display = "none";
+
         if (remote.process.platform === 'win32') {
             document.getElementById('mainContainer').style.height = `${document.body.clientHeight - 30}px`;
         }
         else {
             document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
+        }
+
+        // Sidebar behavior
+        if (document.body.clientWidth <= (sidebarWidth + 810)) {
+            document.getElementById('mainContainer').style.marginLeft = "0px";
+            document.getElementById('editorRibbon').style.left = "0px";
+            toggleSidebar(false);
+            document.getElementById('sidebarMenu').classList.add("shadow-lg");
+        }
+        else {
+            document.getElementById('mainContainer').style.marginLeft = 'var(--sidebar-width)';
+            document.getElementById('editorRibbon').style.left = 'var(--sidebar-width)';
+            toggleSidebar(true);
+            document.getElementById('sidebarMenu').classList.remove("shadow-lg");
         }
 
     });
@@ -529,6 +517,38 @@ function init() {
 
     feather.replace();
 
+
+    
+    // TOOLTIPS
+
+    document.getElementById('revertToDefaultDataDirBtnTooltip').title = "Revert to" + defaultDataDir;
+    $('#revertToDefaultDataDirBtnTooltip').tooltip({
+        trigger: 'hover'
+    });
+    $('#dataDirButton').tooltip({
+        trigger: 'hover'
+    });
+
+    $('#newNotebookBtn').tooltip({
+        boundary: 'window',
+        container: 'body',
+        placement: 'right',
+        trigger: 'hover'
+    });
+
+    $('#newNotebookColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom',
+        offset: 30
+    });
+
+    $('#editNotebookColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom',
+        offset: 30
+    });
+
+    // TOOLTIPS
 
 
     document.execCommand("enableObjectResizing", false, false)
@@ -1459,29 +1479,6 @@ function addSidebarLinkEvents() {
             document.getElementById('page-context-menu').style.display = "none";
         }
     });
-    /*document.querySelectorAll('.notebook').forEach(function(el) {
-      el.addEventListener('contextmenu', function(e) {
-        document.getElementById('page-context-menu').style.display = "none";
-        let cm = document.getElementById('notebook-context-menu');
-        cm.style.display = "block";
-        cm.style.left = `${e.clientX}px`;
-        cm.style.top = `${e.clientY - 30}px`;
-        rightClickedNotebookIndex = parseInt(this.getAttribute("notebook-index"));
-      });
-    });*/
-    /*document.querySelectorAll('.page').forEach(function(el) {
-      el.addEventListener('contextmenu', function(e) {
-        document.getElementById('notebook-context-menu').style.display = "none";
-        let cm = document.getElementById('page-context-menu');
-        cm.style.display = "block";
-        cm.style.left = `${e.clientX}px`;
-        cm.style.top = `${e.clientY - 30}px`;
-      });
-    });*/
-    window.addEventListener('resize', () => {
-        document.getElementById('notebook-context-menu').style.display = "none";
-        document.getElementById('page-context-menu').style.display = "none";
-    })
 }
 
 /**
@@ -1697,19 +1694,36 @@ function toggleEditorRibbon() {
     }
 }
 
-function toggleSidebar() {
-    if (sidebarOpen == true) {
-        document.getElementById('sidebarMenu').style.width = "0px";
-        document.getElementById('mainContainer').style.marginLeft = "0px";
-        document.getElementById('editorRibbon').style.left = "0px";
-        sidebarOpen = false;
+function toggleSidebar(value) {
+
+    if (value != null) {
+        if (value == true) {
+            document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+            document.getElementById('sidebarToggler').setAttribute("flipped", "false");
+            return;
+        }
+        else {
+            document.documentElement.style.setProperty('--sidebar-width', `0px`);
+            document.getElementById('sidebarToggler').setAttribute("flipped", "true");
+            return;
+        }
+    }
+
+    if (document.documentElement.style.getPropertyValue('--sidebar-width') == "0px") {
+        document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+        document.getElementById('sidebarToggler').setAttribute("flipped", "false");
+        return;
     }
     else {
-        document.getElementById('sidebarMenu').style.width = "var(--sidebar-width)";
-        document.getElementById('mainContainer').style.marginLeft = "var(--sidebar-width)";
-        document.getElementById('editorRibbon').style.left = "var(--sidebar-width)";
-        sidebarOpen = true;
+        document.documentElement.style.setProperty('--sidebar-width', `0px`);
+        document.getElementById('sidebarToggler').setAttribute("flipped", "true");
+        return;
     }
+}
+
+function resizeSidebar(width) {
+    sidebarWidth = width;
+    document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
 }
 
 async function DataDirDialog() {

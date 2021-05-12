@@ -351,7 +351,7 @@ div.content {
 
 #editorRibbon {
     position: fixed;
-    z-index: 1000;
+    z-index: 90;
     top: 5px;
     margin-top: 10px;
     margin-left: auto;
@@ -485,7 +485,7 @@ div.content {
     outline: none;
 }
 
-@media (max-width: 1085px) {
+/* @media (max-width: 1085px) {
     .sidebar {
         width: 0px !important;
     }
@@ -495,7 +495,7 @@ div.content {
     #editorRibbon {
         left: 0 !important;
     }
-}
+} */
 
 *:not(.ProseMirror-selectednode)::selection {
     background-color: var(--accent-color);
@@ -756,6 +756,10 @@ button:focus {
     outline: none !important;
 }
 
+:focus {
+    outline: none !important;
+}
+
 .caret {
     display: inline-block;
     margin-left: 3px;
@@ -772,5 +776,29 @@ button:focus {
 }
 
 .nav-link[aria-expanded="true"] .caret {
-    transform: rotate(-90deg) translateY(1px);
+    /*transform: rotate(-90deg) translateY(1px);*/
+    transform: rotate(-180deg);
+}
+
+#sidebarToggler {
+    position: absolute;
+    left: calc(var(--sidebar-width) + 10px);
+    bottom: 10px;
+    width: 35px;
+    height: 35px;
+    color: #596B7D;
+    transform: rotateY(0deg);
+    transition: transform 0.3s ease-out;
+    cursor: pointer;
+    z-index: 110;
+    border-radius: 4px;
+}
+
+#sidebarToggler:hover {
+    color: #0F1215;
+    background-color: #EEF0F3;
+}
+
+#sidebarToggler[flipped="true"] {
+    transform: rotateY(180deg);
 }
