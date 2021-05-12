@@ -694,7 +694,6 @@ function applyPrefsFromFile() {
     $('#exportBreakPageOnH1Check').prop("checked", prefs.pdfBreakOnH1);
     $('#darkmodePDFCheck').prop("checked", prefs.pdfDarkMode);
     $('#openPDFonExportCheck').prop("checked", prefs.openPDFonExport);
-    console.log("openPDFonExport = " + prefs.openPDFonExport)
 
     if (fs.existsSync(prefs.dataDir)) {
         document.getElementById('dataDirInput').innerText = prefs.dataDir;
