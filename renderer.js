@@ -1803,10 +1803,9 @@ function updateFavoritesSection() {
     if (favoritePages.length == 0) {
             let div1 = document.createElement('div');
             div1.className = "fakeFavoriteBlock";
-            div1.style.backgroundColor = "#D9DDE4";
 
             div1.innerHTML = `
-                <i class="mx-auto" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; color: rgba(0, 0, 0, 0.5); vertical-align: middle; line-height: 34px;">Nothing here yet...</i>
+                <i class="mx-auto" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 400; vertical-align: middle; line-height: 34px;">Nothing here yet...</i>
             `;
 
             container.appendChild(div1);
@@ -1814,13 +1813,11 @@ function updateFavoritesSection() {
 
             let div2 = document.createElement('div');
             div2.className = "fakeFavoriteBlock";
-            div2.style.backgroundColor = "#EEF0F3";
 
             container.appendChild(div2);
 
             let div3 = document.createElement('div');
             div3.className = "fakeFavoriteBlock";
-            div3.style.backgroundColor = "#F8F9FA";
 
             container.appendChild(div3);
     }

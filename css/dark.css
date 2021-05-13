@@ -204,3 +204,36 @@ a {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #6A7381;
 }
+
+#sidebarResizer {
+    background-color: #2C3036;
+}
+
+#sidebarToggler {
+    background-color: var(--dark-mid);
+    color: var(--dark-light);
+}
+
+#sidebarToggler:hover {
+    background-color: var(--dark-dark);
+    color: var(--text);
+}
+
+.favoriteBlock {
+    background-color: var(--dark-dark);
+    color: var(--text);
+}
+
+.favoriteBlock:hover {
+    background-color: #3D434B;
+}
+
+.favoriteBlock:active {
+    background-color: var(--dark-darker);
+}
+
+.alert-success {
+    background-color: transparent;
+    color: #04b507;
+    border: 1px solid #04b507;
+}

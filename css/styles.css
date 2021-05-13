@@ -807,7 +807,8 @@ button:focus {
 .fakeFavoriteBlock {
     padding: 16px;
     border-radius: 5px;
-    border: 2px dotted rgba(0, 0, 0, 0.15);
+    border: 2px dotted #B2B2B2;
+    color: #B2B2B2; 
     height: 68px;
     display: flex;
     margin-bottom: 32px;
