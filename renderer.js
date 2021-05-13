@@ -75,6 +75,7 @@ class UserPrefs {
     openPDFonExport = true;
     openedNotebooks = [];
     tabSize = 4;
+    sidebarWidth = 275;
 }
 
 class Save {
@@ -208,7 +209,12 @@ function init() {
                 label: 'Toggle Sidebar',
                 accelerator: 'CmdOrCtrl+D',
                 click: () => toggleSidebar(null)
-            }/*,
+            },
+            {
+                label: 'Reset Sidebar Width',
+                click: () => resizeSidebar(275)
+            }
+            /*,
       {
         label: 'Open Dev Tools',
         accelerator: 'CmdOrCtrl+Shift+I',
@@ -338,18 +344,23 @@ function init() {
                 click: () => toggleSidebar(null)
             },
             {
+                label: 'Reset Sidebar Width',
+                click: () => resizeSidebar(275)
+            },
+            {
                 label: 'Toggle Editor Toolbar',
                 accelerator: 'CmdOrCtrl+T',
                 click: () => toggleEditorRibbon()
-            }/*,
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Open Dev Tools',
-        accelerator: 'CmdOrCtrl+Shift+I',
-        click: () => remote.getCurrentWebContents().openDevTools()
-      }*/
+            }
+            /*,
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Open Dev Tools',
+                accelerator: 'CmdOrCtrl+Shift+I',
+                click: () => remote.getCurrentWebContents().openDevTools()
+            }*/
         ]
     }));
 
@@ -518,7 +529,7 @@ function init() {
     feather.replace();
 
 
-    
+
     // TOOLTIPS
 
     document.getElementById('revertToDefaultDataDirBtnTooltip').title = "Revert to" + defaultDataDir;
@@ -561,9 +572,23 @@ function init() {
         setTimeout(() => { $("#tutorialModal1").modal('show') }, 500);
     }
 
+
+    // Sidebar resizer events
+    const sidebarResizer = document.getElementById('sidebarResizer');
+    sidebarResizer.addEventListener('mousedown', (e) => {
+        window.addEventListener('mousemove', handleSidebarResizerDrag, false);
+        window.addEventListener('mouseup', () => {
+            window.removeEventListener('mousemove', handleSidebarResizerDrag, false);
+        }, false);
+    });
+
 }
 
 init();
+
+function handleSidebarResizerDrag(event) {
+    resizeSidebar(event.clientX);
+}
 
 /**
  * Saves the 'save' file which contains the notebooks and stuff.
@@ -636,6 +661,9 @@ function fixPrefs() {
         prefs.openedNotebooks = [];
     if (typeof prefs.tabSize === "undefined")
         prefs.tabSize = 4;
+    if (typeof prefs.sidebarWidth === "undefined") {
+        prefs.sidebarWidth = 275;
+    }
 }
 
 /**
@@ -740,6 +768,8 @@ function applyPrefsFromFile() {
         document.getElementById('dataDirInput').innerText = prefs.dataDir;
     }
 
+    resizeSidebar(prefs.sidebarWidth);
+
 }
 
 /**
@@ -834,6 +864,8 @@ function applyPrefsRuntime(needsRestart = false) {
         remote.app.relaunch();
         remote.app.exit();
     }
+
+    prefs.sidebarWidth = sidebarWidth;
 }
 
 /**
@@ -1121,7 +1153,7 @@ function addNotebookToList(index) {
         let cm = document.getElementById('notebook-context-menu');
         cm.style.display = "block";
         cm.style.left = `${e.clientX}px`;
-        
+
         // Put the menu above the cursor if it's going to go off screen
         if (window.innerHeight - e.clientY < cm.clientHeight) {
             cm.style.top = `${e.clientY - cm.clientHeight}px`;
@@ -1307,7 +1339,7 @@ function addPageToAList(notebookIndex, index) {
         else {
             cm.style.top = `${e.clientY}px`;
         }
-        
+
         rightClickedNotebookIndex = parseInt(this.getAttribute("notebook-index"));
         rightClickedPageIndex = parseInt(this.getAttribute("page-index"));
 
@@ -1700,11 +1732,13 @@ function toggleSidebar(value) {
         if (value == true) {
             document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
             document.getElementById('sidebarToggler').setAttribute("flipped", "false");
+            document.getElementById('sidebarResizer').style.display = "block";
             return;
         }
         else {
             document.documentElement.style.setProperty('--sidebar-width', `0px`);
             document.getElementById('sidebarToggler').setAttribute("flipped", "true");
+            document.getElementById('sidebarResizer').style.display = "none";
             return;
         }
     }
@@ -1712,18 +1746,23 @@ function toggleSidebar(value) {
     if (document.documentElement.style.getPropertyValue('--sidebar-width') == "0px") {
         document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
         document.getElementById('sidebarToggler').setAttribute("flipped", "false");
+        document.getElementById('sidebarResizer').style.display = "block";
         return;
     }
     else {
         document.documentElement.style.setProperty('--sidebar-width', `0px`);
         document.getElementById('sidebarToggler').setAttribute("flipped", "true");
+        document.getElementById('sidebarResizer').style.display = "none";
         return;
     }
 }
 
 function resizeSidebar(width) {
-    sidebarWidth = width;
-    document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+    if (width >= 200 && width <= 600) {
+        sidebarWidth = width;
+        prefs.sidebarWidth = sidebarWidth;
+        document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+    }
 }
 
 async function DataDirDialog() {
@@ -1865,7 +1904,7 @@ async function printPage() {
     await workerWindow.webContents.executeJavaScript(`document.body.innerHTML = \`${content}\``);
     //await workerWindow.webContents.executeJavaScript(`document.getElementById('codeStyleLink').href = 'hljs_styles/${prefs.codeStyle}.css';`);
     await workerWindow.webContents.executeJavaScript(`document.getElementById('codeStyleLink').href = './node_modules/highlight.js/styles/${prefs.codeStyle}.css';`);
-    
+
 
     if (prefs.pdfDarkMode == true) {
         await workerWindow.webContents.executeJavaScript(`document.getElementById('darkStyleLink').href = 'css/dark.css';`);
