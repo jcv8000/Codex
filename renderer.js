@@ -229,21 +229,7 @@ function init() {
             {
                 label: 'Help',
                 accelerator: 'F1',
-                click: () => {
-                    let tab = document.getElementById('helpTab');
-                    if (tab.getAttribute('aria-expanded') != "true") {
-                        $('#helpTab').click();
-                    }
-
-                    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
-                        item.classList.toggle('active', false);
-                    });
-                    let page = document.getElementById('firstHelpPage');
-                    page.classList.toggle('active', true);
-
-                    showHelpPage();
-                    loadHelpPage('howtouse.html');
-                }
+                click: () => autoOpenHelpTab()
             },
             {
                 label: 'Website',
@@ -370,21 +356,7 @@ function init() {
             {
                 label: 'Help',
                 accelerator: 'F1',
-                click: () => {
-                    let tab = document.getElementById('helpTab');
-                    if (tab.getAttribute('aria-expanded') != "true") {
-                        $('#helpTab').click();
-                    }
-
-                    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
-                        item.classList.toggle('active', false);
-                    });
-                    let page = document.getElementById('firstHelpPage');
-                    page.classList.toggle('active', true);
-
-                    showHelpPage();
-                    loadHelpPage('howtouse.html');
-                }
+                click: () => autoOpenHelpTab()
             },
             {
                 label: 'Website',
@@ -474,12 +446,12 @@ function init() {
 
     addSidebarLinkEvents();
 
-    if (remote.process.platform === 'win32') {
+    /*if (remote.process.platform === 'win32') {
         document.getElementById('mainContainer').style.height = `${document.body.clientHeight - 30}px`;
     }
     else {
         document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
-    }
+    }*/
 
 
     window.addEventListener('resize', () => {
@@ -487,25 +459,25 @@ function init() {
         document.getElementById('notebook-context-menu').style.display = "none";
         document.getElementById('page-context-menu').style.display = "none";
 
-        if (remote.process.platform === 'win32') {
+        /*if (remote.process.platform === 'win32') {
             document.getElementById('mainContainer').style.height = `${document.body.clientHeight - 30}px`;
         }
         else {
             document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
-        }
+        }*/
 
         // Sidebar behavior
         if (document.body.clientWidth <= (sidebarWidth + 810)) {
             document.getElementById('mainContainer').style.marginLeft = "0px";
             document.getElementById('editorRibbon').style.left = "0px";
             toggleSidebar(false);
-            document.getElementById('sidebarMenu').classList.add("shadow-lg");
+            //document.getElementById('sidebarMenu').classList.add("shadow-lg");
         }
         else {
             document.getElementById('mainContainer').style.marginLeft = 'var(--sidebar-width)';
             document.getElementById('editorRibbon').style.left = 'var(--sidebar-width)';
             toggleSidebar(true);
-            document.getElementById('sidebarMenu').classList.remove("shadow-lg");
+            //document.getElementById('sidebarMenu').classList.remove("shadow-lg");
         }
 
     });
@@ -1070,7 +1042,7 @@ function displayNotebooks() {
         }
     }
 
-    //updateFavoritesSection();
+    updateFavoritesSection();
 }
 
 /**
@@ -1295,7 +1267,7 @@ function addPageToAList(notebookIndex, index) {
             </div>
             <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
             <div class="col-auto" style="padding-right: 13px">
-                <span data-feather="star" style="width: 14px; height: 14px; color: orange"></span>
+                <span data-feather="star" style="width: 14px; height: 14px; color: orange; vertical-align: -2px"></span>
             </div>
         </div>
         `;
@@ -1825,35 +1797,109 @@ function toggleFavoritePage() {
 }
 
 function updateFavoritesSection() {
-    document.getElementById('favoritePagesContainer').innerHTML = '';
-    let currentRow;
+    const container = document.getElementById('favoritesContainer');
+    container.innerHTML = '';
+
+    if (favoritePages.length == 0) {
+            let div1 = document.createElement('div');
+            div1.className = "fakeFavoriteBlock";
+            div1.style.backgroundColor = "#D9DDE4";
+
+            div1.innerHTML = `
+                <i class="mx-auto" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; color: rgba(0, 0, 0, 0.5); vertical-align: middle; line-height: 34px;">Nothing here yet...</i>
+            `;
+
+            container.appendChild(div1);
+
+
+            let div2 = document.createElement('div');
+            div2.className = "fakeFavoriteBlock";
+            div2.style.backgroundColor = "#EEF0F3";
+
+            container.appendChild(div2);
+
+            let div3 = document.createElement('div');
+            div3.className = "fakeFavoriteBlock";
+            div3.style.backgroundColor = "#F8F9FA";
+
+            container.appendChild(div3);
+    }
 
     for (let i = 0; i < favoritePages.length; i++) {
         let page = favoritePages[i];
-        if (i % 5 == 0) {
-            currentRow = document.createElement('div');
-            currentRow.style.marginTop = "40px";
-            currentRow.style.marginBottom = "40px";
-            document.getElementById('favoritePagesContainer').appendChild(currentRow);
+
+        let a = document.createElement('a');
+        a.className = "favoriteBlock shadow-sm";
+        a.title = page.title;
+
+        let nbIndex = null;
+        let pgIndex = null;
+        for (let n = 0; n < save.notebooks.length; n++) {
+            for (let p = 0; p < save.notebooks[n].pages.length; p++) {
+                if (save.notebooks[n].pages[p] == page) {
+                    nbIndex = n;
+                    pgIndex = p;
+                }
+            }
         }
 
-        let title = page.title;
-        if (title.length > 30) {
-            title = title.substring(0, 30) + "...";
-        }
+        let parent = save.notebooks[nbIndex];
 
-        currentRow.innerHTML += `
-    <div class="favoritePageBox shadow" title="${page.title}">
-      <div class="d-flex" style="width: 100%">
-        <div style="width: 32px;">
-          <span data-feather="star" style="color: orange; height: 100%;"></span>
+        a.innerHTML = `        
+        <div class="row" style="width: 100%">
+            <div class="col-auto">
+                <span data-feather="book" style="width: 32px; height: 32px; color: ${parent.color}"></span>
+            </div>
+            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">${page.title}</div>
+            <div class="col-auto" style="width: 32px">
+                <span data-feather="star" style="width: 24px; height: 24px; color: orange; vertical-align: -12px"></span>
+            </div>
         </div>
-        <div class="flex-grow-1" style="height: 100%; line-height: 61px; text-align: left">
-          <span style="display: inline-block; line-height: 17px; vertical-align: middle;">${title}</span>
-        </div>
-      </div>
-    </div>
-    `;
+        `;
+
+        container.appendChild(a);
+
+        a.addEventListener('click', (e) => {
+            let tab = document.getElementById(`nb-${nbIndex}`);
+            if (tab.getAttribute('aria-expanded') != "true") {
+                $(`#nb-${nbIndex}`).click();
+            }
+
+            document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+                item.classList.toggle('active', false);
+            });
+            let page = document.querySelector(`[notebook-index='${nbIndex}'][page-index='${pgIndex}']`)
+            page.classList.toggle('active', true);
+
+            showEditorPage();
+            loadPage(nbIndex, pgIndex);
+        });
+
+        a.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            document.getElementById('notebook-context-menu').style.display = "none";
+            let cm = document.getElementById('page-context-menu');
+            cm.style.display = "block";
+            cm.style.left = `${e.clientX}px`;
+
+            // Put the menu above the cursor if it's going to go off screen
+            if (window.innerHeight - e.clientY < cm.clientHeight) {
+                cm.style.top = `${e.clientY - cm.clientHeight}px`;
+            }
+            else {
+                cm.style.top = `${e.clientY}px`;
+            }
+
+            rightClickedNotebookIndex = nbIndex;
+            rightClickedPageIndex = pgIndex;
+
+            if (save.notebooks[rightClickedNotebookIndex].pages[rightClickedPageIndex].favorite) {
+                document.getElementById('FavoritePageLink').innerText = "Unfavorite page";
+            }
+            else {
+                document.getElementById('FavoritePageLink').innerText = "Favorite page";
+            }
+        })
     }
 
     feather.replace();
@@ -1972,4 +2018,20 @@ async function startTutorial() {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function autoOpenHelpTab() {
+    let tab = document.getElementById('helpTab');
+    if (tab.getAttribute('aria-expanded') != "true") {
+        $('#helpTab').click();
+    }
+
+    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+        item.classList.toggle('active', false);
+    });
+    let page = document.getElementById('firstHelpPage');
+    page.classList.toggle('active', true);
+
+    showHelpPage();
+    loadHelpPage('howtouse.html');
 }

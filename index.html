@@ -31,7 +31,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- SIDEBAR -->
-            <nav id="sidebarMenu" class="d-md-block bg-light sidebar">
+            <nav id="sidebarMenu" class="d-md-block bg-light sidebar shadow">
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column unselectable">
                         <li class="nav-item my-sidebar-item">
@@ -115,7 +115,7 @@
                         </div>
                         <div class="col-auto" style="padding-right: 16px;">
                             <a id="newNotebookBtn" class="text-muted" href="#newNotebookModal" draggable="false"
-                                data-toggle="modal" title="Create notebook">
+                                data-toggle="modal" title="New Notebook...">
                                 <span data-feather="plus-circle"></span>
                             </a>
                         </div>
@@ -127,75 +127,98 @@
                 </div>
             </nav>
 
-            <span id="sidebarToggler" class="unselectable" data-feather="chevrons-left" onclick="toggleSidebar()" title="Toggle Sidebar"></span>
+            <span id="sidebarToggler" class="unselectable" data-feather="chevrons-left" onclick="toggleSidebar()"
+                title="Toggle Sidebar"></span>
 
             <!-- MAIN CONTAINER -->
             <main id="mainContainer" role="main" class="p-0">
 
                 <!-- HOME PAGE -->
-                <span id="homePage" style="display:block" class="unselectable">
+                <span id="homePage" style="display:block; height: 100%" class="unselectable">
 
-                    <div class="content shadow-sm mt-4" id="updateBlock" style="display: none;">
-                        <div class="row">
-                            <div class="col-auto">
-                                <center><span data-feather="download"
-                                        style="width: 64px; height: 64px; color: #269700"></span></center>
-                            </div>
-                            <div class="col">
-                                <h2>New update available!</h2>
-                                Visit <a href="#"
-                                    onclick="shell.openExternal('https://www.codexnotes.com/download')">https://www.codexnotes.com/download</a>
-                                to install the new update. (<a href="#"
-                                    onclick="shell.openExternal('https://www.codexnotes.com/updates')">Changelog</a>)<br>
-                            </div>
+                    <div class="container-fluid download-header mb-4">
+                        <div>
+                            <center>
+                                <img src="img/logo-shadow.png" style="width: 400px"><br>
+                                <p style="color: white; margin-bottom: 5px; font-weight: 500">Version 1.2.2</p>
+                                <p style="color: white; padding-bottom: 20px;">Made by Josh Vickery</p>
+                            </center>
                         </div>
                     </div>
 
-                    <div class="content shadow-sm" id="welcomeBlock">
-                        <h2>Welcome</h2>
-                        <center><img src="img/logo.png" style="width: 50%"></center>
-                        <p>Codex is a simple and customizable note-taking tool meant for programmers or Computer Science
-                            students.
-                        </p>
-                        <!--<p>Please check <a href="#" class="unselectable"
-                onclick="shell.openExternal('https://www.codexnotes.com/')">https://www.codexnotes.com/</a> periodically for updates and
-              news.</p>-->
-                        <p>This software is still in its early releases, so please feel free to email
-                            <b>support@codexnotes.com</b>
-                            with feedback, suggestions, bug reports, and errors/crashes.
-                        </p>
-                        <br><br>
-                        <center>
-                            <!--<img src="img/logo512.png" class="unselectable" style="width: 64px; height: 64px"><br>-->
-                            <code>Version 1.2.2</code>
-                            <br><br>
-                            <!--<h6 class="sidebar-heading text-muted unselectable">Made by Josh Vickery (jcv8000)</h6>-->
-                            <span style="font-size: 12px">Made by Josh Vickery</span><br>
-                            <span style="font-size: 12px">This work is licensed under a <a rel="license" href="#"
-                                    onclick="shell.openExternal('https://creativecommons.org/licenses/by-nc/4.0/')">CC
-                                    BY-NC 4.0 License</a>.</span>
-                        </center>
+
+
+                        <div class="alert alert-success mx-auto" role="alert" style="width: 800px; margin-bottom: 50px">
+                            <h2>Thank you for trying Codex!</h2>
+                            If you have any issues or feedback for Codex, feel free to email <b>support@codexnotes.com</b>, or
+                            create an Issue/Discussion on the
+                            GitHub repository.
+                        </div>
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col px-5">
+                                <center>
+                                    <h3>Favorites</h3>
+                                </center>
+                                <div id="favoritesContainer" class="py-3">
+        
+                                </div>
+                            </div>
+                            <div class="col px-5">
+                                <center>
+                                    <h3>More</h3>
+                                </center>
+                                <div class="py-3">
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://www.codexnotes.com/')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="globe" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">Website</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://codexnotes.com/updates/')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="file-plus" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">Changelog</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="autoOpenHelpTab()">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="help-circle" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">Help</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://github.com/jcv8000/Codex')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="github" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">GitHub Repository</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://github.com/jcv8000/Codex/issues')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="alert-circle" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">GitHub Issues</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!--<center><h2 class="text-muted">RECENTS</h1></center>
-          <br><br><br>-->
-
-                    <!--<center>
-
-            <h2 class="mx-4">Favorites</h2>
-
-            <div class="container" id="favoritePagesContainer">
-              <div class="favoriteBtn">
-                <div data-feather="file-text" width="24" height="24" stroke-width="1.5" style="width: 100px; height: 40px; margin-top: 20px"></div>
-                <div style="line-height: 25px; margin-top: 5px">1 of 2</div>
-              </div>
-              <div class="favoriteBtn">
-                <div data-feather="file-text" width="24" height="24" stroke-width="1.5" style="width: 100px; height: 40px; margin-top: 20px"></div>
-                <div style="line-height: 25px; margin-top: 5px">1 of 2</div>
-              </div>
-            </div>
-          </center>-->
-
 
                 </span>
 

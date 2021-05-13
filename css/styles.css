@@ -297,6 +297,7 @@ div.content {
 #mainContainer {
     overflow: auto;
     margin-left: var(--sidebar-width);
+    height: calc(100vh - var(--titlebar-height));
     width: 100%;
 }
 
@@ -771,4 +772,45 @@ button:focus {
     cursor: col-resize;
     background-color: #DFE0E1;
     z-index: 100;
+}
+
+.download-header {
+    background: rgb(147, 80, 147);
+    background: -moz-linear-gradient(36deg, rgba(147, 80, 147, 1) 10%, rgba(255, 122, 39, 1) 50%, rgba(255, 80, 39, 1) 90%);
+    background: -webkit-linear-gradient(36deg, rgba(147, 80, 147, 1) 10%, rgba(255, 122, 39, 1) 50%, rgba(255, 80, 39, 1) 90%);
+    background: linear-gradient(36deg, rgba(147, 80, 147, 1) 10%, rgba(255, 122, 39, 1) 50%, rgba(255, 80, 39, 1) 90%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#935093", endColorstr="#ff5027", GradientType=1);
+}
+
+.favoriteBlock {
+    padding: 16px;
+    border-radius: 5px;
+    background-color: #F8F9FA;
+    /* transition: background-color 0.1s linear; */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    display: flex;
+    /* width: 600px; */
+    margin-bottom: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.favoriteBlock:hover {
+    background-color: #EEF0F3;
+}
+
+.favoriteBlock:active {
+    background-color: #D9DDE4;
+}
+
+.fakeFavoriteBlock {
+    padding: 16px;
+    border-radius: 5px;
+    border: 2px dotted rgba(0, 0, 0, 0.15);
+    height: 68px;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: auto;
+    margin-right: auto;
 }
