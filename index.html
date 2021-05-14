@@ -22,6 +22,7 @@
     <!-- HIGHLIHTJS STYLES -->
     <link id="codeStyleLink" rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-dark.css">
     <!-- HIGHLIHTJS STYLES -->
+    <link id="codeOverlayLink" rel="stylesheet">
 </head>
 
 
@@ -263,8 +264,8 @@
 
 
                             <center>
-                                <div id="exampleCode" class="codeSnippet hljs"
-                                    style="font-size:14px; width: 100%; text-align: left; tab-size: 4;"></div>
+                                <div id="exampleCode" class="codeSnippet hljs" data-params="cpp"
+                                    style="font-size:14px; width: 100%; text-align: left; tab-size: 4; position: relative"></div>
                             </center>
 
 
@@ -374,6 +375,15 @@
                             </center>
 
 
+                        </div>
+
+                        <div class="form-group">
+                            <h5 class="settingTitle">Language Overlay</h5>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="showLanguageOverlayCheck"
+                                    onchange="applyPrefsRuntime()">
+                                <label class="custom-control-label" for="showLanguageOverlayCheck">Show the language name at the top-right of code blocks</label>
+                            </div>
                         </div>
 
                         <div class="form-group">

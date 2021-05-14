@@ -76,6 +76,7 @@ class UserPrefs {
     openedNotebooks = [];
     tabSize = 4;
     sidebarWidth = 275;
+    showCodeOverlay = true;
 }
 
 class Save {
@@ -636,6 +637,9 @@ function fixPrefs() {
     if (typeof prefs.sidebarWidth === "undefined") {
         prefs.sidebarWidth = 275;
     }
+    if (typeof prefs.showCodeOverlay === "undefined") {
+        prefs.showCodeOverlay = true;
+    }
 }
 
 /**
@@ -742,6 +746,11 @@ function applyPrefsFromFile() {
 
     resizeSidebar(prefs.sidebarWidth);
 
+    $('#showLanguageOverlayCheck').prop("checked", prefs.showCodeOverlay);
+    if (prefs.showCodeOverlay === true) {
+        document.getElementById('codeOverlayLink').href = "css/codeoverlay.css";
+    }
+
 }
 
 /**
@@ -838,6 +847,14 @@ function applyPrefsRuntime(needsRestart = false) {
     }
 
     prefs.sidebarWidth = sidebarWidth;
+
+    prefs.showCodeOverlay = $('#showLanguageOverlayCheck').is(':checked');
+    if (prefs.showCodeOverlay === true) {
+        document.getElementById('codeOverlayLink').href = "css/codeoverlay.css";
+    }
+    else {
+        document.getElementById('codeOverlayLink').href = "";
+    }
 }
 
 /**
