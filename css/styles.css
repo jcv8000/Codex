@@ -852,3 +852,19 @@ button:focus {
     margin-left: auto;
     margin-right: auto;
 }
+
+#updateBlock {
+    background-color: #BDE3C6;
+    border-top: 1px solid #90D19F;
+    border-bottom: 1px solid #90D19F;
+}
+
+#updateBlock:hover {
+    background-color: #90D19F;
+    border-top: 1px solid #79C78C;
+    border-bottom: 1px solid #79C78C;
+}
+
+#updateBlock:active {
+    background-color: #79C78C;
+}

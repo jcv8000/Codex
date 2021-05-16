@@ -1973,13 +1973,13 @@ function openDataDir() {
 ipcRenderer.on('updateAvailable', function (e, newVer) {
 
     setTimeout(() => {
-        $('#updateBlock').fadeIn();
-        document.getElementById('welcomeBlock').style.marginTop = "20px";
-        feather.replace();
+        $('#updateBlockLI').fadeIn();
+        //document.getElementById('welcomeBlock').style.marginTop = "20px";
+        //feather.replace();
 
-        if (document.getElementById('homePage').style.display == "none") {
+        /*if (document.getElementById('homePage').style.display == "none") {
             popup('Update', 'A new version of Codex is available!', 'Please visit www.codexnotes.com/download to update.');
-        }
+        }*/
     }, 0);
 })
 
