@@ -1614,6 +1614,11 @@ function deleteSelectedNotebook() {
     displayNotebooks();
     showHomePage();
 
+    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+        item.classList.toggle('active', false);
+    });
+    document.getElementById('homeTab').classList.toggle('active', true);
+
     // let nbLI = document.getElementById(`nb-${rightClickedNotebookIndex}`).parentNode;
     // while (nbLI.firstChild) {
     //   nbLI.removeChild(nbLI.lastChild);
@@ -1633,6 +1638,11 @@ function deleteSelectedPage() {
     displayNotebooks();
 
     showHomePage();
+
+    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+        item.classList.toggle('active', false);
+    });
+    document.getElementById('homeTab').classList.toggle('active', true);
 
     //delete the page's list element
     // let pgLI = document.querySelector(`[notebook-index="${rightClickedNotebookIndex}"][page-index="${rightClickedPageIndex}]"`).parentNode;
