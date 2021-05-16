@@ -163,6 +163,10 @@ var favoritePages = [];
 var destroyOpenedNotebooks = false;
 
 
+var lightThemes = [ "a11y-light", "arduino-light", "ascetic", "atelier-cave-light", "atelier-dune-light", "atelier-estuary-light", "atelier-forest-light", "atelier-heath-light", "atelier-lakeside-light", "atelier-plateau-light", "atelier-savanna-light", "atelier-seaside-light", "atelier-sulphurpool-light", "atom-one-light", "color-brewer", "default", "docco", "foundation", "github-gist", "github", "font-weight: bold;", "googlecode", "grayscale", "gruvbox-light", "idea", "isbl-editor-light", "kimbie.light", "magula", "mono-blue", "nnfx", "paraiso-light", "purebasic", "qtcreator_light", "routeros", "solarized-light", "tomorrow", "vs", "xcode" ];
+var darkThemes = [ "a11y-dark", "agate", "androidstudio", "an-old-hope", "arta", "atelier-cave-dark", "atelier-dune-dark", "atelier-estuary-dark", "atelier-forest-dark", "atelier-heath-dark", "atelier-lakeside-dark", "atelier-plateau-dark", "atelier-savanna-dark", "atelier-seaside-dark", "atelier-sulphurpool-dark", "atom-one-dark-reasonable", "atom-one-dark", "font-weight: bold;", "codepen-embed", "darcula", "dark", "dracula", "far", "gml", "gradient-dark", "gruvbox-dark", "hopscotch", "hybrid", "ir-black", "isbl-editor-dark", "kimbie.dark", "lightfair", "lioshi", "monokai-sublime", "monokai", "night-owl", "nnfx-dark", "nord", "ocean", "obsidian", "paraiso-dark", "pojoaque", "qtcreator_dark", "railscasts", "rainbow", "shades-of-purple", "solarized-dark", "srcery", "sunburst", "tomorrow-night-blue", "tomorrow-night-bright", "tomorrow-night-eighties", "tomorrow-night", "vs2015", "xt256", "zenburn" ];
+
+
 /**
  * Run this function at start.
  */
@@ -704,6 +708,13 @@ function applyPrefsFromFile() {
     //document.getElementById('codeStyleLink').href = `hljs_styles/${prefs.codeStyle}.css`;
     document.getElementById('codeStyleLink').href = `./node_modules/highlight.js/styles/${prefs.codeStyle}.css`;
 
+    if (lightThemes.includes(prefs.codeStyle)) {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+    }
+
     document.getElementById('accentColorPicker').value = prefs.accentColor;
     document.documentElement.style.setProperty('--accent-color', prefs.accentColor);
 
@@ -761,6 +772,13 @@ function applyPrefsRuntime(needsRestart = false) {
     prefs.codeStyle = document.getElementById('codeStyleSelect').value;
     //document.getElementById('codeStyleLink').href = `hljs_styles/${prefs.codeStyle}.css`;
     document.getElementById('codeStyleLink').href = `./node_modules/highlight.js/styles/${prefs.codeStyle}.css`;
+
+    if (lightThemes.includes(prefs.codeStyle)) {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+    }
 
     prefs.theme = document.getElementById('themeSelect').value;
     let header = document.getElementsByTagName('head')[0];

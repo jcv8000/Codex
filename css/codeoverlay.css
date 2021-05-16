@@ -1,3 +1,7 @@
+:root {
+    --code-overlay-bg-brightness: 0.95;
+}
+
 .codeSnippet[data-params]:before {
     content: attr(data-params);
     display: block;
@@ -7,6 +11,8 @@
     right: 16px;
     padding: 2px 8px;
     background-color: inherit;
+    filter: brightness(var(--code-overlay-bg-brightness));
+    border-radius: 5px;
 }
 
 .codeSnippet[data-params]:hover:before {
