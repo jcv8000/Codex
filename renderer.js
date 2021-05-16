@@ -1768,7 +1768,10 @@ function resizeSidebar(width) {
     if (width >= 200 && width <= 600) {
         sidebarWidth = width;
         prefs.sidebarWidth = sidebarWidth;
-        document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+
+        if (document.documentElement.style.getPropertyValue('--sidebar-width') != "0px") {
+            document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);   
+        }
     }
 }
 
