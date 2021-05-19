@@ -712,7 +712,7 @@ label {
     margin-top: 2rem;
 }
 
-::-webkit-scrollbar {
+*:not(.codeSnippet)::-webkit-scrollbar {
     width: 10px;
 }
 
