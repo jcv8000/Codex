@@ -240,6 +240,10 @@ a {
 
 .alert-success {
     background-color: transparent;
-    color: #04b507;
-    border: 1px solid #04b507;
+    color: var(--text);
+    border: 1px solid var(--dark-light);
+}
+
+#updateBlock {
+    color: #155724;
 }
