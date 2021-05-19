@@ -75,6 +75,8 @@ class UserPrefs {
     openPDFonExport = true;
     openedNotebooks = [];
     tabSize = 4;
+    sidebarWidth = 275;
+    showCodeOverlay = true;
 }
 
 class Save {
@@ -85,6 +87,7 @@ class Save {
 class Notebook {
     name;
     color;
+    icon = "book";
     pages = [];
     constructor(name, color) {
         this.name = name;
@@ -153,11 +156,16 @@ var zoomLevel = 1.000;
 var titlebar;
 var normalMenu;
 var editingMenu;
-var sidebarOpen = true;
+
+var sidebarWidth = 275;
 
 var favoritePages = [];
 
 var destroyOpenedNotebooks = false;
+
+
+var lightThemes = [ "a11y-light", "arduino-light", "ascetic", "atelier-cave-light", "atelier-dune-light", "atelier-estuary-light", "atelier-forest-light", "atelier-heath-light", "atelier-lakeside-light", "atelier-plateau-light", "atelier-savanna-light", "atelier-seaside-light", "atelier-sulphurpool-light", "atom-one-light", "color-brewer", "default", "docco", "foundation", "github-gist", "github", "font-weight: bold;", "googlecode", "grayscale", "gruvbox-light", "idea", "isbl-editor-light", "kimbie.light", "lightfair", "magula", "mono-blue", "nnfx", "paraiso-light", "purebasic", "qtcreator_light", "routeros", "solarized-light", "tomorrow", "vs", "xcode" ];
+var darkThemes = [ "a11y-dark", "agate", "androidstudio", "an-old-hope", "arta", "atelier-cave-dark", "atelier-dune-dark", "atelier-estuary-dark", "atelier-forest-dark", "atelier-heath-dark", "atelier-lakeside-dark", "atelier-plateau-dark", "atelier-savanna-dark", "atelier-seaside-dark", "atelier-sulphurpool-dark", "atom-one-dark-reasonable", "atom-one-dark", "font-weight: bold;", "codepen-embed", "darcula", "dark", "dracula", "far", "gml", "gradient-dark", "gruvbox-dark", "hopscotch", "hybrid", "ir-black", "isbl-editor-dark", "kimbie.dark", "lioshi", "monokai-sublime", "monokai", "night-owl", "nnfx-dark", "nord", "ocean", "obsidian", "paraiso-dark", "pojoaque", "qtcreator_dark", "railscasts", "rainbow", "shades-of-purple", "solarized-dark", "srcery", "sunburst", "tomorrow-night-blue", "tomorrow-night-bright", "tomorrow-night-eighties", "tomorrow-night", "vs2015", "xt256", "zenburn" ];
 
 
 /**
@@ -206,8 +214,13 @@ function init() {
             {
                 label: 'Toggle Sidebar',
                 accelerator: 'CmdOrCtrl+D',
-                click: () => toggleSidebar()
-            }/*,
+                click: () => toggleSidebar(null)
+            },
+            {
+                label: 'Reset Sidebar Width',
+                click: () => resizeSidebar(275)
+            }
+            /*,
       {
         label: 'Open Dev Tools',
         accelerator: 'CmdOrCtrl+Shift+I',
@@ -222,21 +235,7 @@ function init() {
             {
                 label: 'Help',
                 accelerator: 'F1',
-                click: () => {
-                    let tab = document.getElementById('helpTab');
-                    if (tab.getAttribute('aria-expanded') != "true") {
-                        $('#helpTab').click();
-                    }
-
-                    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
-                        item.classList.toggle('active', false);
-                    });
-                    let page = document.getElementById('firstHelpPage');
-                    page.classList.toggle('active', true);
-
-                    showHelpPage();
-                    loadHelpPage('howtouse.html');
-                }
+                click: () => autoOpenHelpTab()
             },
             {
                 label: 'Website',
@@ -334,21 +333,26 @@ function init() {
             {
                 label: 'Toggle Sidebar',
                 accelerator: 'CmdOrCtrl+D',
-                click: () => toggleSidebar()
+                click: () => toggleSidebar(null)
+            },
+            {
+                label: 'Reset Sidebar Width',
+                click: () => resizeSidebar(275)
             },
             {
                 label: 'Toggle Editor Toolbar',
                 accelerator: 'CmdOrCtrl+T',
                 click: () => toggleEditorRibbon()
-            }/*,
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Open Dev Tools',
-        accelerator: 'CmdOrCtrl+Shift+I',
-        click: () => remote.getCurrentWebContents().openDevTools()
-      }*/
+            }
+            /*,
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Open Dev Tools',
+                accelerator: 'CmdOrCtrl+Shift+I',
+                click: () => remote.getCurrentWebContents().openDevTools()
+            }*/
         ]
     }));
 
@@ -358,21 +362,7 @@ function init() {
             {
                 label: 'Help',
                 accelerator: 'F1',
-                click: () => {
-                    let tab = document.getElementById('helpTab');
-                    if (tab.getAttribute('aria-expanded') != "true") {
-                        $('#helpTab').click();
-                    }
-
-                    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
-                        item.classList.toggle('active', false);
-                    });
-                    let page = document.getElementById('firstHelpPage');
-                    page.classList.toggle('active', true);
-
-                    showHelpPage();
-                    loadHelpPage('howtouse.html');
-                }
+                click: () => autoOpenHelpTab()
             },
             {
                 label: 'Website',
@@ -398,9 +388,6 @@ function init() {
         titlebar.updateMenu(normalMenu);
     }
 
-    document.getElementById('revertToDefaultDataDirBtnTooltip').title = "Revert to" + defaultDataDir;
-    $('#revertToDefaultDataDirBtnTooltip').tooltip();
-    $('#dataDirButton').tooltip();
 
     document.getElementById('exampleCode').innerHTML = "//EXAMPLE CODE BLOCK\n#include &lt;iostream&gt;\n\nint main(int argc, char *argv[]) {\n\tfor (auto i = 0; i &lt; 0xFFFF; i++)\n\t\tcout &lt;&lt; \"Hello, World!\" &lt;&lt; endl;\n\treturn -2e3 + 12l;\n}";
 
@@ -416,15 +403,20 @@ function init() {
 
     //get user preferences
     if (fs.existsSync(defaultDataDir + "/prefs.json")) {
+        let worked = false;
         try {
             let json = fs.readFileSync(defaultDataDir + "/prefs.json", 'utf8');
             prefs = JSON.parse(json);
-            fixPrefs();
-            applyPrefsFromFile();
-            canSavePrefs = true;
+            worked = true;
         }
         catch (err) {
             alert('Your preferences file could not be parsed correctly.', 'Please make sure your prefs.json JSON file is intact');
+        }
+
+        if (worked === true) {
+            fixPrefs();
+            applyPrefsFromFile();
+            canSavePrefs = true;
         }
     }
     else {
@@ -439,6 +431,14 @@ function init() {
         try {
             let json = fs.readFileSync(prefs.dataDir + "/save.json", 'utf8');
             save = JSON.parse(json);
+
+            // Add missing icon property
+            for (let i = 0; i < save.notebooks.length; i++) {
+                if (typeof save.notebooks[i].icon === 'undefined') {
+                    save.notebooks[i].icon = "book";
+                }
+            }
+
             canSaveData = true;
         }
         catch (err) {
@@ -460,21 +460,38 @@ function init() {
 
     addSidebarLinkEvents();
 
-    if (remote.process.platform === 'win32') {
+    /*if (remote.process.platform === 'win32') {
         document.getElementById('mainContainer').style.height = `${document.body.clientHeight - 30}px`;
     }
     else {
         document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
-    }
+    }*/
 
 
     window.addEventListener('resize', () => {
 
-        if (remote.process.platform === 'win32') {
+        document.getElementById('notebook-context-menu').style.display = "none";
+        document.getElementById('page-context-menu').style.display = "none";
+
+        /*if (remote.process.platform === 'win32') {
             document.getElementById('mainContainer').style.height = `${document.body.clientHeight - 30}px`;
         }
         else {
             document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
+        }*/
+
+        // Sidebar behavior
+        if (document.body.clientWidth <= (sidebarWidth + 810)) {
+            document.getElementById('mainContainer').style.marginLeft = "0px";
+            document.getElementById('editorRibbon').style.left = "0px";
+            toggleSidebar(false);
+            //document.getElementById('sidebarMenu').classList.add("shadow-lg");
+        }
+        else {
+            document.getElementById('mainContainer').style.marginLeft = 'var(--sidebar-width)';
+            document.getElementById('editorRibbon').style.left = 'var(--sidebar-width)';
+            toggleSidebar(true);
+            //document.getElementById('sidebarMenu').classList.remove("shadow-lg");
         }
 
     });
@@ -488,6 +505,7 @@ function init() {
         try {
             let nbList = document.getElementById(`nb-${prefs.openedNotebooks[i]}-list`);
             nbList.classList.add('show');
+            document.getElementById(`nb-${prefs.openedNotebooks[i]}`).setAttribute('aria-expanded', "true");
         }
         catch (error) {
             console.error(error);
@@ -496,6 +514,51 @@ function init() {
 
     feather.replace();
 
+
+
+    // TOOLTIPS
+
+    document.getElementById('revertToDefaultDataDirBtnTooltip').title = "Revert to" + defaultDataDir;
+    $('#revertToDefaultDataDirBtnTooltip').tooltip({
+        trigger: 'hover'
+    });
+    $('#dataDirButton').tooltip({
+        trigger: 'hover'
+    });
+
+    $('#newNotebookBtn').tooltip({
+        boundary: 'window',
+        container: 'body',
+        placement: 'right',
+        trigger: 'hover'
+    });
+
+    $('#newNotebookColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom'
+    });
+
+    $('#accentColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom'
+    });
+
+    $('#editNotebookColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom'
+    });
+
+    $('#newNotebookIconHelp').tooltip({
+        trigger: 'hover',
+        placement: 'right'
+    });
+
+    $('#editNotebookIconHelp').tooltip({
+        trigger: 'hover',
+        placement: 'right'
+    });
+
+    // TOOLTIPS
 
 
     document.execCommand("enableObjectResizing", false, false)
@@ -508,9 +571,62 @@ function init() {
         setTimeout(() => { $("#tutorialModal1").modal('show') }, 500);
     }
 
+
+    // Sidebar resizer events
+    const sidebarResizer = document.getElementById('sidebarResizer');
+    sidebarResizer.addEventListener('mousedown', (e) => {
+        window.addEventListener('mousemove', handleSidebarResizerDrag, false);
+        window.addEventListener('mouseup', () => {
+            window.removeEventListener('mousemove', handleSidebarResizerDrag, false);
+        }, false);
+    });
+
+    // Set up Icon Selectors for notebook modals
+    let newNotebookIconSelect = document.getElementById('newNotebookIconSelect');
+
+    Object.keys(feather.icons).forEach(element => {
+        let op = document.createElement('option');
+        op.text = element;
+        op.value = element;
+        newNotebookIconSelect.appendChild(op);
+    });
+
+    newNotebookIconSelect.value = "book";
+
+    newNotebookIconSelect.addEventListener('change', () => {
+        document.getElementById('newNotebookIconPreview').setAttribute('data-feather', document.getElementById('newNotebookIconSelect').value);
+        feather.replace();
+    });
+
+    document.getElementById('newNotebookColorPicker').addEventListener('change', () => {
+        document.getElementById('newNotebookIconPreview').style.color = document.getElementById('newNotebookColorPicker').value;
+    });
+
+    let editNotebookIconSelect = document.getElementById('editNotebookIconSelect');
+
+    Object.keys(feather.icons).forEach(element => {
+        let op = document.createElement('option');
+        op.text = element;
+        op.value = element;
+        editNotebookIconSelect.appendChild(op);
+    });
+
+    editNotebookIconSelect.addEventListener('change', () => {
+        document.getElementById('editNotebookIconPreview').setAttribute('data-feather', document.getElementById('editNotebookIconSelect').value);
+        feather.replace();
+    });
+
+    document.getElementById('editNotebookColorPicker').addEventListener('change', () => {
+        document.getElementById('editNotebookIconPreview').style.color = document.getElementById('editNotebookColorPicker').value;
+    });
+
 }
 
 init();
+
+function handleSidebarResizerDrag(event) {
+    resizeSidebar(event.clientX);
+}
 
 /**
  * Saves the 'save' file which contains the notebooks and stuff.
@@ -583,6 +699,12 @@ function fixPrefs() {
         prefs.openedNotebooks = [];
     if (typeof prefs.tabSize === "undefined")
         prefs.tabSize = 4;
+    if (typeof prefs.sidebarWidth === "undefined") {
+        prefs.sidebarWidth = 275;
+    }
+    if (typeof prefs.showCodeOverlay === "undefined") {
+        prefs.showCodeOverlay = true;
+    }
 }
 
 /**
@@ -647,6 +769,13 @@ function applyPrefsFromFile() {
     //document.getElementById('codeStyleLink').href = `hljs_styles/${prefs.codeStyle}.css`;
     document.getElementById('codeStyleLink').href = `./node_modules/highlight.js/styles/${prefs.codeStyle}.css`;
 
+    if (lightThemes.includes(prefs.codeStyle)) {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+    }
+
     document.getElementById('accentColorPicker').value = prefs.accentColor;
     document.documentElement.style.setProperty('--accent-color', prefs.accentColor);
 
@@ -662,7 +791,6 @@ function applyPrefsFromFile() {
     $('#exportBreakPageOnH1Check').prop("checked", prefs.pdfBreakOnH1);
     $('#darkmodePDFCheck').prop("checked", prefs.pdfDarkMode);
     $('#openPDFonExportCheck').prop("checked", prefs.openPDFonExport);
-    console.log("openPDFonExport = " + prefs.openPDFonExport)
 
     if (fs.existsSync(prefs.dataDir)) {
         document.getElementById('dataDirInput').innerText = prefs.dataDir;
@@ -688,6 +816,13 @@ function applyPrefsFromFile() {
         document.getElementById('dataDirInput').innerText = prefs.dataDir;
     }
 
+    resizeSidebar(prefs.sidebarWidth);
+
+    $('#showLanguageOverlayCheck').prop("checked", prefs.showCodeOverlay);
+    if (prefs.showCodeOverlay === true) {
+        document.getElementById('codeOverlayLink').href = "css/codeoverlay.css";
+    }
+
 }
 
 /**
@@ -698,6 +833,13 @@ function applyPrefsRuntime(needsRestart = false) {
     prefs.codeStyle = document.getElementById('codeStyleSelect').value;
     //document.getElementById('codeStyleLink').href = `hljs_styles/${prefs.codeStyle}.css`;
     document.getElementById('codeStyleLink').href = `./node_modules/highlight.js/styles/${prefs.codeStyle}.css`;
+
+    if (lightThemes.includes(prefs.codeStyle)) {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+    }
 
     prefs.theme = document.getElementById('themeSelect').value;
     let header = document.getElementsByTagName('head')[0];
@@ -782,6 +924,16 @@ function applyPrefsRuntime(needsRestart = false) {
         remote.app.relaunch();
         remote.app.exit();
     }
+
+    prefs.sidebarWidth = sidebarWidth;
+
+    prefs.showCodeOverlay = $('#showLanguageOverlayCheck').is(':checked');
+    if (prefs.showCodeOverlay === true) {
+        document.getElementById('codeOverlayLink').href = "css/codeoverlay.css";
+    }
+    else {
+        document.getElementById('codeOverlayLink').href = "";
+    }
 }
 
 /**
@@ -794,11 +946,13 @@ function applyModalEventHandlers() {
         e.preventDefault();
         let name = document.getElementById('newNotebookNameInput').value;
         let color = document.getElementById('newNotebookColorPicker').value;
+        let icon = document.getElementById('newNotebookIconSelect').value;
         if (name !== "") {
 
             getExpandedNotebookData();
 
             let nb = new Notebook(name, color);
+            nb.icon = icon;
             let index = save.notebooks.length;
             save.notebooks.push(nb);
 
@@ -811,6 +965,10 @@ function applyModalEventHandlers() {
             document.getElementById('newNotebookNameInput').classList.remove("is-invalid");
             document.getElementById('newNotebookNameInput').value = "";
             document.getElementById('newNotebookColorPicker').value = "000000";
+            document.getElementById('newNotebookIconSelect').value = "book";
+            document.getElementById('newNotebookIconPreview').setAttribute('data-feather', 'book');
+            feather.replace();
+            document.getElementById('newNotebookIconPreview').style.color = "black";
         }
         else {
             document.getElementById('newNotebookNameInput').classList.add("is-invalid");
@@ -831,6 +989,7 @@ function applyModalEventHandlers() {
         e.preventDefault();
         let newName = document.getElementById('editNotebookNameInput').value;
         let newColor = document.getElementById('editNotebookColorPicker').value;
+        let newIcon = document.getElementById('editNotebookIconSelect').value;
 
         if (newName !== "") {
             $('#editNotebookModal').modal('hide');
@@ -839,6 +998,7 @@ function applyModalEventHandlers() {
 
             save.notebooks[rightClickedNotebookIndex].name = newName;
             save.notebooks[rightClickedNotebookIndex].color = newColor;
+            save.notebooks[rightClickedNotebookIndex].icon = newIcon;
             saveData();
 
             displayNotebooks();
@@ -859,7 +1019,7 @@ function applyModalEventHandlers() {
 
     $('#editNotebookModal').on('shown.bs.modal', (e) => {
         document.getElementById('editNotebookNameInput').focus();
-        document.getElementById('editNotebookNameInput').select();
+        //document.getElementById('editNotebookNameInput').select();
     });
 
     $('#editNotebookModal').on('hidden.bs.modal', (e) => {
@@ -943,7 +1103,7 @@ function applyModalEventHandlers() {
 
     $('#editPageModal').on('shown.bs.modal', (e) => {
         document.getElementById('editPageNameInput').focus();
-        document.getElementById('editPageNameInput').select();
+        //document.getElementById('editPageNameInput').select();
     });
 
     $('#editPageModal').on('hidden.bs.modal', (e) => {
@@ -986,7 +1146,7 @@ function displayNotebooks() {
         }
     }
 
-    //updateFavoritesSection();
+    updateFavoritesSection();
 }
 
 /**
@@ -1018,6 +1178,7 @@ function addNotebookToList(index) {
 
     let el = document.createElement("li");
     el.classList.add("nav-item");
+    el.classList.add("my-sidebar-item");
     el.draggable = true;
     el.style.transition = "box-shadow 0.2s ease";
 
@@ -1025,13 +1186,25 @@ function addNotebookToList(index) {
     a.id = `nb-${index}`;
     a.title = notebook.name;
     a.setAttribute('notebook-index', index);
-    a.classList.add('nav-link', 'dropdown-toggle', 'notebook', 'unselectable');
+    a.classList.add('nav-link', /*'dropdown-toggle', */'notebook', 'unselectable');
     a.href = `#nb-${index}-list`;
     a.setAttribute('data-toggle', 'collapse');
     a.setAttribute('aria-expanded', 'false');
-    a.innerHTML = `
+    /*a.innerHTML = `
   <span data-feather="book" style="color: ${notebook.color}"></span><span class="notebook-title"> ${notebook.name} </span><span class="caret"></span>
-  `;
+  `;*/
+
+    a.innerHTML = `
+        <div class="row">
+            <div class="col-auto pr-0">
+                <span data-feather="${notebook.icon}" style="color: ${notebook.color}"></span>
+            </div>
+            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${notebook.name}</div>
+            <div class="col-auto" style="padding-right: 20px">
+                <span class="caret"></span>
+            </div>
+        </div>
+    `;
     el.appendChild(a);
 
     let ul = document.createElement("ul");
@@ -1056,7 +1229,7 @@ function addNotebookToList(index) {
         let cm = document.getElementById('notebook-context-menu');
         cm.style.display = "block";
         cm.style.left = `${e.clientX}px`;
-        
+
         // Put the menu above the cursor if it's going to go off screen
         if (window.innerHeight - e.clientY < cm.clientHeight) {
             cm.style.top = `${e.clientY - cm.clientHeight}px`;
@@ -1184,13 +1357,34 @@ function addPageToAList(notebookIndex, index) {
     a.id = `page-${index}`;
     a.title = `${page.title}`;
     a.href = "#";
-    a.classList.add('nav-link', 'my-sidebar-link', 'page', 'indent', 'unselectable');
-    a.innerHTML = `
+    a.classList.add('nav-link', 'my-sidebar-link', /*'page',*/ 'indent', 'unselectable');
+    /*a.innerHTML = `
   <span data-feather="file-text"></span><span class="page-title"> ${page.title} </span>
-  `;
+  `;*/
 
     if (page.favorite) {
-        a.innerHTML += '<span data-feather="star" style="width: 14px; height: 14px; color: orange"></span>'
+        //a.innerHTML += '<span data-feather="star" style="width: 14px; height: 14px; color: orange"></span>'
+        a.innerHTML = `
+        <div class="row">
+            <div class="col-auto pr-0">
+                <span data-feather="file-text"></span>
+            </div>
+            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
+            <div class="col-auto" style="padding-right: 13px">
+                <span data-feather="star" style="width: 14px; height: 14px; color: orange; vertical-align: -2px"></span>
+            </div>
+        </div>
+        `;
+    }
+    else {
+        a.innerHTML = `
+        <div class="row">
+            <div class="col-auto pr-0">
+                <span data-feather="file-text"></span>
+            </div>
+            <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
+        </div>
+        `;
     }
 
     a.setAttribute('notebook-index', `${notebookIndex}`);
@@ -1221,7 +1415,7 @@ function addPageToAList(notebookIndex, index) {
         else {
             cm.style.top = `${e.clientY}px`;
         }
-        
+
         rightClickedNotebookIndex = parseInt(this.getAttribute("notebook-index"));
         rightClickedPageIndex = parseInt(this.getAttribute("page-index"));
 
@@ -1393,29 +1587,6 @@ function addSidebarLinkEvents() {
             document.getElementById('page-context-menu').style.display = "none";
         }
     });
-    /*document.querySelectorAll('.notebook').forEach(function(el) {
-      el.addEventListener('contextmenu', function(e) {
-        document.getElementById('page-context-menu').style.display = "none";
-        let cm = document.getElementById('notebook-context-menu');
-        cm.style.display = "block";
-        cm.style.left = `${e.clientX}px`;
-        cm.style.top = `${e.clientY - 30}px`;
-        rightClickedNotebookIndex = parseInt(this.getAttribute("notebook-index"));
-      });
-    });*/
-    /*document.querySelectorAll('.page').forEach(function(el) {
-      el.addEventListener('contextmenu', function(e) {
-        document.getElementById('notebook-context-menu').style.display = "none";
-        let cm = document.getElementById('page-context-menu');
-        cm.style.display = "block";
-        cm.style.left = `${e.clientX}px`;
-        cm.style.top = `${e.clientY - 30}px`;
-      });
-    });*/
-    window.addEventListener('resize', () => {
-        document.getElementById('notebook-context-menu').style.display = "none";
-        document.getElementById('page-context-menu').style.display = "none";
-    })
 }
 
 /**
@@ -1452,6 +1623,8 @@ function showSettingsPage() {
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(normalMenu);
     }
+
+    document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
 /**
@@ -1467,6 +1640,8 @@ function showEditorPage() {
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(editingMenu);
     }
+
+    document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
 function showHelpPage() {
@@ -1480,6 +1655,8 @@ function showHelpPage() {
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(normalMenu);
     }
+
+    document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
 function loadHelpPage(filename) {
@@ -1494,6 +1671,10 @@ function editSelectedNotebook() {
     $('#editNotebookModal').modal('show');
     document.getElementById('editNotebookNameInput').value = save.notebooks[rightClickedNotebookIndex].name;
     document.getElementById('editNotebookColorPicker').value = save.notebooks[rightClickedNotebookIndex].color;
+    document.getElementById('editNotebookIconSelect').value = save.notebooks[rightClickedNotebookIndex].icon;
+    document.getElementById('editNotebookIconPreview').setAttribute('data-feather', save.notebooks[rightClickedNotebookIndex].icon);
+    document.getElementById('editNotebookIconPreview').style.color = save.notebooks[rightClickedNotebookIndex].color;
+    feather.replace();
 }
 
 /**
@@ -1505,6 +1686,11 @@ function deleteSelectedNotebook() {
     saveData();
     displayNotebooks();
     showHomePage();
+
+    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+        item.classList.toggle('active', false);
+    });
+    document.getElementById('homeTab').classList.toggle('active', true);
 
     // let nbLI = document.getElementById(`nb-${rightClickedNotebookIndex}`).parentNode;
     // while (nbLI.firstChild) {
@@ -1525,6 +1711,11 @@ function deleteSelectedPage() {
     displayNotebooks();
 
     showHomePage();
+
+    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+        item.classList.toggle('active', false);
+    });
+    document.getElementById('homeTab').classList.toggle('active', true);
 
     //delete the page's list element
     // let pgLI = document.querySelector(`[notebook-index="${rightClickedNotebookIndex}"][page-index="${rightClickedPageIndex}]"`).parentNode;
@@ -1553,6 +1744,7 @@ function loadPage(notebookIndex, pageIndex) {
         })
     })
 
+    document.getElementById("mainContainer").scrollTo(0, 0);
     //window.view.focus();
 }
 
@@ -1598,12 +1790,16 @@ function defaultZoom() {
  */
 function updateZoom() {
     prefs.defaultZoom = zoomLevel;
-    let ec = document.getElementById('editorContent');
 
-    //ec.style.transform = `scale(${zoomLevel})`;
+    let ec = document.getElementById('editorContent');
+    let mainContainer = document.getElementById("mainContainer");
+
+    let oldScrollTop = mainContainer.scrollTop;
+    let oldScrollHeight = mainContainer.scrollHeight;
+
     ec.style.zoom = `${zoomLevel}`;
-    //let ep = document.getElementById('editorPage');
-    //ep.style.height = `${ep.style.height * zoomLevel}px`;
+
+    mainContainer.scrollTop = (oldScrollTop / oldScrollHeight) * mainContainer.scrollHeight;
 }
 
 /**
@@ -1620,18 +1816,45 @@ function toggleEditorRibbon() {
     }
 }
 
-function toggleSidebar() {
-    if (sidebarOpen == true) {
-        document.getElementById('sidebarMenu').style.width = "0px";
-        document.getElementById('mainContainer').style.marginLeft = "0px";
-        document.getElementById('editorRibbon').style.left = "0px";
-        sidebarOpen = false;
+function toggleSidebar(value) {
+
+    if (value != null) {
+        if (value == true) {
+            document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+            document.getElementById('sidebarToggler').setAttribute("flipped", "false");
+            document.getElementById('sidebarResizer').style.display = "block";
+            return;
+        }
+        else {
+            document.documentElement.style.setProperty('--sidebar-width', `0px`);
+            document.getElementById('sidebarToggler').setAttribute("flipped", "true");
+            document.getElementById('sidebarResizer').style.display = "none";
+            return;
+        }
+    }
+
+    if (document.documentElement.style.getPropertyValue('--sidebar-width') == "0px") {
+        document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);
+        document.getElementById('sidebarToggler').setAttribute("flipped", "false");
+        document.getElementById('sidebarResizer').style.display = "block";
+        return;
     }
     else {
-        document.getElementById('sidebarMenu').style.width = "var(--sidebar-width)";
-        document.getElementById('mainContainer').style.marginLeft = "var(--sidebar-width)";
-        document.getElementById('editorRibbon').style.left = "var(--sidebar-width)";
-        sidebarOpen = true;
+        document.documentElement.style.setProperty('--sidebar-width', `0px`);
+        document.getElementById('sidebarToggler').setAttribute("flipped", "true");
+        document.getElementById('sidebarResizer').style.display = "none";
+        return;
+    }
+}
+
+function resizeSidebar(width) {
+    if (width >= 200 && width <= 600) {
+        sidebarWidth = width;
+        prefs.sidebarWidth = sidebarWidth;
+
+        if (document.documentElement.style.getPropertyValue('--sidebar-width') != "0px") {
+            document.documentElement.style.setProperty('--sidebar-width', `${sidebarWidth}px`);   
+        }
     }
 }
 
@@ -1695,35 +1918,106 @@ function toggleFavoritePage() {
 }
 
 function updateFavoritesSection() {
-    document.getElementById('favoritePagesContainer').innerHTML = '';
-    let currentRow;
+    const container = document.getElementById('favoritesContainer');
+    container.innerHTML = '';
+
+    if (favoritePages.length == 0) {
+            let div1 = document.createElement('div');
+            div1.className = "fakeFavoriteBlock";
+
+            div1.innerHTML = `
+                <i class="mx-auto" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 400; vertical-align: middle; line-height: 34px;">Nothing here yet...</i>
+            `;
+
+            container.appendChild(div1);
+
+
+            let div2 = document.createElement('div');
+            div2.className = "fakeFavoriteBlock";
+
+            container.appendChild(div2);
+
+            let div3 = document.createElement('div');
+            div3.className = "fakeFavoriteBlock";
+
+            container.appendChild(div3);
+    }
 
     for (let i = 0; i < favoritePages.length; i++) {
         let page = favoritePages[i];
-        if (i % 5 == 0) {
-            currentRow = document.createElement('div');
-            currentRow.style.marginTop = "40px";
-            currentRow.style.marginBottom = "40px";
-            document.getElementById('favoritePagesContainer').appendChild(currentRow);
+
+        let a = document.createElement('a');
+        a.className = "favoriteBlock shadow-sm";
+        a.title = page.title;
+
+        let nbIndex = null;
+        let pgIndex = null;
+        for (let n = 0; n < save.notebooks.length; n++) {
+            for (let p = 0; p < save.notebooks[n].pages.length; p++) {
+                if (save.notebooks[n].pages[p] == page) {
+                    nbIndex = n;
+                    pgIndex = p;
+                }
+            }
         }
 
-        let title = page.title;
-        if (title.length > 30) {
-            title = title.substring(0, 30) + "...";
-        }
+        let parent = save.notebooks[nbIndex];
 
-        currentRow.innerHTML += `
-    <div class="favoritePageBox shadow" title="${page.title}">
-      <div class="d-flex" style="width: 100%">
-        <div style="width: 32px;">
-          <span data-feather="star" style="color: orange; height: 100%;"></span>
+        a.innerHTML = `        
+        <div class="row" style="width: 100%">
+            <div class="col-auto">
+                <span data-feather="${parent.icon}" style="width: 32px; height: 32px; color: ${parent.color}"></span>
+            </div>
+            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">${page.title}</div>
+            <div class="col-auto" style="width: 32px">
+                <span data-feather="star" style="width: 24px; height: 24px; color: orange; vertical-align: -12px"></span>
+            </div>
         </div>
-        <div class="flex-grow-1" style="height: 100%; line-height: 61px; text-align: left">
-          <span style="display: inline-block; line-height: 17px; vertical-align: middle;">${title}</span>
-        </div>
-      </div>
-    </div>
-    `;
+        `;
+
+        container.appendChild(a);
+
+        a.addEventListener('click', (e) => {
+            let tab = document.getElementById(`nb-${nbIndex}`);
+            if (tab.getAttribute('aria-expanded') != "true") {
+                $(`#nb-${nbIndex}`).click();
+            }
+
+            document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+                item.classList.toggle('active', false);
+            });
+            let page = document.querySelector(`[notebook-index='${nbIndex}'][page-index='${pgIndex}']`)
+            page.classList.toggle('active', true);
+
+            showEditorPage();
+            loadPage(nbIndex, pgIndex);
+        });
+
+        a.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            document.getElementById('notebook-context-menu').style.display = "none";
+            let cm = document.getElementById('page-context-menu');
+            cm.style.display = "block";
+            cm.style.left = `${e.clientX}px`;
+
+            // Put the menu above the cursor if it's going to go off screen
+            if (window.innerHeight - e.clientY < cm.clientHeight) {
+                cm.style.top = `${e.clientY - cm.clientHeight}px`;
+            }
+            else {
+                cm.style.top = `${e.clientY}px`;
+            }
+
+            rightClickedNotebookIndex = nbIndex;
+            rightClickedPageIndex = pgIndex;
+
+            if (save.notebooks[rightClickedNotebookIndex].pages[rightClickedPageIndex].favorite) {
+                document.getElementById('FavoritePageLink').innerText = "Unfavorite page";
+            }
+            else {
+                document.getElementById('FavoritePageLink').innerText = "Favorite page";
+            }
+        })
     }
 
     feather.replace();
@@ -1752,13 +2046,13 @@ function openDataDir() {
 ipcRenderer.on('updateAvailable', function (e, newVer) {
 
     setTimeout(() => {
-        $('#updateBlock').fadeIn();
-        document.getElementById('welcomeBlock').style.marginTop = "20px";
-        feather.replace();
+        $('#updateBlockLI').fadeIn();
+        //document.getElementById('welcomeBlock').style.marginTop = "20px";
+        //feather.replace();
 
-        if (document.getElementById('homePage').style.display == "none") {
+        /*if (document.getElementById('homePage').style.display == "none") {
             popup('Update', 'A new version of Codex is available!', 'Please visit www.codexnotes.com/download to update.');
-        }
+        }*/
     }, 0);
 })
 
@@ -1774,7 +2068,7 @@ async function printPage() {
     await workerWindow.webContents.executeJavaScript(`document.body.innerHTML = \`${content}\``);
     //await workerWindow.webContents.executeJavaScript(`document.getElementById('codeStyleLink').href = 'hljs_styles/${prefs.codeStyle}.css';`);
     await workerWindow.webContents.executeJavaScript(`document.getElementById('codeStyleLink').href = './node_modules/highlight.js/styles/${prefs.codeStyle}.css';`);
-    
+
 
     if (prefs.pdfDarkMode == true) {
         await workerWindow.webContents.executeJavaScript(`document.getElementById('darkStyleLink').href = 'css/dark.css';`);
@@ -1842,4 +2136,20 @@ async function startTutorial() {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function autoOpenHelpTab() {
+    let tab = document.getElementById('helpTab');
+    if (tab.getAttribute('aria-expanded') != "true") {
+        $('#helpTab').click();
+    }
+
+    document.querySelectorAll('.my-sidebar-link').forEach(function (item) {
+        item.classList.toggle('active', false);
+    });
+    let page = document.getElementById('firstHelpPage');
+    page.classList.toggle('active', true);
+
+    showHelpPage();
+    loadHelpPage('howtouse.html');
 }

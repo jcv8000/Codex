@@ -5,7 +5,7 @@ app.commandLine.appendSwitch("disable-http-cache");
 
 var mainWindow = null;
 
-const currentVersion = "1.2.2";
+const currentVersion = "1.3.0";
 
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -55,8 +55,8 @@ function createWindow() {
             width: 1280,
             height: 720,
             frame: false,
-            minWidth: 820,
-            minHeight: 400,
+            minWidth: 920,
+            minHeight: 500,
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
@@ -73,8 +73,8 @@ function createWindow() {
             width: 1280,
             height: 720,
             frame: true,
-            minWidth: 820,
-            minHeight: 400,
+            minWidth: 920,
+            minHeight: 500,
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
@@ -91,8 +91,8 @@ function createWindow() {
             width: 1280,
             height: 720,
             frame: true,
-            minWidth: 820,
-            minHeight: 400,
+            minWidth: 920,
+            minHeight: 500,
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,

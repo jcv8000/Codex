@@ -22,6 +22,7 @@
     <!-- HIGHLIHTJS STYLES -->
     <link id="codeStyleLink" rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-dark.css">
     <!-- HIGHLIHTJS STYLES -->
+    <link id="codeOverlayLink" rel="stylesheet">
 </head>
 
 
@@ -31,7 +32,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- SIDEBAR -->
-            <nav id="sidebarMenu" class="d-md-block bg-light sidebar">
+            <nav id="sidebarMenu" class="d-md-block bg-light sidebar shadow">
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column unselectable">
                         <li class="nav-item my-sidebar-item">
@@ -49,10 +50,24 @@
                             </a>
                         </li>
                         <li class="nav-item my-sidebar-item">
-                            <a id="helpTab" class="nav-link dropdown-toggle unselectable" href="#help-list"
-                                data-toggle="collapse" draggable="false" onclick="">
-                                <span data-feather="help-circle"></span><span class="notebook-title"> Help </span><span
+                            <!--<a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse"
+                                draggable="false" onclick="">
+                                <span data-feather="help-circle"></span>Help<span
                                     class="caret"></span>
+                            </a>-->
+                            <a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse"
+                                draggable="false" onclick="">
+                                <div class="row">
+                                    <div class="col-auto pr-0">
+                                        <span data-feather="help-circle"></span>
+                                    </div>
+                                    <div class="col pr-1"
+                                        style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                                        Help</div>
+                                    <div class="col-auto" style="padding-right: 20px">
+                                        <span class="caret"></span>
+                                    </div>
+                                </div>
                             </a>
                             <ul class="nav collapse" id="help-list">
                                 <li class="nav-item my-sidebar-item">
@@ -85,88 +100,134 @@
                             </ul>
                         </li>
 
+                        <li id="updateBlockLI" class="nav-item my-sidebar-item" style="display: none;" title="www.codexnotes.com/download">
+                            <a id="updateBlock" class="nav-link" href="#" draggable="false"
+                                onclick="shell.openExternal('https://www.codexnotes.com/download')">
+                                <span data-feather="download" style="color: #269700;"></span>
+                                New update available
+                            </a>
+                        </li>
+
                     </ul>
 
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+                    <!--<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
                         style="margin-bottom: 8px !important;">
                         <span class="unselectable">Notebooks</span>
-                        <a class="d-flex align-items-center text-muted" href="#newNotebookModal" draggable="false"
+                        <a id="newNotebookBtn" class="d-flex align-items-center text-muted" href="#newNotebookModal" draggable="false"
                             data-toggle="modal" title="Create notebook">
                             <span data-feather="plus-circle"></span>
                         </a>
-                    </h6>
-                    <ul class="nav flex-column mb-2" id="notebookList">
+                    </h6>-->
+                    <div class="row px-3 mt-4 mb-0 unselectable">
+                        <div class="col">
+                            <h6 class="sidebar-heading text-muted" style="margin-top: 3px">Notebooks</h6>
+                        </div>
+                        <div class="col-auto" style="padding-right: 16px;">
+                            <a id="newNotebookBtn" class="text-muted" href="#newNotebookModal" draggable="false"
+                                data-toggle="modal" title="New Notebook...">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="nav flex-column mb-2 unselectable" id="notebookList">
                     </ul>
+
+                    <span id="sidebarResizer" class="unselectable"></span>
                 </div>
             </nav>
 
+            <span id="sidebarToggler" class="unselectable" data-feather="chevrons-left" onclick="toggleSidebar()"
+                title="Toggle Sidebar"></span>
 
             <!-- MAIN CONTAINER -->
             <main id="mainContainer" role="main" class="p-0">
 
                 <!-- HOME PAGE -->
-                <span id="homePage" style="display:block" class="unselectable">
+                <span id="homePage" style="display:block; height: 100%" class="unselectable">
 
-                    <div class="content shadow-sm mt-4" id="updateBlock" style="display: none;">
-                        <div class="row">
-                            <div class="col-auto">
-                                <center><span data-feather="download"
-                                        style="width: 64px; height: 64px; color: #269700"></span></center>
-                            </div>
-                            <div class="col">
-                                <h2>New update available!</h2>
-                                Visit <a href="#"
-                                    onclick="shell.openExternal('https://www.codexnotes.com/download')">https://www.codexnotes.com/download</a>
-                                to install the new update. (<a href="#"
-                                    onclick="shell.openExternal('https://www.codexnotes.com/updates')">Changelog</a>)<br>
-                            </div>
+                    <div class="container-fluid download-header mb-4">
+                        <div>
+                            <center>
+                                <img src="img/logo-shadow.png" style="width: 400px"><br>
+                                <p style="color: white; margin-bottom: 5px; font-weight: 500">Version 1.3.0</p>
+                                <p style="color: white; padding-bottom: 20px;">Made by Josh Vickery</p>
+                            </center>
                         </div>
                     </div>
 
-                    <div class="content shadow-sm" id="welcomeBlock">
-                        <h2>Welcome</h2>
-                        <center><img src="img/logo.png" style="width: 50%"></center>
-                        <p>Codex is a simple and customizable note-taking tool meant for programmers or Computer Science
-                            students.
-                        </p>
-                        <!--<p>Please check <a href="#" class="unselectable"
-                onclick="shell.openExternal('https://www.codexnotes.com/')">https://www.codexnotes.com/</a> periodically for updates and
-              news.</p>-->
-                        <p>This software is still in its early releases, so please feel free to email
-                            <b>support@codexnotes.com</b>
-                            with feedback, suggestions, bug reports, and errors/crashes.
-                        </p>
-                        <br><br>
-                        <center>
-                            <!--<img src="img/logo512.png" class="unselectable" style="width: 64px; height: 64px"><br>-->
-                            <code>Version 1.2.2</code>
-                            <br><br>
-                            <!--<h6 class="sidebar-heading text-muted unselectable">Made by Josh Vickery (jcv8000)</h6>-->
-                            <span style="font-size: 12px">Made by Josh Vickery</span><br>
-                            <span style="font-size: 12px">This work is licensed under a <a rel="license" href="#"
-                                    onclick="shell.openExternal('https://creativecommons.org/licenses/by-nc/4.0/')">CC BY-NC 4.0 License</a>.</span>
-                        </center>
+
+
+                        <div class="alert alert-success mx-auto" role="alert" style="width: 800px; margin-bottom: 50px">
+                            <h2>Thank you for trying Codex!</h2>
+                            If you have any issues or feedback for Codex, feel free to email <b>support@codexnotes.com</b>, or
+                            create an Issue/Discussion on the
+                            GitHub repository.
+                        </div>
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col px-5">
+                                <center>
+                                    <h3>Favorites</h3>
+                                </center>
+                                <div id="favoritesContainer" class="py-3">
+        
+                                </div>
+                            </div>
+                            <div class="col px-5">
+                                <center>
+                                    <h3>More</h3>
+                                </center>
+                                <div class="py-3">
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://www.codexnotes.com/')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="globe" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">Website</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://codexnotes.com/updates/')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="file-plus" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">Changelog</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="autoOpenHelpTab()">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="help-circle" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">Help</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://github.com/jcv8000/Codex')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="github" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">GitHub Repository</div>
+                                        </div>
+                                    </a>
+
+                                    <a class="favoriteBlock shadow-sm" onclick="shell.openExternal('https://github.com/jcv8000/Codex/issues')">
+                                        <div class="row" style="width: 100%">
+                                            <div class="col-auto">
+                                                <span data-feather="alert-circle" style="width: 32px; height: 32px;"></span>
+                                            </div>
+                                            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">GitHub Issues</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <!--<center><h2 class="text-muted">RECENTS</h1></center>
-          <br><br><br>-->
-
-                    <!--<center>
-
-            <h2 class="mx-4">Favorites</h2>
-
-            <div class="container" id="favoritePagesContainer">
-              <div class="favoriteBtn">
-                <div data-feather="file-text" width="24" height="24" stroke-width="1.5" style="width: 100px; height: 40px; margin-top: 20px"></div>
-                <div style="line-height: 25px; margin-top: 5px">1 of 2</div>
-              </div>
-              <div class="favoriteBtn">
-                <div data-feather="file-text" width="24" height="24" stroke-width="1.5" style="width: 100px; height: 40px; margin-top: 20px"></div>
-                <div style="line-height: 25px; margin-top: 5px">1 of 2</div>
-              </div>
-            </div>
-          </center>-->
-
 
                 </span>
 
@@ -180,13 +241,14 @@
                 <!-- SETTINGS PAGE -->
                 <span id="settingsPage" class="unselectable" style="display: none;">
                     <div class="content shadow-sm">
-                        <center><h2>Appearance</h1></center>
+                        <center>
+                            <h2>Appearance</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group">
                             <h5 class="settingTitle">Theme</h5>
-                            <select class="form-control custom-select" id="themeSelect"
-                                onchange="applyPrefsRuntime()">
+                            <select class="form-control custom-select" id="themeSelect" onchange="applyPrefsRuntime()">
                                 <option value="0">Light</option>
                                 <option value="1">Dark</option>
                                 <option value="2">System default</option>
@@ -195,12 +257,14 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Accent color</h5>
                             <input class="form-control" type="color" id="accentColorPicker"
-                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px">
-                            <button class="btn mybtn" style="vertical-align: 7px; padding: 6px 8px; margin-left: 10px"
+                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px" title="Choose color...">
+                            <button class="btn mybtn" style="vertical-align: 7px; margin-left: 10px"
                                 onclick="revertAccentColor()">Revert to default</button>
                         </div>
 
-                        <center><h2 class="mt-5">Code Blocks</h1></center>
+                        <center>
+                            <h2 class="mt-5">Code Blocks</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group">
@@ -208,8 +272,8 @@
 
 
                             <center>
-                                <div id="exampleCode" class="codeSnippet hljs"
-                                    style="font-size:14px; width: 100%; text-align: left; tab-size: 4;"></div>
+                                <div id="exampleCode" class="codeSnippet hljs" data-params="cpp"
+                                    style="font-size:14px; width: 100%; text-align: left; tab-size: 4; position: relative"></div>
                             </center>
 
 
@@ -242,6 +306,7 @@
                                     <option value="idea">Idea</option>
                                     <option value="isbl-editor-light">Isbl Editor Light</option>
                                     <option value="kimbie.light">Kimbie Light</option>
+                                    <option value="lightfair">Lightfair</option>
                                     <option value="magula">Magula</option>
                                     <option value="mono-blue">Mono Blue</option>
                                     <option value="nnfx">Nnfx</option>
@@ -285,7 +350,6 @@
                                     <option value="ir-black">Ir Black</option>
                                     <option value="isbl-editor-dark">Isbl Editor Dark</option>
                                     <option value="kimbie.dark">Kimbie Dark</option>
-                                    <option value="lightfair">Lightfair</option>
                                     <option value="lioshi">Lioshi</option>
                                     <option value="monokai-sublime">Monokai Sublime</option>
                                     <option value="monokai">Monokai</option>
@@ -322,6 +386,15 @@
                         </div>
 
                         <div class="form-group">
+                            <h5 class="settingTitle">Language Overlay</h5>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="showLanguageOverlayCheck"
+                                    onchange="applyPrefsRuntime()">
+                                <label class="custom-control-label" for="showLanguageOverlayCheck">Show the language name at the top-right of code blocks</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <h5 class="settingTitle">Preferred Tab Size</h5>
                             <!--<label for="tabSizeSelect">Preferred tab size</label>-->
                             <select class="form-control custom-select" id="tabSizeSelect"
@@ -331,7 +404,9 @@
                             </select>
                         </div>
 
-                        <center><h2 class="mt-5">Exporting</h1></center>
+                        <center>
+                            <h2 class="mt-5">Exporting</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group">
@@ -368,7 +443,9 @@
 
                         </div>
 
-                        <center><h2 class="mt-5">Other</h1></center>
+                        <center>
+                            <h2 class="mt-5">Other</h1>
+                        </center>
                         <hr>
 
                         <div class="form-group mb-0">
@@ -376,8 +453,8 @@
                             <h5 class="settingTitle">Save Location</h5>
                             <div class="input-group">
                                 <!--<input type="text" id="dataDirInput" class="form-control" spellcheck="false" readonly onclick="openDataDir()">-->
-                                <div class="form-control" readonly><a href="#" onclick="openDataDir()"
-                                        id="dataDirInput" style="font-size: 14px; vertical-align: 1px;"></a></div>
+                                <div class="form-control" readonly><a href="#" onclick="openDataDir()" id="dataDirInput"
+                                        style="font-size: 14px; vertical-align: 1px;"></a></div>
                                 <div class="input-group-append" id="revertToDefaultDataDirBtnTooltip">
                                     <button id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()"
                                         class="btn mybtn-primary" type="button"
@@ -448,17 +525,29 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-row">
+                        <label class="form-label">Icon:</label>
+                        <div class="form-row mb-3">
+                            
                             <div class="col-auto">
-                                <input class="form-control" type="color" style="width: 50px"
-                                    id="newNotebookColorPicker">
+                                <span id="newNotebookIconPreview" data-feather="book" style="width: 32px; height: 32px; vertical-align: -19px; color: black;"></span>
+                            </div>
+                            <div class="col">
+                                <select id="newNotebookIconSelect" class="form-control"></select>
                             </div>
                             <div class="col-auto">
-                                <input class="form-control" type="text" id="newNotebookNameInput"
-                                    placeholder="New notebook name...">
-                                <div class="invalid-feedback">
-                                    Please enter a valid name.
-                                </div>
+                                <input class="form-control" type="color" style="width: 50px" id="newNotebookColorPicker"
+                                    title="Choose color...">
+                            </div>
+                            <div class="col-auto">
+                                <span id="newNotebookIconHelp" data-feather="help-circle" href="#" onclick="shell.openExternal('https://www.feathericons.com/')" style="color: #9AA6B3; width: 24px; height: 24px; vertical-align: -15px; cursor: pointer;" title="View all icons at feathericons.com"></span>
+                            </div>
+                        </div>
+                        <label class="form-label" for="newNotebookNameInput">Name:</label>
+                        <div class="form-row">
+                            <input class="form-control" type="text" id="newNotebookNameInput"
+                                placeholder="New notebook name...">
+                            <div class="invalid-feedback">
+                                Please enter a valid name.
                             </div>
                         </div>
                     </div>
@@ -484,17 +573,30 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-row">
+
+                        <label class="form-label">Icon:</label>
+                        <div class="form-row mb-3">
+                            
                             <div class="col-auto">
-                                <input class="form-control" type="color" style="width: 50px"
-                                    id="editNotebookColorPicker">
+                                <span id="editNotebookIconPreview" data-feather="book" style="width: 32px; height: 32px; vertical-align: -19px; color: black;"></span>
+                            </div>
+                            <div class="col">
+                                <select id="editNotebookIconSelect" class="form-control"></select>
                             </div>
                             <div class="col-auto">
-                                <input class="form-control" type="text" id="editNotebookNameInput"
-                                    placeholder="Notebook name...">
-                                <div class="invalid-feedback">
-                                    Please enter a valid name.
-                                </div>
+                                <input class="form-control" type="color" style="width: 50px" id="editNotebookColorPicker"
+                                    title="Choose color...">
+                            </div>
+                            <div class="col-auto">
+                                <span id="editNotebookIconHelp" data-feather="help-circle" href="#" onclick="shell.openExternal('https://www.feathericons.com/')" style="color: #9AA6B3; width: 24px; height: 24px; vertical-align: -15px; cursor: pointer;" title="View all icons at feathericons.com"></span>
+                            </div>
+                        </div>
+                        <label class="form-label" for="newNotebookNameInput">Name:</label>
+                        <div class="form-row">
+                            <input class="form-control" type="text" id="editNotebookNameInput"
+                                placeholder="New notebook name...">
+                            <div class="invalid-feedback">
+                                Please enter a valid name.
                             </div>
                         </div>
                     </div>
@@ -584,11 +686,11 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content shadow-lg">
                 <div class="modal-body">
-                    <h6>Are you sure you want to delete this notebook?</h6>
+                    <h6>Are you sure you want to delete this page?</h6>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="mybtn-primary" id="deletePageButton"
+                    <button type="button" class="mybtn-danger" id="deletePageButton"
                         onclick="deleteSelectedPage(); $('#deletePageModal').modal('hide');">Delete</button>
                 </div>
             </div>

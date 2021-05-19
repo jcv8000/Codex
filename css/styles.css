@@ -41,46 +41,8 @@ code {
 }
 
 /* Disable box shadows on a bunch of stuff */
-.was-validated .form-control:valid:focus, .form-control.is-valid:focus,
-.was-validated .custom-control-input:valid:focus~.custom-control-label::before, .custom-control-input.is-valid:focus~.custom-control-label::before,
-.was-validated .custom-file-input:valid:focus~.custom-file-label, .custom-file-input.is-valid:focus~.custom-file-label,
-.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus,
-.was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus,
-.was-validated .custom-control-input:invalid:focus~.custom-control-label::before, .custom-control-input.is-invalid:focus~.custom-control-label::before,
-.was-validated .custom-file-input:invalid:focus~.custom-file-label, .custom-file-input.is-invalid:focus~.custom-file-label,
-.btn:focus, .btn.focus,
-.btn-primary:focus, .btn-primary.focus,
-.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus,
-.btn-secondary:focus, .btn-secondary.focus,
-.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-secondary.dropdown-toggle:focus,
-.btn-success:focus, .btn-success.focus,
-.btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus, .show>.btn-success.dropdown-toggle:focus,
-.btn-info:focus, .btn-info.focus,
-.btn-info:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus, .show>.btn-info.dropdown-toggle:focus,
-.btn-warning:focus, .btn-warning.focus,
-.btn-warning:not(:disabled):not(.disabled):active:focus, .btn-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-warning.dropdown-toggle:focus,
-.btn-danger:focus, .btn-danger.focus,
-.btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-danger.dropdown-toggle:focus,
-.btn-light:focus, .btn-light.focus,
-.btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .show>.btn-light.dropdown-toggle:focus,
-.btn-dark:focus, .btn-dark.focus,
-.btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-dark.dropdown-toggle:focus,
-.btn-outline-primary:focus, .btn-outline-primary.focus,
-.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-primary.dropdown-toggle:focus,
-.btn-outline-secondary:focus, .btn-outline-secondary.focus,
-.btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-secondary.dropdown-toggle:focus,
-.btn-outline-success:focus, .btn-outline-success.focus,
-.btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-success.dropdown-toggle:focus,
-.btn-outline-info:focus, .btn-outline-info.focus,
-.btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-info.dropdown-toggle:focus,
-.btn-outline-warning:focus, .btn-outline-warning.focus,
-.btn-outline-warning:not(:disabled):not(.disabled):active:focus, .btn-outline-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-warning.dropdown-toggle:focus,
-.btn-outline-danger:focus, .btn-outline-danger.focus,
-.btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-danger.dropdown-toggle:focus,
-.btn-outline-light:focus, .btn-outline-light.focus,
-.btn-outline-light:not(:disabled):not(.disabled):active:focus, .btn-outline-light:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-light.dropdown-toggle:focus,
-.btn-outline-dark:focus, .btn-outline-dark.focus,
-.btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-dark.dropdown-toggle:focus {
+
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus, .was-validated .custom-control-input:valid:focus~.custom-control-label::before, .custom-control-input.is-valid:focus~.custom-control-label::before, .was-validated .custom-file-input:valid:focus~.custom-file-label, .custom-file-input.is-valid:focus~.custom-file-label, .was-validated .form-control:invalid:focus, .form-control.is-invalid:focus, .was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus, .was-validated .custom-control-input:invalid:focus~.custom-control-label::before, .custom-control-input.is-invalid:focus~.custom-control-label::before, .was-validated .custom-file-input:invalid:focus~.custom-file-label, .custom-file-input.is-invalid:focus~.custom-file-label, .btn:focus, .btn.focus, .btn-primary:focus, .btn-primary.focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-primary.dropdown-toggle:focus, .btn-secondary:focus, .btn-secondary.focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-secondary.dropdown-toggle:focus, .btn-success:focus, .btn-success.focus, .btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus, .show>.btn-success.dropdown-toggle:focus, .btn-info:focus, .btn-info.focus, .btn-info:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus, .show>.btn-info.dropdown-toggle:focus, .btn-warning:focus, .btn-warning.focus, .btn-warning:not(:disabled):not(.disabled):active:focus, .btn-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-warning.dropdown-toggle:focus, .btn-danger:focus, .btn-danger.focus, .btn-danger:not(:disabled):not(.disabled):active:focus, .btn-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-danger.dropdown-toggle:focus, .btn-light:focus, .btn-light.focus, .btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .show>.btn-light.dropdown-toggle:focus, .btn-dark:focus, .btn-dark.focus, .btn-dark:not(:disabled):not(.disabled):active:focus, .btn-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-dark.dropdown-toggle:focus, .btn-outline-primary:focus, .btn-outline-primary.focus, .btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-primary.dropdown-toggle:focus, .btn-outline-secondary:focus, .btn-outline-secondary.focus, .btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-secondary.dropdown-toggle:focus, .btn-outline-success:focus, .btn-outline-success.focus, .btn-outline-success:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-success.dropdown-toggle:focus, .btn-outline-info:focus, .btn-outline-info.focus, .btn-outline-info:not(:disabled):not(.disabled):active:focus, .btn-outline-info:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-info.dropdown-toggle:focus, .btn-outline-warning:focus, .btn-outline-warning.focus, .btn-outline-warning:not(:disabled):not(.disabled):active:focus, .btn-outline-warning:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-warning.dropdown-toggle:focus, .btn-outline-danger:focus, .btn-outline-danger.focus, .btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-danger.dropdown-toggle:focus, .btn-outline-light:focus, .btn-outline-light.focus, .btn-outline-light:not(:disabled):not(.disabled):active:focus, .btn-outline-light:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-light.dropdown-toggle:focus, .btn-outline-dark:focus, .btn-outline-dark.focus, .btn-outline-dark:not(:disabled):not(.disabled):active:focus, .btn-outline-dark:not(:disabled):not(.disabled).active:focus, .show>.btn-outline-dark.dropdown-toggle:focus {
     box-shadow: none !important;
 }
 
@@ -118,20 +80,7 @@ code {
     border-color: unset;
 }
 
-.custom-select:focus,
-.custom-file-input:focus~.custom-file-label,
-.custom-range:focus::-webkit-slider-thumb,
-.custom-range:focus::-moz-range-thumb,
-.custom-range:focus::-ms-thumb,
-.page-link:focus,
-a.badge-primary:focus, a.badge-primary.focus,
-a.badge-secondary:focus, a.badge-secondary.focus,
-a.badge-success:focus, a.badge-success.focus,
-a.badge-info:focus, a.badge-info.focus,
-a.badge-warning:focus, a.badge-warning.focus,
-a.badge-danger:focus, a.badge-danger.focus,
-a.badge-light:focus, a.badge-light.focus,
-a.badge-dark:focus, a.badge-dark.focus {
+.custom-select:focus, .custom-file-input:focus~.custom-file-label, .custom-range:focus::-webkit-slider-thumb, .custom-range:focus::-moz-range-thumb, .custom-range:focus::-ms-thumb, .page-link:focus, a.badge-primary:focus, a.badge-primary.focus, a.badge-secondary:focus, a.badge-secondary.focus, a.badge-success:focus, a.badge-success.focus, a.badge-info:focus, a.badge-info.focus, a.badge-warning:focus, a.badge-warning.focus, a.badge-danger:focus, a.badge-danger.focus, a.badge-light:focus, a.badge-light.focus, a.badge-dark:focus, a.badge-dark.focus {
     box-shadow: none !important;
 }
 
@@ -182,7 +131,7 @@ body {
     /* Behind the navbar */
     padding: 0 0 0;
     /* Height of navbar */
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    /*box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);*/
     width: var(--sidebar-width);
 }
 
@@ -207,6 +156,7 @@ body {
     font-weight: 500;
     color: #333;
     transition: 0.1s background-color;
+    max-width: var(--sidebar-width);
 }
 
 .sidebar .nav-link .feather {
@@ -218,6 +168,8 @@ body {
 .sidebar .nav-link.active {
     color: white;
     background-color: var(--accent-color);
+    z-index: 200;
+    position: relative;
 }
 
 .sidebar .nav-link:hover .feather, .sidebar .nav-link.active .feather {
@@ -305,16 +257,6 @@ a.titlebarBtn:active {
     padding-left: 35px;
 }
 
-.dropdown-toggle[aria-expanded="true"]:after {
-    transform: rotate(-90deg);
-}
-
-/*for animation*/
-
-.dropdown-toggle:after {
-    transition: 0.2s;
-}
-
 .my-sidebar-item {
     width: 100%;
 }
@@ -355,12 +297,13 @@ div.content {
 #mainContainer {
     overflow: auto;
     margin-left: var(--sidebar-width);
+    height: calc(100vh - var(--titlebar-height));
     width: 100%;
 }
 
 #editorRibbon {
     position: fixed;
-    z-index: 1000;
+    z-index: 90;
     top: 5px;
     margin-top: 10px;
     margin-left: auto;
@@ -417,6 +360,7 @@ div.content {
 
 .mybtn-primary:focus {
     outline: none;
+    box-shadow: inset 0px 1px 0px 0px #97c4fe !important;
 }
 
 .mybtn-primary:disabled {
@@ -427,6 +371,42 @@ div.content {
 }
 
 .mybtn {
+    box-shadow:inset 0px 1px 0px 0px #ffffff, 0 1px 2px rgba(0, 0, 0, 0.06);
+	background: linear-gradient(to bottom, #ffffff, #e6e6e6);
+	background-color: #FFFFFF;
+    border-radius: 5px;
+    border:1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: #333333;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0 1px 1px #ffffff;
+    border: 1px solid #cccccc;
+    text-decoration: none;
+}
+
+.mybtn:hover {
+    background: linear-gradient(to bottom, #ffffff 10%, #f0f0f0 100%);
+	background-color: #FFFFFF;
+    color: #444444;
+    text-decoration: none;
+}
+
+.mybtn:active {
+    background: linear-gradient(to bottom, #e6e6e6, #ffffff);
+	background-color: #FFFFFF;
+    color: #222222;
+    text-decoration: none;
+}
+
+.mybtn:focus {
+    box-shadow:inset 0px 1px 0px 0px #ffffff, 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+/*.mybtn {
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     background: linear-gradient(to bottom, #FCFCFC 5%, #e9e9e9 100%);
     background-color: #FFFFFF;
@@ -454,7 +434,7 @@ div.content {
     background-color: #e9e9e9;
     color: #555555;
     text-decoration: none;
-}
+}*/
 
 .mybtn:focus {
     outline: none;
@@ -494,7 +474,7 @@ div.content {
     outline: none;
 }
 
-@media (max-width: 1085px) {
+/* @media (max-width: 1085px) {
     .sidebar {
         width: 0px !important;
     }
@@ -504,7 +484,7 @@ div.content {
     #editorRibbon {
         left: 0 !important;
     }
-}
+} */
 
 *:not(.ProseMirror-selectednode)::selection {
     background-color: var(--accent-color);
@@ -730,4 +710,161 @@ label {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
     margin-top: 2rem;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #F2F4F6;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #D1D7DE;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #AFB9C5;
+}
+
+.sidebar-sticky::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+}
+
+.sidebar-sticky::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-sticky::-webkit-scrollbar-track {
+    background-color: #F8F9FA;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+:focus {
+    outline: none !important;
+}
+
+.caret {
+    display: inline-block;
+    margin-left: 3px;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+    vertical-align: 2px;
+}
+
+.nav-link .caret {
+    transition: 0.2s;
+}
+
+.nav-link[aria-expanded="true"] .caret {
+    /*transform: rotate(-90deg) translateY(1px);*/
+    transform: rotate(-180deg);
+}
+
+#sidebarToggler {
+    position: absolute;
+    left: calc(var(--sidebar-width) + 10px);
+    bottom: 10px;
+    width: 35px;
+    height: 35px;
+    color: #596B7D;
+    /*transform: rotateY(0deg);
+    transition: transform 0.3s ease-out;*/
+    transform: rotate(0deg);
+    transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+    cursor: pointer;
+    z-index: 110;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+}
+
+#sidebarToggler:hover {
+    color: #0F1215;
+    background-color: #EEF0F3;
+}
+
+#sidebarToggler:active {
+    background-color: #D9DDE4;
+}
+
+#sidebarToggler[flipped="true"] {
+    /*transform: rotateY(180deg);*/
+    transform: rotate(180deg);
+}
+
+#sidebarResizer {
+    width: 2px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--sidebar-width) - 1px);
+    cursor: col-resize;
+    background-color: #DFE0E1;
+    z-index: 100;
+}
+
+.download-header {
+    background: rgb(147, 80, 147);
+    background: -moz-linear-gradient(36deg, rgba(147, 80, 147, 1) 10%, rgba(255, 122, 39, 1) 50%, rgba(255, 80, 39, 1) 90%);
+    background: -webkit-linear-gradient(36deg, rgba(147, 80, 147, 1) 10%, rgba(255, 122, 39, 1) 50%, rgba(255, 80, 39, 1) 90%);
+    background: linear-gradient(36deg, rgba(147, 80, 147, 1) 10%, rgba(255, 122, 39, 1) 50%, rgba(255, 80, 39, 1) 90%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#935093", endColorstr="#ff5027", GradientType=1);
+}
+
+.favoriteBlock {
+    padding: 16px;
+    border-radius: 5px;
+    background-color: #F8F9FA;
+    /* transition: background-color 0.1s linear; */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    display: flex;
+    /* width: 600px; */
+    margin-bottom: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.favoriteBlock:hover {
+    background-color: #EEF0F3;
+}
+
+.favoriteBlock:active {
+    background-color: #D9DDE4;
+}
+
+.fakeFavoriteBlock {
+    padding: 16px;
+    border-radius: 5px;
+    border: 2px dotted #B2B2B2;
+    color: #B2B2B2; 
+    height: 68px;
+    display: flex;
+    margin-bottom: 32px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#updateBlock {
+    background-color: #BDE3C6;
+    border-top: 1px solid #90D19F;
+    border-bottom: 1px solid #90D19F;
+}
+
+#updateBlock:hover {
+    background-color: #90D19F;
+    border-top: 1px solid #79C78C;
+    border-bottom: 1px solid #79C78C;
+}
+
+#updateBlock:active {
+    background-color: #79C78C;
 }

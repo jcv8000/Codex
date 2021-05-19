@@ -1,0 +1,176 @@
+:root {
+    --code-overlay-bg-brightness: 0.95;
+}
+
+.codeSnippet[data-params]:before {
+    content: attr(data-params);
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    position: absolute;
+    right: 16px;
+    padding: 2px 8px;
+    background-color: inherit;
+    filter: brightness(var(--code-overlay-bg-brightness));
+    border-radius: 5px;
+}
+
+.codeSnippet[data-params]:hover:before {
+    display: none;
+}
+
+.codeSnippet[data-params][id="exampleCode"]::before {
+    right: 8px;
+}
+
+.codeSnippet[data-params="arduino"]:before {
+    content: "Arduino C++"
+}
+
+.codeSnippet[data-params="arm"]:before {
+    content: "ARM"
+}
+
+.codeSnippet[data-params="coffeescript"]:before {
+    content: "CoffeeScript"
+}
+
+.codeSnippet[data-params="cmake"]:before {
+    content: "CMake"
+}
+
+.codeSnippet[data-params="cs"]:before {
+    content: "C#"
+}
+
+.codeSnippet[data-params="cpp"]:before {
+    content: "C++"
+}
+
+.codeSnippet[data-params="c"]:before {
+    content: "C"
+}
+
+.codeSnippet[data-params="css"]:before {
+    content: "CSS"
+}
+
+.codeSnippet[data-params="go"]:before {
+    content: "Go"
+}
+
+.codeSnippet[data-params="gradle"]:before {
+    content: "Gradle"
+}
+
+.codeSnippet[data-params="groovy"]:before {
+    content: "Groovy"
+}
+
+.codeSnippet[data-params="html"]:before {
+    content: "HTML"
+}
+
+.codeSnippet[data-params="http"]:before {
+    content: "HTTP"
+}
+
+.codeSnippet[data-params="java"]:before {
+    content: "Java"
+}
+
+.codeSnippet[data-params="js"]:before {
+    content: "JS"
+}
+
+.codeSnippet[data-params="json"]:before {
+    content: "JSON"
+}
+
+.codeSnippet[data-params="tex"]:before {
+    content: "LaTeX"
+}
+
+.codeSnippet[data-params="less"]:before {
+    content: "Less"
+}
+
+.codeSnippet[data-params="lisp"]:before {
+    content: "Lisp"
+}
+
+.codeSnippet[data-params="lua"]:before {
+    content: "Lua"
+}
+
+.codeSnippet[data-params="makefile"]:before {
+    content: "Makefile"
+}
+
+.codeSnippet[data-params="mathematica"]:before {
+    content: "Mathematica"
+}
+
+.codeSnippet[data-params="matlab"]:before {
+    content: "MatLab"
+}
+
+.codeSnippet[data-params="objectivec"]:before {
+    content: "Objective C"
+}
+
+.codeSnippet[data-params="glsl"]:before {
+    content: "GLSL"
+}
+
+.codeSnippet[data-params="perl"]:before {
+    content: "Perl"
+}
+
+.codeSnippet[data-params="php"]:before {
+    content: "PHP"
+}
+
+.codeSnippet[data-params="ps"]:before {
+    content: "PowerShell"
+}
+
+.codeSnippet[data-params="py"]:before {
+    content: "Python"
+}
+
+.codeSnippet[data-params="r"]:before {
+    content: "R"
+}
+
+.codeSnippet[data-params="ruby"]:before {
+    content: "Ruby"
+}
+
+.codeSnippet[data-params="rust"]:before {
+    content: "Rust"
+}
+
+.codeSnippet[data-params="sql"]:before {
+    content: "SQL"
+}
+
+.codeSnippet[data-params="shell"]:before {
+    content: "Shell"
+}
+
+.codeSnippet[data-params="swift"]:before {
+    content: "Swift"
+}
+
+.codeSnippet[data-params="ts"]:before {
+    content: "TypeScript"
+}
+
+.codeSnippet[data-params="x86asm"]:before {
+    content: "x86"
+}
+
+.codeSnippet[data-params="yml"]:before {
+    content: "YAML"
+}

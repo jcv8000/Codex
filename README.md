@@ -6,9 +6,12 @@ A free note-taking software for programmers and Computer Science students
 
 Made by [Josh Vickery](https://jcv8000.github.io)
 
-## Usage
+## Testing
 
-After cloning, run  ``npm install`` to get the required packages, then run ``npm start`` to test.
+1. Clone the respoitory with a git client, or download the source code ZIP from GitHub and extract it.
+2. Make sure you have [NodeJS](https://nodejs.org/en/) and npm (Node's package manager) installed.
+3. In the project's root folder, run ``npm install`` to download the required dependencies.
+4. Run ``npm start`` to test/run the project.
 
 ## Building
 
