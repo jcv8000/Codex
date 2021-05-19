@@ -217,12 +217,16 @@ a {
 
 #sidebarToggler {
     background-color: var(--dark-mid);
-    color: var(--dark-light);
+    color: var(--text);
 }
 
 #sidebarToggler:hover {
     background-color: var(--dark-dark);
     color: var(--text);
+}
+
+#sidebarToggler:active {
+    background-color: var(--dark-darker);
 }
 
 .favoriteBlock {
