@@ -257,8 +257,8 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Accent color</h5>
                             <input class="form-control" type="color" id="accentColorPicker"
-                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px">
-                            <button class="btn mybtn" style="vertical-align: 7px; padding: 6px 8px; margin-left: 10px"
+                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px" title="Choose color...">
+                            <button class="btn mybtn" style="vertical-align: 7px; margin-left: 10px"
                                 onclick="revertAccentColor()">Revert to default</button>
                         </div>
 
@@ -525,17 +525,29 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-row">
+                        <label class="form-label">Icon:</label>
+                        <div class="form-row mb-3">
+                            
+                            <div class="col-auto">
+                                <span id="newNotebookIconPreview" data-feather="book" style="width: 32px; height: 32px; vertical-align: -19px; color: black;"></span>
+                            </div>
+                            <div class="col">
+                                <select id="newNotebookIconSelect" class="form-control"></select>
+                            </div>
                             <div class="col-auto">
                                 <input class="form-control" type="color" style="width: 50px" id="newNotebookColorPicker"
                                     title="Choose color...">
                             </div>
-                            <div class="col">
-                                <input class="form-control" type="text" id="newNotebookNameInput"
-                                    placeholder="New notebook name...">
-                                <div class="invalid-feedback">
-                                    Please enter a valid name.
-                                </div>
+                            <div class="col-auto">
+                                <span id="newNotebookIconHelp" data-feather="help-circle" href="#" onclick="shell.openExternal('https://www.feathericons.com/')" style="color: #9AA6B3; width: 24px; height: 24px; vertical-align: -15px; cursor: pointer;" title="View all icons at feathericons.com"></span>
+                            </div>
+                        </div>
+                        <label class="form-label" for="newNotebookNameInput">Name:</label>
+                        <div class="form-row">
+                            <input class="form-control" type="text" id="newNotebookNameInput"
+                                placeholder="New notebook name...">
+                            <div class="invalid-feedback">
+                                Please enter a valid name.
                             </div>
                         </div>
                     </div>
@@ -561,17 +573,30 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-row">
+
+                        <label class="form-label">Icon:</label>
+                        <div class="form-row mb-3">
+                            
                             <div class="col-auto">
-                                <input class="form-control" type="color" style="width: 50px"
-                                    id="editNotebookColorPicker" title="Choose color...">
+                                <span id="editNotebookIconPreview" data-feather="book" style="width: 32px; height: 32px; vertical-align: -19px; color: black;"></span>
                             </div>
                             <div class="col">
-                                <input class="form-control" type="text" id="editNotebookNameInput"
-                                    placeholder="Notebook name...">
-                                <div class="invalid-feedback">
-                                    Please enter a valid name.
-                                </div>
+                                <select id="editNotebookIconSelect" class="form-control"></select>
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" type="color" style="width: 50px" id="editNotebookColorPicker"
+                                    title="Choose color...">
+                            </div>
+                            <div class="col-auto">
+                                <span id="editNotebookIconHelp" data-feather="help-circle" href="#" onclick="shell.openExternal('https://www.feathericons.com/')" style="color: #9AA6B3; width: 24px; height: 24px; vertical-align: -15px; cursor: pointer;" title="View all icons at feathericons.com"></span>
+                            </div>
+                        </div>
+                        <label class="form-label" for="newNotebookNameInput">Name:</label>
+                        <div class="form-row">
+                            <input class="form-control" type="text" id="editNotebookNameInput"
+                                placeholder="New notebook name...">
+                            <div class="invalid-feedback">
+                                Please enter a valid name.
                             </div>
                         </div>
                     </div>

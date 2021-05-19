@@ -87,6 +87,7 @@ class Save {
 class Notebook {
     name;
     color;
+    icon = "book";
     pages = [];
     constructor(name, color) {
         this.name = name;
@@ -430,6 +431,14 @@ function init() {
         try {
             let json = fs.readFileSync(prefs.dataDir + "/save.json", 'utf8');
             save = JSON.parse(json);
+
+            // Add missing icon property
+            for (let i = 0; i < save.notebooks.length; i++) {
+                if (typeof(save.notebooks[i].icon) === undefined) {
+                    save.notebooks[i].icon = "book";
+                }
+            }
+
             canSaveData = true;
         }
         catch (err) {
@@ -526,14 +535,27 @@ function init() {
 
     $('#newNotebookColorPicker').tooltip({
         trigger: 'hover',
-        placement: 'bottom',
-        offset: 30
+        placement: 'bottom'
+    });
+
+    $('#accentColorPicker').tooltip({
+        trigger: 'hover',
+        placement: 'bottom'
     });
 
     $('#editNotebookColorPicker').tooltip({
         trigger: 'hover',
-        placement: 'bottom',
-        offset: 30
+        placement: 'bottom'
+    });
+
+    $('#newNotebookIconHelp').tooltip({
+        trigger: 'hover',
+        placement: 'right'
+    });
+
+    $('#editNotebookIconHelp').tooltip({
+        trigger: 'hover',
+        placement: 'right'
     });
 
     // TOOLTIPS
@@ -557,6 +579,45 @@ function init() {
         window.addEventListener('mouseup', () => {
             window.removeEventListener('mousemove', handleSidebarResizerDrag, false);
         }, false);
+    });
+
+    // Set up Icon Selectors for notebook modals
+    let newNotebookIconSelect = document.getElementById('newNotebookIconSelect');
+
+    Object.keys(feather.icons).forEach(element => {
+        let op = document.createElement('option');
+        op.text = element;
+        op.value = element;
+        newNotebookIconSelect.appendChild(op);
+    });
+
+    newNotebookIconSelect.value = "book";
+
+    newNotebookIconSelect.addEventListener('change', () => {
+        document.getElementById('newNotebookIconPreview').setAttribute('data-feather', document.getElementById('newNotebookIconSelect').value);
+        feather.replace();
+    });
+
+    document.getElementById('newNotebookColorPicker').addEventListener('change', () => {
+        document.getElementById('newNotebookIconPreview').style.color = document.getElementById('newNotebookColorPicker').value;
+    });
+
+    let editNotebookIconSelect = document.getElementById('editNotebookIconSelect');
+
+    Object.keys(feather.icons).forEach(element => {
+        let op = document.createElement('option');
+        op.text = element;
+        op.value = element;
+        editNotebookIconSelect.appendChild(op);
+    });
+
+    editNotebookIconSelect.addEventListener('change', () => {
+        document.getElementById('editNotebookIconPreview').setAttribute('data-feather', document.getElementById('editNotebookIconSelect').value);
+        feather.replace();
+    });
+
+    document.getElementById('editNotebookColorPicker').addEventListener('change', () => {
+        document.getElementById('editNotebookIconPreview').style.color = document.getElementById('editNotebookColorPicker').value;
     });
 
 }
@@ -885,11 +946,13 @@ function applyModalEventHandlers() {
         e.preventDefault();
         let name = document.getElementById('newNotebookNameInput').value;
         let color = document.getElementById('newNotebookColorPicker').value;
+        let icon = document.getElementById('newNotebookIconSelect').value;
         if (name !== "") {
 
             getExpandedNotebookData();
 
             let nb = new Notebook(name, color);
+            nb.icon = icon;
             let index = save.notebooks.length;
             save.notebooks.push(nb);
 
@@ -902,6 +965,10 @@ function applyModalEventHandlers() {
             document.getElementById('newNotebookNameInput').classList.remove("is-invalid");
             document.getElementById('newNotebookNameInput').value = "";
             document.getElementById('newNotebookColorPicker').value = "000000";
+            document.getElementById('newNotebookIconSelect').value = "book";
+            document.getElementById('newNotebookIconPreview').setAttribute('data-feather', 'book');
+            feather.replace();
+            document.getElementById('newNotebookIconPreview').style.color = "black";
         }
         else {
             document.getElementById('newNotebookNameInput').classList.add("is-invalid");
@@ -922,6 +989,7 @@ function applyModalEventHandlers() {
         e.preventDefault();
         let newName = document.getElementById('editNotebookNameInput').value;
         let newColor = document.getElementById('editNotebookColorPicker').value;
+        let newIcon = document.getElementById('editNotebookIconSelect').value;
 
         if (newName !== "") {
             $('#editNotebookModal').modal('hide');
@@ -930,6 +998,7 @@ function applyModalEventHandlers() {
 
             save.notebooks[rightClickedNotebookIndex].name = newName;
             save.notebooks[rightClickedNotebookIndex].color = newColor;
+            save.notebooks[rightClickedNotebookIndex].icon = newIcon;
             saveData();
 
             displayNotebooks();
@@ -950,7 +1019,7 @@ function applyModalEventHandlers() {
 
     $('#editNotebookModal').on('shown.bs.modal', (e) => {
         document.getElementById('editNotebookNameInput').focus();
-        document.getElementById('editNotebookNameInput').select();
+        //document.getElementById('editNotebookNameInput').select();
     });
 
     $('#editNotebookModal').on('hidden.bs.modal', (e) => {
@@ -1034,7 +1103,7 @@ function applyModalEventHandlers() {
 
     $('#editPageModal').on('shown.bs.modal', (e) => {
         document.getElementById('editPageNameInput').focus();
-        document.getElementById('editPageNameInput').select();
+        //document.getElementById('editPageNameInput').select();
     });
 
     $('#editPageModal').on('hidden.bs.modal', (e) => {
@@ -1128,7 +1197,7 @@ function addNotebookToList(index) {
     a.innerHTML = `
         <div class="row">
             <div class="col-auto pr-0">
-                <span data-feather="book" style="color: ${notebook.color}"></span>
+                <span data-feather="${notebook.icon}" style="color: ${notebook.color}"></span>
             </div>
             <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${notebook.name}</div>
             <div class="col-auto" style="padding-right: 20px">
@@ -1602,6 +1671,10 @@ function editSelectedNotebook() {
     $('#editNotebookModal').modal('show');
     document.getElementById('editNotebookNameInput').value = save.notebooks[rightClickedNotebookIndex].name;
     document.getElementById('editNotebookColorPicker').value = save.notebooks[rightClickedNotebookIndex].color;
+    document.getElementById('editNotebookIconSelect').value = save.notebooks[rightClickedNotebookIndex].icon;
+    document.getElementById('editNotebookIconPreview').setAttribute('data-feather', save.notebooks[rightClickedNotebookIndex].icon);
+    document.getElementById('editNotebookIconPreview').style.color = save.notebooks[rightClickedNotebookIndex].color;
+    feather.replace();
 }
 
 /**
@@ -1893,7 +1966,7 @@ function updateFavoritesSection() {
         a.innerHTML = `        
         <div class="row" style="width: 100%">
             <div class="col-auto">
-                <span data-feather="book" style="width: 32px; height: 32px; color: ${parent.color}"></span>
+                <span data-feather="${parent.icon}" style="width: 32px; height: 32px; color: ${parent.color}"></span>
             </div>
             <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">${page.title}</div>
             <div class="col-auto" style="width: 32px">
