@@ -434,7 +434,7 @@ function init() {
 
             // Add missing icon property
             for (let i = 0; i < save.notebooks.length; i++) {
-                if (typeof(save.notebooks[i].icon) === undefined) {
+                if (typeof save.notebooks[i].icon === 'undefined') {
                     save.notebooks[i].icon = "book";
                 }
             }
