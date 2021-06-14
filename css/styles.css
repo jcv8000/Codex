@@ -868,3 +868,7 @@ button:focus {
 #updateBlock:active {
     background-color: #79C78C;
 }
+
+a.action-menu-item {
+    cursor: pointer;
+}
