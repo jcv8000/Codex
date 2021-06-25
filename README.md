@@ -19,6 +19,10 @@ Run ``npx electron-builder`` to build.
 
 The package.json should already specify the building behavior for Windows and Linux, but macOS has not been tested.
 
+## Screenshot
+
+![Screenshot](https://codexnotes.com/exampleimg/main2.png)
+
 ## License
 
 This work is licensed under a [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
