@@ -246,6 +246,10 @@ function init() {
                 click: () => shell.openExternal('https://www.codexnotes.com/updates/')
             },
             {
+                label: 'Give Feedback (Google Forms)',
+                click: () => shell.openExternal('https://forms.gle/uDLJpqLbNLcEx1F8A')
+            },
+            {
                 type: 'separator'
             },
             {
@@ -371,6 +375,10 @@ function init() {
             {
                 label: 'Update notes',
                 click: () => shell.openExternal('https://www.codexnotes.com/updates/')
+            },
+            {
+                label: 'Give Feedback (Google Forms)',
+                click: () => shell.openExternal('https://forms.gle/uDLJpqLbNLcEx1F8A')
             },
             {
                 type: 'separator'
