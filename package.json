@@ -56,7 +56,8 @@
     },
     "license": "CC BY-NC 4.0",
     "devDependencies": {
-        "electron": "^12.0.17"
+        "electron": "^12.0.17",
+        "electron-builder": "latest"
     },
     "dependencies": {
         "bootstrap": "4.5.0",
