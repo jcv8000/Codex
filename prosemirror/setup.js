@@ -21,6 +21,7 @@ var { arrow, addColumnAfter, addColumnBefore, deleteColumn, addRowAfter, addRowB
 var { Fragment } = require('prosemirror-model');
 //const { schema } = require('./schema');
 const { chainCommands } = require('prosemirror-commands');
+const { mathPlugin, mathBackspaceCmd, insertMathCmd, mathSerializer, makeInlineMathInputRule, makeBlockMathInputRule, REGEX_BLOCK_MATH_DOLLARS, REGEX_INLINE_MATH_DOLLARS, mathSelectPlugin } = require('@benrbray/prosemirror-math');
 
 
 // Defining my custom icons
@@ -715,8 +716,26 @@ function buildMenuItems(schema) {
         }
     });
 
+    r.InsertBlockEquation = new prosemirrorMenu.MenuItem({
+        title: "Insert block KaTeX equation",
+        label: "Block KaTeX equation",
+        run: insertMathCmd(schema.nodes.math_display),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
+    });
+
+    r.InsertInlineEquation = new prosemirrorMenu.MenuItem({
+        title: "Insert inline KaTeX equation",
+        label: "Inline KaTeX equation",
+        run: insertMathCmd(schema.nodes.math_inline),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
+    });
+
     var cut = function (arr) { return arr.filter(function (x) { return x; }); };
-    r.insertMenu = new prosemirrorMenu.Dropdown(cut([r.insertImage, r.insertHorizontalRule, r.insertTable]), { label: "Insert" });
+    r.insertMenu = new prosemirrorMenu.Dropdown(cut([r.insertImage, r.insertHorizontalRule, r.insertTable/*, r.InsertInlineEquation, r.InsertBlockEquation*/]), { label: "Insert" });
     r.typeMenu = new prosemirrorMenu.Dropdown(cut([r.makeParagraph,
     r.makeCodeBlock && new prosemirrorMenu.DropdownSubmenu(cut([
         r.makeArduino, r.makeARM, r.makeBAT, r.makeCoffee, r.makeCmake, r.makeCS, r.makeCPP, r.makeC, r.makeCSS, r.makeGo, r.makeGLSL, r.makeGradle, r.makeGroovy, r.makeOther
@@ -955,6 +974,9 @@ function buildInputRules(schema) {
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[yml\]$/, type, function (match) { return ({ params: "yml" }); }));
     }
     if (type = schema.nodes.heading) { rules.push(headingRule(type, 6)); }
+
+    rules.push(makeInlineMathInputRule(REGEX_INLINE_MATH_DOLLARS, schema.nodes.math_inline));
+    rules.push(makeBlockMathInputRule(REGEX_BLOCK_MATH_DOLLARS, schema.nodes.math_display));
 
     return prosemirrorInputrules.inputRules({ rules: rules })
 }
@@ -1252,6 +1274,8 @@ function exampleSetup(options) {
         }),
     ];
 
+
+    plugins.push(mathPlugin);
 
     /*plugins.push(prosemirrorMenu.menuBar({
         floating: options.floatingMenu !== false,

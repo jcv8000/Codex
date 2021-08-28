@@ -135,7 +135,28 @@ var nodes = {
     selectable: false,
     parseDOM: [{tag: "br"}],
     toDOM: function toDOM() { return brDOM }
-  }
+  },
+
+    math_inline: {               // important!
+        group: "inline math",
+        content: "text*",        // important!
+        inline: true,            // important!
+        atom: true,              // important!
+        toDOM: () => ["math-inline", { class: "math-node" }, 0],
+        parseDOM: [{
+            tag: "math-inline"   // important!
+        }]
+    },
+    math_display: {              // important!
+        group: "block math",
+        content: "text*",        // important!
+        atom: true,              // important!
+        code: true,              // important!
+        toDOM: () => ["math-display", { class: "math-node" }, 0],
+        parseDOM: [{
+            tag: "math-display"  // important!
+        }]
+    },
 };
 
 var emDOM = ["em", 0], strongDOM = ["strong", 0], codeDOM = ["code", 0], uDOM = ["u", 0];
