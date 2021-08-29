@@ -251,3 +251,27 @@ a {
 #updateBlock {
     color: #155724;
 }
+
+math-inline .math-src::after, math-inline .math-src::before {
+    background-color: var(--dark-darker);
+    color: var(--dark-light);
+}
+
+math-inline .math-src .ProseMirror {
+    background-color: var(--dark-darker);
+    color: #d34cff;
+}
+
+math-display .math-src .ProseMirror {
+    background-color: var(--dark-darker);
+    color: #d34cff;
+}
+
+math-display .math-src::after, math-display .math-src::before {
+    background-color: var(--dark-darker);
+    color: var(--dark-light);
+}
+
+math-display.ProseMirror-selectednode {
+    background-color: var(--dark-darker);
+}

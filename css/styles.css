@@ -872,3 +872,36 @@ button:focus {
 a.action-menu-item {
     cursor: pointer;
 }
+
+math-inline .math-render {
+    font-size: 0.95em;
+}
+
+.katex {
+    font-size: 1.25em;
+}
+
+math-inline .math-src .ProseMirror {
+    padding: 0px 2px;
+    background-color: #E4E8EC;
+    display: inline-block;
+}
+
+math-inline .math-src::after, math-inline .math-src::before {
+    background-color: #E4E8EC;
+    color: #687D92;
+    padding: 0px 2px;
+}
+
+math-display .math-src::after, math-display .math-src::before {
+    background-color: #E4E8EC;
+    color: #687D92;
+}
+
+math-display.ProseMirror-selectednode {
+    background-color: #E4E8EC;
+}
+
+math-display .math-src .ProseMirror {
+    background-color: #E4E8EC;
+}
