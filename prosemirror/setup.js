@@ -875,6 +875,15 @@ function buildKeymap(schema, mapKeys) {
         });
     }
 
+    if (type = schema.nodes.heading) {
+        bind("Mod-1", prosemirrorCommands.setBlockType(type, {level: 1}));
+        bind("Mod-2", prosemirrorCommands.setBlockType(type, {level: 2}));
+        bind("Mod-3", prosemirrorCommands.setBlockType(type, {level: 3}));
+        bind("Mod-4", prosemirrorCommands.setBlockType(type, {level: 4}));
+        bind("Mod-5", prosemirrorCommands.setBlockType(type, {level: 5}));
+        bind("Mod-6", prosemirrorCommands.setBlockType(type, {level: 6}));
+    }
+
     return keys
 }
 
