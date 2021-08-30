@@ -173,6 +173,17 @@ var darkThemes = [ "a11y-dark", "agate", "androidstudio", "an-old-hope", "arta",
  */
 function init() {
 
+    window.addEventListener("auxclick", (event) => {
+        if (event.button === 1) {
+            event.preventDefault();
+        }
+    });
+    window.addEventListener("click", (event) => {
+        if (event.ctrlKey) {
+            event.preventDefault();
+        }
+    })
+
     contextMenu({
         showSearchWithGoogle: false,
         showLookUpSelection: false
