@@ -1,5 +1,12 @@
 /* BOOTSTRAP OVERRIDES */
 
+@font-face {
+    font-family: 'Fira-Mono';
+    src: url('../font/FiraMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: monospace;
+}
+
 :root {
     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --sidebar-width: 275px;
@@ -510,7 +517,7 @@ option:hover {
     padding: 0.5em;
     border: 1px solid #00000030;
     border-radius: 5px;
-    font-family: Consolas, monospace;
+    font-family: Consolas, 'Fira-Mono', monospace;
     min-height: 40px;
     /*cursor: pointer;*/
     margin-top: 10px;
