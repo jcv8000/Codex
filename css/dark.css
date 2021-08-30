@@ -212,7 +212,7 @@ a {
 }
 
 #sidebarResizer {
-    background-color: #2C3036;
+    background-color: rgba(0, 0, 0, 0.45);
 }
 
 #sidebarToggler {

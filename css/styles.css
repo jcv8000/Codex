@@ -812,13 +812,13 @@ button:focus {
 }
 
 #sidebarResizer {
-    width: 2px;
+    width: 1px;
     position: absolute;
     top: 0;
     bottom: 0;
     left: calc(var(--sidebar-width) - 1px);
     cursor: col-resize;
-    background-color: #DFE0E1;
+    background-color: rgba(0, 0, 0, 0.12);
     z-index: 100;
 }
 
