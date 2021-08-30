@@ -628,6 +628,10 @@ a.nav-link:hover {
     z-index: 1002;
 }
 
+#saveIndicatorTitle {
+    color: #212529;
+}
+
 .ProseMirror-selectednode {
     outline: 2px solid var(--accent-color);
 }

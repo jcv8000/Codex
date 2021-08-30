@@ -275,3 +275,20 @@ math-display .math-src::after, math-display .math-src::before {
 math-display.ProseMirror-selectednode {
     background-color: var(--dark-darker);
 }
+
+hr {
+    background-color: var(--dark-darker);
+}
+
+.ProseMirror-example-setup-style hr {
+    background-color: transparent;
+}
+
+#saveIndicator {
+    background-color: transparent;
+    color: #B1D8B1;
+}
+
+#saveIndicatorTitle {
+    color: #B1D8B1;
+}
