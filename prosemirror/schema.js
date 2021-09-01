@@ -89,13 +89,13 @@ var nodes = {
     group: "block",
     code: true,
     defining: true,
-	attrs: {params: {default: ""}},
+	attrs: {params: {default: ""}, collapsed: {default: false}},
     //parseDOM: [{tag: "pre", preserveWhitespace: "full"}],
     //toDOM: function toDOM() { return preDOM }
 	parseDOM: [{tag: "div", preserveWhitespace: "full", getAttrs: function (node) { return (
         {params: node.getAttribute("data-params") || ""}
     ); }}],
-    toDOM: function toDOM(node) { return ["div", {"class": "codeSnippet hljs language-" + node.attrs.params, "data-params": node.attrs.params, "spellcheck": "false"}, 0] }
+    toDOM: function toDOM(node) { return ["div", {"class": "codeSnippet hljs language-" + node.attrs.params + (node.attrs.collapsed ? " collapsed" : ""), "data-params": node.attrs.params, "spellcheck": "false"}, ["span", {"class": "snippetCollapser"}, (node.attrs.collapsed ? "∨" : "∧")], ["div", 0]] }
   },
 
   // :: NodeSpec The text node.

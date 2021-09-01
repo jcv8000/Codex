@@ -525,6 +525,34 @@ option:hover {
     white-space: pre;
     font-size: 14px;
     line-height: 1.5;
+    position: relative;
+}
+
+.codeSnippet.collapsed {
+    max-height: 105px;
+    overflow-y: hidden;
+}
+
+.codeSnippet .snippetCollapser {
+    display: none;
+}
+
+.codeSnippet:hover .snippetCollapser {
+    display: inline;
+}
+
+.snippetCollapser {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    padding: 2px 8px;
+    /*background-color: rgba(0, 0, 0, 0.05);*/
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.snippetCollapser:hover {
+    background-color: rgba(0, 0, 0, 0.15);;
 }
 
 .inline-code {

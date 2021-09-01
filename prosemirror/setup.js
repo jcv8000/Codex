@@ -1197,6 +1197,33 @@ function alignSelection(alignment) {
     }
 }
 
+let codeCollapsePlugin = new prosemirrorState.Plugin({
+    props: {
+        handleClick(view, _, event) {
+            
+            if (event.target.className == "snippetCollapser") {
+
+                let state = view.state;
+                state.doc.nodesBetween(state.selection.from, state.selection.to, (node, pos) => {
+
+                    if (node.type.name == "code_block") {
+
+                        let tr = state.tr;
+
+                        let newAttrs = Object.assign({}, node.attrs)
+                        newAttrs.collapsed = !node.attrs.collapsed;
+                        tr.setNodeMarkup(pos, node.type, newAttrs)
+
+                        tr = tr.setMeta("addToHistory", false);
+
+                        view.dispatch(tr);
+                    }
+                });
+
+            }
+        }
+    }
+});
 
 function exampleSetup(options) {
 
@@ -1209,6 +1236,7 @@ function exampleSetup(options) {
         prosemirrorKeymap.keymap(prosemirrorCommands.baseKeymap),
         prosemirrorGapcursor.gapCursor(),
         highlightPlugin(hljs),
+        codeCollapsePlugin,
         tableEditing(),
         prosemirrorKeymap.keymap({
             Tab: (state, dispatch) => {
