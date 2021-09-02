@@ -531,6 +531,7 @@ option:hover {
 .codeSnippet.collapsed {
     max-height: 105px;
     overflow-y: hidden;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -37px 36px -42px inset;
 }
 
 .codeSnippet .snippetCollapser {

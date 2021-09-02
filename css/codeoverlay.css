@@ -10,10 +10,6 @@
     border-radius: 5px;
 }
 
-.codeSnippet.collapsed {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px -37px 36px -42px inset;
-}
-
 .codeSnippet[data-params]:hover:before {
     display: none;
 }
