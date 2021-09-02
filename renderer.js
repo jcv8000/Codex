@@ -230,13 +230,15 @@ function init() {
             {
                 label: 'Reset Sidebar Width',
                 click: () => resizeSidebar(275)
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Toggle Developer Tools',
+                accelerator: 'CmdOrCtrl+Shift+I',
+                click: () => remote.getCurrentWebContents().openDevTools()
             }
-            /*,
-      {
-        label: 'Open Dev Tools',
-        accelerator: 'CmdOrCtrl+Shift+I',
-        click: () => remote.getCurrentWebContents().openDevTools()
-      }*/
         ]
     }));
 
@@ -358,16 +360,15 @@ function init() {
                 label: 'Toggle Editor Toolbar',
                 accelerator: 'CmdOrCtrl+T',
                 click: () => toggleEditorRibbon()
-            }
-            /*,
+            },
             {
                 type: 'separator'
             },
             {
-                label: 'Open Dev Tools',
+                label: 'Toggle Developer Tools',
                 accelerator: 'CmdOrCtrl+Shift+I',
                 click: () => remote.getCurrentWebContents().openDevTools()
-            }*/
+            }
         ]
     }));
 
