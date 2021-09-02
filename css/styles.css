@@ -525,7 +525,7 @@ option:hover {
     white-space: pre;
     font-size: 14px;
     line-height: 1.5;
-    position: relative;
+    position: static;
 }
 
 .codeSnippet.collapsed {
@@ -543,8 +543,7 @@ option:hover {
 
 .snippetCollapser {
     position: absolute;
-    top: 6px;
-    right: 8px;
+    right: 16px;
     padding: 2px 8px;
     /*background-color: rgba(0, 0, 0, 0.05);*/
     border-radius: 5px;

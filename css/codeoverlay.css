@@ -7,7 +7,7 @@
     display: block;
     font-size: 13px;
     position: absolute;
-    right: 8px;
+    right: 16px;
     padding: 2px 8px;
     background-color: inherit;
     filter: brightness(var(--code-overlay-bg-brightness));
