@@ -77,6 +77,7 @@ class UserPrefs {
     tabSize = 4;
     sidebarWidth = 275;
     showCodeOverlay = true;
+    codeWordWrap = false;
 }
 
 class Save {
@@ -725,6 +726,9 @@ function fixPrefs() {
     if (typeof prefs.showCodeOverlay === "undefined") {
         prefs.showCodeOverlay = true;
     }
+    if (typeof prefs.codeWordWrap === "undefined") {
+        prefs.codeWordWrap = false;
+    }
 }
 
 /**
@@ -847,6 +851,13 @@ function applyPrefsFromFile() {
         document.getElementById('codeOverlayLink').href = "css/codeoverlay.css";
     }
 
+    $('#codeWordWrapCheck').prop("checked", prefs.codeWordWrap);
+    if (prefs.codeWordWrap === true) {
+        document.documentElement.style.setProperty('--code-white-space', 'pre-wrap');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-white-space', 'pre');
+    }
 }
 
 /**
@@ -961,6 +972,14 @@ function applyPrefsRuntime(needsRestart = false) {
     }
     else {
         document.getElementById('codeOverlayLink').href = "";
+    }
+
+    prefs.codeWordWrap = $('#codeWordWrapCheck').is(':checked');
+    if (prefs.codeWordWrap === true) {
+        document.documentElement.style.setProperty('--code-white-space', 'pre-wrap');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-white-space', 'pre');
     }
 }
 

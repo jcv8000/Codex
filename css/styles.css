@@ -14,6 +14,7 @@
     --accent-color: #FF7A27;
     --editor-scale: 1.0;
     --footer-height: 24px;
+    --code-white-space: 'pre';
 }
 
 body {
@@ -522,7 +523,7 @@ option:hover {
     /*cursor: pointer;*/
     margin-top: 10px;
     margin-bottom: 10px;
-    white-space: pre;
+    white-space: var(--code-white-space);
     font-size: 14px;
     line-height: 1.5;
     position: static;
