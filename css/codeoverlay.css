@@ -1,7 +1,3 @@
-:root {
-    --code-overlay-bg-brightness: 0.95;
-}
-
 .codeSnippet[data-params]:before {
     content: attr(data-params);
     display: block;
@@ -15,12 +11,7 @@
 }
 
 .codeSnippet.collapsed {
-    box-shadow: rgba(0, 0, 0, var(--code-overlay-bg-brightness)) 0px -37px 36px -42px inset;
-}
-
-.snippetCollapser {
-    background-color: inherit;
-    filter: brightness(var(--code-overlay-bg-brightness));
+    box-shadow: rgba(0, 0, 0, 0.2) 0px -37px 36px -42px inset;
 }
 
 .codeSnippet[data-params]:hover:before {

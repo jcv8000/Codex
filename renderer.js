@@ -791,9 +791,13 @@ function applyPrefsFromFile() {
 
     if (lightThemes.includes(prefs.codeStyle)) {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '0');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.07');
     }
     else {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '255');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.3');
     }
 
     document.getElementById('accentColorPicker').value = prefs.accentColor;
@@ -856,9 +860,13 @@ function applyPrefsRuntime(needsRestart = false) {
 
     if (lightThemes.includes(prefs.codeStyle)) {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '0');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.07');
     }
     else {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '255');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.3');
     }
 
     prefs.theme = document.getElementById('themeSelect').value;
