@@ -482,13 +482,13 @@
                                     Level 1
                                     Headings</label>
                             </div>
-                            <div class="custom-control custom-checkbox">
+                            <!--<div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="darkmodePDFCheck"
                                     onchange="applyPrefsRuntime()">
                                 <label class="custom-control-label" for="darkmodePDFCheck">Dark mode PDFs <span
                                         style="font-size: 12px">
                                         (Please do not actually print these out)</span></label>
-                            </div>
+                            </div>-->
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="openPDFonExportCheck"
                                     onchange="applyPrefsRuntime()">
@@ -760,6 +760,9 @@
         <a class="dropdown-item" href="#" onclick="editSelectedNotebook()"><span data-feather="edit"
                 class="context-menu-glyph"></span>Edit Notebook</a>
         <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" onclick="openExportNotebookModal()"><span data-feather="external-link"
+            class="context-menu-glyph"></span>Export all pages to PDF</a>
+        <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#deleteNotebookModal" data-toggle="modal" style="color: red"><span
                 data-feather="trash-2" class="context-menu-glyph"></span>Delete notebook</a>
     </div>
@@ -770,6 +773,9 @@
                 class="context-menu-glyph"></span>Rename page</a>
         <a class="dropdown-item" href="#" onclick="toggleFavoritePage()"><span data-feather="star"
                 class="context-menu-glyph"></span><span id="FavoritePageLink">Favorite page</span></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" onclick="printRightClickedPage()"><span data-feather="external-link"
+            class="context-menu-glyph"></span>Export to PDF</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#deletePageModal" data-toggle="modal" style="color: red"><span
                 data-feather="trash-2" class="context-menu-glyph"></span>Delete page</a>
@@ -882,6 +888,55 @@
         </div>
     </div>
     <!-- OOBE TUTORIAL 4 -->
+
+
+    <!-- EXPORT NOTEBOOK MODAL -->
+    <div class="modal fade unselectable" id="exportNotebookModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header">
+                    <h5 class="modal-title">Export all pages to PDF</h5>
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>-->
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <span id="exportNotebookModalIcon" data-feather="book" style="width: 32px; height: 32px; vertical-align: -12px;"></span>
+                        <span id="exportNotebookModalTitle" class="ml-2" style="font-size: 16px; font-weight: 500;"></span>
+                        <span id="exportNotebookModalPageCount"></span>
+                    </center>
+                    <hr>
+                    <div class="mb-3">
+                        <span data-feather="info" style="color: dodgerblue;"></span>
+                        You should create a new folder for the files to be saved into.
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn mybtn-primary" onclick="exportNotebookDirDialog()" style="padding: 0px 10px; font-size: 13px;">Choose Location</button>
+                        </div>
+                        <div class="form-control">
+                            <span id="exportNodebookLocation" style="font-size: 13px;">No location set</span>
+                        </div>
+                    </div>
+                    <div class="mt-5 mb-2" id="exportNotebookProgressSection" style="display: none;">
+                        <div class="progress mb-1">
+                            <div id="exportNotebookProgressBar" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <center>
+                            <span id="exportNotebookProgressText"></span>
+                        </center>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn mybtn" id="exportNotebookCancelButton" onclick="closeExportNotebookModal()">Cancel</button>
+                    <button type="button" class="btn mybtn-primary" id="exportNotebookButton" disabled="true" onclick="exportNotebookPages()">Export</button>
+                    <button type="button" class="btn mybtn" id="exportNotebookCloseButton" onclick="closeExportNotebookModal()" style="display: none;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- NEW PAGE MODAL -->
 
 
     <script src="renderer.js"></script>

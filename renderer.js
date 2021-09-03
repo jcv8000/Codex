@@ -168,6 +168,7 @@ var destroyOpenedNotebooks = false;
 var lightThemes = [ "a11y-light", "arduino-light", "ascetic", "atelier-cave-light", "atelier-dune-light", "atelier-estuary-light", "atelier-forest-light", "atelier-heath-light", "atelier-lakeside-light", "atelier-plateau-light", "atelier-savanna-light", "atelier-seaside-light", "atelier-sulphurpool-light", "atom-one-light", "color-brewer", "default", "docco", "foundation", "github-gist", "github", "font-weight: bold;", "googlecode", "grayscale", "gruvbox-light", "idea", "isbl-editor-light", "kimbie.light", "lightfair", "magula", "mono-blue", "nnfx", "paraiso-light", "purebasic", "qtcreator_light", "routeros", "solarized-light", "tomorrow", "vs", "xcode" ];
 var darkThemes = [ "a11y-dark", "agate", "androidstudio", "an-old-hope", "arta", "atelier-cave-dark", "atelier-dune-dark", "atelier-estuary-dark", "atelier-forest-dark", "atelier-heath-dark", "atelier-lakeside-dark", "atelier-plateau-dark", "atelier-savanna-dark", "atelier-seaside-dark", "atelier-sulphurpool-dark", "atom-one-dark-reasonable", "atom-one-dark", "font-weight: bold;", "codepen-embed", "darcula", "dark", "dracula", "far", "gml", "gradient-dark", "gruvbox-dark", "hopscotch", "hybrid", "ir-black", "isbl-editor-dark", "kimbie.dark", "lioshi", "monokai-sublime", "monokai", "night-owl", "nnfx-dark", "nord", "ocean", "obsidian", "paraiso-dark", "pojoaque", "qtcreator_dark", "railscasts", "rainbow", "shades-of-purple", "solarized-dark", "srcery", "sunburst", "tomorrow-night-blue", "tomorrow-night-bright", "tomorrow-night-eighties", "tomorrow-night", "vs2015", "xt256", "zenburn" ];
 
+var exportNotebookLocation = "";
 
 /**
  * Run this function at start.
@@ -294,7 +295,7 @@ function init() {
             {
                 label: 'Export page to PDF...',
                 accelerator: 'CmdOrCtrl+P',
-                click: () => printPage()
+                click: () => printCurrentPage()
             },
             {
                 type: 'separator'
@@ -2103,8 +2104,63 @@ ipcRenderer.on('updateAvailable', function (e, newVer) {
     }, 0);
 })
 
-async function printPage() {
-    let content = window.view.dom.innerHTML;
+function printCurrentPage() {
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "PDF Document", extensions: ["pdf"] }],
+        title: "Export page to PDF",
+        defaultPath: "*/" + sanitizeStringForFiles(selectedPage.title) + ".pdf"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            
+            printPage(window.view.dom.innerHTML, result.filePath);
+
+        }
+
+    });
+}
+
+function printRightClickedPage() {
+
+    let page = save.notebooks[rightClickedNotebookIndex].pages[rightClickedPageIndex];
+
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "PDF Document", extensions: ["pdf"] }],
+        title: "Export page to PDF",
+        defaultPath: "*/" + sanitizeStringForFiles(page.title) + ".pdf"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            
+            let editorView = null;
+            try {
+                let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
+
+                editorView = new EditorView(null, {
+                    state: EditorState.create({
+                        doc: mySchema.nodeFromJSON(JSON.parse(json)),
+                        plugins: exampleSetup({ schema: mySchema, tabSize: prefs.tabSize })
+                    })
+                });
+
+                let html = editorView.dom.innerHTML;
+
+                printPage(html, result.filePath);
+            }
+            catch (exception) {
+                console.error(exception);
+                alert("An error occurred while exporting the page. Check the developer console (Ctrl-Shift-I) for more information.");
+            }
+            finally {
+                editorView.destroy();
+            }
+
+        }
+
+    });
+}
+
+async function printPage(content, path, disableOpening = false) {
 
     let workerWindow = new remote.BrowserWindow({
         parent: remote.getCurrentWindow(),
@@ -2117,34 +2173,27 @@ async function printPage() {
     await workerWindow.webContents.executeJavaScript(`document.getElementById('codeStyleLink').href = './node_modules/highlight.js/styles/${prefs.codeStyle}.css';`);
 
 
-    if (prefs.pdfDarkMode == true) {
+    /*if (prefs.pdfDarkMode == true) {
         await workerWindow.webContents.executeJavaScript(`document.getElementById('darkStyleLink').href = 'css/dark.css';`);
-    }
+    }*/
 
     if (prefs.pdfBreakOnH1 == true) {
         await workerWindow.webContents.executeJavaScript('enableBreaksOnH1()');
     }
 
-    let path = remote.dialog.showSaveDialogSync(remote.getCurrentWindow(), {
-        filters: [{ name: "PDF Document", extensions: ["pdf"] }],
-        title: "Export page to PDF",
-        defaultPath: "*/" + sanitizeStringForFiles(selectedPage.title) + ".pdf"
+    // !!! This is here to give the new page time to render KaTeX equations !!!
+    await sleep(200);
+
+    var data = await workerWindow.webContents.printToPDF({ pageSize: 'A4', printBackground: true, scaleFactor: 100, marginsType: 0 });
+
+    fs.writeFileSync(path, data, (err) => {
+        console.log(err.message);
+        workerWindow.destroy();
+        return;
     });
 
-    if (path) {
-
-        var data = await workerWindow.webContents.printToPDF({ pageSize: 'A4', printBackground: true, scaleFactor: 100, marginsType: 1 });
-
-        fs.writeFileSync(path, data, (err) => {
-            console.log(err.message);
-            workerWindow.destroy();
-            return;
-        });
-
-        if (prefs.openPDFonExport == true)
-            shell.openExternal('file:///' + path);
-
-    }
+    if (prefs.openPDFonExport == true && disableOpening == false)
+        shell.openExternal('file:///' + path);
 
     workerWindow.destroy();
 
@@ -2199,4 +2248,111 @@ function autoOpenHelpTab() {
 
     showHelpPage();
     loadHelpPage('howtouse.html');
+}
+
+function openExportNotebookModal() {
+
+    if (save.notebooks[rightClickedNotebookIndex].pages.length > 0) {
+
+        $('#exportNotebookModal').modal({backdrop: 'static', keyboard: false})
+
+        document.getElementById('exportNotebookModalIcon').setAttribute('data-feather', save.notebooks[rightClickedNotebookIndex].icon);
+        document.getElementById('exportNotebookModalIcon').style.color = save.notebooks[rightClickedNotebookIndex].color;
+
+        let text = save.notebooks[rightClickedNotebookIndex].name;
+        if (text.length > 26) {
+            text = text.substring(0, 26) + "...";
+        }
+
+        document.getElementById('exportNotebookModalTitle').textContent = text;
+        document.getElementById('exportNotebookModalPageCount').textContent = " - " + save.notebooks[rightClickedNotebookIndex].pages.length + " pages"
+    }
+    else {
+        let name = save.notebooks[rightClickedNotebookIndex].name;
+        if (name.length > 16) {
+            name = name.substring(0, 16) + "...";
+        }
+        popup("Info", "Unable to export this Notebook", "This notebook (" + name + ") doesn't have any pages in it.");
+    }
+}
+
+function exportNotebookDirDialog() {
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), { properties: ['openDirectory'] }).then((result) => {
+        if (result.canceled == false) {
+            document.getElementById('exportNodebookLocation').innerText = result.filePaths[0];
+
+            exportNotebookLocation = result.filePaths[0];
+
+            document.getElementById('exportNotebookButton').disabled = false;
+        }
+    });
+}
+
+async function exportNotebookPages() {
+
+    document.getElementById('exportNotebookButton').disabled = true;
+    document.getElementById('exportNotebookProgressSection').style.display = "block";
+
+    let notebook = save.notebooks[rightClickedNotebookIndex];
+
+    let editorView = null;
+
+    document.getElementById('exportNotebookProgressText').textContent = `Exporting... (0/${notebook.pages.length})`;
+
+    try {
+        for (let i = 0; i < notebook.pages.length; i++) {
+
+            let page = notebook.pages[i];
+            let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
+
+            editorView = new EditorView(null, {
+                state: EditorState.create({
+                    doc: mySchema.nodeFromJSON(JSON.parse(json)),
+                    plugins: exampleSetup({ schema: mySchema, tabSize: prefs.tabSize })
+                })
+            });
+
+            let html = editorView.dom.innerHTML;
+
+            await printPage(html, exportNotebookLocation + "/" + sanitizeStringForFiles(page.title) + ".pdf", true);
+
+            editorView.destroy();
+
+            let percent = ((i+1) / notebook.pages.length) * 100;
+            document.getElementById('exportNotebookProgressBar').style.width = `${percent}%`;
+            document.getElementById('exportNotebookProgressText').textContent = `Exporting... (${i+1}/${notebook.pages.length})`;
+        }
+        document.getElementById('exportNotebookProgressText').textContent = "Done.";
+
+        document.getElementById('exportNotebookCancelButton').style.display = "none";
+        document.getElementById('exportNotebookButton').style.display = "none";
+        document.getElementById('exportNotebookCloseButton').style.display = "block";
+    }
+    catch (exception) {
+        console.error(exception);
+        alert("An error occurred while exporting the pages. Check the developer console (Ctrl-Shift-I) for more information.");
+        closeExportNotebookModal();
+    }
+    finally {
+        if (editorView != null) {
+            editorView.destroy();
+        }
+    }
+}
+
+function closeExportNotebookModal() {
+    $('#exportNotebookModal').modal('hide');
+
+    document.getElementById('exportNotebookCancelButton').style.display = "block";
+    document.getElementById('exportNotebookButton').style.display = "block";
+    document.getElementById('exportNotebookCloseButton').style.display = "none";
+    document.getElementById('exportNotebookProgressSection').style.display = "none";
+    document.getElementById('exportNodebookLocation').innerText = "No location set";
+    exportNotebookLocation = "";
+
+    document.getElementById('exportNotebookCancelButton').disabled = false;
+    document.getElementById('exportNotebookButton').disabled = false;
+
+    document.getElementById('exportNotebookProgressBar').style.width = "0%";
+
 }
