@@ -50,60 +50,37 @@ else {
 function createWindow() {
     // Create the browser window.
 
+    let useFrame = true;
+    let iconPath = "";
+
     if (process.platform === 'win32') {
-        mainWindow = new BrowserWindow({
-            width: 1280,
-            height: 720,
-            frame: false,
-            minWidth: 920,
-            minHeight: 500,
-            webPreferences: {
-                nodeIntegration: true,
-                enableRemoteModule: true,
-                worldSafeExecuteJavaScript: true,
-				contextIsolation: false
-            },
-            icon: __dirname + '/icons/icon.ico',
-            show: false,
-            title: 'Codex'
-        })
+        useFrame = false;
+        iconPath = '/icons/icon.ico';
     }
     else if (process.platform === 'linux') {
-        mainWindow = new BrowserWindow({
-            width: 1280,
-            height: 720,
-            frame: true,
-            minWidth: 920,
-            minHeight: 500,
-            webPreferences: {
-                nodeIntegration: true,
-                enableRemoteModule: true,
-                worldSafeExecuteJavaScript: true,
-				contextIsolation: false
-            },
-            icon: __dirname + '/icons/64x64.png',
-            show: false,
-            title: 'Codex'
-        })
+        iconPath = '/icons/64x64.png';
     }
     else if (process.platform === 'darwin') {
-        mainWindow = new BrowserWindow({
-            width: 1280,
-            height: 720,
-            frame: true,
-            minWidth: 920,
-            minHeight: 500,
-            webPreferences: {
-                nodeIntegration: true,
-                enableRemoteModule: true,
-                worldSafeExecuteJavaScript: true,
-				contextIsolation: false
-            },
-            icon: __dirname + '/icons/icon.icns',
-            show: false,
-            title: 'Codex'
-        })
+        iconPath = '/icons/icon.icns';
     }
+
+
+    mainWindow = new BrowserWindow({
+        width: 1280,
+        height: 720,
+        frame: useFrame,
+        minWidth: 920,
+        minHeight: 500,
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            worldSafeExecuteJavaScript: true,
+            contextIsolation: false
+        },
+        icon: __dirname + iconPath,
+        show: false,
+        title: 'Codex'
+    });
 
     mainWindow.webContents.once('dom-ready', () => {
         mainWindow.show();
