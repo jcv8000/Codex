@@ -2162,6 +2162,8 @@ function printRightClickedPage() {
 
 async function printPage(content, path, disableOpening = false) {
 
+    content = content.replace(/\\n/g, "CODEX_PRINT_NEWLINE_CHAR_DONT_EVER_TYPE_THIS");
+
     let workerWindow = new remote.BrowserWindow({
         parent: remote.getCurrentWindow(),
         show: false,
@@ -2181,8 +2183,10 @@ async function printPage(content, path, disableOpening = false) {
         await workerWindow.webContents.executeJavaScript('enableBreaksOnH1()');
     }
 
+    await workerWindow.webContents.executeJavaScript('fixNewLines()')
+
     // !!! This is here to give the new page time to render KaTeX equations !!!
-    await sleep(200);
+    await sleep(400);
 
     var data = await workerWindow.webContents.printToPDF({ pageSize: 'A4', printBackground: true, scaleFactor: 100, marginsType: 0 });
 

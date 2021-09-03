@@ -40,4 +40,8 @@
         }
         document.getElementsByTagName('head')[0].appendChild(style);
     }
+
+    function fixNewLines() {
+        document.documentElement.innerHTML = document.documentElement.innerHTML.replace('CODEX_PRINT_NEWLINE_CHAR_DONT_EVER_TYPE_THIS', '\\n')
+    }
 </script>
