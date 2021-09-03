@@ -1906,20 +1906,22 @@ function resizeSidebar(width) {
     }
 }
 
-async function DataDirDialog() {
-    let result = await remote.dialog.showOpenDialogSync(remote.getCurrentWindow(), {
+function DataDirDialog() {
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
         properties: ['openDirectory']
-    })
+    }).then((result) => {
 
-    if (result != undefined) {
-        document.getElementById('dataDirInput').innerText = result[0];
+        if (result.canceled == false) {
+            document.getElementById('dataDirInput').innerText = result.filePaths[0];
 
-        destroyOpenedNotebooks = true;
-        saveData();
+            destroyOpenedNotebooks = true;
+            saveData();
 
-        canSaveData = false;
-        applyPrefsRuntime(true);
-    }
+            canSaveData = false;
+            applyPrefsRuntime(true);
+        }
+
+    });
 }
 
 function revertToDefaultDataDir() {
