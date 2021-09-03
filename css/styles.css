@@ -761,7 +761,7 @@ label {
 }
 
 *:not(.codeSnippet)::-webkit-scrollbar {
-    width: 10px;
+    width: 16px;
 }
 
 ::-webkit-scrollbar-track {
@@ -771,6 +771,8 @@ label {
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #D1D7DE;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -798,10 +800,12 @@ label {
 
 .sidebar-sticky::-webkit-scrollbar-thumb {
     border-radius: 3px;
+    border: 3px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
 }
 
 .sidebar-sticky::-webkit-scrollbar {
-    width: 6px;
+    width: 12px;
 }
 
 .sidebar-sticky::-webkit-scrollbar-track {
