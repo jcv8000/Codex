@@ -2303,10 +2303,26 @@ async function exportNotebookPages() {
 
     document.getElementById('exportNotebookProgressText').textContent = `Exporting... (0/${notebook.pages.length})`;
 
+    let extra = 1;
+
     try {
         for (let i = 0; i < notebook.pages.length; i++) {
 
             let page = notebook.pages[i];
+            let title = page.title;
+
+            //check and make sure pages don't have the same name
+            for (let e = 0; e < notebook.pages.length; e++) {
+                //don't check yourself
+                if (i != e) {
+                    if (page.title == notebook.pages[e].title) {
+                        title += " " + extra;
+                        extra++;
+                        break;
+                    }
+                }
+            }
+
             let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
 
             editorView = new EditorView(null, {
@@ -2318,7 +2334,7 @@ async function exportNotebookPages() {
 
             let html = editorView.dom.innerHTML;
 
-            await printPage(html, exportNotebookLocation + "/" + sanitizeStringForFiles(page.title) + ".pdf", true);
+            await printPage(html, exportNotebookLocation + "/" + sanitizeStringForFiles(title) + ".pdf", true);
 
             editorView.destroy();
 
