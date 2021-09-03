@@ -568,7 +568,7 @@ option:hover {
     font-size: 13px;
     font-weight: 600;
     padding-top: 2px !important;
-    padding-bottom: 2px !important;
+    padding-bottom: 4px !important;
     padding-left: 4px !important;
     padding-right: 4px !important;
     border: 1px solid #00000030;
@@ -576,6 +576,8 @@ option:hover {
     font-family: Consolas, monospace;
     word-wrap: break-word;
     display: inline !important;
+    background: white;
+    color: #333333;
 }
 
 /*.codeSnippet:focus {
@@ -975,4 +977,20 @@ math-display.ProseMirror-selectednode {
 
 math-display .math-src .ProseMirror {
     background-color: #E4E8EC;
+}
+
+.key-symbol {
+    font-size: 14px;
+    font-weight: 600;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    border: 1px solid #00000030;
+    border-radius: 4px;
+    word-wrap: break-word;
+    display: inline !important;
+    background: white;
+    color: #333333;
+    box-shadow: 0px 2px 0px 0px #b5b4b4;
 }

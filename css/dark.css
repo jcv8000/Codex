@@ -292,3 +292,15 @@ hr {
 #saveIndicatorTitle {
     color: #B1D8B1;
 }
+
+.inline-code {
+    color: #abb2bf;
+    background: #282c34;
+}
+
+.key-symbol {
+    background-color: #4c4c4c;
+    color: var(--text-color);
+    box-shadow: 0px 2px 0px 0px #1f1f1f;
+    border: 1px solid #00000070;
+}
