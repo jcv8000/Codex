@@ -78,6 +78,7 @@ class UserPrefs {
     sidebarWidth = 275;
     showCodeOverlay = true;
     codeWordWrap = false;
+    doneTutorial = false;
 }
 
 class Save {
@@ -588,7 +589,7 @@ function init() {
 
 
     // first time use tutorial
-    if (save.notebooks.length <= 0) {
+    if (prefs.doneTutorial == false) {
         //probably first use
         setTimeout(() => { $("#tutorialModal1").modal('show') }, 500);
     }
@@ -729,6 +730,9 @@ function fixPrefs() {
     }
     if (typeof prefs.codeWordWrap === "undefined") {
         prefs.codeWordWrap = false;
+    }
+    if (typeof prefs.doneTutorial === "undefined") {
+        prefs.doneTutorial = false;
     }
 }
 
@@ -1107,6 +1111,7 @@ function applyModalEventHandlers() {
                 setTimeout(() => {
                     $("#tutorialModal4").modal('show');
                     doingTutorial = false;
+                    prefs.doneTutorial = true;
                 }, 300);
             }
         }
