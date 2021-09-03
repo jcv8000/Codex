@@ -1712,8 +1712,8 @@ function showHelpPage() {
     document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
-function loadHelpPage(filename) {
-    document.getElementById('helpContent').innerHTML = fs.readFileSync(__dirname + "/docs/" + filename, 'utf8');
+function loadHelpPage(title) {
+    document.getElementById('helpContent').innerHTML = fs.readFileSync(__dirname + "/docs/" + title + "/index.html", 'utf8');
 }
 
 /**
