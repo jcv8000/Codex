@@ -100,7 +100,7 @@
                                     <a href="#" class="nav-link my-sidebar-link indent unselectable"
                                         onclick="showHelpPage(); loadHelpPage('equations')">
                                         <div class="row">
-                                            <div class="col-auto pr-0"><span data-feather="plus"></span></div>
+                                            <div class="col-auto pr-0"><span data-feather="divide"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                                                 Math and Equations
                                             </div>
@@ -783,111 +783,29 @@
 
 
 
-    <!-- OOBE TUTORIAL 1 -->
-    <div class="modal fade unselectable" id="tutorialModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- NEW USER POPUP -->
+    <div class="modal fade unselectable" id="firstUseModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content shadow-lg">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tutorial</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title">Welcome</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="prefs.firstUse = false;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     It looks like this is the first time you're using Codex.<br><br>
-                    Click Continue if you would like to see a short tutorial about how to use Codex.
+                    Click Continue if you would like to see a short guide about how to use Codex.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="mybtn" onclick="prefs.doneTutorial = true;" data-dismiss="modal">No thanks</button>
+                    <button type="button" class="mybtn" onclick="prefs.firstUse = false;" data-dismiss="modal">No thanks</button>
                     <button type="button" class="mybtn-primary" data-dismiss="modal"
-                        onclick="startTutorial();">Continue</button>
+                        onclick="autoOpenHelpTab(); prefs.firstUse = false;">Continue</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- OOBE TUTORIAL 1 -->
-
-    <!-- OOBE TUTORIAL 2 -->
-    <div class="modal fade unselectable" id="tutorialModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content shadow-lg">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tutorial (1/3)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    First, let's create a new Notebook.<br><br>
-
-                    Click the <span data-feather="plus-circle"></span> icon next to the "NOTEBOOKS" section on the
-                    sidebar on the
-                    left.<br>
-                    Then, type in a name for the notebook, like what class it's for. You can also set a custom color for
-                    the
-                    notebook.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="mybtn-primary" data-dismiss="modal">Continue</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- OOBE TUTORIAL 2 -->
-
-    <!-- OOBE TUTORIAL 3 -->
-    <div class="modal fade unselectable" id="tutorialModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content shadow-lg">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tutorial (2/3)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Now let's create a Page inside that notebook.<br><br>
-
-                    Click on the notebook you just created to view what's in it.<br><br>Right-click on the new notebook,
-                    and click
-                    "New Page" and give it a name.<br><br> This could be something like a section/chapter in the class.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="mybtn-primary" data-dismiss="modal">Continue</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- OOBE TUTORIAL 3 -->
-
-
-    <!-- OOBE TUTORIAL 4 -->
-    <div class="modal fade unselectable" id="tutorialModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content shadow-lg">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tutorial (3/3)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Now you have a notebook page where you can write down your notes. Click on the page to edit
-                    it.<br><br>
-
-                    To add a code block to the page, click the "Type..." menu on the editor toolbar and choose your
-                    desired
-                    programming language.<br>
-                    Or, you can type a macro such as <span class="inline-code">[cpp]</span> for C++ or <span
-                        class="inline-code">[js]</span> for JavaScript.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="mybtn-primary" data-dismiss="modal">Finish</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- OOBE TUTORIAL 4 -->
+    <!-- NEW USER POPUP -->
 
 
     <!-- EXPORT NOTEBOOK MODAL -->

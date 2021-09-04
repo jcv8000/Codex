@@ -78,7 +78,7 @@ class UserPrefs {
     sidebarWidth = 275;
     showCodeOverlay = true;
     codeWordWrap = false;
-    doneTutorial = false;
+    firstUse = true;
 }
 
 class Save {
@@ -588,10 +588,10 @@ function init() {
     document.execCommand("enableInlineTableEditing", false, false)
 
 
-    // first time use tutorial
-    if (prefs.doneTutorial == false) {
+    // first time use popup
+    if (prefs.firstUse == true) {
         //probably first use
-        setTimeout(() => { $("#tutorialModal1").modal('show') }, 500);
+        setTimeout(() => { $("#firstUseModal").modal('show') }, 500);
     }
 
 
@@ -731,8 +731,8 @@ function fixPrefs() {
     if (typeof prefs.codeWordWrap === "undefined") {
         prefs.codeWordWrap = false;
     }
-    if (typeof prefs.doneTutorial === "undefined") {
-        prefs.doneTutorial = false;
+    if (typeof prefs.firstUse === "undefined") {
+        prefs.firstUse = true;
     }
 }
 
@@ -1105,15 +1105,6 @@ function applyModalEventHandlers() {
             //addPageToAList(rightClickedNotebookIndex, index);
 
             document.getElementById('newPageNameInput').value = "";
-
-            //tutorial purposes
-            if (doingTutorial == true) {
-                setTimeout(() => {
-                    $("#tutorialModal4").modal('show');
-                    doingTutorial = false;
-                    prefs.doneTutorial = true;
-                }, 300);
-            }
         }
         else {
             document.getElementById('newPageNameInput').classList.add("is-invalid");
@@ -2092,7 +2083,7 @@ function _loadCloudSyncPage() {
     page.classList.toggle('active', true);
 
     showHelpPage();
-    loadHelpPage('cloudsync.html');
+    loadHelpPage('cloudsyncing');
 }
 
 function openDataDir() {
@@ -2221,27 +2212,6 @@ function revertAccentColor() {
     document.documentElement.style.setProperty('--accent-color', prefs.accentColor);
 }
 
-let doingTutorial = false;
-async function startTutorial() {
-
-    doingTutorial = true;
-    await sleep(300);
-
-    $("#tutorialModal2").modal('show');
-
-    let nbCount = save.notebooks.length;
-
-    while (save.notebooks.length <= nbCount) {
-        if (save.notebooks.length > nbCount) {
-            break;
-        }
-        await sleep(500);
-    }
-
-    await sleep(300);
-    $("#tutorialModal3").modal('show');
-}
-
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -2259,7 +2229,7 @@ function autoOpenHelpTab() {
     page.classList.toggle('active', true);
 
     showHelpPage();
-    loadHelpPage('howtouse.html');
+    loadHelpPage('gettingstarted');
 }
 
 function openExportNotebookModal() {
