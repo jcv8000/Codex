@@ -573,7 +573,7 @@ option:hover {
     padding-right: 4px !important;
     border: 1px solid #00000030;
     border-radius: 4px;
-    font-family: Consolas, monospace;
+    font-family: Consolas, 'Fira-Mono', monospace;
     word-wrap: break-word;
     display: inline !important;
     background: white;
