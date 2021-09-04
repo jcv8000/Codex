@@ -676,8 +676,11 @@ function buildMenuItems(schema) {
         r.insertHorizontalRule = new prosemirrorMenu.MenuItem({
             title: "Insert horizontal rule",
             label: "Horizontal rule",
-            enable: function enable(state) { return canInsert(state, hr) },
-            run: function run(state, dispatch) { dispatch(state.tr.replaceSelectionWith(hr.create())); }
+            enable: function enable(state) { return (canInsert(state, hr) && !isInTable(state) && !isCursorInCodeBlock(state)) },
+            run: function run(state, dispatch) {
+                if (!isInTable(state) && !isCursorInCodeBlock(state))
+                    dispatch(state.tr.replaceSelectionWith(hr.create()));
+            }
         });
     }
 
@@ -686,7 +689,7 @@ function buildMenuItems(schema) {
             label: "Table",
             run: insertTable,
             enable: function enable(state) {
-                return !isInTable(state);
+                return !isInTable(state) && !isCursorInCodeBlock(state);
             }
         });
     }
@@ -1047,37 +1050,39 @@ let tableMenu = [
     item("Make cell not-green", setCellAttr("background", null))
 ]
 
-function insertTable(
-    state,
-    dispatch
-) {
-    const tr = state.tr.replaceSelectionWith(
-        state.schema.nodes.table.create(
-            undefined,
-            Fragment.fromArray([
-                state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
-                    //state.schema.nodes.table_cell.createAndFill(),
-                    //state.schema.nodes.table_cell.createAndFill()
-                    state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
-                        state.schema.nodes.paragraph.createAndFill(null, state.schema.text("New"))
+function insertTable(state, dispatch) {
+
+    if (!isCursorInCodeBlock(state)) {
+
+        const tr = state.tr.replaceSelectionWith(
+            state.schema.nodes.table.create(
+                undefined,
+                Fragment.fromArray([
+                    state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
+                        //state.schema.nodes.table_cell.createAndFill(),
+                        //state.schema.nodes.table_cell.createAndFill()
+                        state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
+                            state.schema.nodes.paragraph.createAndFill(null, state.schema.text("New"))
+                        ])),
+                        state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
+                            state.schema.nodes.paragraph.createAndFill(null, state.schema.text("Table"))
+                        ]))
                     ])),
-                    state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
-                        state.schema.nodes.paragraph.createAndFill(null, state.schema.text("Table"))
+                    state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
+                        state.schema.nodes.table_cell.createAndFill(),
+                        state.schema.nodes.table_cell.createAndFill()
                     ]))
-                ])),
-                state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
-                    state.schema.nodes.table_cell.createAndFill(),
-                    state.schema.nodes.table_cell.createAndFill()
-                ]))
-            ])
-        )
-    );
+                ])
+            )
+        );
 
-    if (dispatch) {
-        dispatch(tr);
+        if (dispatch) {
+            dispatch(tr);
+        }
+
+        return true;
+
     }
-
-    return true;
 }
 
 function makeCodeBlock(language) {
