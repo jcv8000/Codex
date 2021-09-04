@@ -1056,8 +1056,14 @@ function insertTable(
             undefined,
             Fragment.fromArray([
                 state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
-                    state.schema.nodes.table_cell.createAndFill(),
-                    state.schema.nodes.table_cell.createAndFill()
+                    //state.schema.nodes.table_cell.createAndFill(),
+                    //state.schema.nodes.table_cell.createAndFill()
+                    state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
+                        state.schema.nodes.paragraph.createAndFill(null, state.schema.text("New"))
+                    ])),
+                    state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
+                        state.schema.nodes.paragraph.createAndFill(null, state.schema.text("Table"))
+                    ]))
                 ])),
                 state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
                     state.schema.nodes.table_cell.createAndFill(),
