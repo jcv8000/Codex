@@ -489,14 +489,18 @@
                                         style="font-size: 12px">
                                         (Please do not actually print these out)</span></label>
                             </div>-->
+
+                        </div>
+
+                        <div class="form-group">
+                            <h5 class="settingTitle">Exporting to PDF/Markdown</h5>
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="openPDFonExportCheck"
                                     onchange="applyPrefsRuntime()">
-                                <label class="custom-control-label" for="openPDFonExportCheck">Open the created PDF
+                                <label class="custom-control-label" for="openPDFonExportCheck">Open the created file
                                     after
                                     exporting</label>
                             </div>
-
                         </div>
 
                         <center>
@@ -761,7 +765,7 @@
                 class="context-menu-glyph"></span>Edit Notebook</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" onclick="openExportNotebookModal()"><span data-feather="external-link"
-            class="context-menu-glyph"></span>Export all pages to PDF</a>
+            class="context-menu-glyph"></span>Export all pages...</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#deleteNotebookModal" data-toggle="modal" style="color: red"><span
                 data-feather="trash-2" class="context-menu-glyph"></span>Delete notebook</a>
@@ -776,6 +780,8 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" onclick="printRightClickedPage()"><span data-feather="external-link"
             class="context-menu-glyph"></span>Export to PDF</a>
+        <a class="dropdown-item" href="#" onclick="exportRightClickedPageToMarkdown()"><span data-feather="hash"
+            class="context-menu-glyph"></span>Export to Markdown</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#deletePageModal" data-toggle="modal" style="color: red"><span
                 data-feather="trash-2" class="context-menu-glyph"></span>Delete page</a>
@@ -813,7 +819,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
             <div class="modal-content shadow-lg">
                 <div class="modal-header">
-                    <h5 class="modal-title">Export all pages to PDF</h5>
+                    <h5 class="modal-title">Export all Notebook pages</h5>
                     <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>-->
@@ -836,6 +842,13 @@
                         <div class="form-control">
                             <span id="exportNodebookLocation" style="font-size: 13px;">No location set</span>
                         </div>
+                    </div>
+                    <div class="form-group mx-0 my-3">
+                        <label for="exportNotebookFileTypeSelect">Export type</label>
+                        <select id="exportNotebookFileTypeSelect" class="form-control custom-select">
+                            <option value="PDF">PDF</option>
+                            <option value="MD">Markdown</option>
+                        </select>
                     </div>
                     <div class="mt-5 mb-2" id="exportNotebookProgressSection" style="display: none;">
                         <div class="progress mb-1">

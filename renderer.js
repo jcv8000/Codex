@@ -13,13 +13,12 @@ const { schema } = require('./prosemirror/schema');
 const { tableNodes } = require('prosemirror-tables');
 const { addListNodes } = require('prosemirror-schema-list');
 const contextMenu = require('electron-context-menu');
-
-
+const { customMarkdownSerializer } = require('./prosemirror/md-serializer');
 
 let tableSchema = new Schema({
     nodes: schema.spec.nodes.append(tableNodes({
         tableGroup: "block",
-        cellContent: "block+",
+        cellContent: "paragraph+",
         cellAttributes: {
             background: {
                 default: null,
@@ -297,6 +296,10 @@ function init() {
                 label: 'Export page to PDF...',
                 accelerator: 'CmdOrCtrl+P',
                 click: () => printCurrentPage()
+            },
+            {
+                label: 'Export page to Markdown...',
+                click: () => exportCurrentPageToMarkdown()
             },
             {
                 type: 'separator'
@@ -2202,6 +2205,70 @@ async function printPage(content, path, disableOpening = false) {
 
 }
 
+function exportCurrentPageToMarkdown() {
+
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "Markdown file", extensions: ["md"] }],
+        title: "Export page to Markdown",
+        defaultPath: "*/" + sanitizeStringForFiles(selectedPage.title) + ".md"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            exportPageToMarkdown(window.view.state.doc, result.filePath);
+        }
+
+    });
+}
+
+function exportRightClickedPageToMarkdown() {
+    let page = save.notebooks[rightClickedNotebookIndex].pages[rightClickedPageIndex];
+
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "Markdown file", extensions: ["md"] }],
+        title: "Export page to Markdown",
+        defaultPath: "*/" + sanitizeStringForFiles(page.title) + ".md"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            
+            let editorView = null;
+            try {
+                let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
+
+                editorView = new EditorView(null, {
+                    state: EditorState.create({
+                        doc: mySchema.nodeFromJSON(JSON.parse(json)),
+                        plugins: exampleSetup({ schema: mySchema, tabSize: prefs.tabSize })
+                    })
+                });
+
+                exportPageToMarkdown(editorView.state.doc, result.filePath);
+            }
+            catch (exception) {
+                console.error(exception);
+                alert("An error occurred while exporting the page. Check the developer console (Ctrl-Shift-I) for more information.");
+            }
+            finally {
+                editorView.destroy();
+            }
+
+        }
+
+    });
+}
+
+function exportPageToMarkdown(doc, path, disableOpening = false) {
+    let data = customMarkdownSerializer.serialize(doc);
+
+    fs.writeFileSync(path, data, (err) => {
+        console.log(err.message);
+        return;
+    });
+
+    if (prefs.openPDFonExport == true && disableOpening == false)
+        shell.openExternal('file:///' + path);
+}
+
 function sanitizeStringForFiles(x) {
     return x.replace(/[\/\\:$*"<>|]+/g, " ");
 }
@@ -2283,6 +2350,8 @@ async function exportNotebookPages() {
 
     let extra = 1;
 
+    let type = document.getElementById('exportNotebookFileTypeSelect').value;
+
     try {
         for (let i = 0; i < notebook.pages.length; i++) {
 
@@ -2310,9 +2379,15 @@ async function exportNotebookPages() {
                 })
             });
 
-            let html = editorView.dom.innerHTML;
 
-            await printPage(html, exportNotebookLocation + "/" + sanitizeStringForFiles(title) + ".pdf", true);
+            if (type == "PDF") {
+                let html = editorView.dom.innerHTML;
+
+                await printPage(html, exportNotebookLocation + "/" + sanitizeStringForFiles(title) + ".pdf", true);
+            }
+            else if (type == "MD") {
+                exportPageToMarkdown(editorView.state.doc, exportNotebookLocation + "/" + sanitizeStringForFiles(title) + ".md", true);
+            }
 
             editorView.destroy();
 
