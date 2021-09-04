@@ -92,8 +92,7 @@ const customMarkdownSerializer = new MarkdownSerializer({
                 let col = cols[x];
 
                 //check for empty cell
-                let text = col.content.content[0].textContent;
-                if (text == "") {
+                if (col.content.content[0].content.content.length == 0) {
                     if (x == cols.length - 1)
                         state.write("&nbsp;");
                     else

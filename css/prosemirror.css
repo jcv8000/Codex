@@ -247,7 +247,7 @@ li.ProseMirror-selectednode:after {
 
 .ProseMirror-example-setup-style img {
   cursor: default;
-  max-width: 728px;
+  max-width: 100%;
   box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
   border-radius: 3px;
 }
