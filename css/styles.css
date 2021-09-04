@@ -524,7 +524,7 @@ option:hover {
     padding: 0.5em;
     border: 1px solid #00000030;
     border-radius: 5px;
-    font-family: Consolas, 'Fira-Mono', monospace;
+    font-family: SFMono-Regular, Consolas, 'Fira-Mono', monospace;
     min-height: 40px;
     /*cursor: pointer;*/
     margin-top: 10px;
@@ -573,7 +573,7 @@ option:hover {
     padding-right: 4px !important;
     border: 1px solid #00000030;
     border-radius: 4px;
-    font-family: Consolas, 'Fira-Mono', monospace;
+    font-family: SFMono-Regular, Consolas, 'Fira-Mono', monospace;
     word-wrap: break-word;
     display: inline !important;
     background: white;
