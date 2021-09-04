@@ -240,7 +240,7 @@ function init() {
             {
                 label: 'Toggle Developer Tools',
                 accelerator: 'CmdOrCtrl+Shift+I',
-                click: () => remote.getCurrentWebContents().openDevTools()
+                click: () => remote.getCurrentWebContents().toggleDevTools()
             }
         ]
     }));
@@ -370,7 +370,7 @@ function init() {
             {
                 label: 'Toggle Developer Tools',
                 accelerator: 'CmdOrCtrl+Shift+I',
-                click: () => remote.getCurrentWebContents().openDevTools()
+                click: () => remote.getCurrentWebContents().toggleDevTools()
             }
         ]
     }));
