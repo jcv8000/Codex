@@ -493,6 +493,10 @@ function init() {
         document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
     }*/
 
+    if (remote.process.platform !== 'win32') {
+        document.documentElement.style.setProperty("--titlebar-height", "0px");
+    }
+
 
     window.addEventListener('resize', () => {
 
