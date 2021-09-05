@@ -2429,3 +2429,39 @@ function closeExportNotebookModal() {
     document.getElementById('exportNotebookProgressBar').style.width = "0%";
 
 }
+
+function deleteOldPages() {
+    let activeFiles = [];
+
+    for (let n = 0; n < save.notebooks.length; n++) {
+        let notebook = save.notebooks[n];
+        for (let p = 0; p < notebook.pages.length; p++) {
+            let page = notebook.pages[p];
+
+            activeFiles.push(page.fileName);
+        }
+    }
+
+    let allFiles = fs.readdirSync(prefs.dataDir + "/notes/");
+
+    let unusedFiles = allFiles.filter(function(obj) { return activeFiles.indexOf(obj) == -1; });
+
+    if (allFiles.length > activeFiles.length && unusedFiles.length > 0) {
+        try {
+
+            unusedFiles.forEach((file) => {
+                fs.rmSync(prefs.dataDir + "/notes/" + file);
+            })
+    
+            popup("Codex", "Unused files deleted", "Any files in your /notes/ folder that you deleted in Codex have been removed.");
+    
+        }
+        catch(exception) {
+            alert(exception);
+            console.error(exception);
+        }
+    }
+    else {
+        popup("Codex", "Info", "No unused files found.");
+    }
+}

@@ -519,7 +519,7 @@
                         </center>
                         <hr>
 
-                        <div class="form-group mb-0">
+                        <div class="form-group">
                             <input type="file" id="dataDirInputDialog" webkitdirectory style="display:none">
                             <h5 class="settingTitle">Save Location</h5>
                             <div class="input-group">
@@ -554,6 +554,15 @@
                                         onclick="_loadCloudSyncPage()">here</a> for a tutorial.
                                 </i>
                             </div>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <h5 class="settingTitle">Unused Files</h5>
+                            <p>When you delete a notebook/page in Codex, the actual files that hold the pages' content stays in the <b><code>notes</code></b> folder in case you need to get it back.<br><br>
+                            Don't worry about this unless you have extremely large notes with embedded images and you need extra space. Most note files are less than 1 MB in size.<br><br>
+                            This button deletes all files that are currently unused by your notebooks.</p>
+                            
+                            <center><button class="btn mybtn-danger" onclick="deleteOldPages()">Purge unused files</button></center>
                         </div>
                     </div>
                 </span>
