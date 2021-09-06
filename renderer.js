@@ -409,6 +409,19 @@ function init() {
     }));
 
 
+    if (remote.process.platform === 'linux') {
+        normalMenu.items[1].submenu.append(new remote.MenuItem({
+            label: 'Toggle Menu Bar',
+            click: () => { remote.getCurrentWindow().setMenuBarVisibility(!remote.getCurrentWindow().isMenuBarVisible()) },
+            accelerator: "Ctrl+M"
+        }))
+        editingMenu.items[2].submenu.append(new remote.MenuItem({
+            label: 'Toggle Menu Bar',
+            click: () => { remote.getCurrentWindow().setMenuBarVisibility(!remote.getCurrentWindow().isMenuBarVisible()) },
+            accelerator: "Ctrl+M"
+        }))
+    }
+
     remote.Menu.setApplicationMenu(normalMenu);
     if (remote.process.platform === 'win32') {
         titlebar.updateMenu(normalMenu);
