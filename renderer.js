@@ -895,6 +895,8 @@ function applyPrefsFromFile() {
     else {
         document.documentElement.style.setProperty('--code-white-space', 'pre');
     }
+
+    remote.getCurrentWindow().setMenuBarVisibility(prefs.showMenuBar);
 }
 
 /**
