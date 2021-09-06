@@ -67,6 +67,7 @@
         "feather-icons": "^4.28.0",
         "highlight.js": "^10.6.0",
         "jquery": "^3.5.1",
+        "katex": "^0.13.18",
         "prosemirror-commands": "^1.1.7",
         "prosemirror-dropcursor": "^1.3.3",
         "prosemirror-gapcursor": "^1.1.5",
