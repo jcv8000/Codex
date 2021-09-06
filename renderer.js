@@ -78,6 +78,7 @@ class UserPrefs {
     showCodeOverlay = true;
     codeWordWrap = false;
     firstUse = true;
+    showMenuBar = true;
 }
 
 class Save {
@@ -412,12 +413,20 @@ function init() {
     if (remote.process.platform === 'linux') {
         normalMenu.items[1].submenu.append(new remote.MenuItem({
             label: 'Toggle Menu Bar',
-            click: () => { remote.getCurrentWindow().setMenuBarVisibility(!remote.getCurrentWindow().isMenuBarVisible()) },
+            click: () => {
+                let current = remote.getCurrentWindow().isMenuBarVisible();
+                remote.getCurrentWindow().setMenuBarVisibility(!current);
+                prefs.showMenuBar = !current;
+            },
             accelerator: "Ctrl+M"
         }))
         editingMenu.items[2].submenu.append(new remote.MenuItem({
             label: 'Toggle Menu Bar',
-            click: () => { remote.getCurrentWindow().setMenuBarVisibility(!remote.getCurrentWindow().isMenuBarVisible()) },
+            click: () => {
+                let current = remote.getCurrentWindow().isMenuBarVisible();
+                remote.getCurrentWindow().setMenuBarVisibility(!current);
+                prefs.showMenuBar = !current;
+            },
             accelerator: "Ctrl+M"
         }))
     }
@@ -753,6 +762,9 @@ function fixPrefs() {
     }
     if (typeof prefs.firstUse === "undefined") {
         prefs.firstUse = true;
+    }
+    if (typeof prefs.showMenuBar === "undefined") {
+        prefs.showMenuBar = true;
     }
 }
 
