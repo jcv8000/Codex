@@ -1,12 +1,7 @@
-:root {
-    --code-overlay-bg-brightness: 0.95;
-}
-
 .codeSnippet[data-params]:before {
     content: attr(data-params);
     display: block;
     font-size: 13px;
-    font-weight: 600;
     position: absolute;
     right: 16px;
     padding: 2px 8px;

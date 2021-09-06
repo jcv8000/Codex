@@ -1,0 +1,44 @@
+<h1>Exporting Help</h1><br>
+
+<p>You can export your notes to PDF or Markdown by right-clicking on the page and choosing Export, from the File menu, or you can export an entire notebook to one of the two formats.</p>
+
+<br>
+
+<h3>PDFs</h3>
+
+<p>If you export a page to a PDF and your images/equations are not showing up, try exporting it again.</p>
+
+<br>
+
+<h3>Markdown</h3>
+
+<p>Some flavors of Markdown support different features than others.</p>
+
+<p>The exported markdown should be compatible everywhere except for Tables, KaTeX equations, and centered/right-aligned text/images. Tables are converted to the <a href="#" onclick="shell.openExternal('https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown')">GitHub Markdown style</a> and follow this structure:</p>
+
+<div class="codeSnippet">First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column</div>
+
+<br>
+
+<p>The KaTeX inline equations are formatted as <span class="hljs inline-code">$equation$</span> and the block equations are formatted as:</p>
+
+<div class="codeSnippet">$$
+equation
+$$</div>
+
+<br>
+
+<p>Any text/images that has been right/center-aligned in your notes will be wrapped with<br>
+<span class="hljs inline-code">&lt;p align='center'&gt;text&lt;p&gt;</span>
+which might not work on sites other than GitHub.</p>
+
+<br>
+
+<p>Images that have their data encoded directly in the document (such as screenshots that you paste in) will not be included in the Markdown file. It has to have a URL source.</p>
+
+<br>
+
+<p>So you may have to edit the Markdown file after exporting to make it follow the Markdown format of whatever website/software you're using it in.</p>

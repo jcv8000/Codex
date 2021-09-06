@@ -13,13 +13,12 @@ const { schema } = require('./prosemirror/schema');
 const { tableNodes } = require('prosemirror-tables');
 const { addListNodes } = require('prosemirror-schema-list');
 const contextMenu = require('electron-context-menu');
-
-
+const { customMarkdownSerializer } = require('./prosemirror/md-serializer');
 
 let tableSchema = new Schema({
     nodes: schema.spec.nodes.append(tableNodes({
         tableGroup: "block",
-        cellContent: "block+",
+        cellContent: "paragraph+",
         cellAttributes: {
             background: {
                 default: null,
@@ -77,6 +76,9 @@ class UserPrefs {
     tabSize = 4;
     sidebarWidth = 275;
     showCodeOverlay = true;
+    codeWordWrap = false;
+    firstUse = true;
+    showMenuBar = true;
 }
 
 class Save {
@@ -167,11 +169,23 @@ var destroyOpenedNotebooks = false;
 var lightThemes = [ "a11y-light", "arduino-light", "ascetic", "atelier-cave-light", "atelier-dune-light", "atelier-estuary-light", "atelier-forest-light", "atelier-heath-light", "atelier-lakeside-light", "atelier-plateau-light", "atelier-savanna-light", "atelier-seaside-light", "atelier-sulphurpool-light", "atom-one-light", "color-brewer", "default", "docco", "foundation", "github-gist", "github", "font-weight: bold;", "googlecode", "grayscale", "gruvbox-light", "idea", "isbl-editor-light", "kimbie.light", "lightfair", "magula", "mono-blue", "nnfx", "paraiso-light", "purebasic", "qtcreator_light", "routeros", "solarized-light", "tomorrow", "vs", "xcode" ];
 var darkThemes = [ "a11y-dark", "agate", "androidstudio", "an-old-hope", "arta", "atelier-cave-dark", "atelier-dune-dark", "atelier-estuary-dark", "atelier-forest-dark", "atelier-heath-dark", "atelier-lakeside-dark", "atelier-plateau-dark", "atelier-savanna-dark", "atelier-seaside-dark", "atelier-sulphurpool-dark", "atom-one-dark-reasonable", "atom-one-dark", "font-weight: bold;", "codepen-embed", "darcula", "dark", "dracula", "far", "gml", "gradient-dark", "gruvbox-dark", "hopscotch", "hybrid", "ir-black", "isbl-editor-dark", "kimbie.dark", "lioshi", "monokai-sublime", "monokai", "night-owl", "nnfx-dark", "nord", "ocean", "obsidian", "paraiso-dark", "pojoaque", "qtcreator_dark", "railscasts", "rainbow", "shades-of-purple", "solarized-dark", "srcery", "sunburst", "tomorrow-night-blue", "tomorrow-night-bright", "tomorrow-night-eighties", "tomorrow-night", "vs2015", "xt256", "zenburn" ];
 
+var exportNotebookLocation = "";
 
 /**
  * Run this function at start.
  */
 function init() {
+
+    window.addEventListener("auxclick", (event) => {
+        if (event.button === 1) {
+            event.preventDefault();
+        }
+    });
+    window.addEventListener("click", (event) => {
+        if (event.ctrlKey) {
+            event.preventDefault();
+        }
+    })
 
     contextMenu({
         showSearchWithGoogle: false,
@@ -219,13 +233,15 @@ function init() {
             {
                 label: 'Reset Sidebar Width',
                 click: () => resizeSidebar(275)
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Toggle Developer Tools',
+                accelerator: 'CmdOrCtrl+Shift+I',
+                click: () => remote.getCurrentWebContents().toggleDevTools()
             }
-            /*,
-      {
-        label: 'Open Dev Tools',
-        accelerator: 'CmdOrCtrl+Shift+I',
-        click: () => remote.getCurrentWebContents().openDevTools()
-      }*/
         ]
     }));
 
@@ -244,6 +260,10 @@ function init() {
             {
                 label: 'Update notes',
                 click: () => shell.openExternal('https://www.codexnotes.com/updates/')
+            },
+            {
+                label: 'Give Feedback (Google Forms)',
+                click: () => shell.openExternal('https://forms.gle/uDLJpqLbNLcEx1F8A')
             },
             {
                 type: 'separator'
@@ -276,7 +296,11 @@ function init() {
             {
                 label: 'Export page to PDF...',
                 accelerator: 'CmdOrCtrl+P',
-                click: () => printPage()
+                click: () => printCurrentPage()
+            },
+            {
+                label: 'Export page to Markdown...',
+                click: () => exportCurrentPageToMarkdown()
             },
             {
                 type: 'separator'
@@ -343,16 +367,15 @@ function init() {
                 label: 'Toggle Editor Toolbar',
                 accelerator: 'CmdOrCtrl+T',
                 click: () => toggleEditorRibbon()
-            }
-            /*,
+            },
             {
                 type: 'separator'
             },
             {
-                label: 'Open Dev Tools',
+                label: 'Toggle Developer Tools',
                 accelerator: 'CmdOrCtrl+Shift+I',
-                click: () => remote.getCurrentWebContents().openDevTools()
-            }*/
+                click: () => remote.getCurrentWebContents().toggleDevTools()
+            }
         ]
     }));
 
@@ -373,6 +396,10 @@ function init() {
                 click: () => shell.openExternal('https://www.codexnotes.com/updates/')
             },
             {
+                label: 'Give Feedback (Google Forms)',
+                click: () => shell.openExternal('https://forms.gle/uDLJpqLbNLcEx1F8A')
+            },
+            {
                 type: 'separator'
             },
             {
@@ -382,6 +409,27 @@ function init() {
         ]
     }));
 
+
+    if (remote.process.platform === 'linux') {
+        normalMenu.items[1].submenu.append(new remote.MenuItem({
+            label: 'Toggle Menu Bar',
+            click: () => {
+                let current = remote.getCurrentWindow().isMenuBarVisible();
+                remote.getCurrentWindow().setMenuBarVisibility(!current);
+                prefs.showMenuBar = !current;
+            },
+            accelerator: "Ctrl+M"
+        }))
+        editingMenu.items[2].submenu.append(new remote.MenuItem({
+            label: 'Toggle Menu Bar',
+            click: () => {
+                let current = remote.getCurrentWindow().isMenuBarVisible();
+                remote.getCurrentWindow().setMenuBarVisibility(!current);
+                prefs.showMenuBar = !current;
+            },
+            accelerator: "Ctrl+M"
+        }))
+    }
 
     remote.Menu.setApplicationMenu(normalMenu);
     if (remote.process.platform === 'win32') {
@@ -466,6 +514,10 @@ function init() {
     else {
         document.getElementById('mainContainer').style.height = `${document.body.clientHeight}px`;
     }*/
+
+    if (remote.process.platform !== 'win32') {
+        document.documentElement.style.setProperty("--titlebar-height", "0px");
+    }
 
 
     window.addEventListener('resize', () => {
@@ -565,10 +617,10 @@ function init() {
     document.execCommand("enableInlineTableEditing", false, false)
 
 
-    // first time use tutorial
-    if (save.notebooks.length <= 0) {
+    // first time use popup
+    if (prefs.firstUse == true) {
         //probably first use
-        setTimeout(() => { $("#tutorialModal1").modal('show') }, 500);
+        setTimeout(() => { $("#firstUseModal").modal('show') }, 500);
     }
 
 
@@ -705,6 +757,15 @@ function fixPrefs() {
     if (typeof prefs.showCodeOverlay === "undefined") {
         prefs.showCodeOverlay = true;
     }
+    if (typeof prefs.codeWordWrap === "undefined") {
+        prefs.codeWordWrap = false;
+    }
+    if (typeof prefs.firstUse === "undefined") {
+        prefs.firstUse = true;
+    }
+    if (typeof prefs.showMenuBar === "undefined") {
+        prefs.showMenuBar = true;
+    }
 }
 
 /**
@@ -771,9 +832,13 @@ function applyPrefsFromFile() {
 
     if (lightThemes.includes(prefs.codeStyle)) {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '0');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.07');
     }
     else {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '255');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.3');
     }
 
     document.getElementById('accentColorPicker').value = prefs.accentColor;
@@ -823,6 +888,15 @@ function applyPrefsFromFile() {
         document.getElementById('codeOverlayLink').href = "css/codeoverlay.css";
     }
 
+    $('#codeWordWrapCheck').prop("checked", prefs.codeWordWrap);
+    if (prefs.codeWordWrap === true) {
+        document.documentElement.style.setProperty('--code-white-space', 'pre-wrap');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-white-space', 'pre');
+    }
+
+    remote.getCurrentWindow().setMenuBarVisibility(prefs.showMenuBar);
 }
 
 /**
@@ -836,9 +910,13 @@ function applyPrefsRuntime(needsRestart = false) {
 
     if (lightThemes.includes(prefs.codeStyle)) {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '0.95');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '0');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.07');
     }
     else {
         document.documentElement.style.setProperty('--code-overlay-bg-brightness', '1.25');
+        document.documentElement.style.setProperty('--code-scrollbar-color', '255');
+        document.documentElement.style.setProperty('--code-scrollbar-opacity', '0.3');
     }
 
     prefs.theme = document.getElementById('themeSelect').value;
@@ -933,6 +1011,14 @@ function applyPrefsRuntime(needsRestart = false) {
     }
     else {
         document.getElementById('codeOverlayLink').href = "";
+    }
+
+    prefs.codeWordWrap = $('#codeWordWrapCheck').is(':checked');
+    if (prefs.codeWordWrap === true) {
+        document.documentElement.style.setProperty('--code-white-space', 'pre-wrap');
+    }
+    else {
+        document.documentElement.style.setProperty('--code-white-space', 'pre');
     }
 }
 
@@ -1053,14 +1139,6 @@ function applyModalEventHandlers() {
             //addPageToAList(rightClickedNotebookIndex, index);
 
             document.getElementById('newPageNameInput').value = "";
-
-            //tutorial purposes
-            if (doingTutorial == true) {
-                setTimeout(() => {
-                    $("#tutorialModal4").modal('show');
-                    doingTutorial = false;
-                }, 300);
-            }
         }
         else {
             document.getElementById('newPageNameInput').classList.add("is-invalid");
@@ -1659,8 +1737,9 @@ function showHelpPage() {
     document.getElementById("mainContainer").scrollTo(0, 0);
 }
 
-function loadHelpPage(filename) {
-    document.getElementById('helpContent').innerHTML = fs.readFileSync(__dirname + "/docs/" + filename, 'utf8');
+function loadHelpPage(title) {
+    document.getElementById('helpContent').innerHTML = fs.readFileSync(__dirname + "/docs/" + title + "/index.html", 'utf8');
+    feather.replace();
 }
 
 /**
@@ -1858,20 +1937,22 @@ function resizeSidebar(width) {
     }
 }
 
-async function DataDirDialog() {
-    let result = await remote.dialog.showOpenDialogSync(remote.getCurrentWindow(), {
+function DataDirDialog() {
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
         properties: ['openDirectory']
-    })
+    }).then((result) => {
 
-    if (result != undefined) {
-        document.getElementById('dataDirInput').innerText = result[0];
+        if (result.canceled == false) {
+            document.getElementById('dataDirInput').innerText = result.filePaths[0];
 
-        destroyOpenedNotebooks = true;
-        saveData();
+            destroyOpenedNotebooks = true;
+            saveData();
 
-        canSaveData = false;
-        applyPrefsRuntime(true);
-    }
+            canSaveData = false;
+            applyPrefsRuntime(true);
+        }
+
+    });
 }
 
 function revertToDefaultDataDir() {
@@ -2036,7 +2117,7 @@ function _loadCloudSyncPage() {
     page.classList.toggle('active', true);
 
     showHelpPage();
-    loadHelpPage('cloudsync.html');
+    loadHelpPage('cloudsyncing');
 }
 
 function openDataDir() {
@@ -2056,8 +2137,65 @@ ipcRenderer.on('updateAvailable', function (e, newVer) {
     }, 0);
 })
 
-async function printPage() {
-    let content = window.view.dom.innerHTML;
+function printCurrentPage() {
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "PDF Document", extensions: ["pdf"] }],
+        title: "Export page to PDF",
+        defaultPath: "*/" + sanitizeStringForFiles(selectedPage.title) + ".pdf"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            
+            printPage(window.view.dom.innerHTML, result.filePath);
+
+        }
+
+    });
+}
+
+function printRightClickedPage() {
+
+    let page = save.notebooks[rightClickedNotebookIndex].pages[rightClickedPageIndex];
+
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "PDF Document", extensions: ["pdf"] }],
+        title: "Export page to PDF",
+        defaultPath: "*/" + sanitizeStringForFiles(page.title) + ".pdf"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            
+            let editorView = null;
+            try {
+                let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
+
+                editorView = new EditorView(null, {
+                    state: EditorState.create({
+                        doc: mySchema.nodeFromJSON(JSON.parse(json)),
+                        plugins: exampleSetup({ schema: mySchema, tabSize: prefs.tabSize })
+                    })
+                });
+
+                let html = editorView.dom.innerHTML;
+
+                printPage(html, result.filePath);
+            }
+            catch (exception) {
+                console.error(exception);
+                alert("An error occurred while exporting the page. Check the developer console (Ctrl-Shift-I) for more information.");
+            }
+            finally {
+                editorView.destroy();
+            }
+
+        }
+
+    });
+}
+
+async function printPage(content, path, disableOpening = false) {
+
+    content = content.replace(/\\n/g, "CODEX_PRINT_NEWLINE_CHAR_DONT_EVER_TYPE_THIS");
 
     let workerWindow = new remote.BrowserWindow({
         parent: remote.getCurrentWindow(),
@@ -2070,37 +2208,96 @@ async function printPage() {
     await workerWindow.webContents.executeJavaScript(`document.getElementById('codeStyleLink').href = './node_modules/highlight.js/styles/${prefs.codeStyle}.css';`);
 
 
-    if (prefs.pdfDarkMode == true) {
+    /*if (prefs.pdfDarkMode == true) {
         await workerWindow.webContents.executeJavaScript(`document.getElementById('darkStyleLink').href = 'css/dark.css';`);
-    }
+    }*/
 
     if (prefs.pdfBreakOnH1 == true) {
         await workerWindow.webContents.executeJavaScript('enableBreaksOnH1()');
     }
 
-    let path = remote.dialog.showSaveDialogSync(remote.getCurrentWindow(), {
-        filters: [{ name: "PDF Document", extensions: ["pdf"] }],
-        title: "Export page to PDF",
-        defaultPath: "*/" + sanitizeStringForFiles(selectedPage.title) + ".pdf"
+    await workerWindow.webContents.executeJavaScript('fixNewLines()')
+
+    // !!! This is here to give the new page time to render KaTeX equations !!!
+    await sleep(400);
+
+    var data = await workerWindow.webContents.printToPDF({ pageSize: 'A4', printBackground: true, scaleFactor: 100, marginsType: 0 });
+
+    fs.writeFileSync(path, data, (err) => {
+        console.log(err.message);
+        workerWindow.destroy();
+        return;
     });
 
-    if (path) {
-
-        var data = await workerWindow.webContents.printToPDF({ pageSize: 'A4', printBackground: true, scaleFactor: 100, marginsType: 1 });
-
-        fs.writeFileSync(path, data, (err) => {
-            console.log(err.message);
-            workerWindow.destroy();
-            return;
-        });
-
-        if (prefs.openPDFonExport == true)
-            shell.openExternal('file:///' + path);
-
-    }
+    if (prefs.openPDFonExport == true && disableOpening == false)
+        shell.openExternal('file:///' + path);
 
     workerWindow.destroy();
 
+}
+
+function exportCurrentPageToMarkdown() {
+
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "Markdown file", extensions: ["md"] }],
+        title: "Export page to Markdown",
+        defaultPath: "*/" + sanitizeStringForFiles(selectedPage.title) + ".md"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            exportPageToMarkdown(window.view.state.doc, result.filePath);
+        }
+
+    });
+}
+
+function exportRightClickedPageToMarkdown() {
+    let page = save.notebooks[rightClickedNotebookIndex].pages[rightClickedPageIndex];
+
+    remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        filters: [{ name: "Markdown file", extensions: ["md"] }],
+        title: "Export page to Markdown",
+        defaultPath: "*/" + sanitizeStringForFiles(page.title) + ".md"
+    }).then((result) => {
+
+        if (result.canceled == false) {
+            
+            let editorView = null;
+            try {
+                let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
+
+                editorView = new EditorView(null, {
+                    state: EditorState.create({
+                        doc: mySchema.nodeFromJSON(JSON.parse(json)),
+                        plugins: exampleSetup({ schema: mySchema, tabSize: prefs.tabSize })
+                    })
+                });
+
+                exportPageToMarkdown(editorView.state.doc, result.filePath);
+            }
+            catch (exception) {
+                console.error(exception);
+                alert("An error occurred while exporting the page. Check the developer console (Ctrl-Shift-I) for more information.");
+            }
+            finally {
+                editorView.destroy();
+            }
+
+        }
+
+    });
+}
+
+function exportPageToMarkdown(doc, path, disableOpening = false) {
+    let data = customMarkdownSerializer.serialize(doc);
+
+    fs.writeFileSync(path, data, (err) => {
+        console.log(err.message);
+        return;
+    });
+
+    if (prefs.openPDFonExport == true && disableOpening == false)
+        shell.openExternal('file:///' + path);
 }
 
 function sanitizeStringForFiles(x) {
@@ -2111,27 +2308,6 @@ function revertAccentColor() {
     prefs.accentColor = "#FF7A27";
     document.getElementById('accentColorPicker').value = "#FF7A27";
     document.documentElement.style.setProperty('--accent-color', prefs.accentColor);
-}
-
-let doingTutorial = false;
-async function startTutorial() {
-
-    doingTutorial = true;
-    await sleep(300);
-
-    $("#tutorialModal2").modal('show');
-
-    let nbCount = save.notebooks.length;
-
-    while (save.notebooks.length <= nbCount) {
-        if (save.notebooks.length > nbCount) {
-            break;
-        }
-        await sleep(500);
-    }
-
-    await sleep(300);
-    $("#tutorialModal3").modal('show');
 }
 
 function sleep(ms) {
@@ -2151,5 +2327,172 @@ function autoOpenHelpTab() {
     page.classList.toggle('active', true);
 
     showHelpPage();
-    loadHelpPage('howtouse.html');
+    loadHelpPage('gettingstarted');
+}
+
+function openExportNotebookModal() {
+
+    if (save.notebooks[rightClickedNotebookIndex].pages.length > 0) {
+
+        $('#exportNotebookModal').modal({backdrop: 'static', keyboard: false})
+
+        document.getElementById('exportNotebookModalIcon').setAttribute('data-feather', save.notebooks[rightClickedNotebookIndex].icon);
+        document.getElementById('exportNotebookModalIcon').style.color = save.notebooks[rightClickedNotebookIndex].color;
+
+        let text = save.notebooks[rightClickedNotebookIndex].name;
+        if (text.length > 26) {
+            text = text.substring(0, 26) + "...";
+        }
+
+        document.getElementById('exportNotebookModalTitle').textContent = text;
+        document.getElementById('exportNotebookModalPageCount').textContent = " - " + save.notebooks[rightClickedNotebookIndex].pages.length + " pages"
+    }
+    else {
+        let name = save.notebooks[rightClickedNotebookIndex].name;
+        if (name.length > 16) {
+            name = name.substring(0, 16) + "...";
+        }
+        popup("Info", "Unable to export this Notebook", "This notebook (" + name + ") doesn't have any pages in it.");
+    }
+}
+
+function exportNotebookDirDialog() {
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), { properties: ['openDirectory'] }).then((result) => {
+        if (result.canceled == false) {
+            document.getElementById('exportNodebookLocation').innerText = result.filePaths[0];
+
+            exportNotebookLocation = result.filePaths[0];
+
+            document.getElementById('exportNotebookButton').disabled = false;
+        }
+    });
+}
+
+async function exportNotebookPages() {
+
+    document.getElementById('exportNotebookButton').disabled = true;
+    document.getElementById('exportNotebookProgressSection').style.display = "block";
+
+    let notebook = save.notebooks[rightClickedNotebookIndex];
+
+    let editorView = null;
+
+    document.getElementById('exportNotebookProgressText').textContent = `Exporting... (0/${notebook.pages.length})`;
+
+    let extra = 1;
+
+    let type = document.getElementById('exportNotebookFileTypeSelect').value;
+
+    try {
+        for (let i = 0; i < notebook.pages.length; i++) {
+
+            let page = notebook.pages[i];
+            let title = page.title;
+
+            //check and make sure pages don't have the same name
+            for (let e = 0; e < notebook.pages.length; e++) {
+                //don't check yourself
+                if (i != e) {
+                    if (page.title == notebook.pages[e].title) {
+                        title += " " + extra;
+                        extra++;
+                        break;
+                    }
+                }
+            }
+
+            let json = fs.readFileSync(prefs.dataDir + "/notes/" + page.fileName, 'utf8');
+
+            editorView = new EditorView(null, {
+                state: EditorState.create({
+                    doc: mySchema.nodeFromJSON(JSON.parse(json)),
+                    plugins: exampleSetup({ schema: mySchema, tabSize: prefs.tabSize })
+                })
+            });
+
+
+            if (type == "PDF") {
+                let html = editorView.dom.innerHTML;
+
+                await printPage(html, exportNotebookLocation + "/" + sanitizeStringForFiles(title) + ".pdf", true);
+            }
+            else if (type == "MD") {
+                exportPageToMarkdown(editorView.state.doc, exportNotebookLocation + "/" + sanitizeStringForFiles(title) + ".md", true);
+            }
+
+            editorView.destroy();
+
+            let percent = ((i+1) / notebook.pages.length) * 100;
+            document.getElementById('exportNotebookProgressBar').style.width = `${percent}%`;
+            document.getElementById('exportNotebookProgressText').textContent = `Exporting... (${i+1}/${notebook.pages.length})`;
+        }
+        document.getElementById('exportNotebookProgressText').textContent = "Done.";
+
+        document.getElementById('exportNotebookCancelButton').style.display = "none";
+        document.getElementById('exportNotebookButton').style.display = "none";
+        document.getElementById('exportNotebookCloseButton').style.display = "block";
+    }
+    catch (exception) {
+        console.error(exception);
+        alert("An error occurred while exporting the pages. Check the developer console (Ctrl-Shift-I) for more information.");
+        closeExportNotebookModal();
+    }
+    finally {
+        if (editorView != null) {
+            editorView.destroy();
+        }
+    }
+}
+
+function closeExportNotebookModal() {
+    $('#exportNotebookModal').modal('hide');
+
+    document.getElementById('exportNotebookCancelButton').style.display = "block";
+    document.getElementById('exportNotebookButton').style.display = "block";
+    document.getElementById('exportNotebookCloseButton').style.display = "none";
+    document.getElementById('exportNotebookProgressSection').style.display = "none";
+    document.getElementById('exportNodebookLocation').innerText = "No location set";
+    exportNotebookLocation = "";
+
+    document.getElementById('exportNotebookCancelButton').disabled = false;
+    document.getElementById('exportNotebookButton').disabled = false;
+
+    document.getElementById('exportNotebookProgressBar').style.width = "0%";
+
+}
+
+function deleteOldPages() {
+    let activeFiles = [];
+
+    for (let n = 0; n < save.notebooks.length; n++) {
+        let notebook = save.notebooks[n];
+        for (let p = 0; p < notebook.pages.length; p++) {
+            let page = notebook.pages[p];
+
+            activeFiles.push(page.fileName);
+        }
+    }
+
+    let allFiles = fs.readdirSync(prefs.dataDir + "/notes/");
+
+    let unusedFiles = allFiles.filter(function(obj) { return activeFiles.indexOf(obj) == -1; });
+
+    if (allFiles.length > activeFiles.length && unusedFiles.length > 0) {
+        try {
+
+            unusedFiles.forEach((file) => {
+                fs.rmSync(prefs.dataDir + "/notes/" + file);
+            })
+    
+            popup("Codex", "Unused files deleted", "Any files in your /notes/ folder that you deleted in Codex have been removed.");
+    
+        }
+        catch(exception) {
+            alert(exception);
+            console.error(exception);
+        }
+    }
+    else {
+        popup("Codex", "Info", "No unused files found.");
+    }
 }

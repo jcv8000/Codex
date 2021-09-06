@@ -21,6 +21,7 @@ var { arrow, addColumnAfter, addColumnBefore, deleteColumn, addRowAfter, addRowB
 var { Fragment } = require('prosemirror-model');
 //const { schema } = require('./schema');
 const { chainCommands } = require('prosemirror-commands');
+const { mathPlugin, mathBackspaceCmd, insertMathCmd, mathSerializer, makeInlineMathInputRule, makeBlockMathInputRule, REGEX_BLOCK_MATH_DOLLARS, REGEX_INLINE_MATH_DOLLARS, mathSelectPlugin } = require('@benrbray/prosemirror-math');
 
 
 // Defining my custom icons
@@ -675,8 +676,11 @@ function buildMenuItems(schema) {
         r.insertHorizontalRule = new prosemirrorMenu.MenuItem({
             title: "Insert horizontal rule",
             label: "Horizontal rule",
-            enable: function enable(state) { return canInsert(state, hr) },
-            run: function run(state, dispatch) { dispatch(state.tr.replaceSelectionWith(hr.create())); }
+            enable: function enable(state) { return (canInsert(state, hr) && !isInTable(state) && !isCursorInCodeBlock(state)) },
+            run: function run(state, dispatch) {
+                if (!isInTable(state) && !isCursorInCodeBlock(state))
+                    dispatch(state.tr.replaceSelectionWith(hr.create()));
+            }
         });
     }
 
@@ -685,7 +689,7 @@ function buildMenuItems(schema) {
             label: "Table",
             run: insertTable,
             enable: function enable(state) {
-                return !isInTable(state);
+                return !isInTable(state) && !isCursorInCodeBlock(state);
             }
         });
     }
@@ -715,8 +719,26 @@ function buildMenuItems(schema) {
         }
     });
 
+    r.InsertBlockEquation = new prosemirrorMenu.MenuItem({
+        title: "Insert block KaTeX equation",
+        label: "Block KaTeX equation",
+        run: insertMathCmd(schema.nodes.math_display),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
+    });
+
+    r.InsertInlineEquation = new prosemirrorMenu.MenuItem({
+        title: "Insert inline KaTeX equation",
+        label: "Inline KaTeX equation",
+        run: insertMathCmd(schema.nodes.math_inline),
+        enable: function enable(state) {
+            return !isCursorInCodeBlock(state);
+        }
+    });
+
     var cut = function (arr) { return arr.filter(function (x) { return x; }); };
-    r.insertMenu = new prosemirrorMenu.Dropdown(cut([r.insertImage, r.insertHorizontalRule, r.insertTable]), { label: "Insert" });
+    r.insertMenu = new prosemirrorMenu.Dropdown(cut([r.insertImage, r.insertHorizontalRule, r.insertTable/*, r.InsertInlineEquation, r.InsertBlockEquation*/]), { label: "Insert" });
     r.typeMenu = new prosemirrorMenu.Dropdown(cut([r.makeParagraph,
     r.makeCodeBlock && new prosemirrorMenu.DropdownSubmenu(cut([
         r.makeArduino, r.makeARM, r.makeBAT, r.makeCoffee, r.makeCmake, r.makeCS, r.makeCPP, r.makeC, r.makeCSS, r.makeGo, r.makeGLSL, r.makeGradle, r.makeGroovy, r.makeOther
@@ -856,6 +878,15 @@ function buildKeymap(schema, mapKeys) {
         });
     }
 
+    if (type = schema.nodes.heading) {
+        bind("Mod-1", prosemirrorCommands.setBlockType(type, {level: 1}));
+        bind("Mod-2", prosemirrorCommands.setBlockType(type, {level: 2}));
+        bind("Mod-3", prosemirrorCommands.setBlockType(type, {level: 3}));
+        bind("Mod-4", prosemirrorCommands.setBlockType(type, {level: 4}));
+        bind("Mod-5", prosemirrorCommands.setBlockType(type, {level: 5}));
+        bind("Mod-6", prosemirrorCommands.setBlockType(type, {level: 6}));
+    }
+
     return keys
 }
 
@@ -956,6 +987,9 @@ function buildInputRules(schema) {
     }
     if (type = schema.nodes.heading) { rules.push(headingRule(type, 6)); }
 
+    rules.push(makeInlineMathInputRule(REGEX_INLINE_MATH_DOLLARS, schema.nodes.math_inline));
+    rules.push(makeBlockMathInputRule(REGEX_BLOCK_MATH_DOLLARS, schema.nodes.math_display));
+
     return prosemirrorInputrules.inputRules({ rules: rules })
 }
 
@@ -1016,31 +1050,39 @@ let tableMenu = [
     item("Make cell not-green", setCellAttr("background", null))
 ]
 
-function insertTable(
-    state,
-    dispatch
-) {
-    const tr = state.tr.replaceSelectionWith(
-        state.schema.nodes.table.create(
-            undefined,
-            Fragment.fromArray([
-                state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
-                    state.schema.nodes.table_cell.createAndFill(),
-                    state.schema.nodes.table_cell.createAndFill()
-                ])),
-                state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
-                    state.schema.nodes.table_cell.createAndFill(),
-                    state.schema.nodes.table_cell.createAndFill()
-                ]))
-            ])
-        )
-    );
+function insertTable(state, dispatch) {
 
-    if (dispatch) {
-        dispatch(tr);
+    if (!isCursorInCodeBlock(state)) {
+
+        const tr = state.tr.replaceSelectionWith(
+            state.schema.nodes.table.create(
+                undefined,
+                Fragment.fromArray([
+                    state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
+                        //state.schema.nodes.table_cell.createAndFill(),
+                        //state.schema.nodes.table_cell.createAndFill()
+                        state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
+                            state.schema.nodes.paragraph.createAndFill(null, state.schema.text("New"))
+                        ])),
+                        state.schema.nodes.table_cell.create(undefined, Fragment.fromArray([
+                            state.schema.nodes.paragraph.createAndFill(null, state.schema.text("Table"))
+                        ]))
+                    ])),
+                    state.schema.nodes.table_row.create(undefined, Fragment.fromArray([
+                        state.schema.nodes.table_cell.createAndFill(),
+                        state.schema.nodes.table_cell.createAndFill()
+                    ]))
+                ])
+            )
+        );
+
+        if (dispatch) {
+            dispatch(tr);
+        }
+
+        return true;
+
     }
-
-    return true;
 }
 
 function makeCodeBlock(language) {
@@ -1166,6 +1208,33 @@ function alignSelection(alignment) {
     }
 }
 
+let codeCollapsePlugin = new prosemirrorState.Plugin({
+    props: {
+        handleClick(view, _, event) {
+            
+            if (event.target.className == "snippetCollapser") {
+
+                let state = view.state;
+                state.doc.nodesBetween(state.selection.from, state.selection.to, (node, pos) => {
+
+                    if (node.type.name == "code_block") {
+
+                        let tr = state.tr;
+
+                        let newAttrs = Object.assign({}, node.attrs)
+                        newAttrs.collapsed = !node.attrs.collapsed;
+                        tr.setNodeMarkup(pos, node.type, newAttrs)
+
+                        tr = tr.setMeta("addToHistory", false);
+
+                        view.dispatch(tr);
+                    }
+                });
+
+            }
+        }
+    }
+});
 
 function exampleSetup(options) {
 
@@ -1178,6 +1247,7 @@ function exampleSetup(options) {
         prosemirrorKeymap.keymap(prosemirrorCommands.baseKeymap),
         prosemirrorGapcursor.gapCursor(),
         highlightPlugin(hljs),
+        codeCollapsePlugin,
         tableEditing(),
         prosemirrorKeymap.keymap({
             Tab: (state, dispatch) => {
@@ -1252,6 +1322,8 @@ function exampleSetup(options) {
         }),
     ];
 
+
+    plugins.push(mathPlugin);
 
     /*plugins.push(prosemirrorMenu.menuBar({
         floating: options.floatingMenu !== false,

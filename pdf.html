@@ -1,9 +1,10 @@
 <head>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/prosemirror.css">
+    <link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+    <link rel="stylesheet" href="node_modules/@benrbray/prosemirror-math/style/math.css">
     <link rel="stylesheet" href="css/styles.css">
     <link id="codeStyleLink" rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-dark.css">
-    <link id="darkStyleLink" rel="stylesheet" href="">
 
     <style>
     body {
@@ -15,7 +16,13 @@
         max-width: 100%;
     }
     .codeSnippet {
-        page-break-inside: avoid;
+        page-break-inside:auto;
+        white-space: pre-wrap;
+    }
+
+    .codeSnippet.collapsed {
+        max-height: none;
+        box-shadow: none;
     }
 
     </style>
@@ -32,5 +39,9 @@
             style.appendChild(document.createTextNode('h1 { page-break-before: always; }'));
         }
         document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function fixNewLines() {
+        document.documentElement.innerHTML = document.documentElement.innerHTML.replace('CODEX_PRINT_NEWLINE_CHAR_DONT_EVER_TYPE_THIS', '\\n')
     }
 </script>

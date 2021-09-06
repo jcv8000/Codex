@@ -89,13 +89,13 @@ var nodes = {
     group: "block",
     code: true,
     defining: true,
-	attrs: {params: {default: ""}},
+	attrs: {params: {default: ""}, collapsed: {default: false}},
     //parseDOM: [{tag: "pre", preserveWhitespace: "full"}],
     //toDOM: function toDOM() { return preDOM }
 	parseDOM: [{tag: "div", preserveWhitespace: "full", getAttrs: function (node) { return (
         {params: node.getAttribute("data-params") || ""}
     ); }}],
-    toDOM: function toDOM(node) { return ["div", {"class": "codeSnippet hljs language-" + node.attrs.params, "data-params": node.attrs.params, "spellcheck": "false"}, 0] }
+    toDOM: function toDOM(node) { return ["div", {"class": "codeSnippet hljs language-" + node.attrs.params + (node.attrs.collapsed ? " collapsed" : ""), "data-params": node.attrs.params, "spellcheck": "false"}, ["span", {"class": "snippetCollapser", "title": "Collapse"}, (node.attrs.collapsed ? "∨" : "∧")], ["div", 0]] }
   },
 
   // :: NodeSpec The text node.
@@ -135,7 +135,28 @@ var nodes = {
     selectable: false,
     parseDOM: [{tag: "br"}],
     toDOM: function toDOM() { return brDOM }
-  }
+  },
+
+    math_inline: {               // important!
+        group: "inline math",
+        content: "text*",        // important!
+        inline: true,            // important!
+        atom: true,              // important!
+        toDOM: () => ["math-inline", { class: "math-node" }, 0],
+        parseDOM: [{
+            tag: "math-inline"   // important!
+        }]
+    },
+    math_display: {              // important!
+        group: "block math",
+        content: "text*",        // important!
+        atom: true,              // important!
+        code: true,              // important!
+        toDOM: () => ["math-display", { class: "math-node" }, 0],
+        parseDOM: [{
+            tag: "math-display"  // important!
+        }]
+    },
 };
 
 var emDOM = ["em", 0], strongDOM = ["strong", 0], codeDOM = ["code", 0], uDOM = ["u", 0];

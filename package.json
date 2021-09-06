@@ -1,6 +1,6 @@
 {
     "name": "codex",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "description": "Codex - Note-taking app for programmers and CS students",
     "homepage": "https://www.codexnotes.com/",
     "repository": "https://github.com/jcv8000/Codex",
@@ -13,7 +13,7 @@
         "appId": "io.github.jcv8000.codex",
         "productName": "Codex",
         "copyright": "CC BY-NC 4.0",
-        "buildVersion": "1.3.1",
+        "buildVersion": "1.4.0",
         "mac": {
             "target": "dmg",
             "icon": "./icons/icon.icns",
@@ -56,9 +56,11 @@
     },
     "license": "CC BY-NC 4.0",
     "devDependencies": {
-        "electron": "^12.0.11"
+        "electron": "^12.1.0",
+        "electron-builder": "latest"
     },
     "dependencies": {
+        "@benrbray/prosemirror-math": "^0.2.2",
         "bootstrap": "4.5.0",
         "custom-electron-titlebar": "^3.2.6",
         "electron-context-menu": "^2.4.0",
@@ -72,6 +74,7 @@
         "prosemirror-history": "^1.1.3",
         "prosemirror-inputrules": "^1.1.3",
         "prosemirror-keymap": "^1.1.4",
+        "prosemirror-markdown": "^1.5.2",
         "prosemirror-menu": "^1.1.4",
         "prosemirror-model": "^1.13.3",
         "prosemirror-schema-list": "^1.1.4",

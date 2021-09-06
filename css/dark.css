@@ -212,7 +212,7 @@ a {
 }
 
 #sidebarResizer {
-    background-color: #2C3036;
+    background-color: rgba(0, 0, 0, 0.45);
 }
 
 #sidebarToggler {
@@ -250,4 +250,57 @@ a {
 
 #updateBlock {
     color: #155724;
+}
+
+math-inline .math-src::after, math-inline .math-src::before {
+    background-color: var(--dark-darker);
+    color: var(--dark-light);
+}
+
+math-inline .math-src .ProseMirror {
+    background-color: var(--dark-darker);
+    color: #d34cff;
+}
+
+math-display .math-src .ProseMirror {
+    background-color: var(--dark-darker);
+    color: #d34cff;
+}
+
+math-display .math-src::after, math-display .math-src::before {
+    background-color: var(--dark-darker);
+    color: var(--dark-light);
+}
+
+math-display.ProseMirror-selectednode {
+    background-color: var(--dark-darker);
+}
+
+hr {
+    background-color: var(--dark-darker);
+}
+
+.ProseMirror-example-setup-style hr {
+    background-color: transparent;
+}
+
+#saveIndicator {
+    background-color: transparent;
+    color: #B1D8B1;
+}
+
+#saveIndicatorTitle {
+    color: #B1D8B1;
+}
+
+.inline-code {
+    color: #abb2bf;
+    background: #282c34;
+}
+
+.key-symbol {
+    background-color: #4c4c4c;
+    color: var(--text-color);
+    box-shadow: 0px 2px 0px 0px #1f1f1f;
+    border: 1px solid #00000070;
 }
