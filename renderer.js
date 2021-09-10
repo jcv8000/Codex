@@ -715,7 +715,7 @@ function saveSelectedPage(showIndicator = false) {
             if (showIndicator) {
                 clearTimeout(fadeInSaveIndicator);
 
-                document.getElementById('saveIndicatorTitle').innerText = `"${title}" saved!`
+                document.getElementById('saveIndicatorTitle').textContent = `"${title}" saved!`
                 document.getElementById('saveIndicator').style.opacity = 1;
 
                 fadeInSaveIndicator = setTimeout(() => {
