@@ -114,8 +114,16 @@
     content: "MatLab"
 }
 
+.codeSnippet[data-params="nim"]:before {
+    content: "Nim"
+}
+
 .codeSnippet[data-params="objectivec"]:before {
     content: "Objective C"
+}
+
+.codeSnippet[data-params="ocaml"]:before {
+    content: "OCaml"
 }
 
 .codeSnippet[data-params="glsl"]:before {

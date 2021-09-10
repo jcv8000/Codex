@@ -565,11 +565,23 @@ function buildMenuItems(schema) {
             attrs: { params: "matlab" },
             run: makeCodeBlock("matlab")
         });
+        r.makeNim = prosemirrorMenu.blockTypeItem(type, {
+            title: "Change to Nim code block",
+            label: "Nim",
+            attrs: { params: "nim" },
+            run: makeCodeBlock("nim")
+        });
         r.makeObjectiveC = prosemirrorMenu.blockTypeItem(type, {
             title: "Change to Objective C code block",
             label: "Objective C",
             attrs: { params: "objectivec" },
             run: makeCodeBlock("objectivec")
+        });
+        r.makeOCaml = prosemirrorMenu.blockTypeItem(type, {
+            title: "Change to OCaml code block",
+            label: "OCaml",
+            attrs: { params: "ocaml" },
+            run: makeCodeBlock("ocaml")
         });
         r.makeGLSL = prosemirrorMenu.blockTypeItem(type, {
             title: "Change to GLSL code block",
@@ -747,7 +759,7 @@ function buildMenuItems(schema) {
         r.makeHTML, r.makeHTTP, r.makeJava, r.makeJS, r.makeJSON, r.makeLatex, r.makeLess, r.makeLisp, r.makeLua, r.makeMakefile, r.makeMarkdown, r.makeMathematica, r.makeMatlab, r.makeOther
     ]), { label: "Code (H-M)" }),
     r.makeCodeBlock && new prosemirrorMenu.DropdownSubmenu(cut([
-        r.makeObjectiveC, r.makePerl, r.makePHP, r.makePS, r.makePY, r.makeR, r.makeRuby, r.makeRust, r.makeSQL, r.makeShell, r.makeSwift, r.makeTS, r.makeX86, r.makeYAML, r.makeOther
+        r.makeNim, r.makeObjectiveC, r.makeOCaml, r.makePerl, r.makePHP, r.makePS, r.makePY, r.makeR, r.makeRuby, r.makeRust, r.makeSQL, r.makeShell, r.makeSwift, r.makeTS, r.makeX86, r.makeYAML, r.makeOther
     ]), { label: "Code (N-Z)" })
         , r.makeHead1 && new prosemirrorMenu.DropdownSubmenu(cut([
             r.makeHead1, r.makeHead2, r.makeHead3, r.makeHead4, r.makeHead5, r.makeHead6
@@ -968,7 +980,9 @@ function buildInputRules(schema) {
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[md\]$/, type, function (match) { return ({ params: "markdown" }); }));
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[math\]$/, type, function (match) { return ({ params: "mathematica" }); }));
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[matlab\]$/, type, function (match) { return ({ params: "matlab" }); }));
+        rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[nim\]$/, type, function (match) { return ({ params: "nim" }); }));
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[objc\]$/, type, function (match) { return ({ params: "objectivec" }); }));
+        rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[ocaml\]$/, type, function (match) { return ({ params: "ocaml" }); }));
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[glsl\]$/, type, function (match) { return ({ params: "glsl" }); }));
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[perl\]$/, type, function (match) { return ({ params: "perl" }); }));
         rules.push(prosemirrorInputrules.textblockTypeInputRule(/^\[php\]$/, type, function (match) { return ({ params: "php" }); }));
