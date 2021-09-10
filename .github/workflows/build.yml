@@ -19,7 +19,7 @@ jobs:
           node-version: 14
         
       - name: Install packages
-        run: npm ci
+        run: npm i
         
       - name: Create Windows cert File
         id: create_pfx
