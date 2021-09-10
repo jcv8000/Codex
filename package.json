@@ -54,7 +54,7 @@
         "name": "Joshua Vickery",
         "email": "jcv8000@gmail.com"
     },
-    "license": "CC BY-NC 4.0",
+    "license": "CC-BY-NC-4.0",
     "devDependencies": {
         "electron": "^12.1.0",
         "electron-builder": "latest"
