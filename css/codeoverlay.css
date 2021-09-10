@@ -10,6 +10,10 @@
     border-radius: 5px;
 }
 
+.codeSnippet[data-params=""]:before {
+    display: none;
+}
+
 .codeSnippet[data-params]:hover:before {
     display: none;
 }
