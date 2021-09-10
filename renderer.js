@@ -14,6 +14,7 @@ const { tableNodes } = require('prosemirror-tables');
 const { addListNodes } = require('prosemirror-schema-list');
 const contextMenu = require('electron-context-menu');
 const { customMarkdownSerializer } = require('./prosemirror/md-serializer');
+const validator = require('validator');
 
 let tableSchema = new Schema({
     nodes: schema.spec.nodes.append(tableNodes({
@@ -1275,9 +1276,9 @@ function addNotebookToList(index) {
     a.innerHTML = `
         <div class="row">
             <div class="col-auto pr-0">
-                <span data-feather="${notebook.icon}" style="color: ${notebook.color}"></span>
+                <span data-feather="${validator.escape(notebook.icon)}" style="color: ${notebook.color}"></span>
             </div>
-            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${notebook.name}</div>
+            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${validator.escape(notebook.name)}</div>
             <div class="col-auto" style="padding-right: 20px">
                 <span class="caret"></span>
             </div>
@@ -1447,7 +1448,7 @@ function addPageToAList(notebookIndex, index) {
             <div class="col-auto pr-0">
                 <span data-feather="file-text"></span>
             </div>
-            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
+            <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${validator.escape(page.title)}</div>
             <div class="col-auto" style="padding-right: 13px">
                 <span data-feather="star" style="width: 14px; height: 14px; color: orange; vertical-align: -2px"></span>
             </div>
@@ -1460,7 +1461,7 @@ function addPageToAList(notebookIndex, index) {
             <div class="col-auto pr-0">
                 <span data-feather="file-text"></span>
             </div>
-            <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${page.title}</div>
+            <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${validator.escape(page.title)}</div>
         </div>
         `;
     }
@@ -2047,9 +2048,9 @@ function updateFavoritesSection() {
         a.innerHTML = `        
         <div class="row" style="width: 100%">
             <div class="col-auto">
-                <span data-feather="${parent.icon}" style="width: 32px; height: 32px; color: ${parent.color}"></span>
+                <span data-feather="${validator.escape(parent.icon)}" style="width: 32px; height: 32px; color: ${parent.color}"></span>
             </div>
-            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">${page.title}</div>
+            <div class="col" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden; font-weight: 500; vertical-align: middle; line-height: 34px;">${validator.escape(page.title)}</div>
             <div class="col-auto" style="width: 32px">
                 <span data-feather="star" style="width: 24px; height: 24px; color: orange; vertical-align: -12px"></span>
             </div>
