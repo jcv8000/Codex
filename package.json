@@ -1,6 +1,6 @@
 {
     "name": "codex",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Codex - Note-taking app for programmers and CS students",
     "homepage": "https://www.codexnotes.com/",
     "repository": "https://github.com/jcv8000/Codex",
@@ -13,7 +13,7 @@
         "appId": "io.github.jcv8000.codex",
         "productName": "Codex",
         "copyright": "CC BY-NC 4.0",
-        "buildVersion": "1.4.0",
+        "buildVersion": "1.4.1",
         "mac": {
             "target": "dmg",
             "icon": "./icons/icon.icns",
