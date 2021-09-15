@@ -12,7 +12,7 @@
     "build": {
         "appId": "io.github.jcv8000.codex",
         "productName": "Codex",
-        "copyright": "CC BY-NC 4.0",
+        "copyright": "CC-BY-NC-4.0",
         "buildVersion": "1.4.1",
         "mac": {
             "target": "dmg",
