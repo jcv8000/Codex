@@ -27,13 +27,13 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           filename: certificate.pfx
-          encodedString: ${{ secrets.BKFIYUR }}
+          encodedString: ${{ secrets.B6473 }}
 
       - name: Run Electron Builder
         run: npx electron-builder --publish=never
         env:
           CSC_LINK: ${{ steps.create_pfx.outputs.filePath }}
-          CSC_KEY_PASSWORD: ${{ secrets.PUIYDBD }}
+          CSC_KEY_PASSWORD: ${{ secrets.P7834 }}
         
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
