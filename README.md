@@ -1,5 +1,5 @@
 <p align="center">
-	<img  src="https://codexnotes.com/logo.png"  width="400" />
+	<img  src="https://www.codexnotes.com/img/logo.png"  width="400" />
 </p>
 
 A free note-taking software for programmers and Computer Science students
