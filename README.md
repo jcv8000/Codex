@@ -21,7 +21,7 @@ The package.json should already specify the building behavior for Windows and Li
 
 ## Screenshot
 
-![Screenshot](https://codexnotes.com/exampleimg/main2.png)
+![Screenshot](https://codexnotes.com/img/main2.png)
 
 ## License
 
