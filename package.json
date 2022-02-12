@@ -1,6 +1,6 @@
 {
     "name": "codex",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "description": "Codex - Note-taking app for programmers and CS students",
     "homepage": "https://www.codexnotes.com/",
     "repository": "https://github.com/jcv8000/Codex",
@@ -13,7 +13,7 @@
         "appId": "io.github.jcv8000.codex",
         "productName": "Codex",
         "copyright": "CC-BY-NC-4.0",
-        "buildVersion": "1.4.1",
+        "buildVersion": "1.4.2",
         "mac": {
             "target": "dmg",
             "icon": "./icons/icon.icns",
@@ -62,13 +62,13 @@
     "dependencies": {
         "@benrbray/prosemirror-math": "^0.2.2",
         "bootstrap": "4.5.0",
-        "custom-electron-titlebar": "^3.2.6",
+        "custom-electron-titlebar": "3.2.7",
         "electron-context-menu": "^2.4.0",
         "feather-icons": "^4.28.0",
         "highlight.js": "^10.6.0",
         "jquery": "^3.5.1",
         "katex": "^0.13.18",
-        "prosemirror-commands": "^1.1.7",
+        "prosemirror-commands": "1.1.12",
         "prosemirror-dropcursor": "^1.3.3",
         "prosemirror-gapcursor": "^1.1.5",
         "prosemirror-highlightjs": "github:jcv8000/prosemirror-highlightjs",
