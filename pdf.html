@@ -35,7 +35,8 @@
         style.type='text/css';
         if (style.styleSheet){
             style.styleSheet.cssText='h1 { page-break-before: always; }';
-        } else {
+        } 
+        else {
             style.appendChild(document.createTextNode('h1 { page-break-before: always; }'));
         }
         document.getElementsByTagName('head')[0].appendChild(style);
