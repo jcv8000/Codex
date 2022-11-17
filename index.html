@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Codex</title>
 
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
 
-    <link rel="stylesheet" href="css/prosemirror.css">
-    <link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
-    <link rel="stylesheet" href="node_modules/@benrbray/prosemirror-math/style/math.css">
+    <link rel="stylesheet" href="css/prosemirror.css" />
+    <link rel="stylesheet" href="node_modules/katex/dist/katex.min.css" />
+    <link rel="stylesheet" href="node_modules/@benrbray/prosemirror-math/style/math.css" />
     
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
 
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -24,9 +24,9 @@
     <script src="node_modules/feather-icons/dist/feather.min.js"></script>
 
     <!-- HIGHLIHTJS STYLES -->
-    <link id="codeStyleLink" rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-dark.css">
+    <link id="codeStyleLink" rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-dark.css" />
     <!-- HIGHLIHTJS STYLES -->
-    <link id="codeOverlayLink" rel="stylesheet">
+    <link id="codeOverlayLink" rel="stylesheet" />
 </head>
 
 
@@ -40,33 +40,29 @@
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column unselectable">
                         <li class="nav-item my-sidebar-item">
-                            <a id="homeTab" class="nav-link my-sidebar-link active" href="#" draggable="false"
-                                onclick="showHomePage()">
+                            <a id="homeTab" class="nav-link my-sidebar-link active" href="#" draggable="false" onclick="showHomePage()">
                                 <span data-feather="home"></span>
                                 Home
                             </a>
                         </li>
                         <li class="nav-item my-sidebar-item">
-                            <a id="settingsTab" class="nav-link my-sidebar-link" href="#" draggable="false"
-                                onclick="showSettingsPage()">
+                            <a id="settingsTab" class="nav-link my-sidebar-link" href="#" draggable="false" onclick="showSettingsPage()">
                                 <span data-feather="settings"></span>
                                 Settings
                             </a>
                         </li>
                         <li class="nav-item my-sidebar-item">
-                            <!--<a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse"
-                                draggable="false" onclick="">
-                                <span data-feather="help-circle"></span>Help<span
-                                    class="caret"></span>
+                            <!--<a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse" draggable="false" onclick="">
+                                <span data-feather="help-circle"></span>
+                                Help
+                                <span class="caret"></span>
                             </a>-->
-                            <a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse"
-                                draggable="false" onclick="">
+                            <a id="helpTab" class="nav-link unselectable" href="#help-list" data-toggle="collapse" draggable="false" onclick="">
                                 <div class="row">
                                     <div class="col-auto pr-0">
                                         <span data-feather="help-circle"></span>
                                     </div>
-                                    <div class="col pr-1"
-                                        style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+                                    <div class="col pr-1" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
                                         Help
                                     </div>
                                     <div class="col-auto" style="padding-right: 20px">
@@ -76,8 +72,7 @@
                             </a>
                             <ul class="nav collapse" id="help-list">
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" id="firstHelpPage" class="nav-link my-sidebar-link indent unselectable"
-                                        onclick="showHelpPage(); loadHelpPage('gettingstarted')">
+                                    <a href="#" id="firstHelpPage" class="nav-link my-sidebar-link indent unselectable" onclick="showHelpPage(); loadHelpPage('gettingstarted')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="zap"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -87,8 +82,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" class="nav-link my-sidebar-link indent unselectable"
-                                        onclick="showHelpPage(); loadHelpPage('basicediting')">
+                                    <a href="#" class="nav-link my-sidebar-link indent unselectable" onclick="showHelpPage(); loadHelpPage('basicediting')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="edit"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -98,8 +92,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" class="nav-link my-sidebar-link indent unselectable"
-                                        onclick="showHelpPage(); loadHelpPage('equations')">
+                                    <a href="#" class="nav-link my-sidebar-link indent unselectable" onclick="showHelpPage(); loadHelpPage('equations')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="divide"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -109,8 +102,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" class="nav-link my-sidebar-link indent unselectable"
-                                        onclick="showHelpPage(); loadHelpPage('keybinds')">
+                                    <a href="#" class="nav-link my-sidebar-link indent unselectable" onclick="showHelpPage(); loadHelpPage('keybinds')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="command"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -120,8 +112,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" id="cloudSyncPage" class="nav-link my-sidebar-link indent unselectable"
-                                        onclick="showHelpPage(); loadHelpPage('exporting')">
+                                    <a href="#" id="cloudSyncPage" class="nav-link my-sidebar-link indent unselectable" onclick="showHelpPage(); loadHelpPage('exporting')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="external-link"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -131,8 +122,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" id="cloudSyncPage" class="nav-link my-sidebar-link indent unselectable"
-                                        onclick="showHelpPage(); loadHelpPage('cloudsyncing')">
+                                    <a href="#" id="cloudSyncPage" class="nav-link my-sidebar-link indent unselectable" onclick="showHelpPage(); loadHelpPage('cloudsyncing')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="upload-cloud"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -142,8 +132,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item my-sidebar-item">
-                                    <a href="#" class="nav-link indent unselectable"
-                                        onclick="shell.openExternal('https://forms.gle/uDLJpqLbNLcEx1F8A')">
+                                    <a href="#" class="nav-link indent unselectable" onclick="shell.openExternal('https://forms.gle/uDLJpqLbNLcEx1F8A')">
                                         <div class="row">
                                             <div class="col-auto pr-0"><span data-feather="inbox"></span></div>
                                             <div class="col pr-4" style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
@@ -156,8 +145,7 @@
                         </li>
 
                         <li id="updateBlockLI" class="nav-item my-sidebar-item" style="display: none;" title="www.codexnotes.com/download">
-                            <a id="updateBlock" class="nav-link" href="#" draggable="false"
-                                onclick="shell.openExternal('https://www.codexnotes.com/download')">
+                            <a id="updateBlock" class="nav-link" href="#" draggable="false" onclick="shell.openExternal('https://www.codexnotes.com/download')">
                                 <span data-feather="download" style="color: #269700;"></span>
                                 New update available
                             </a>
@@ -178,8 +166,7 @@
                             <h6 class="sidebar-heading text-muted" style="margin-top: 3px">Notebooks</h6>
                         </div>
                         <div class="col-auto" style="padding-right: 16px;">
-                            <a id="newNotebookBtn" class="text-muted" href="#newNotebookModal" draggable="false"
-                                data-toggle="modal" title="New Notebook...">
+                            <a id="newNotebookBtn" class="text-muted" href="#newNotebookModal" draggable="false" data-toggle="modal" title="New Notebook...">
                                 <span data-feather="plus-circle"></span>
                             </a>
                         </div>
@@ -192,8 +179,7 @@
                 <span id="sidebarResizer" class="unselectable"></span>
             </nav>
 
-            <span id="sidebarToggler" class="unselectable" data-feather="chevrons-left" onclick="toggleSidebar()"
-                title="Toggle Sidebar"></span>
+            <span id="sidebarToggler" class="unselectable" data-feather="chevrons-left" onclick="toggleSidebar()" title="Toggle Sidebar"></span>
 
             <!-- MAIN CONTAINER -->
             <main id="mainContainer" role="main" class="p-0">
@@ -204,7 +190,7 @@
                     <div class="container-fluid download-header mb-4">
                         <div>
                             <center>
-                                <img src="img/logo-shadow.png" style="width: 400px"><br>
+                                <img src="img/logo-shadow.png" style="width: 400px" /><br/>
                                 <p style="color: white; margin-bottom: 5px; font-weight: 500">Version 1.4.2</p>
                                 <p style="color: white; padding-bottom: 20px;">Made by Josh Vickery</p>
                             </center>
@@ -297,7 +283,7 @@
                 <span id="settingsPage" class="unselectable" style="display: none;">
                     <div class="content shadow-sm">
                         <center>
-                            <h2>Appearance</h1>
+                            <h2>Appearance</h2>
                         </center>
                         <hr />
 
@@ -311,15 +297,12 @@
                         </div>
                         <div class="form-group">
                             <h5 class="settingTitle">Accent color</h5>
-                            <input class="form-control" type="color" id="accentColorPicker"
-                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px" title="Choose color..." />
-                            <button class="btn mybtn" style="vertical-align: 7px; margin-left: 10px"
-                                onclick="revertAccentColor()">Revert to default
-                            </button>
+                            <input class="form-control" type="color" id="accentColorPicker" onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px" title="Choose color..." />
+                            <button class="btn mybtn" style="vertical-align: 7px; margin-left: 10px" onclick="revertAccentColor()">Revert to default</button>
                         </div>
 
                         <center>
-                            <h2 class="mt-5">Code Blocks</h1>
+                            <h2 class="mt-5">Code Blocks</h2>
                         </center>
                         <hr />
 
@@ -329,7 +312,8 @@
 
                             <center>
                                 <div id="exampleCode" class="codeSnippet hljs" data-params="cpp"
-                                    style="font-size:14px; width: 100%; text-align: left; tab-size: 4; position: relative"></div>
+                                    style="font-size:14px; width: 100%; text-align: left; tab-size: 4; position: relative">
+                                </div>
                             </center>
 
 
@@ -444,7 +428,7 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Language Overlay</h5>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="showLanguageOverlayCheck" onchange="applyPrefsRuntime()">
+                                <input type="checkbox" class="custom-control-input" id="showLanguageOverlayCheck" onchange="applyPrefsRuntime()" />
                                 <label class="custom-control-label" for="showLanguageOverlayCheck">Show the language name at the top-right of code blocks</label>
                             </div>
                         </div>
@@ -461,15 +445,15 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Word Wrap</h5>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="codeWordWrapCheck" onchange="applyPrefsRuntime()">
+                                <input type="checkbox" class="custom-control-input" id="codeWordWrapCheck" onchange="applyPrefsRuntime()" />
                                 <label class="custom-control-label" for="codeWordWrapCheck">Enable word wrap in code blocks</label>
                             </div>
                         </div>
 
                         <center>
-                            <h2 class="mt-5">Exporting</h1>
+                            <h2 class="mt-5">Exporting</h2>
                         </center>
-                        <hr>
+                        <hr />
 
                         <div class="form-group">
 
@@ -481,13 +465,13 @@
                                 <label style="font-weight: normal; vertical-align: top; margin-left: 6px" for="darkmodePDFCheck">Dark mode PDFs <span style="font-size: 12px"> (Please do not actually print these)</span></label>-->
 
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="exportBreakPageOnH1Check" onchange="applyPrefsRuntime()">
+                                <input type="checkbox" class="custom-control-input" id="exportBreakPageOnH1Check" onchange="applyPrefsRuntime()" />
                                 <label class="custom-control-label" for="exportBreakPageOnH1Check">
                                     Break page before Level 1 Headings
                                 </label>
                             </div>
                             <!--<div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="darkmodePDFCheck" onchange="applyPrefsRuntime()">
+                                <input type="checkbox" class="custom-control-input" id="darkmodePDFCheck" onchange="applyPrefsRuntime()" />
                                 <label class="custom-control-label" for="darkmodePDFCheck">
                                         Dark mode PDFs 
                                         <span style="font-size: 12px">
