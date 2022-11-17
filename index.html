@@ -67,7 +67,8 @@
                                     </div>
                                     <div class="col pr-1"
                                         style="padding-left: 5px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-                                        Help</div>
+                                        Help
+                                    </div>
                                     <div class="col-auto" style="padding-right: 20px">
                                         <span class="caret"></span>
                                     </div>
@@ -298,7 +299,7 @@
                         <center>
                             <h2>Appearance</h1>
                         </center>
-                        <hr>
+                        <hr />
 
                         <div class="form-group">
                             <h5 class="settingTitle">Theme</h5>
@@ -311,15 +312,16 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Accent color</h5>
                             <input class="form-control" type="color" id="accentColorPicker"
-                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px" title="Choose color...">
+                                onchange="applyPrefsRuntime()" style="display: inline; width: 58px; height: 48px" title="Choose color..." />
                             <button class="btn mybtn" style="vertical-align: 7px; margin-left: 10px"
-                                onclick="revertAccentColor()">Revert to default</button>
+                                onclick="revertAccentColor()">Revert to default
+                            </button>
                         </div>
 
                         <center>
                             <h2 class="mt-5">Code Blocks</h1>
                         </center>
-                        <hr>
+                        <hr />
 
                         <div class="form-group">
                             <h5 class="settingTitle">Code Block Theme</h5>
@@ -431,9 +433,9 @@
                                 </optgroup>
                             </select>
                             <center>
-                                <p class="mt-2" style="font-size: 15px; font-weight: 400;">(Click the dropdown, press
-                                    enter, and press
-                                    up/down to cycle through themes)</p>
+                                <p class="mt-2" style="font-size: 15px; font-weight: 400;">
+                                    (Click the dropdown, press enter, and press up/down to cycle through themes)
+                                </p>
                             </center>
 
 
@@ -442,8 +444,7 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Language Overlay</h5>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="showLanguageOverlayCheck"
-                                    onchange="applyPrefsRuntime()">
+                                <input type="checkbox" class="custom-control-input" id="showLanguageOverlayCheck" onchange="applyPrefsRuntime()">
                                 <label class="custom-control-label" for="showLanguageOverlayCheck">Show the language name at the top-right of code blocks</label>
                             </div>
                         </div>
@@ -451,8 +452,7 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Preferred Tab Size</h5>
                             <!--<label for="tabSizeSelect">Preferred tab size</label>-->
-                            <select class="form-control custom-select" id="tabSizeSelect"
-                                onchange="applyPrefsRuntime()">
+                            <select class="form-control custom-select" id="tabSizeSelect" onchange="applyPrefsRuntime()">
                                 <option value="2">2 spaces</option>
                                 <option value="4">4 spaces</option>
                             </select>
@@ -461,8 +461,7 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Word Wrap</h5>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="codeWordWrapCheck"
-                                    onchange="applyPrefsRuntime()">
+                                <input type="checkbox" class="custom-control-input" id="codeWordWrapCheck" onchange="applyPrefsRuntime()">
                                 <label class="custom-control-label" for="codeWordWrapCheck">Enable word wrap in code blocks</label>
                             </div>
                         </div>
@@ -476,25 +475,25 @@
 
                             <h5 class="settingTitle">Exporting to PDF</h5>
                             <!--<input style="width: 24px; height: 24px;" type="checkbox" id="exportBreakPageOnH1Check" onchange="applyPrefsRuntime()">
-              <label style="font-weight: normal; vertical-align: top; margin-left: 6px" for="exportBreakPageOnH1Check">Break page before Level 1 Headings</label>
-              <br>
-              <input style="width: 24px; height: 24px;" type="checkbox" id="darkmodePDFCheck" onchange="applyPrefsRuntime()">
-              <label style="font-weight: normal; vertical-align: top; margin-left: 6px" for="darkmodePDFCheck">Dark mode PDFs <span style="font-size: 12px"> (Please do not actually print these)</span></label>
-              -->
+                                <label style="font-weight: normal; vertical-align: top; margin-left: 6px" for="exportBreakPageOnH1Check">Break page before Level 1 Headings</label>
+                                <br>
+                                <input style="width: 24px; height: 24px;" type="checkbox" id="darkmodePDFCheck" onchange="applyPrefsRuntime()">
+                                <label style="font-weight: normal; vertical-align: top; margin-left: 6px" for="darkmodePDFCheck">Dark mode PDFs <span style="font-size: 12px"> (Please do not actually print these)</span></label>-->
 
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="exportBreakPageOnH1Check"
-                                    onchange="applyPrefsRuntime()">
-                                <label class="custom-control-label" for="exportBreakPageOnH1Check">Break page before
-                                    Level 1
-                                    Headings</label>
+                                <input type="checkbox" class="custom-control-input" id="exportBreakPageOnH1Check" onchange="applyPrefsRuntime()">
+                                <label class="custom-control-label" for="exportBreakPageOnH1Check">
+                                    Break page before Level 1 Headings
+                                </label>
                             </div>
                             <!--<div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="darkmodePDFCheck"
-                                    onchange="applyPrefsRuntime()">
-                                <label class="custom-control-label" for="darkmodePDFCheck">Dark mode PDFs <span
-                                        style="font-size: 12px">
-                                        (Please do not actually print these out)</span></label>
+                                <input type="checkbox" class="custom-control-input" id="darkmodePDFCheck" onchange="applyPrefsRuntime()">
+                                <label class="custom-control-label" for="darkmodePDFCheck">
+                                        Dark mode PDFs 
+                                        <span style="font-size: 12px">
+                                            (Please do not actually print these out)
+                                        </span>
+                                </label>
                             </div>-->
 
                         </div>
@@ -502,63 +501,67 @@
                         <div class="form-group">
                             <h5 class="settingTitle">Exporting to PDF/Markdown</h5>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="openPDFonExportCheck"
-                                    onchange="applyPrefsRuntime()">
-                                <label class="custom-control-label" for="openPDFonExportCheck">Open the created file
-                                    after
-                                    exporting</label>
+                                <input type="checkbox" class="custom-control-input" id="openPDFonExportCheck" onchange="applyPrefsRuntime()" />
+                                <label class="custom-control-label" for="openPDFonExportCheck">
+                                    Open the created file after exporting
+                                </label>
                             </div>
                         </div>
 
                         <center>
-                            <h2 class="mt-5">Other</h1>
+                            <h2 class="mt-5">Other</h2>
                         </center>
-                        <hr>
+                        <hr />
 
                         <div class="form-group">
-                            <input type="file" id="dataDirInputDialog" webkitdirectory style="display:none">
+                            <input type="file" id="dataDirInputDialog" webkitdirectory style="display:none" />
                             <h5 class="settingTitle">Save Location</h5>
                             <div class="input-group">
                                 <!--<input type="text" id="dataDirInput" class="form-control" spellcheck="false" readonly onclick="openDataDir()">-->
-                                <div class="form-control" readonly><a href="#" onclick="openDataDir()" id="dataDirInput"
-                                        style="font-size: 14px; vertical-align: 1px;"></a></div>
+                                <div class="form-control" readonly>
+                                    <a href="#" onclick="openDataDir()" id="dataDirInput" style="font-size: 14px; vertical-align: 1px;"></a>
+                                </div>
                                 <div class="input-group-append" id="revertToDefaultDataDirBtnTooltip">
-                                    <button id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()"
-                                        class="btn mybtn-primary" type="button"
-                                        style="padding-left: 12px; padding-right: 12px" title=""><span
-                                            data-feather="rotate-ccw"></span></button>
+                                    <button id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()" class="btn mybtn-primary" type="button"
+                                        style="padding-left: 12px; padding-right: 12px" title="">
+                                        <span data-feather="rotate-ccw"></span>
+                                    </button>
                                 </div>
                                 <div class="input-group-append">
                                     <button onclick="DataDirDialog();" id="dataDirButton" class="btn mybtn-primary"
-                                        type="button" style="padding-left: 12px; padding-right: 12px"
-                                        title="Change save directory"><span data-feather="folder"></span></button>
+                                        type="button" style="padding-left: 12px; padding-right: 12px" title="Change save directory">
+                                        <span data-feather="folder"></span>
+                                    </button>
                                 </div>
                             </div>
-                            <br>
+                            <br />
                             <!--<span id="revertToDefaultDataDirBtnTooltip" class="d-inline-block mb-4" data-toggle="tooltip" data-placement="bottom" title="">
-                <button class="mybtn-primary" style="width: 100%" id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()">Revert to default save directory</button>
-              </span>-->
+                                <button class="mybtn-primary" style="width: 100%" id="revertToDefaultDataDirBtn" onclick="revertToDefaultDataDir()">Revert to default save directory</button>
+                                </span>-->
                             <div class="alert alert-warning mb-0" role="alert" style="font-size: 14px">
-                                <i><b>Changing your save location will immediately restart the application.</b><br>Make
-                                    sure it has its
-                                    own folder to separate the files from others.<br><br>You will have to copy/replace
-                                    the
-                                    <b><code>save.json</code></b> file and <b><code>notes</code></b> folder from the old
-                                    location to the
-                                    new location to see your notes.<br>
-                                    <hr>This can be used for cloud syncing your notes, check <a href="#"
-                                        onclick="_loadCloudSyncPage()">here</a> for a tutorial.
+                                <i><b>Changing your save location will immediately restart the application.</b>
+                                    <br />Make sure it has its own folder to separate the files from others.<br />
+                                    <br />You will have to copy/replace the <b><code>save.json</code></b> file and 
+                                    <b><code>notes</code></b> folder from the old location to the new location to see your notes.<br />
+                                    <hr />This can be used for cloud syncing your notes, check 
+                                    <a href="#" onclick="_loadCloudSyncPage()">here</a> for a tutorial.
                                 </i>
                             </div>
                         </div>
 
                         <div class="form-group mb-0">
                             <h5 class="settingTitle">Unused Files</h5>
-                            <p>When you delete a notebook/page in Codex, the actual files that hold the pages' content stays in the <b><code>notes</code></b> folder in case you need to get it back.<br><br>
-                            Don't worry about this unless you have extremely large notes with embedded images and you need extra space. Most note files are less than 1 MB in size.<br><br>
-                            This button deletes all files that are currently unused by your notebooks.</p>
+                            <p>
+                                When you delete a notebook/page in Codex, the actual files that hold the pages' content stays in the <b><code>notes</code></b> 
+                                folder in case you need to get it back.<br/><br/>Don't worry about this unless you have extremely large notes with embedded images and you 
+                                need extra space. Most note files are less than 1 MB in size.<br/><br/>This button deletes all files that are currently unused by your notebooks.
+                            </p>
                             
-                            <center><button class="btn mybtn-danger" onclick="deleteOldPages()">Purge unused files</button></center>
+                            <center>
+                                <button class="btn mybtn-danger" onclick="deleteOldPages()">
+                                    Purge unused files
+                                </button>
+                            </center>
                         </div>
                     </div>
                 </span>
@@ -611,8 +614,7 @@
                                 <select id="newNotebookIconSelect" class="form-control"></select>
                             </div>
                             <div class="col-auto">
-                                <input class="form-control" type="color" style="width: 50px" id="newNotebookColorPicker"
-                                    title="Choose color...">
+                                <input class="form-control" type="color" style="width: 50px" id="newNotebookColorPicker" title="Choose color..." />
                             </div>
                             <div class="col-auto">
                                 <span id="newNotebookIconHelp" data-feather="help-circle" href="#" onclick="shell.openExternal('https://www.feathericons.com/')" style="color: #9AA6B3; width: 24px; height: 24px; vertical-align: -15px; cursor: pointer;" title="View all icons at feathericons.com"></span>
@@ -620,8 +622,7 @@
                         </div>
                         <label class="form-label" for="newNotebookNameInput">Name:</label>
                         <div class="form-row">
-                            <input class="form-control" type="text" id="newNotebookNameInput"
-                                placeholder="New notebook name...">
+                            <input class="form-control" type="text" id="newNotebookNameInput" placeholder="New notebook name..." />
                             <div class="invalid-feedback">
                                 Please enter a valid name.
                             </div>
@@ -629,7 +630,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="mybtn-primary" id="createNotebookButton" value="Create">
+                        <input type="submit" class="mybtn-primary" id="createNotebookButton" value="Create" />
                     </div>
                 </form>
             </div>
@@ -660,8 +661,7 @@
                                 <select id="editNotebookIconSelect" class="form-control"></select>
                             </div>
                             <div class="col-auto">
-                                <input class="form-control" type="color" style="width: 50px" id="editNotebookColorPicker"
-                                    title="Choose color...">
+                                <input class="form-control" type="color" style="width: 50px" id="editNotebookColorPicker" title="Choose color..." />
                             </div>
                             <div class="col-auto">
                                 <span id="editNotebookIconHelp" data-feather="help-circle" href="#" onclick="shell.openExternal('https://www.feathericons.com/')" style="color: #9AA6B3; width: 24px; height: 24px; vertical-align: -15px; cursor: pointer;" title="View all icons at feathericons.com"></span>
@@ -669,8 +669,7 @@
                         </div>
                         <label class="form-label" for="newNotebookNameInput">Name:</label>
                         <div class="form-row">
-                            <input class="form-control" type="text" id="editNotebookNameInput"
-                                placeholder="New notebook name...">
+                            <input class="form-control" type="text" id="editNotebookNameInput" placeholder="New notebook name..." />
                             <div class="invalid-feedback">
                                 Please enter a valid name.
                             </div>
@@ -678,7 +677,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="mybtn-primary" id="editNotebookButton" value="Save">
+                        <input type="submit" class="mybtn-primary" id="editNotebookButton" value="Save" />
                     </div>
                 </form>
             </div>
@@ -695,8 +694,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="mybtn-danger" id="deleteNotebookButton"
-                        onclick="deleteSelectedNotebook(); $('#deleteNotebookModal').modal('hide');">Delete</button>
+                    <button type="button" class="mybtn-danger" id="deleteNotebookButton" onclick="deleteSelectedNotebook(); $('#deleteNotebookModal').modal('hide');">Delete</button>
                 </div>
             </div>
         </div>
@@ -715,14 +713,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input class="form-control" type="text" id="newPageNameInput" placeholder="New page name...">
+                        <input class="form-control" type="text" id="newPageNameInput" placeholder="New page name..." />
                         <div class="invalid-feedback">
                             Please enter a valid name.
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="mybtn-primary" id="editNotebookButton" value="Create">
+                        <input type="submit" class="mybtn-primary" id="editNotebookButton" value="Create" />
                     </div>
                 </form>
             </div>
@@ -742,14 +740,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input class="form-control" type="text" id="editPageNameInput" placeholder="New page name...">
+                        <input class="form-control" type="text" id="editPageNameInput" placeholder="New page name..." />
                         <div class="invalid-feedback">
                             Please enter a valid name.
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="mybtn-primary" id="editPageButton" value="Rename">
+                        <input type="submit" class="mybtn-primary" id="editPageButton" value="Rename" />
                     </div>
                 </form>
             </div>
@@ -766,8 +764,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="mybtn" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="mybtn-danger" id="deletePageButton"
-                        onclick="deleteSelectedPage(); $('#deletePageModal').modal('hide');">Delete</button>
+                    <button type="button" class="mybtn-danger" id="deletePageButton" onclick="deleteSelectedPage(); $('#deletePageModal').modal('hide');">Delete</button>
                 </div>
             </div>
         </div>
@@ -775,32 +772,50 @@
 
     <!-- NOTEBOOK CONTEXT MENU -->
     <div class="dropdown-menu shadow m-0 unselectable" id="notebook-context-menu" style="position: fixed">
-        <a class="dropdown-item" href="#newPageModal" data-toggle="modal"><span data-feather="copy"
-                class="context-menu-glyph"></span>New Page</a>
-        <a class="dropdown-item" href="#" onclick="editSelectedNotebook()"><span data-feather="edit"
-                class="context-menu-glyph"></span>Edit Notebook</a>
+        <a class="dropdown-item" href="#newPageModal" data-toggle="modal">
+            <span data-feather="copy" class="context-menu-glyph"></span>
+            New Page
+        </a>
+        <a class="dropdown-item" href="#" onclick="editSelectedNotebook()">
+            <span data-feather="edit" class="context-menu-glyph"></span>
+            Edit Notebook
+        </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#" onclick="openExportNotebookModal()"><span data-feather="external-link"
-            class="context-menu-glyph"></span>Export all pages...</a>
+        <a class="dropdown-item" href="#" onclick="openExportNotebookModal()">
+            <span data-feather="external-link" class="context-menu-glyph"></span>
+            Export all pages...
+        </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#deleteNotebookModal" data-toggle="modal" style="color: red"><span
-                data-feather="trash-2" class="context-menu-glyph"></span>Delete notebook</a>
+        <a class="dropdown-item" href="#deleteNotebookModal" data-toggle="modal" style="color: red">
+            <span data-feather="trash-2" class="context-menu-glyph"></span>
+            Delete notebook
+        </a>
     </div>
 
     <!-- PAGE CONTEXT MENU -->
     <div class="dropdown-menu shadow m-0 unselectable" id="page-context-menu" style="position: fixed">
-        <a class="dropdown-item" href="#" onclick="editSelectedPage()"><span data-feather="edit"
-                class="context-menu-glyph"></span>Rename page</a>
-        <a class="dropdown-item" href="#" onclick="toggleFavoritePage()"><span data-feather="star"
-                class="context-menu-glyph"></span><span id="FavoritePageLink">Favorite page</span></a>
+        <a class="dropdown-item" href="#" onclick="editSelectedPage()">
+            <span data-feather="edit" class="context-menu-glyph"></span>
+            Rename page
+        </a>
+        <a class="dropdown-item" href="#" onclick="toggleFavoritePage()">
+            <span data-feather="star" class="context-menu-glyph"></span>
+            <span id="FavoritePageLink">Favorite page</span>
+        </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#" onclick="printRightClickedPage()"><span data-feather="external-link"
-            class="context-menu-glyph"></span>Export to PDF</a>
-        <a class="dropdown-item" href="#" onclick="exportRightClickedPageToMarkdown()"><span data-feather="hash"
-            class="context-menu-glyph"></span>Export to Markdown</a>
+        <a class="dropdown-item" href="#" onclick="printRightClickedPage()">
+            <span data-feather="external-link" class="context-menu-glyph"></span>
+            Export to PDF
+        </a>
+        <a class="dropdown-item" href="#" onclick="exportRightClickedPageToMarkdown()">
+            <span data-feather="hash" class="context-menu-glyph"></span>
+            Export to Markdown
+        </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#deletePageModal" data-toggle="modal" style="color: red"><span
-                data-feather="trash-2" class="context-menu-glyph"></span>Delete page</a>
+        <a class="dropdown-item" href="#deletePageModal" data-toggle="modal" style="color: red">
+            <span data-feather="trash-2" class="context-menu-glyph"></span>
+            Delete page
+        </a>
     </div>
 
 
@@ -816,13 +831,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    It looks like this is the first time you're using Codex.<br><br>
+                    It looks like this is the first time you're using Codex.
+                    <br/><br/>
                     Click Continue if you would like to see a short guide about how to use Codex.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="mybtn" onclick="prefs.firstUse = false;" data-dismiss="modal">No thanks</button>
-                    <button type="button" class="mybtn-primary" data-dismiss="modal"
-                        onclick="autoOpenHelpTab(); prefs.firstUse = false;">Continue</button>
+                    <button type="button" class="mybtn-primary" data-dismiss="modal" onclick="autoOpenHelpTab(); prefs.firstUse = false;">Continue</button>
                 </div>
             </div>
         </div>
@@ -846,7 +861,7 @@
                         <span id="exportNotebookModalTitle" class="ml-2" style="font-size: 16px; font-weight: 500;"></span>
                         <span id="exportNotebookModalPageCount"></span>
                     </center>
-                    <hr>
+                    <hr />
                     <div class="mb-3">
                         <span data-feather="info" style="color: dodgerblue;"></span>
                         You should create a new folder for the files to be saved into.
