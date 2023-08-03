@@ -10,6 +10,18 @@
 	<small>Made by <a href="https://jvickery.dev">Josh Vickery</a></small>
 </p>
 
+## Building Locally
+
+Requires Node.js 16 or higher
+
+```sh
+pnpm install
+
+pnpm dev # Run the app in development mode with hot reloading
+pnpm dir # Only generates folder(s) of the standalone executable, quicker
+pnpm dist # Generates all installers/portable archives for your platform
+```
+
 ## License
 
 This work is licensed under a [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license.
