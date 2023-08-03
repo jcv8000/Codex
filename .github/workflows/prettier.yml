@@ -5,7 +5,7 @@ on:
         branches: ["master"]
 
 jobs:
-    build:
+    prettier:
         runs-on: ubuntu-latest
 
         steps:

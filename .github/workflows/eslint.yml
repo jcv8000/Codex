@@ -5,7 +5,7 @@ on:
         branches: ["master"]
 
 jobs:
-    build:
+    eslint:
         runs-on: ubuntu-latest
 
         steps:

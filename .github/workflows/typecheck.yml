@@ -5,7 +5,7 @@ on:
         branches: ["master"]
 
 jobs:
-    build:
+    typecheck:
         runs-on: ubuntu-latest
 
         steps:
