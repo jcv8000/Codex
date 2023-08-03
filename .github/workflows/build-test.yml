@@ -1,0 +1,66 @@
+name: build-test
+
+on:
+    pull_request:
+        branches: ["master"]
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: Install node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Create Windows cert File
+              id: create_pfx
+              if: matrix.os == 'windows-latest'
+              uses: timheuer/base64-to-file@v1
+              with:
+                  filename: certificate.pfx
+                  encodedString: ${{ secrets.B64 }}
+
+            - name: Create macOS cert File
+              id: create_p12
+              if: matrix.os == 'macos-latest'
+              uses: timheuer/base64-to-file@v1
+              with:
+                  filename: cert.p12
+                  encodedString: ${{ secrets.MAC_CERT }}
+
+            - name: Run Electron Builder (Windows)
+              if: matrix.os == 'windows-latest'
+              run: pnpm dist
+              env:
+                  CSC_LINK: ${{ steps.create_pfx.outputs.filePath }}
+                  CSC_KEY_PASSWORD: ${{ secrets.PASS }}
+
+            - name: Run Electron Builder (Linux)
+              if: matrix.os == 'ubuntu-latest'
+              run: pnpm dist
+
+            - name: Run Electron Builder (macOS)
+              if: matrix.os == 'macos-latest'
+              run: pnpm dist
+              env:
+                  CSC_LINK: ${{ steps.create_p12.outputs.filePath }}
+                  CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
+                  APPLE_ID: ${{ secrets.APPLE_ID }}
+                  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+                  APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
