@@ -1,0 +1,26 @@
+.rainbow {
+    animation: colorRotate 7s linear 0s infinite;
+}
+
+@keyframes colorRotate {
+    from {
+        color: #6666ff;
+        fill: #6666ff;
+    }
+    10% {
+        color: #0099ff;
+        fill: #0099ff;
+    }
+    50% {
+        color: #00ff00;
+        fill: #00ff00;
+    }
+    75% {
+        color: #ff3399;
+        fill: #ff3399;
+    }
+    100% {
+        color: #6666ff;
+        fill: #6666ff;
+    }
+}

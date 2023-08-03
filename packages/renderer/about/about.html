@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <style>
+            body {
+                font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans",
+                    "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                    "Segoe UI Symbol", "Noto Color Emoji";
+                font-size: 14px;
+                background-color: #f8f9fa;
+                user-select: none;
+            }
+
+            code {
+                font-family: SFMono-Regular, Consolas, "Fira-Mono", monospace;
+            }
+
+            .flex {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+            }
+
+            #versions {
+                background-color: #282c34;
+                color: #abb2bf;
+                border-radius: 6px;
+                border: black;
+                padding: 8px;
+                font-family: SFMono-Regular, Consolas, "Fira-Mono", monospace;
+                min-width: 150px;
+                white-space: nowrap;
+                font-size: 13px;
+            }
+        </style>
+    </head>
+
+    <body style="height: 100%">
+        <table>
+            <tr>
+                <td>
+                    <div class="flex">
+                        <img src="../logo512.png" width="150px" />
+                        <p>
+                            <code style="color: #ff7b28; font-size: 13px"
+                                ><b>Version %VITE_APP_VERSION%</b></code
+                            >
+                            <br />
+                            Made by Josh Vickery
+                        </p>
+
+                        <div id="versions">
+                            Electron
+                            <span id="electron" style="color: #9feaf9">%VITE_ELECTRON_VERSION%</span
+                            ><br />
+                            Node <span id="node" style="color: #84ba64">%VITE_NODE_VERSION%</span
+                            ><br />
+                            Chromium
+                            <span id="chromium" style="color: #de5145"
+                                >%VITE_CHROMIUM_VERSION%</span
+                            >
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="flex">
+                        <p>
+                            Codex would not be possible without many amazing open-source projects
+                            such as Electron, Mantine, TipTap/ProseMirror, Highlight.js, and more.
+                            Thank you to all of the projects that make this possible, and to all of
+                            you who use Codex.
+                        </p>
+
+                        <h3>Privacy and License</h3>
+
+                        <p>
+                            Codex does not collect any of your information or data, or transmit any
+                            of your information or data over the internet.<br /><br />
+                            This work is licensed under a CC BY-NC 4.0 license.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

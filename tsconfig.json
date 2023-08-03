@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "allowJs": false,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "strict": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "noEmit": true,
+        "types": ["vite/client"],
+        "paths": {
+            "common/*": ["./packages/common/*"]
+        }
+    },
+    "include": ["packages"],
+    "exclude": ["packages/renderer"]
+}
