@@ -1,51 +1,90 @@
 name: build
 
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    build:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
 
-    steps:
-      - uses: actions/checkout@v2
+        steps:
+            - uses: actions/checkout@v3
 
-      - name: Install node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-        
-      - name: Install packages
-        run: npm i
-        
-      - name: Create Windows cert File
-        id: create_pfx
-        if: matrix.os == 'windows-latest'
-        uses: timheuer/base64-to-file@v1
-        with:
-          filename: certificate.pfx
-          encodedString: ${{ secrets.B6473 }}
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
 
-      - name: Run Electron Builder
-        run: npx electron-builder --publish=never
-        env:
-          CSC_LINK: ${{ steps.create_pfx.outputs.filePath }}
-          CSC_KEY_PASSWORD: ${{ secrets.P7834 }}
-        
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: binaries
-          path: |
-            dist
-            !dist/*.blockmap
-            !dist/*.yml
-            !dist/win-unpacked
-            !dist/linux-unpacked
-            !dist/.icon-set
-            !dist/mac
-            !dist/.cache
-          retention-days: 1
+            - name: Install node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Create Windows cert File
+              id: create_pfx
+              if: matrix.os == 'windows-latest'
+              uses: timheuer/base64-to-file@v1
+              with:
+                  filename: certificate.pfx
+                  encodedString: ${{ secrets.B64 }}
+
+            - name: Create macOS cert File
+              id: create_p12
+              if: matrix.os == 'macos-latest'
+              uses: timheuer/base64-to-file@v1
+              with:
+                  filename: cert.p12
+                  encodedString: ${{ secrets.MAC_CERT }}
+
+            - name: Run Electron Builder (Windows)
+              if: matrix.os == 'windows-latest'
+              run: pnpm dist
+              env:
+                  CSC_LINK: ${{ steps.create_pfx.outputs.filePath }}
+                  CSC_KEY_PASSWORD: ${{ secrets.PASS }}
+
+            - name: Run Electron Builder (Linux)
+              if: matrix.os == 'ubuntu-latest'
+              run: pnpm dist
+
+            - name: Run Electron Builder (macOS)
+              if: matrix.os == 'macos-latest'
+              run: pnpm dist
+              env:
+                  CSC_LINK: ${{ steps.create_p12.outputs.filePath }}
+                  CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
+                  APPLE_ID: ${{ secrets.APPLE_ID }}
+                  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+                  APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
+            - name: Archive production artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: binaries
+                  path: |
+                      dist/*.exe
+                      !dist/win_unpacked/*
+                      dist/*.zip
+                      dist/*.deb
+                      dist/*.tar.xz
+                      dist/*.dmg
+                  retention-days: 1
+
+            # - name: Release
+            #   uses: softprops/action-gh-release@v1
+            #   with:
+            #       draft: true
+            #       files: |
+            #           dist/*.exe
+            #           !dist/win_unpacked/*
+            #           dist/*.zip
+            #           dist/*.deb
+            #           dist/*.tar.xz
+            #           dist/*.dmg
