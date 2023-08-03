@@ -1,4 +1,4 @@
-name: eslint
+name: typecheck
 
 on:
     pull_request:
