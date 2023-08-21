@@ -14,22 +14,14 @@ import escape from "validator/lib/escape";
 async function checkForUpdates(window: BrowserWindow) {
     app.commandLine.appendSwitch("disable-http-cache");
 
-    const resp = await nodeFetch("https://jcv8000.github.io/codex/latestversion.txt");
-    const onlineVersion = await resp.text();
+    const resp = await nodeFetch("https://api.github.com/repos/jcv8000/Codex/releases");
+    const body = (await resp.json()) as any[];
 
-    if (onlineVersion != undefined && import.meta.env.VITE_APP_VERSION != undefined)
-        if (compare(onlineVersion, import.meta.env.VITE_APP_VERSION) != 0) {
-            window.webContents.send("UPDATE_AVAILABLE", [escape(onlineVersion)]);
+    const latest = body[0].tag_name as string;
 
-            // if (process.platform === "win32") {
-            //     window.once("focus", () => window.flashFrame(false));
-            //     window.flashFrame(true);
-            // }
-
-            // if (process.platform === "darwin") {
-            //     app.dock.bounce("critical");
-            // }
-        }
+    if (latest != undefined && import.meta.env.VITE_APP_VERSION != undefined)
+        if (compare(latest, import.meta.env.VITE_APP_VERSION) != 0)
+            window.webContents.send("UPDATE_AVAILABLE", [escape(latest)]);
 }
 
 export function createWindow(prefs: Prefs) {
