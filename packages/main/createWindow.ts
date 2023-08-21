@@ -8,7 +8,7 @@ import contextMenu from "electron-context-menu";
 import { Prefs } from "common/Prefs";
 import { locales } from "common/Locales";
 import nodeFetch from "node-fetch";
-import { compare } from "semver";
+import { lt } from "semver";
 import escape from "validator/lib/escape";
 
 async function checkForUpdates(window: BrowserWindow) {
@@ -20,7 +20,7 @@ async function checkForUpdates(window: BrowserWindow) {
     const latest = body[0].tag_name as string;
 
     if (latest != undefined && import.meta.env.VITE_APP_VERSION != undefined)
-        if (compare(latest, import.meta.env.VITE_APP_VERSION) != 0)
+        if (lt(import.meta.env.VITE_APP_VERSION, latest))
             window.webContents.send("UPDATE_AVAILABLE", [escape(latest)]);
 }
 
