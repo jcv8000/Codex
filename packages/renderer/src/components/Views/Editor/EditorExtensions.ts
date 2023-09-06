@@ -1,7 +1,7 @@
 import { Extensions } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Focus from "@tiptap/extension-focus";
-import { lowlight } from "lowlight/lib/all";
+import { createLowlight, all as lowlightAll } from "lowlight";
 import Image from "@tiptap/extension-image";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
@@ -46,7 +46,7 @@ export function extensions(options: { useTypography: boolean }) {
             placeholder: "Start typing..."
         }),
         CustomCodeBlock.configure({
-            lowlight: lowlight
+            lowlight: createLowlight(lowlightAll)
         }),
         Image.configure({
             allowBase64: true

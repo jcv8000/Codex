@@ -16,7 +16,7 @@ import { ToolbarButton } from "./ToolbarButton";
 import { ToolbarDropdown } from "./ToolbarDropdown";
 import { ToolbarSplit } from "./ToolbarSplit";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { lowlight } from "lowlight";
+import { createLowlight, all as lowlightAll } from "lowlight";
 import { AppContext } from "types/AppStore";
 import { locales } from "common/Locales";
 import { ToolbarToggler } from "./ToolbarToggler";
@@ -31,7 +31,7 @@ export default function Toolbar({ editor }: Props) {
     const texts = locales[appContext.prefs.general.locale].editor.toolbar;
 
     const languages = useMemo(() => {
-        return lowlight.listLanguages().sort();
+        return createLowlight(lowlightAll).listLanguages().sort();
     }, []);
 
     const [recentLangs, setRecentLangs] = useState<string[]>([]);

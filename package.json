@@ -67,7 +67,7 @@
         "fuse.js": "^6.6.2",
         "highlight.js": "^11.8.0",
         "katex": "^0.16.8",
-        "lowlight": "^2.9.0",
+        "lowlight": "^3.0.0",
         "mathlive": "^0.95.5",
         "palettey": "^1.0.3",
         "react-lowlight": "^3.0.0",
