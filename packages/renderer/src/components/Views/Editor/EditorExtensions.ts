@@ -25,17 +25,19 @@ import { CustomCodeBlock } from "./extensions/CustomCodeBlock";
 import { Markdown } from "tiptap-markdown";
 import { FontSize } from "./extensions/FontSize";
 import { CustomLink } from "./extensions/CustomLink";
+import { CustomCode } from "./extensions/CustomCode";
 
 export function extensions(options: { useTypography: boolean }) {
     const e = [
         StarterKit.configure({
             codeBlock: false,
             heading: false,
-            code: {
-                HTMLAttributes: {
-                    class: "hljs",
-                    spellCheck: false
-                }
+            code: false
+        }),
+        CustomCode.configure({
+            HTMLAttributes: {
+                class: "hljs",
+                spellCheck: false
             }
         }),
         Focus.configure({

@@ -41,6 +41,9 @@ dependencies:
   '@tiptap/core':
     specifier: ^2.1.8
     version: 2.1.8(@tiptap/pm@2.1.8)
+  '@tiptap/extension-code':
+    specifier: ^2.1.8
+    version: 2.1.8(@tiptap/core@2.1.8)
   '@tiptap/extension-code-block':
     specifier: ^2.1.8
     version: 2.1.8(@tiptap/core@2.1.8)(@tiptap/pm@2.1.8)
