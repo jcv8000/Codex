@@ -14,7 +14,6 @@ import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
-import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Subscript from "@tiptap/extension-subscript";
@@ -25,6 +24,7 @@ import { MathBlock, MathInline } from "./extensions/Math";
 import { CustomCodeBlock } from "./extensions/CustomCodeBlock";
 import { Markdown } from "tiptap-markdown";
 import { FontSize } from "./extensions/FontSize";
+import { CustomLink } from "./extensions/CustomLink";
 
 export function extensions(options: { useTypography: boolean }) {
     const e = [
@@ -69,9 +69,7 @@ export function extensions(options: { useTypography: boolean }) {
         Highlight.configure({
             multicolor: true
         }),
-        Link.configure({
-            openOnClick: false
-        }),
+        CustomLink.configure({ openOnClick: true }),
         TextAlign.configure({
             types: ["heading", "paragraph"]
         }),

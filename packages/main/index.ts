@@ -169,6 +169,10 @@ if (app.requestSingleInstanceLock()) {
         typedIpcMain.isRunningUnderARM64Translation(() => {
             return app.runningUnderARM64Translation;
         });
+
+        typedIpcMain.onOpenExternalLink((href) => {
+            shell.openExternal(href);
+        });
     });
 
     // Quit when all windows are closed, except on macOS. There, it's common

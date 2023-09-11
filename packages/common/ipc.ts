@@ -101,6 +101,10 @@ export class TypedIpcMain {
     isRunningUnderARM64Translation = (callback: () => boolean) => {
         ipcMain.handle("IS_RUNNING_UNDER_ARM64_TRANSLATION", callback);
     };
+
+    onOpenExternalLink = (callback: (href: string) => void) => {
+        ipcMain.on("OPEN_EXTERNAL_LINK", (e, args) => callback(args[0]));
+    };
 }
 
 export class TypedIpcRenderer {
@@ -230,5 +234,9 @@ export class TypedIpcRenderer {
 
     isRunningUnderARM64Translation = () => {
         return ipcRenderer.invoke("IS_RUNNING_UNDER_ARM64_TRANSLATION");
+    };
+
+    openExternalLink = (href: string) => {
+        ipcRenderer.send("OPEN_EXTERNAL_LINK", [href]);
     };
 }
