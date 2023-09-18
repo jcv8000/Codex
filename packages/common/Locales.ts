@@ -341,7 +341,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                 "You can nest folders inside of folders",
                 "You can make a page top-level by dragging it to an empty part of the sidebar",
                 'Edit your save.json and try setting a page\'s "color" property to "rainbow"',
-                "Contribute your own language to Codex on the GitHub repository (see CONTRIBUTING.md)"
+                "Contribute your own language to Codex on the GitHub repository (see CONTRIBUTING.md)",
+                "Open links in your notes by holding Control (or Cmd) and clicking on it"
             ],
             favorites: "Favorites"
         },
