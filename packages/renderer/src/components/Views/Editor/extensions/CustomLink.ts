@@ -4,7 +4,7 @@ import { Plugin, PluginKey } from "@tiptap/pm/state";
 
 export const CustomLink = Link.extend({
     addProseMirrorPlugins() {
-        const plugin = new Plugin({
+        const clickHandler = new Plugin({
             key: new PluginKey("handleClickLink"),
             props: {
                 handleDOMEvents: {
@@ -60,6 +60,11 @@ export const CustomLink = Link.extend({
             }
         });
 
-        return [plugin];
+        const oldPlugins = this.parent?.() || [];
+
+        // Remove old click handler plugin, but keep paste handler and autolinking
+        oldPlugins.splice(1, 1);
+
+        return [...oldPlugins, clickHandler];
     }
 });

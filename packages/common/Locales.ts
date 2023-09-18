@@ -94,6 +94,14 @@ export type Locale = {
         changelogs: string;
         about: string;
     };
+    shellDialogs: {
+        open_external_link: {
+            title: string;
+            yes: string;
+            cancel: string;
+            trust_domain: string;
+        };
+    };
     mutateModals: {
         edit_modal_title: (itemName: string) => string;
         new_page_modal_title: (parentName: string) => string;
@@ -350,6 +358,14 @@ export const locales: Record<SupportedLocales, Locale> = {
             website: "Website",
             changelogs: "Changelogs",
             about: "About"
+        },
+        shellDialogs: {
+            open_external_link: {
+                title: "Are you sure you want to open this link?",
+                yes: "Yes",
+                cancel: "Cancel",
+                trust_domain: "Always trust this domain"
+            }
         },
         mutateModals: {
             edit_modal_title: (itemName: string) => `Edit ${itemName}`,

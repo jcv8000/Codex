@@ -2,13 +2,14 @@ import { BrowserWindow, app, dialog, shell } from "electron";
 import { loadPrefs, loadSave, writePrefs, writeSave, loadPage, writePage } from "./data";
 import { createWindow } from "./createWindow";
 import { TypedIpcMain } from "common/ipc";
-import { writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { sanitizeStringForFileName } from "common/Utils";
 import { join } from "path";
 import isDev from "electron-is-dev";
 import { electronSecurity } from "./security";
 import { setupLogger } from "./logger";
 import { saveWindowState } from "./windowState";
+import { locales } from "common/Locales";
 
 if (app.requestSingleInstanceLock()) {
     app.whenReady().then(() => {
@@ -171,7 +172,41 @@ if (app.requestSingleInstanceLock()) {
         });
 
         typedIpcMain.onOpenExternalLink((href) => {
-            shell.openExternal(href);
+            const filePath = join(app.getPath("userData"), "trusted-link-domains.json");
+            if (!existsSync(filePath)) {
+                writeFileSync(filePath, JSON.stringify([]), "utf-8");
+            }
+            const trusted: string[] = JSON.parse(readFileSync(filePath).toString());
+
+            const url = new URL(href);
+            const origin = url.origin;
+
+            if (trusted.includes(origin)) {
+                shell.openExternal(href);
+                return;
+            }
+
+            const result = dialog.showMessageBoxSync(window, {
+                type: "question",
+                noLink: true,
+                message: locales[prefs.general.locale].shellDialogs.open_external_link.title,
+                detail: href + "\n\nTrusted domains are stored here:\n" + filePath,
+                buttons: [
+                    locales[prefs.general.locale].shellDialogs.open_external_link.yes,
+                    locales[prefs.general.locale].shellDialogs.open_external_link.trust_domain,
+                    locales[prefs.general.locale].shellDialogs.open_external_link.cancel
+                ]
+            });
+
+            if (result == 0) {
+                // Yes
+                shell.openExternal(href);
+            } else if (result == 1) {
+                // Trust domain
+                shell.openExternal(href);
+                trusted.push(origin);
+                writeFileSync(filePath, JSON.stringify(trusted), "utf-8");
+            }
         });
     });
 
