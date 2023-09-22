@@ -10,18 +10,23 @@ import { locales } from "common/Locales";
 import nodeFetch from "node-fetch";
 import { lt } from "semver";
 import escape from "validator/lib/escape";
+import log from "electron-log";
 
 async function checkForUpdates(window: BrowserWindow) {
     app.commandLine.appendSwitch("disable-http-cache");
 
-    const resp = await nodeFetch("https://api.github.com/repos/jcv8000/Codex/releases");
-    const body = (await resp.json()) as any[];
+    try {
+        const resp = await nodeFetch("https://api.github.com/repos/jcv8000/Codex/releases");
+        const body = (await resp.json()) as any[];
 
-    const latest = body[0].tag_name as string;
+        const latest = body[0].tag_name as string;
 
-    if (latest != undefined && import.meta.env.VITE_APP_VERSION != undefined)
-        if (lt(import.meta.env.VITE_APP_VERSION, latest))
-            window.webContents.send("UPDATE_AVAILABLE", [escape(latest)]);
+        if (latest != undefined && import.meta.env.VITE_APP_VERSION != undefined)
+            if (lt(import.meta.env.VITE_APP_VERSION, latest))
+                window.webContents.send("UPDATE_AVAILABLE", [escape(latest)]);
+    } catch (e) {
+        log.info("Unable to check for updates");
+    }
 }
 
 export function createWindow(prefs: Prefs) {
