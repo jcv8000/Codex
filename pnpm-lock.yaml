@@ -236,7 +236,7 @@ devDependencies:
     specifier: ^2.7.0
     version: 2.7.0
   preact:
-    specifier: ^10.17.1
+    specifier: 10.17.1
     version: 10.17.1
   prettier:
     specifier: ^3.0.3
