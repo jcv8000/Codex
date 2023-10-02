@@ -1,5 +1,14 @@
 #fake-editor {
     display: none;
+
+    .ProseMirror {
+        pre {
+            code {
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+            }
+        }
+    }
 }
 
 @media print {
@@ -11,13 +20,6 @@
     #fake-editor {
         display: block;
         width: 720px !important;
-    }
-    .ProseMirror {
-        pre {
-            code {
-                white-space: pre-wrap !important;
-            }
-        }
     }
 }
 
