@@ -100,7 +100,7 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.3",
         "node-fetch": "^2.7.0",
-        "preact": "^10.17.1",
+        "preact": "10.17.1",
         "prettier": "^3.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
