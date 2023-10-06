@@ -1,8 +1,18 @@
-import { getAttributes } from "@tiptap/core";
+import { getAttributes, mergeAttributes } from "@tiptap/core";
 import Link from "@tiptap/extension-link";
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 
 export const CustomLink = Link.extend({
+    renderHTML({ HTMLAttributes, mark }) {
+        return [
+            "a",
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+                title: mark.attrs.href
+            }),
+            0
+        ];
+    },
+
     addProseMirrorPlugins() {
         const clickHandler = new Plugin({
             key: new PluginKey("handleClickLink"),
