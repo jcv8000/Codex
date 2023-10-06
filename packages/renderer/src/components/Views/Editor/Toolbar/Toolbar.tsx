@@ -147,6 +147,24 @@ export default function Toolbar({ editor }: Props) {
                             onClick={() => editor.chain().focus().toggleSubscript().run()}
                             isActive={() => editor.isActive("subscript")}
                         />
+                        <ToolbarButton
+                            title={texts.link}
+                            icon="link"
+                            isActive={() => editor.isActive("link")}
+                            disabled={() => editor.view.state.selection.empty}
+                            onClick={() => {
+                                if (editor.isActive("link"))
+                                    modalContext.openEditorLinkModal({
+                                        editor: editor,
+                                        initialUrl: editor.getAttributes("link").href
+                                    });
+                                else
+                                    modalContext.openEditorLinkModal({
+                                        editor: editor,
+                                        initialUrl: ""
+                                    });
+                            }}
+                        />
 
                         <Space w="xs" />
 

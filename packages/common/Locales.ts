@@ -177,6 +177,7 @@ export type Locale = {
             inline_code: string;
             superscript: string;
             subscript: string;
+            link: string;
             align_left: string;
             align_right: string;
             align_center: string;
@@ -243,6 +244,11 @@ export type Locale = {
             cancel: string;
             edit: string;
             insert: string;
+        };
+        linkModal: {
+            cancel: string;
+            create_link: string;
+            url: string;
         };
     };
 };
@@ -447,6 +453,7 @@ export const locales: Record<SupportedLocales, Locale> = {
                 inline_code: "Inline Code",
                 superscript: "Superscript",
                 subscript: "Subscript",
+                link: "Link",
                 align_left: "Align Left",
                 align_right: "Align Right",
                 align_center: "Align Center",
@@ -514,6 +521,11 @@ export const locales: Record<SupportedLocales, Locale> = {
                 cancel: "Cancel",
                 edit: "Edit",
                 insert: "Insert"
+            },
+            linkModal: {
+                cancel: "Cancel",
+                create_link: "Create Link",
+                url: "URL"
             }
         }
     }

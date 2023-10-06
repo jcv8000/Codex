@@ -13,6 +13,7 @@ import {
 } from "components/Modals";
 import React, { createContext, useState } from "react";
 import { exampleSave, Folder } from "common/Save";
+import { EditorLinkModal, EditorLinkModalState } from "./EditorLinkModal";
 
 class ModalStore {
     openWhatsNewModal: () => void = () => {};
@@ -25,6 +26,7 @@ class ModalStore {
     // Editor modals
     openEditorImageModal: (options: Omit<EditorImageModalState, "opened">) => void = () => {};
     openEditorMathModal: (options: Omit<EditorMathModalState, "opened">) => void = () => {};
+    openEditorLinkModal: (options: Omit<EditorLinkModalState, "opened">) => void = () => {};
 }
 
 export const ModalContext = createContext<ModalStore>(new ModalStore());
@@ -68,6 +70,12 @@ export function ModalProvider(props: { children?: React.ReactNode }) {
         startLatex: ""
     });
 
+    const [editorLinkModalState, setEditorLinkModalState] = useState<EditorLinkModalState>({
+        opened: false,
+        editor: null,
+        initialUrl: ""
+    });
+
     return (
         <ModalContext.Provider
             value={{
@@ -98,6 +106,13 @@ export function ModalProvider(props: { children?: React.ReactNode }) {
                         opened: true,
                         editor: options.editor,
                         startLatex: options.startLatex
+                    });
+                },
+                openEditorLinkModal: (options) => {
+                    setEditorLinkModalState({
+                        opened: true,
+                        editor: options.editor,
+                        initialUrl: options.initialUrl
                     });
                 }
             }}
@@ -131,6 +146,10 @@ export function ModalProvider(props: { children?: React.ReactNode }) {
             <EditorMathModal
                 state={editorMathModalState}
                 onClose={() => setEditorMathModalState({ ...editorMathModalState, opened: false })}
+            />
+            <EditorLinkModal
+                state={editorLinkModalState}
+                onClose={() => setEditorLinkModalState({ ...editorLinkModalState, opened: false })}
             />
         </ModalContext.Provider>
     );

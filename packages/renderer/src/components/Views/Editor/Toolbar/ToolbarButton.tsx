@@ -20,7 +20,7 @@ export function ToolbarButton(props: Props) {
                     size="xs"
                     style={{ color: "inherit" }}
                     px={6}
-                    variant={isActive() ? "filled" : "default"}
+                    variant={isActive() && !disabled() ? "filled" : "default"}
                     onClick={props.onClick}
                     disabled={disabled()}
                 >
