@@ -40,6 +40,10 @@
         pointer-events: none;
     }
 
+    a + a {
+        border-left: 2px solid -webkit-link;
+    }
+
     a.ctrl {
         cursor: pointer;
     }
