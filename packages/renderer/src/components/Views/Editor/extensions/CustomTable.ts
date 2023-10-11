@@ -23,6 +23,7 @@ export const CustomTable = Table.extend({
                         const lang = m[1];
                         const code = m[2];
 
+                        // https://stackoverflow.com/a/53038904/6784197
                         html = html.replace(
                             /<pre><code class="language-(.*)">([\S\s]*?)<\/code><\/pre>/gm,
                             `\n\n\`\`\`${lang}\n${code}\n\`\`\`\n`
