@@ -3,7 +3,6 @@ import StarterKit from "@tiptap/starter-kit";
 import Focus from "@tiptap/extension-focus";
 import { createLowlight, all as lowlightAll } from "lowlight";
 import Image from "@tiptap/extension-image";
-import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
@@ -26,6 +25,7 @@ import { Markdown } from "tiptap-markdown";
 import { FontSize } from "./extensions/FontSize";
 import { CustomLink } from "./extensions/CustomLink";
 import { CustomCode } from "./extensions/CustomCode";
+import { CustomTable } from "./extensions/CustomTable";
 
 export function extensions(options: { useTypography: boolean }) {
     const e = [
@@ -53,7 +53,7 @@ export function extensions(options: { useTypography: boolean }) {
         Image.configure({
             allowBase64: true
         }),
-        Table.configure({
+        CustomTable.configure({
             // resizable: true,
             // lastColumnResizable: false,
             // allowTableNodeSelection: true
