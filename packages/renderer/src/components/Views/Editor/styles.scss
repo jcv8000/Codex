@@ -102,6 +102,10 @@
         overflow: hidden;
         table-layout: fixed;
 
+        .code-language {
+            right: 32px;
+        }
+
         td,
         th {
             border: 1px solid var(--table-border-color);
