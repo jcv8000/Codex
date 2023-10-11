@@ -1,5 +1,5 @@
 import "./styles.scss";
-import { Box, Container, Paper } from "@mantine/core";
+import { Container, Paper } from "@mantine/core";
 import { Page } from "common/Save";
 import { useContext, useEffect } from "react";
 import { AppContext } from "types/AppStore";
