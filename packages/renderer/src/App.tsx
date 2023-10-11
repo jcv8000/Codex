@@ -1,4 +1,4 @@
-import { Anchor, AppShell, MantineProvider, Portal, Text } from "@mantine/core";
+import { Anchor, AppShell, Box, MantineProvider, Portal, Text } from "@mantine/core";
 import { ModalsProvider as MantineModalsProvider } from "@mantine/modals";
 import { Sidebar } from "components/Sidebar";
 import { EditorView, HomeView, SettingsView } from "components/Views";
@@ -16,6 +16,7 @@ import { EditorContent } from "@tiptap/react";
 import { Notifications, notifications } from "@mantine/notifications";
 import { Icon } from "components/Icon";
 import { locales } from "common/Locales";
+import { EditorStyles } from "components/Views/Editor/EditorStyles";
 
 export function App() {
     const forceUpdate = useForceUpdate();
@@ -276,8 +277,8 @@ export function App() {
             />
 
             <MantineProvider
-                withGlobalStyles
                 withNormalizeCSS
+                withGlobalStyles
                 theme={AppTheme({
                     prefs: prefs.current,
                     titlebarStyle: startPrefs.general.titlebarStyle
@@ -287,15 +288,23 @@ export function App() {
                 <MantineModalsProvider>
                     <ModalProvider>
                         <AppShell navbar={<Sidebar />}>{renderedView}</AppShell>
-
-                        <Portal>
-                            <MantineProvider inherit theme={{ colorScheme: "light" }}>
-                                <EditorContent id="fake-editor" editor={fakeEditor.current} />
-                            </MantineProvider>
-                        </Portal>
                     </ModalProvider>
                 </MantineModalsProvider>
             </MantineProvider>
+
+            <Portal>
+                <MantineProvider theme={{ colorScheme: "light" }}>
+                    <Box
+                        sx={(theme) => ({
+                            color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black
+                        })}
+                    >
+                        <EditorStyles>
+                            <EditorContent id="fake-editor" editor={fakeEditor.current} />
+                        </EditorStyles>
+                    </Box>
+                </MantineProvider>
+            </Portal>
         </AppContext.Provider>
     );
 }

@@ -108,7 +108,7 @@
 
         td,
         th {
-            border: 1px solid var(--table-border-color);
+            //border: 1px solid var(--table-border-color);
             box-sizing: border-box;
             min-width: 1em;
             padding: 6px 13px;
@@ -126,9 +126,9 @@
             text-align: center;
         }
 
-        tr:nth-child(even) {
-            background-color: var(--table-bg-color);
-        }
+        // tr:nth-child(even) {
+        //     background-color: var(--table-bg-color);
+        // }
 
         .selectedCell:after {
             background: rgba(200, 200, 255, 0.4);

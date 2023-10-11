@@ -7,6 +7,7 @@ import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import Toolbar from "./Toolbar/Toolbar";
 import { extensions } from "./EditorExtensions";
 import { TableOfContents } from "./TableOfContents";
+import { EditorStyles } from "./EditorStyles";
 
 type Props = {
     page: Page;
@@ -64,15 +65,7 @@ export function EditorView({ page, setEditorRef }: Props) {
 
     if (editor != null) {
         return (
-            <Box
-                sx={(theme) => ({
-                    ".node-mathBlock.has-focus, .node-mathInline.has-focus, img.has-focus, .node-canvas.has-focus":
-                        {
-                            outline: `2px solid ${theme.fn.primaryColor()}`
-                        }
-                })}
-                mx="md"
-            >
+            <EditorStyles>
                 <Toolbar editor={editor} />
 
                 <TableOfContents editor={editor} />
@@ -98,7 +91,7 @@ export function EditorView({ page, setEditorRef }: Props) {
                         />
                     </Paper>
                 </Container>
-            </Box>
+            </EditorStyles>
         );
     } else return <></>;
 }
