@@ -2,7 +2,6 @@ import { Extensions } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Focus from "@tiptap/extension-focus";
 import { createLowlight, all as lowlightAll } from "lowlight";
-import Image from "@tiptap/extension-image";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
@@ -26,6 +25,7 @@ import { FontSize } from "./extensions/FontSize";
 import { CustomLink } from "./extensions/CustomLink";
 import { CustomCode } from "./extensions/CustomCode";
 import { CustomTable } from "./extensions/CustomTable";
+import { ResizableImage } from "./extensions/ResizableImage/ResizableImage";
 
 export function extensions(options: { useTypography: boolean }) {
     const e = [
@@ -50,7 +50,7 @@ export function extensions(options: { useTypography: boolean }) {
         CustomCodeBlock.configure({
             lowlight: createLowlight(lowlightAll)
         }),
-        Image.configure({
+        ResizableImage.configure({
             allowBase64: true
         }),
         CustomTable.configure({

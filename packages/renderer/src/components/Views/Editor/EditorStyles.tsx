@@ -4,10 +4,12 @@ export function EditorStyles(props: { children: JSX.Element | JSX.Element[] }) {
     return (
         <Box
             sx={(theme) => ({
-                ".node-mathBlock.has-focus, .node-mathInline.has-focus, img.has-focus, .node-canvas.has-focus":
-                    {
-                        outline: `2px solid ${theme.fn.primaryColor()}`
-                    },
+                ".node-mathBlock.has-focus, .node-mathInline.has-focus, .node-canvas.has-focus": {
+                    outline: `2px solid ${theme.fn.primaryColor()}`
+                },
+                ".node-image.has-focus img": {
+                    outline: `2px solid ${theme.fn.primaryColor()}`
+                },
                 "th, td": {
                     border: `1px solid ${theme.colorScheme == "light" ? "#d0d7de" : "#373A40"}`
                 },
