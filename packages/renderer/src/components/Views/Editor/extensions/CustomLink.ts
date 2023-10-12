@@ -7,7 +7,7 @@ export const CustomLink = Link.extend({
         return [
             "a",
             mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-                title: mark.attrs.href
+                title: mark.attrs.href + " (Ctrl or Cmd-click to open)"
             }),
             0
         ];
@@ -17,26 +17,26 @@ export const CustomLink = Link.extend({
         const clickHandler = new Plugin({
             key: new PluginKey("handleClickLink"),
             props: {
-                handleDOMEvents: {
-                    keydown: (view, event) => {
-                        if (event.key == "Control") {
-                            document.querySelectorAll(".ProseMirror a").forEach((value) => {
-                                const el = value as HTMLAnchorElement;
+                // handleDOMEvents: {
+                //     keydown: (view, event) => {
+                //         if (event.key == "Control") {
+                //             document.querySelectorAll(".ProseMirror a").forEach((value) => {
+                //                 const el = value as HTMLAnchorElement;
 
-                                el.classList.add("ctrl");
-                            });
-                        }
-                    },
-                    keyup: (view, event) => {
-                        if (event.key == "Control") {
-                            document.querySelectorAll(".ProseMirror a").forEach((value) => {
-                                const el = value as HTMLAnchorElement;
+                //                 el.classList.add("ctrl");
+                //             });
+                //         }
+                //     },
+                //     keyup: (view, event) => {
+                //         if (event.key == "Control") {
+                //             document.querySelectorAll(".ProseMirror a").forEach((value) => {
+                //                 const el = value as HTMLAnchorElement;
 
-                                el.classList.remove("ctrl");
-                            });
-                        }
-                    }
-                },
+                //                 el.classList.remove("ctrl");
+                //             });
+                //         }
+                //     }
+                // },
                 handleClick: (view, pos, event) => {
                     if (event.button !== 0) {
                         return false;
