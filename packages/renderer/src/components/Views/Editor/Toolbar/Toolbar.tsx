@@ -35,7 +35,7 @@ export default function Toolbar({ editor }: Props) {
         return createLowlight(lowlightAll).listLanguages().sort();
     }, []);
 
-    const [recentLangs, setRecentLangs] = useState<string[]>([]);
+    const [recentLangs, setRecentLangs] = useState(appContext.prefs.editor.recentCodeLangs);
     const [show, setShow] = useState(true);
 
     useEffect(() => {
@@ -57,6 +57,10 @@ export default function Toolbar({ editor }: Props) {
                             const newRecentLangs = [...recentLangs];
                             newRecentLangs.splice(newRecentLangs.indexOf(lang), 1);
                             setRecentLangs(newRecentLangs);
+
+                            appContext.modifyPrefs(
+                                (p) => (p.editor.recentCodeLangs = newRecentLangs)
+                            );
                         }}
                     />
                 }
@@ -297,6 +301,10 @@ export default function Toolbar({ editor }: Props) {
                                                 newRecentLangs.splice(newRecentLangs.length - 1, 1);
                                             newRecentLangs.splice(0, 0, value);
                                             setRecentLangs(newRecentLangs);
+
+                                            appContext.modifyPrefs(
+                                                (p) => (p.editor.recentCodeLangs = newRecentLangs)
+                                            );
                                         }
                                     }
                                 }}
