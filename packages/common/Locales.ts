@@ -253,7 +253,8 @@ export type Locale = {
     };
 };
 
-export type SupportedLocales = "en_US";
+export const supportedLocales = ["en_US"] as const;
+export type SupportedLocales = (typeof supportedLocales)[number];
 
 export const locales: Record<SupportedLocales, Locale> = {
     en_US: {

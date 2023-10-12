@@ -1,10 +1,11 @@
 import { app, dialog } from "electron";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { Prefs } from "common/Prefs";
 import { exampleSave, Save } from "common/Save";
 import { logError } from "./logger";
 import { convertOldPrefs, convertOldSave } from "./convertOld";
+import { supportedLocales } from "common/Locales";
 
 export function loadPrefs(): Prefs | null {
     const prefsPath = path.join(app.getPath("userData"), "/prefs.json");
@@ -17,6 +18,7 @@ export function loadPrefs(): Prefs | null {
                 // 1.X Save
                 const prefs = convertOldPrefs(readPrefs);
                 writePrefs(prefs);
+                fixPrefs(prefs);
 
                 return prefs;
             } else {
@@ -26,14 +28,9 @@ export function loadPrefs(): Prefs | null {
                 Object.assign(prefs.editor, readPrefs.editor);
                 Object.assign(prefs.misc, readPrefs.misc);
 
-                if (prefs.general.saveFolder == "") {
-                    prefs.general.saveFolder = app.getPath("userData");
-                }
+                fixPrefs(prefs);
 
-                if (process.platform === "darwin") {
-                    prefs.general.titlebarStyle = "native";
-                }
-
+                writePrefs(prefs);
                 return prefs;
             }
         } catch (error) {
@@ -61,7 +58,7 @@ export function writePrefs(prefs: Prefs) {
     try {
         writeFileSync(prefsPath, JSON.stringify(prefs, null, 4), "utf-8");
     } catch (error) {
-        logError("Couldn't write prefs.json to the disk", "" + (<Error>error).stack);
+        logError("Error: Couldn't write prefs.json to the disk", "" + (<Error>error).stack);
     }
 }
 
@@ -115,7 +112,7 @@ export function loadSave(saveFolderPath: string): Save | null {
                 return Save.parse(saveText);
             }
         } catch (error) {
-            logError("Couldn't parse save.json", "" + (<Error>error).stack);
+            logError("Error: Couldn't parse save.json", "" + (<Error>error).stack);
             return null;
         }
     } else {
@@ -131,7 +128,7 @@ export function writeSave(saveFolderPath: string, save: Save) {
     try {
         writeFileSync(saveFilePath, Save.stringify(save), "utf-8");
     } catch (error) {
-        logError("Couldn't write save.json to the disk", "" + (<Error>error).stack);
+        logError("Error: Couldn't write save.json to the disk", "" + (<Error>error).stack);
     }
 }
 
@@ -156,4 +153,52 @@ export function writePage(saveFolderPath: string, pageFileName: string, data: st
 
     const filePath = path.join(saveFolderPath, "/notes/", pageFileName);
     writeFileSync(filePath, data, "utf-8");
+}
+
+function fixPrefs(prefs: Prefs) {
+    if (prefs.general.saveFolder == "") {
+        prefs.general.saveFolder = app.getPath("userData");
+        logError(
+            "Error",
+            'Save folder location was set to "", reverting to default:\n\n' +
+                app.getPath("userData")
+        );
+    }
+
+    try {
+        if (
+            existsSync(prefs.general.saveFolder) == false ||
+            lstatSync(prefs.general.saveFolder).isDirectory() == false
+        ) {
+            logError(
+                "Error",
+                `Save folder location (${prefs.general.saveFolder}) does not exist, or is not a directory. Reverting to default:\n\n` +
+                    app.getPath("userData")
+            );
+            prefs.general.saveFolder = app.getPath("userData");
+        }
+    } catch (err) {
+        logError(
+            "Error",
+            `Save folder location (${prefs.general.saveFolder}) does not exist, or is not a directory. Reverting to default:\n\n` +
+                app.getPath("userData")
+        );
+        prefs.general.saveFolder = app.getPath("userData");
+    }
+
+    if (process.platform === "darwin") {
+        prefs.general.titlebarStyle = "native";
+    }
+
+    if (!supportedLocales.includes(prefs.general.locale)) {
+        prefs.general.locale = "en_US";
+    }
+
+    if (prefs.general.theme != "light" && prefs.general.theme != "dark") {
+        prefs.general.theme = "light";
+    }
+
+    if (prefs.general.titlebarStyle != "custom" && prefs.general.titlebarStyle != "native") {
+        prefs.general.titlebarStyle = process.platform === "darwin" ? "native" : "custom";
+    }
 }
