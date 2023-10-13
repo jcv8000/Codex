@@ -16,10 +16,11 @@ import { ToolbarButton } from "./ToolbarButton";
 import { ToolbarDropdown } from "./ToolbarDropdown";
 import { ToolbarSplit } from "./ToolbarSplit";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { lowlight } from "lowlight";
+import { createLowlight, all as lowlightAll } from "lowlight";
 import { AppContext } from "types/AppStore";
 import { locales } from "common/Locales";
 import { ToolbarToggler } from "./ToolbarToggler";
+import { BUTTON_WIDTH, BUTTON_HEIGHT, SPACING_W } from "./Constants";
 
 type Props = {
     editor: Editor;
@@ -31,10 +32,10 @@ export default function Toolbar({ editor }: Props) {
     const texts = locales[appContext.prefs.general.locale].editor.toolbar;
 
     const languages = useMemo(() => {
-        return lowlight.listLanguages().sort();
+        return createLowlight(lowlightAll).listLanguages().sort();
     }, []);
 
-    const [recentLangs, setRecentLangs] = useState<string[]>([]);
+    const [recentLangs, setRecentLangs] = useState(appContext.prefs.editor.recentCodeLangs);
     const [show, setShow] = useState(true);
 
     useEffect(() => {
@@ -56,6 +57,10 @@ export default function Toolbar({ editor }: Props) {
                             const newRecentLangs = [...recentLangs];
                             newRecentLangs.splice(newRecentLangs.indexOf(lang), 1);
                             setRecentLangs(newRecentLangs);
+
+                            appContext.modifyPrefs(
+                                (p) => (p.editor.recentCodeLangs = newRecentLangs)
+                            );
                         }}
                     />
                 }
@@ -89,7 +94,7 @@ export default function Toolbar({ editor }: Props) {
                         marginRight: "auto"
                     }}
                 >
-                    <Flex gap={6} justify="flex-start" align="center" direction="row" wrap="wrap">
+                    <Flex gap={6} justify="center" align="center" direction="row" wrap="wrap">
                         <ToolbarButton
                             title={texts.undo}
                             icon="arrow-back-up"
@@ -103,7 +108,7 @@ export default function Toolbar({ editor }: Props) {
                             disabled={() => !editor.can().redo()}
                         />
 
-                        <Space w="xs" />
+                        <Space w={SPACING_W} />
 
                         <ToolbarButton
                             title={texts.bold}
@@ -147,8 +152,26 @@ export default function Toolbar({ editor }: Props) {
                             onClick={() => editor.chain().focus().toggleSubscript().run()}
                             isActive={() => editor.isActive("subscript")}
                         />
+                        <ToolbarButton
+                            title={texts.link}
+                            icon="link"
+                            isActive={() => editor.isActive("link")}
+                            disabled={() => editor.view.state.selection.empty}
+                            onClick={() => {
+                                if (editor.isActive("link"))
+                                    modalContext.openEditorLinkModal({
+                                        editor: editor,
+                                        initialUrl: editor.getAttributes("link").href
+                                    });
+                                else
+                                    modalContext.openEditorLinkModal({
+                                        editor: editor,
+                                        initialUrl: ""
+                                    });
+                            }}
+                        />
 
-                        <Space w="xs" />
+                        <Space w={SPACING_W} />
 
                         <ToolbarButton
                             title={texts.align_left}
@@ -174,7 +197,7 @@ export default function Toolbar({ editor }: Props) {
                             onClick={() => editor.chain().focus().setTextAlign("justify").run()}
                         />
 
-                        <Space w="xs" />
+                        <Space w={SPACING_W} />
 
                         <ToolbarButton
                             title={texts.image}
@@ -222,7 +245,7 @@ export default function Toolbar({ editor }: Props) {
                             onClick={() => editor.chain().focus().setHorizontalRule().run()}
                         />
 
-                        <Space w="xs" />
+                        <Space w={SPACING_W} />
 
                         <ToolbarButton
                             title={texts.bullet_list}
@@ -243,7 +266,7 @@ export default function Toolbar({ editor }: Props) {
                             isActive={() => editor.isActive("taskList")}
                         />
 
-                        <Space w="xs" />
+                        <Space w={SPACING_W} />
 
                         <ToolbarSplit
                             title={texts.code_block}
@@ -278,6 +301,10 @@ export default function Toolbar({ editor }: Props) {
                                                 newRecentLangs.splice(newRecentLangs.length - 1, 1);
                                             newRecentLangs.splice(0, 0, value);
                                             setRecentLangs(newRecentLangs);
+
+                                            appContext.modifyPrefs(
+                                                (p) => (p.editor.recentCodeLangs = newRecentLangs)
+                                            );
                                         }
                                     }
                                 }}
@@ -420,17 +447,11 @@ export default function Toolbar({ editor }: Props) {
                             }}
                         />
 
-                        <Space w="xs" />
-
-                        <ToolbarButton
-                            title={texts.clear_formatting}
-                            icon="eraser"
-                            onClick={() => editor.chain().focus().unsetAllMarks().run()}
-                        />
+                        <Space w={SPACING_W} />
 
                         <ToolbarDropdown
                             title={texts.text_color}
-                            icon="paint-filled"
+                            icon="paint"
                             iconColor={editor.getAttributes("textStyle").color}
                         >
                             <ColorPicker
@@ -462,35 +483,6 @@ export default function Toolbar({ editor }: Props) {
                                 {texts.reset_text_color}
                             </Button>
                         </ToolbarDropdown>
-
-                        <Select
-                            size="xs"
-                            w={140}
-                            icon={<Icon icon="typography" />}
-                            data={[
-                                { value: "default", label: texts.default_font },
-                                "Arial",
-                                "Verdana",
-                                "Tahoma",
-                                "Trebuchet MS",
-                                "Impact",
-                                "Times New Roman",
-                                "Georgia",
-                                "Courier",
-                                "Comic Sans MS"
-                            ]}
-                            value={
-                                editor.getAttributes("textStyle").fontFamily
-                                    ? editor.getAttributes("textStyle").fontFamily
-                                    : "default"
-                            }
-                            onChange={(value) => {
-                                if (value == "default" || value == null)
-                                    editor.chain().focus().unsetFontFamily().run();
-                                else editor.chain().focus().setFontFamily(value).run();
-                            }}
-                            disabled={!editor.can().setFontFamily("Arial")}
-                        />
 
                         <ToolbarDropdown
                             title={texts.highlight}
@@ -527,12 +519,40 @@ export default function Toolbar({ editor }: Props) {
                             </Button>
                         </ToolbarDropdown>
 
-                        <Space w="xs" />
+                        <Select
+                            size="xs"
+                            w={140}
+                            icon={<Icon icon="typography" />}
+                            data={[
+                                { value: "default", label: texts.default_font },
+                                "Arial",
+                                "Verdana",
+                                "Tahoma",
+                                "Trebuchet MS",
+                                "Impact",
+                                "Times New Roman",
+                                "Georgia",
+                                "Courier",
+                                "Comic Sans MS"
+                            ]}
+                            value={
+                                editor.getAttributes("textStyle").fontFamily
+                                    ? editor.getAttributes("textStyle").fontFamily
+                                    : "default"
+                            }
+                            onChange={(value) => {
+                                if (value == "default" || value == null)
+                                    editor.chain().focus().unsetFontFamily().run();
+                                else editor.chain().focus().setFontFamily(value).run();
+                            }}
+                            disabled={!editor.can().setFontFamily("Arial")}
+                        />
 
                         <div>
                             <Button
-                                size="xs"
-                                px={12}
+                                w={BUTTON_WIDTH}
+                                h={BUTTON_HEIGHT}
+                                p={0}
                                 variant="default"
                                 onClick={() => {
                                     const oldSize = editor.getAttributes("textStyle").fontSize
@@ -558,7 +578,8 @@ export default function Toolbar({ editor }: Props) {
                                         variant="default"
                                         style={{ borderRadius: 0 }}
                                         w={50}
-                                        px={0}
+                                        h={BUTTON_HEIGHT}
+                                        p={0}
                                     >
                                         {editor.getAttributes("textStyle").fontSize
                                             ? editor.getAttributes("textStyle").fontSize
@@ -586,8 +607,9 @@ export default function Toolbar({ editor }: Props) {
                                 </Menu.Dropdown>
                             </Menu>
                             <Button
-                                size="xs"
-                                px={12}
+                                w={BUTTON_WIDTH}
+                                h={BUTTON_HEIGHT}
+                                p={0}
                                 variant="default"
                                 onClick={() => {
                                     const oldSize = editor.getAttributes("textStyle").fontSize
@@ -607,6 +629,13 @@ export default function Toolbar({ editor }: Props) {
                                 +
                             </Button>
                         </div>
+
+                        <ToolbarButton
+                            title={texts.clear_formatting}
+                            icon="eraser"
+                            onClick={() => editor.chain().focus().unsetAllMarks().run()}
+                        />
+
                         {/* <ToolbarButton
                     title="Canvas"
                     icon="brush"

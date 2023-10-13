@@ -27,13 +27,13 @@ export function AppTheme(options: {
     }
 
     // Set editor table colors for light/dark mode
-    if (prefs.general.theme == "light") {
-        document.documentElement.style.setProperty("--table-border-color", "#d0d7de");
-        document.documentElement.style.setProperty("--table-bg-color", "#f6f8fa");
-    } else {
-        document.documentElement.style.setProperty("--table-border-color", "#373A40");
-        document.documentElement.style.setProperty("--table-bg-color", "#25262b");
-    }
+    // if (prefs.general.theme == "light") {
+    //     document.documentElement.style.setProperty("--table-border-color", "#d0d7de");
+    //     document.documentElement.style.setProperty("--table-bg-color", "#f6f8fa");
+    // } else {
+    //     document.documentElement.style.setProperty("--table-border-color", "#373A40");
+    //     document.documentElement.style.setProperty("--table-bg-color", "#25262b");
+    // }
 
     return {
         fontSizes: { md: "13px" },
@@ -68,6 +68,9 @@ export function AppTheme(options: {
         primaryShade: 5,
         cursorType: "pointer",
         globalStyles: (theme) => ({
+            body: {
+                backgroundColor: "white !important"
+            },
             code: {
                 fontFamily:
                     "ui-monospace, Consolas, 'Cascadia Code', 'Source Code Pro', Menlo, 'DejaVu Sans Mono', monospace"
@@ -143,7 +146,8 @@ export function AppTheme(options: {
                     root: {
                         height: titlebarStyle == "custom" ? "calc(100vh - 30px)" : "100vh",
                         marginTop: titlebarStyle == "custom" ? "30px" : "0px",
-                        position: "relative"
+                        position: "relative",
+                        backgroundColor: prefs.general.theme === "dark" ? "#1A1B1E" : "#FFFFFF"
                     },
                     body: {
                         height: titlebarStyle == "custom" ? "calc(100vh - 30px)" : "100vh"

@@ -1,5 +1,14 @@
 #fake-editor {
     display: none;
+
+    .ProseMirror {
+        pre {
+            code {
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+            }
+        }
+    }
 }
 
 @media print {
@@ -11,13 +20,6 @@
     #fake-editor {
         display: block;
         width: 720px !important;
-    }
-    .ProseMirror {
-        pre {
-            code {
-                white-space: pre-wrap !important;
-            }
-        }
     }
 }
 
@@ -37,6 +39,14 @@
         height: 0;
         pointer-events: none;
     }
+
+    a + a {
+        border-left: 2px solid -webkit-link;
+    }
+
+    // a.ctrl {
+    //     cursor: pointer;
+    // }
 
     ul,
     ol {
@@ -96,18 +106,32 @@
         overflow: hidden;
         table-layout: fixed;
 
+        .code-language {
+            right: 32px;
+        }
+        .code-collapser {
+            right: 32px;
+        }
+
+        pre {
+            code {
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+            }
+        }
+
         td,
         th {
-            border: 1px solid var(--table-border-color);
+            //border: 1px solid var(--table-border-color);
             box-sizing: border-box;
             min-width: 1em;
-            padding: 3px 5px;
+            padding: 6px 13px;
             position: relative;
             vertical-align: top;
 
             > * {
-                margin-bottom: 0.5em;
-                margin-top: 0.5em;
+                margin-bottom: 0;
+                margin-top: 0;
             }
         }
 
@@ -116,9 +140,9 @@
             text-align: center;
         }
 
-        tr:nth-child(even) {
-            background-color: var(--table-bg-color);
-        }
+        // tr:nth-child(even) {
+        //     background-color: var(--table-bg-color);
+        // }
 
         .selectedCell:after {
             background: rgba(200, 200, 255, 0.4);

@@ -34,7 +34,7 @@ export function setupLogger() {
 export function logError(message: string, detail: string) {
     log.error(message + "\n" + detail);
     dialog.showMessageBoxSync({
-        title: "Error",
+        title: "Codex",
         message: message,
         detail: detail,
         type: "error"

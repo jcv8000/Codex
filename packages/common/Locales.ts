@@ -94,6 +94,14 @@ export type Locale = {
         changelogs: string;
         about: string;
     };
+    shellDialogs: {
+        open_external_link: {
+            title: string;
+            yes: string;
+            cancel: string;
+            trust_domain: string;
+        };
+    };
     mutateModals: {
         edit_modal_title: (itemName: string) => string;
         new_page_modal_title: (parentName: string) => string;
@@ -169,6 +177,7 @@ export type Locale = {
             inline_code: string;
             superscript: string;
             subscript: string;
+            link: string;
             align_left: string;
             align_right: string;
             align_center: string;
@@ -236,10 +245,16 @@ export type Locale = {
             edit: string;
             insert: string;
         };
+        linkModal: {
+            cancel: string;
+            create_link: string;
+            url: string;
+        };
     };
 };
 
-export type SupportedLocales = "en_US";
+export const supportedLocales = ["en_US"] as const;
+export type SupportedLocales = (typeof supportedLocales)[number];
 
 export const locales: Record<SupportedLocales, Locale> = {
     en_US: {
@@ -333,7 +348,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                 "You can nest folders inside of folders",
                 "You can make a page top-level by dragging it to an empty part of the sidebar",
                 'Edit your save.json and try setting a page\'s "color" property to "rainbow"',
-                "Contribute your own language to Codex on the GitHub repository (see CONTRIBUTING.md)"
+                "Contribute your own language to Codex on the GitHub repository (see CONTRIBUTING.md)",
+                "Open links in your notes by holding Control (or Cmd) and clicking on it"
             ],
             favorites: "Favorites"
         },
@@ -350,6 +366,14 @@ export const locales: Record<SupportedLocales, Locale> = {
             website: "Website",
             changelogs: "Changelogs",
             about: "About"
+        },
+        shellDialogs: {
+            open_external_link: {
+                title: "Are you sure you want to open this link?",
+                yes: "Yes",
+                cancel: "Cancel",
+                trust_domain: "Always trust this domain"
+            }
         },
         mutateModals: {
             edit_modal_title: (itemName: string) => `Edit ${itemName}`,
@@ -430,6 +454,7 @@ export const locales: Record<SupportedLocales, Locale> = {
                 inline_code: "Inline Code",
                 superscript: "Superscript",
                 subscript: "Subscript",
+                link: "Link",
                 align_left: "Align Left",
                 align_right: "Align Right",
                 align_center: "Align Center",
@@ -497,6 +522,11 @@ export const locales: Record<SupportedLocales, Locale> = {
                 cancel: "Cancel",
                 edit: "Edit",
                 insert: "Insert"
+            },
+            linkModal: {
+                cancel: "Cancel",
+                create_link: "Create Link",
+                url: "URL"
             }
         }
     }

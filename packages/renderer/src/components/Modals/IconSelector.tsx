@@ -64,7 +64,13 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
             tags: icon.tags
         }));
 
-        list.push({ name: "codex", category: "Brand", tags: [] });
+        // Insert custom Codex icon in-order
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].name > "codex") {
+                list.splice(i, 0, { name: "codex", category: "Brand", tags: [] });
+                break;
+            }
+        }
 
         return list;
     }, []);

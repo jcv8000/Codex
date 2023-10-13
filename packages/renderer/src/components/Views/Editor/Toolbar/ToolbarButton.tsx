@@ -1,5 +1,6 @@
 import { Button, Tooltip } from "@mantine/core";
 import { Icon } from "components/Icon";
+import { BUTTON_WIDTH, BUTTON_HEIGHT } from "./Constants";
 
 type Props = {
     title: string;
@@ -17,10 +18,11 @@ export function ToolbarButton(props: Props) {
         <Tooltip withArrow label={props.title}>
             <span>
                 <Button
-                    size="xs"
+                    w={BUTTON_WIDTH}
+                    h={BUTTON_HEIGHT}
+                    p={0}
                     style={{ color: "inherit" }}
-                    px={6}
-                    variant={isActive() ? "filled" : "default"}
+                    variant={isActive() && !disabled() ? "filled" : "default"}
                     onClick={props.onClick}
                     disabled={disabled()}
                 >

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, createStyles, Group, Menu, Tooltip } from "@mantine/core";
 import { Icon } from "components/Icon";
+import { BUTTON_WIDTH, BUTTON_HEIGHT } from "./Constants";
 
 type Props = {
     title: string;
@@ -34,8 +35,9 @@ export function ToolbarSplit(props: Props) {
                     style={{ color: "inherit" }}
                     variant={isActive() ? "filled" : "default"}
                     className={classes.button}
-                    px={6}
-                    size="xs"
+                    w={BUTTON_WIDTH}
+                    h={BUTTON_HEIGHT}
+                    p={0}
                     onClick={props.onClick}
                 >
                     <Icon icon={props.icon} size={18} />
@@ -54,7 +56,9 @@ export function ToolbarSplit(props: Props) {
                         style={{ color: "inherit" }}
                         variant={isActive() ? "filled" : "default"}
                         className={classes.menuControl}
-                        px={6}
+                        w={BUTTON_WIDTH}
+                        h={BUTTON_HEIGHT}
+                        p={0}
                         size="xs"
                     >
                         <Icon icon="chevron-down" />

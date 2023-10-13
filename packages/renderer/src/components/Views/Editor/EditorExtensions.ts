@@ -1,9 +1,7 @@
 import { Extensions } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Focus from "@tiptap/extension-focus";
-import { lowlight } from "lowlight/lib/all";
-import Image from "@tiptap/extension-image";
-import Table from "@tiptap/extension-table";
+import { createLowlight, all as lowlightAll } from "lowlight";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
@@ -14,7 +12,6 @@ import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
-import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Subscript from "@tiptap/extension-subscript";
@@ -25,17 +22,22 @@ import { MathBlock, MathInline } from "./extensions/Math";
 import { CustomCodeBlock } from "./extensions/CustomCodeBlock";
 import { Markdown } from "tiptap-markdown";
 import { FontSize } from "./extensions/FontSize";
+import { CustomLink } from "./extensions/CustomLink";
+import { CustomCode } from "./extensions/CustomCode";
+import { CustomTable } from "./extensions/CustomTable";
+import { ResizableImage } from "./extensions/ResizableImage/ResizableImage";
 
 export function extensions(options: { useTypography: boolean }) {
     const e = [
         StarterKit.configure({
             codeBlock: false,
             heading: false,
-            code: {
-                HTMLAttributes: {
-                    class: "hljs",
-                    spellCheck: false
-                }
+            code: false
+        }),
+        CustomCode.configure({
+            HTMLAttributes: {
+                class: "hljs",
+                spellCheck: false
             }
         }),
         Focus.configure({
@@ -46,12 +48,12 @@ export function extensions(options: { useTypography: boolean }) {
             placeholder: "Start typing..."
         }),
         CustomCodeBlock.configure({
-            lowlight: lowlight
+            lowlight: createLowlight(lowlightAll)
         }),
-        Image.configure({
+        ResizableImage.configure({
             allowBase64: true
         }),
-        Table.configure({
+        CustomTable.configure({
             // resizable: true,
             // lastColumnResizable: false,
             // allowTableNodeSelection: true
@@ -69,9 +71,7 @@ export function extensions(options: { useTypography: boolean }) {
         Highlight.configure({
             multicolor: true
         }),
-        Link.configure({
-            openOnClick: false
-        }),
+        CustomLink.configure({ openOnClick: true }),
         TextAlign.configure({
             types: ["heading", "paragraph"]
         }),
