@@ -109,6 +109,16 @@
         .code-language {
             right: 32px;
         }
+        .code-collapser {
+            right: 32px;
+        }
+
+        pre {
+            code {
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+            }
+        }
 
         td,
         th {
