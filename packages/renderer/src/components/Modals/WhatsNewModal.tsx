@@ -27,11 +27,12 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.0-beta.0</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.0</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="bugs">
+            <Tabs orientation="vertical" placement="right" defaultValue="sinceBeta">
                 <Tabs.List>
+                    <Tabs.Tab value="sinceBeta">Since 2.0.0-beta.0</Tabs.Tab>
                     <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
                     <Tabs.Tab value="tech">Tech Stack</Tabs.Tab>
                     <Tabs.Tab value="search">Searching</Tabs.Tab>
@@ -40,6 +41,37 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
                     <Tabs.Tab value="languages">Languages</Tabs.Tab>
                     <Tabs.Tab value="icons">Icons</Tabs.Tab>
                 </Tabs.List>
+
+                <Tabs.Panel value="sinceBeta" px="xs">
+                    <hr />
+                    <Title order={6}>What&apos;s new since 2.0.0-beta.0</Title>
+                    <ul>
+                        <li>Updated to Electron 22.3.27</li>
+                        <li>Hundreds of new icons from Tabler Icons (2.30 -&gt; 2.39)</li>
+                        <li>Added custom Codex icon to icon list</li>
+                        <li>
+                            Clickable links in editor (Ctrl-click or Cmd-click)
+                            <ul>
+                                <li>
+                                    Prompts before opening to make sure you trust the link, you can
+                                    also trust specific domains
+                                </li>
+                                <li>
+                                    Visible border between links right next to each other that have
+                                    different URLs
+                                </li>
+                                <li>Hovering over links shows the URL</li>
+                                <li>New editor toolbar button for creating/editing links</li>
+                            </ul>
+                        </li>
+                        <li>Added back the shortcut for inline code (Ctrl-/ or Cmd-/)</li>
+                        <li>Added image resizing</li>
+                        <li>
+                            The code block menu on the editor toolbar now remembers your
+                            &quot;Recent Languages&quot;
+                        </li>
+                    </ul>
+                </Tabs.Panel>
 
                 <Tabs.Panel value="bugs" px="xs">
                     If you find any bugs/issues with the new release of Codex, create an Issue on
@@ -96,7 +128,7 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
 
                 <Tabs.Panel value="icons" px="xs">
                     Codex has switched to a new icon pack called Tabler Icons, which has over{" "}
-                    <b>4,250</b> icons compared to Feather Icons&apos; 287.
+                    <b>4,800</b> icons compared to Feather Icons&apos; 287.
                     <Space h="md" />
                     There&apos;s also a new <b>Icon Selector</b> popup which lets you view all of
                     the icons and search for icons by name or by category.
