@@ -10,6 +10,27 @@
 	<small>Made by <a href="https://jvickery.dev">Josh Vickery</a></small>
 </p>
 
+## About
+
+> _**Notice**: If you're upgrading from Codex v1, make sure to copy your save data (save.json and notes folder) for all of your saves before updating._
+
+Codex is a note-taking app that allows you to save **styled and highlighted code snippets** in your notes.
+
+Other features:
+- Support for highlighting 190+ programming languages
+- Over 240 code themes
+- Sort your notes into nestable notebooks/folders, customizable icons for notebooks and pages
+- KaTeX math expressions
+- PDF and Markdown exporting
+
+## Screenshot
+
+![Example screenshot](https://imgur.com/zpmi3kS.png)
+
+## Other Distributions
+
+**Arch Linux**: You can install Codex from the AUR with [codex-bin](https://aur.archlinux.org/packages/codex-bin)
+
 ## Building Locally
 
 Requires Node.js 16 or higher
