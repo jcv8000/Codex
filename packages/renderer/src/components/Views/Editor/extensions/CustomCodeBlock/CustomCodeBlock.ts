@@ -16,8 +16,11 @@ export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
         return {
             // ...this.parent?.(),
             Tab: () => {
-                this.editor.view.dispatch(this.editor.state.tr.insertText("    "));
-                return true;
+                if (this.editor.state.selection.$anchor.parent.type.name == "codeBlock") {
+                    this.editor.view.dispatch(this.editor.state.tr.insertText("    "));
+                    return false;
+                }
+                return false;
             }
         };
     },
