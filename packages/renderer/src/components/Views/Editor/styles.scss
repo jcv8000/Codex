@@ -200,6 +200,7 @@ ul[data-type="taskList"] {
 
 .code-language {
     position: absolute;
+    user-select: none !important;
     right: 16px;
     font-size: 13px;
     background-color: inherit;

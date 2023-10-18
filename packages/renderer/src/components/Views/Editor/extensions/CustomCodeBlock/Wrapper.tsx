@@ -24,7 +24,7 @@ export function CustomCodeBlockWrapper({ node, updateAttributes }: NodeViewProps
             onMouseLeave={() => setHovered(false)}
         >
             {hovered && lineCount > 4 && (
-                <Tooltip withArrow label="Collapse" position="left">
+                <Tooltip withArrow withinPortal label="Collapse" position="left">
                     <span
                         contentEditable={false}
                         className="code-collapser"
