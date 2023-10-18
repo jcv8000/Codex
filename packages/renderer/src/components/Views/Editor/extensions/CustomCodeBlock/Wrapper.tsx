@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Tooltip, ActionIcon } from "@mantine/core";
 import { NodeViewContent, NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { Icon } from "components/Icon";
+import { AppContext } from "types/AppStore";
+import { locales } from "common/Locales";
 
 export function CustomCodeBlockWrapper({ node, updateAttributes }: NodeViewProps) {
+    const appContext = useContext(AppContext);
+    const editorTexts = locales[appContext.prefs.general.locale].editor;
+
     let lineCount = 1;
 
     const matches = node.textContent.match(/\n/gm);
@@ -24,7 +29,12 @@ export function CustomCodeBlockWrapper({ node, updateAttributes }: NodeViewProps
             onMouseLeave={() => setHovered(false)}
         >
             {hovered && lineCount > 4 && (
-                <Tooltip withArrow withinPortal label="Collapse" position="left">
+                <Tooltip
+                    withArrow
+                    withinPortal
+                    label={editorTexts.code_block_collapse}
+                    position="left"
+                >
                     <span
                         contentEditable={false}
                         className="code-collapser"

@@ -250,6 +250,7 @@ export type Locale = {
             create_link: string;
             url: string;
         };
+        code_block_collapse: string;
     };
 };
 
@@ -527,7 +528,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                 cancel: "Cancel",
                 create_link: "Create Link",
                 url: "URL"
-            }
+            },
+            code_block_collapse: "Collapse"
         }
     }
 };
