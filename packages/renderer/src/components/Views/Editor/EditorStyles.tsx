@@ -1,6 +1,9 @@
 import { Box } from "@mantine/core";
+import { useContext } from "react";
+import { AppContext } from "types/AppStore";
 
 export function EditorStyles(props: { children: JSX.Element | JSX.Element[] }) {
+    const { prefs } = useContext(AppContext);
     return (
         <Box
             sx={(theme) => ({
@@ -15,6 +18,12 @@ export function EditorStyles(props: { children: JSX.Element | JSX.Element[] }) {
                 },
                 "tr:nth-child(even)": {
                     backgroundColor: theme.colorScheme == "light" ? "#f6f8fa" : "#25262b"
+                },
+                ".ProseMirror pre code": {
+                    "white-space": prefs.editor.codeWordWrap
+                        ? "pre-wrap !important"
+                        : "pre !important",
+                    "word-break": prefs.editor.codeWordWrap ? "break-all !important" : "inherit"
                 }
             })}
             mx="md"

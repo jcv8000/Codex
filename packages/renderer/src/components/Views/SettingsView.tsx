@@ -202,6 +202,15 @@ export function SettingsView(props: { startPrefs: Prefs }) {
                     }}
                 />
 
+                <Checkbox
+                    mb="xl"
+                    label={texts.code_block_word_wrap}
+                    checked={prefs.editor.codeWordWrap}
+                    onChange={(e) => {
+                        modifyPrefs((p) => (p.editor.codeWordWrap = e.currentTarget.checked));
+                    }}
+                />
+
                 <Select
                     mb="xl"
                     label={texts.editor_width}
