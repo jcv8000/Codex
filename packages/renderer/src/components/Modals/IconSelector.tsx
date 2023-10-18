@@ -43,6 +43,14 @@ const styles = createStyles((theme) => ({
             backgroundColor:
                 theme.colorScheme == "light" ? theme.colors.gray[2] : theme.colors.dark[4]
         }
+    },
+    active: {
+        backgroundColor: theme.fn.primaryColor(),
+        color: theme.white,
+
+        "&:hover": {
+            backgroundColor: theme.colors["accent"][6]
+        }
     }
 }));
 
@@ -53,7 +61,7 @@ type Props = {
     onChangeColor: (value: string) => void;
 };
 
-export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props) {
+export function IconSelector(props: Props) {
     const { classes } = styles();
     const appContext = useContext(AppContext);
     const locale = locales[appContext.prefs.general.locale];
@@ -135,28 +143,31 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
                                 withinPortal
                             >
                                 <ActionIcon size={96} variant="outline" onClick={open}>
-                                    <Icon icon={icon} color={color} size={64} />
+                                    <Icon icon={props.icon} color={props.color} size={64} />
                                 </ActionIcon>
                             </Tooltip>
 
                             <Space h={4} />
 
-                            <Text ta="center">{icon}</Text>
+                            <Text ta="center">{props.icon}</Text>
                         </div>
                     </Center>
                 </Grid.Col>
                 <Grid.Col span="auto">
                     <Center>
-                        {color == "rainbow" ? (
+                        {props.color == "rainbow" ? (
                             <Center h="230px">
-                                <Button variant="default" onClick={() => onChangeColor("#999999")}>
+                                <Button
+                                    variant="default"
+                                    onClick={() => props.onChangeColor("#999999")}
+                                >
                                     {locale.mutateModals.iconSelector.reset_color_from_rainbow}
                                 </Button>
                             </Center>
                         ) : (
                             <ColorPicker
-                                value={color}
-                                onChangeEnd={(value) => onChangeColor(value)}
+                                value={props.color}
+                                onChangeEnd={(value) => props.onChangeColor(value)}
                                 swatchesPerRow={7}
                                 swatches={[
                                     "#f03e3e",
@@ -397,9 +408,13 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
                             <div
                                 key={icon.name}
                                 title={icon.name}
-                                className={classes.iconButton}
+                                className={
+                                    props.icon == icon.name
+                                        ? classes.active + " " + classes.iconButton
+                                        : classes.iconButton
+                                }
                                 onClick={() => {
-                                    onChangeIcon(icon.name);
+                                    props.onChangeIcon(icon.name);
                                     close();
                                 }}
                             >
