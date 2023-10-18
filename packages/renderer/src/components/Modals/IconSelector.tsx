@@ -47,6 +47,7 @@ const styles = createStyles((theme) => ({
     active: {
         backgroundColor: theme.fn.primaryColor(),
         color: theme.white,
+        fill: theme.white,
 
         "&:hover": {
             backgroundColor: theme.colors["accent"][6]
@@ -76,7 +77,11 @@ export function IconSelector(props: Props) {
         // Insert custom Codex icon in-order
         for (let i = 0; i < list.length; i++) {
             if (list[i].name > "codex") {
-                list.splice(i, 0, { name: "codex", category: "Brand", tags: [] });
+                list.splice(i, 0, {
+                    name: "codex",
+                    category: "Brand",
+                    tags: ["brand", "codex", "software", "icon"]
+                });
                 break;
             }
         }
@@ -92,14 +97,18 @@ export function IconSelector(props: Props) {
     const filterInputRef = useRef<HTMLInputElement>(null);
 
     const open = () => {
-        if (filterInputRef.current) filterInputRef.current.value = "";
-        setFilter("");
-        setCategory(null);
+        // if (filterInputRef.current) filterInputRef.current.value = "";
+        // setFilter("");
+        // setCategory(null);
 
         setShowPickerModal(true);
     };
 
     const close = () => {
+        if (filterInputRef.current) filterInputRef.current.value = "";
+        setFilter("");
+        setCategory(null);
+
         setShowPickerModal(false);
     };
 
@@ -118,7 +127,7 @@ export function IconSelector(props: Props) {
 
         if (filter != "") {
             const fuse = new Fuse(temp, {
-                keys: ["name", "category", "tags"],
+                keys: [{ name: "name", weight: 3 }, "category", { name: "tags", weight: 2 }],
                 ignoreLocation: true,
                 threshold: 0.2,
                 minMatchCharLength: 2
