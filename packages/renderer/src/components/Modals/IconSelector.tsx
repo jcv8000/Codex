@@ -8,6 +8,7 @@ import {
     Grid,
     Modal,
     Select,
+    Space,
     Text,
     TextInput,
     Tooltip,
@@ -127,15 +128,21 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
             <Grid mb="xl">
                 <Grid.Col span="auto">
                     <Center h="100%">
-                        <Tooltip
-                            label={locale.mutateModals.iconSelector.tooltip}
-                            withArrow
-                            withinPortal
-                        >
-                            <ActionIcon size={96} variant="outline" onClick={open}>
-                                <Icon icon={icon} color={color} size={64} />
-                            </ActionIcon>
-                        </Tooltip>
+                        <div>
+                            <Tooltip
+                                label={locale.mutateModals.iconSelector.tooltip}
+                                withArrow
+                                withinPortal
+                            >
+                                <ActionIcon size={96} variant="outline" onClick={open}>
+                                    <Icon icon={icon} color={color} size={64} />
+                                </ActionIcon>
+                            </Tooltip>
+
+                            <Space h={4} />
+
+                            <Text ta="center">{icon}</Text>
+                        </div>
                     </Center>
                 </Grid.Col>
                 <Grid.Col span="auto">
