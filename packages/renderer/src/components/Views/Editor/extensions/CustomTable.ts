@@ -24,6 +24,13 @@ export const CustomTable = Table.extend({
                 }
 
                 return this.editor.chain().addRowAfter().goToNextCell().run();
+            },
+            "Shift-Tab": () => {
+                if (this.editor.state.selection.$anchor.parent.type.name == "codeBlock") {
+                    return false;
+                }
+
+                return this.editor.commands.goToPreviousCell();
             }
         };
     },
