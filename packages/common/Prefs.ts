@@ -19,6 +19,7 @@ class EditorPrefs {
     zoom = 1.0;
     openPDFonExport = true;
     recentCodeLangs: string[] = [];
+    codeWordWrap = false;
 }
 
 class MiscPrefs {

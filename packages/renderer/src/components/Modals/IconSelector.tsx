@@ -8,6 +8,7 @@ import {
     Grid,
     Modal,
     Select,
+    Space,
     Text,
     TextInput,
     Tooltip,
@@ -42,6 +43,15 @@ const styles = createStyles((theme) => ({
             backgroundColor:
                 theme.colorScheme == "light" ? theme.colors.gray[2] : theme.colors.dark[4]
         }
+    },
+    active: {
+        backgroundColor: theme.fn.primaryColor(),
+        color: theme.white,
+        fill: theme.white,
+
+        "&:hover": {
+            backgroundColor: theme.colors["accent"][6]
+        }
     }
 }));
 
@@ -52,7 +62,7 @@ type Props = {
     onChangeColor: (value: string) => void;
 };
 
-export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props) {
+export function IconSelector(props: Props) {
     const { classes } = styles();
     const appContext = useContext(AppContext);
     const locale = locales[appContext.prefs.general.locale];
@@ -67,7 +77,11 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
         // Insert custom Codex icon in-order
         for (let i = 0; i < list.length; i++) {
             if (list[i].name > "codex") {
-                list.splice(i, 0, { name: "codex", category: "Brand", tags: [] });
+                list.splice(i, 0, {
+                    name: "codex",
+                    category: "Brand",
+                    tags: ["brand", "codex", "software", "icon"]
+                });
                 break;
             }
         }
@@ -83,14 +97,18 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
     const filterInputRef = useRef<HTMLInputElement>(null);
 
     const open = () => {
-        if (filterInputRef.current) filterInputRef.current.value = "";
-        setFilter("");
-        setCategory(null);
+        // if (filterInputRef.current) filterInputRef.current.value = "";
+        // setFilter("");
+        // setCategory(null);
 
         setShowPickerModal(true);
     };
 
     const close = () => {
+        if (filterInputRef.current) filterInputRef.current.value = "";
+        setFilter("");
+        setCategory(null);
+
         setShowPickerModal(false);
     };
 
@@ -109,7 +127,7 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
 
         if (filter != "") {
             const fuse = new Fuse(temp, {
-                keys: ["name", "category", "tags"],
+                keys: [{ name: "name", weight: 3 }, "category", { name: "tags", weight: 2 }],
                 ignoreLocation: true,
                 threshold: 0.2,
                 minMatchCharLength: 2
@@ -127,29 +145,38 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
             <Grid mb="xl">
                 <Grid.Col span="auto">
                     <Center h="100%">
-                        <Tooltip
-                            label={locale.mutateModals.iconSelector.tooltip}
-                            withArrow
-                            withinPortal
-                        >
-                            <ActionIcon size={96} variant="outline" onClick={open}>
-                                <Icon icon={icon} color={color} size={64} />
-                            </ActionIcon>
-                        </Tooltip>
+                        <div>
+                            <Tooltip
+                                label={locale.mutateModals.iconSelector.tooltip}
+                                withArrow
+                                withinPortal
+                            >
+                                <ActionIcon size={96} variant="outline" onClick={open}>
+                                    <Icon icon={props.icon} color={props.color} size={64} />
+                                </ActionIcon>
+                            </Tooltip>
+
+                            <Space h={4} />
+
+                            <Text ta="center">{props.icon}</Text>
+                        </div>
                     </Center>
                 </Grid.Col>
                 <Grid.Col span="auto">
                     <Center>
-                        {color == "rainbow" ? (
+                        {props.color == "rainbow" ? (
                             <Center h="230px">
-                                <Button variant="default" onClick={() => onChangeColor("#999999")}>
+                                <Button
+                                    variant="default"
+                                    onClick={() => props.onChangeColor("#999999")}
+                                >
                                     {locale.mutateModals.iconSelector.reset_color_from_rainbow}
                                 </Button>
                             </Center>
                         ) : (
                             <ColorPicker
-                                value={color}
-                                onChangeEnd={(value) => onChangeColor(value)}
+                                value={props.color}
+                                onChangeEnd={(value) => props.onChangeColor(value)}
                                 swatchesPerRow={7}
                                 swatches={[
                                     "#f03e3e",
@@ -390,9 +417,13 @@ export function IconSelector({ icon, onChangeIcon, color, onChangeColor }: Props
                             <div
                                 key={icon.name}
                                 title={icon.name}
-                                className={classes.iconButton}
+                                className={
+                                    props.icon == icon.name
+                                        ? classes.active + " " + classes.iconButton
+                                        : classes.iconButton
+                                }
                                 onClick={() => {
-                                    onChangeIcon(icon.name);
+                                    props.onChangeIcon(icon.name);
                                     close();
                                 }}
                             >

@@ -4,6 +4,37 @@ import { getHTMLFromFragment } from "@tiptap/core";
 import { Node } from "@tiptap/pm/model";
 
 export const CustomTable = Table.extend({
+    addKeyboardShortcuts() {
+        const parent = this.parent?.();
+        delete parent?.Tab;
+        return {
+            ...parent,
+            Tab: () => {
+                // Don't move to next cell when tabbing in a code block
+                if (this.editor.state.selection.$anchor.parent.type.name == "codeBlock") {
+                    return false;
+                }
+
+                if (this.editor.commands.goToNextCell()) {
+                    return true;
+                }
+
+                if (!this.editor.can().addRowAfter()) {
+                    return false;
+                }
+
+                return this.editor.chain().addRowAfter().goToNextCell().run();
+            },
+            "Shift-Tab": () => {
+                if (this.editor.state.selection.$anchor.parent.type.name == "codeBlock") {
+                    return false;
+                }
+
+                return this.editor.commands.goToPreviousCell();
+            }
+        };
+    },
+
     addStorage() {
         return {
             markdown: {

@@ -26,6 +26,7 @@ export type Locale = {
     settings: {
         accent_color: string;
         code_block_theme: string;
+        code_block_word_wrap: string;
         language: string;
         contribute_language: string;
         theme: string;
@@ -250,6 +251,7 @@ export type Locale = {
             create_link: string;
             url: string;
         };
+        code_block_collapse: string;
     };
 };
 
@@ -285,6 +287,7 @@ export const locales: Record<SupportedLocales, Locale> = {
         settings: {
             accent_color: "Accent Color",
             code_block_theme: "Code Block Theme",
+            code_block_word_wrap: "Word Wrap in Code Blocks",
             language: "Language",
             contribute_language:
                 "Contribute your own translation by opening a pull request on GitHub",
@@ -527,7 +530,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                 cancel: "Cancel",
                 create_link: "Create Link",
                 url: "URL"
-            }
+            },
+            code_block_collapse: "Collapse"
         }
     }
 };
