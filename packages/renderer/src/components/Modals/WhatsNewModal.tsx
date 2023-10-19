@@ -27,49 +27,51 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.0</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.1</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="sinceBeta">
+            <Tabs orientation="vertical" placement="right" defaultValue="improvements">
                 <Tabs.List>
-                    <Tabs.Tab value="sinceBeta">Since 2.0.0-beta.0</Tabs.Tab>
+                    <Tabs.Tab value="improvements">Improvements</Tabs.Tab>
+                    <Tabs.Tab value="bugfixes">Bug Fixes</Tabs.Tab>
                     <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
-                    <Tabs.Tab value="tech">Tech Stack</Tabs.Tab>
-                    <Tabs.Tab value="search">Searching</Tabs.Tab>
-                    <Tabs.Tab value="folders">Folders</Tabs.Tab>
-                    <Tabs.Tab value="editor">Editor</Tabs.Tab>
-                    <Tabs.Tab value="languages">Languages</Tabs.Tab>
-                    <Tabs.Tab value="icons">Icons</Tabs.Tab>
+                    <Tabs.Tab value="v2release">2.0 Changelog</Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="sinceBeta" px="xs">
-                    <hr />
-                    <Title order={6}>What&apos;s new since 2.0.0-beta.0</Title>
-                    <ul>
-                        <li>Updated to Electron 22.3.27</li>
-                        <li>Hundreds of new icons from Tabler Icons (2.30 -&gt; 2.39)</li>
-                        <li>Added custom Codex icon to icon list</li>
+                <Tabs.Panel value="improvements" px="xs">
+                    <ul style={{ paddingLeft: "16px" }}>
                         <li>
-                            Clickable links in editor (Ctrl-click or Cmd-click)
-                            <ul>
-                                <li>
-                                    Prompts before opening to make sure you trust the link, you can
-                                    also trust specific domains
-                                </li>
-                                <li>
-                                    Visible border between links right next to each other that have
-                                    different URLs
-                                </li>
-                                <li>Hovering over links shows the URL</li>
-                                <li>New editor toolbar button for creating/editing links</li>
-                            </ul>
+                            Added <b>single-line and multi-line indenting and un-indenting</b> (Tab
+                            / Shift-Tab) in code blocks
                         </li>
-                        <li>Added back the shortcut for inline code (Ctrl-/ or Cmd-/)</li>
-                        <li>Added image resizing</li>
                         <li>
-                            The code block menu on the editor toolbar now remembers your
-                            &quot;Recent Languages&quot;
+                            <b>Added a Tab Size setting</b> for how many spaces to add/remove when
+                            pressing Tab/Shift-Tab in code blocks
                         </li>
+                        <li>Added a setting for word-wrap in code blocks (disabled by default)</li>
+                        <li>Icon Selector:</li>
+                        <ul>
+                            <li>
+                                Now shows the name of the selected icon below the icon in Edit menus
+                            </li>
+                            <li>The Icon Selector popup highlights the currently-selected icon</li>
+                            <li>
+                                Improved how icons are searched for, finding them by name should be
+                                easier
+                            </li>
+                        </ul>
+                        <li>Custom scrollbars for code blocks</li>
+                    </ul>
+                </Tabs.Panel>
+
+                <Tabs.Panel value="bugfixes" px="xs">
+                    <ul style={{ paddingLeft: "16px" }}>
+                        <li>
+                            Fixed not being able to tab/shift-tab in code blocks that are inside a
+                            table
+                        </li>
+                        <li>Fixed tab/shift-tab not working to sink/lift list items</li>
+                        <li>Localized the &quot;Collapse&quot; tooltip in code blocks</li>
                     </ul>
                 </Tabs.Panel>
 
@@ -86,59 +88,10 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
                     suggestions, and a question about Windows 7/8/8.1 support.
                 </Tabs.Panel>
 
-                <Tabs.Panel value="tech" px="xs">
-                    Codex has been completely rewritten in React/Preact and TypeScript. The entire
-                    project is more clean and modular with a much better developer experience.
-                    <Space h="md" />
-                    Electron has also been upgraded to version 22, the last to support Windows 7 and
-                    8, but will stop receiving support in October.
-                </Tabs.Panel>
-
-                <Tabs.Panel value="search" px="xs">
-                    You can now use the Search bar on the sidebar to search for pages by name, or by
-                    the page&apos;s contents.
-                </Tabs.Panel>
-
-                <Tabs.Panel value="folders" px="xs">
-                    Folders can now be nested inside other folders for more organization
-                </Tabs.Panel>
-
-                <Tabs.Panel value="editor" px="xs">
-                    The Editor has been overhauled and is now using TipTap, a wrapper for
-                    Prosemirror. New features include changing font family, font color, and
-                    highlighting text.
-                    <Space h="md" />
-                    There&apos;s a new custom popup for adding images to a document, and a new
-                    custom popup for inserting/editing math expressions, which has a new visual math
-                    editor.
-                    <Space h="md" />
-                    The editor&apos;s appearance can now be customized, such as removing the border
-                    around the editor and changing its width. You can also disable the editor&apos;s
-                    spellcheck in the Settings if it&apos;s not working correctly with your
-                    language.
-                </Tabs.Panel>
-
-                <Tabs.Panel value="languages" px="xs">
-                    Codex now supports multiple languages for the interface and menu bar (menu bar
-                    requires a restart to see changes).
-                    <Space h="md" />
-                    If you would like to contribute a new translation, make a pull request on GitHub
-                    with your language added (see CONTRIBUTING.md)
-                </Tabs.Panel>
-
-                <Tabs.Panel value="icons" px="xs">
-                    Codex has switched to a new icon pack called Tabler Icons, which has over{" "}
-                    <b>4,800</b> icons compared to Feather Icons&apos; 287.
-                    <Space h="md" />
-                    There&apos;s also a new <b>Icon Selector</b> popup which lets you view all of
-                    the icons and search for icons by name or by category.
-                    <Space h="md" />
-                    Tabler Icons has many technology and programming-related icons which suits the
-                    needs of this app better.
-                    <Space h="md" />
-                    When you convert your old save to the new version, Codex automatically replaces
-                    any missing or mismatched icons to an icon from Tabler that looks similar to the
-                    old one.
+                <Tabs.Panel value="v2release" px="xs">
+                    <Anchor onClick={() => window.api.openLink("changelogs")}>
+                        Codex 2.0.0 Changelogs
+                    </Anchor>
                 </Tabs.Panel>
             </Tabs>
         </Modal>

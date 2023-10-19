@@ -150,8 +150,9 @@ if (app.requestSingleInstanceLock()) {
         typedIpcMain.onOpenLink((link) => {
             if (link == "help") shell.openExternal("https://codexnotes.com/docs");
             if (link == "website") shell.openExternal("https://codexnotes.com/");
-            if (link == "changelogs") shell.openExternal("https://codexnotes.com/updates");
-            if (link == "download") shell.openExternal("https://codexnotes.com/download");
+            if (link == "changelogs")
+                shell.openExternal("https://github.com/jcv8000/Codex/releases");
+            if (link == "download") shell.openExternal("https://github.com/jcv8000/Codex/releases");
             if (link == "github") shell.openExternal("https://github.com/jcv8000/Codex");
             if (link == "issues") shell.openExternal("https://github.com/jcv8000/Codex/issues");
             if (link == "feedback") shell.openExternal("https://forms.gle/MgVtcPtcytTYZgxJ7");
