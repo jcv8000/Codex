@@ -63,17 +63,17 @@
     }
 
     pre {
-        font-family: "JetBrainsMono", monospace;
-        padding: 0.75rem 1rem;
         border-radius: 0.5rem;
         overflow-x: auto;
         display: flex;
+        cursor: default;
 
         code {
             color: inherit;
-            padding: 0;
+            //padding: 0;
+            padding: 0.75rem 1rem;
             background: none;
-            font-size: 0.8rem;
+            font-size: 13px;
             tab-size: 4;
             // white-space: pre !important;
         }
@@ -81,6 +81,7 @@
         &[data-collapsed="true"] {
             max-height: 100px;
             overflow-y: hidden;
+            overflow-x: hidden;
         }
     }
 
@@ -107,13 +108,13 @@
         table-layout: fixed;
 
         .code-language {
-            right: 32px;
+            right: 18px;
         }
         .code-collapser {
-            right: 32px;
+            right: 18px;
         }
 
-        pre {
+        pre.hljs {
             code {
                 white-space: pre-wrap !important;
                 word-break: break-all !important;
@@ -195,15 +196,17 @@ ul[data-type="taskList"] {
 .code-collapser {
     display: none;
     position: absolute;
-    right: 16px;
+    right: 6px;
+    margin: 10px;
 }
 
 .code-language {
+    margin: 12px;
     position: absolute;
     user-select: none !important;
-    right: 16px;
+    right: 8px;
     font-size: 13px;
-    background-color: inherit;
+    background-color: transparent;
     opacity: 0.75;
     font-family: ui-monospace, Consolas, "Cascadia Code", "Source Code Pro", Menlo,
         "DejaVu Sans Mono", monospace;
@@ -211,4 +214,23 @@ ul[data-type="taskList"] {
 
 .ProseMirror pre:hover .code-collapser {
     display: inline;
+}
+
+/* width */
+pre.hljs::-webkit-scrollbar {
+    height: 14px;
+}
+
+/* Track */
+pre.hljs::-webkit-scrollbar-track {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+/* Handle */
+pre.hljs::-webkit-scrollbar-thumb {
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
 }
