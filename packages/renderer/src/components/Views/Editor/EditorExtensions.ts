@@ -27,7 +27,7 @@ import { CustomCode } from "./extensions/CustomCode";
 import { CustomTable } from "./extensions/CustomTable";
 import { ResizableImage } from "./extensions/ResizableImage/ResizableImage";
 
-export function extensions(options: { useTypography: boolean }) {
+export function extensions(options: { useTypography: boolean; tabSize: number }) {
     const e = [
         StarterKit.configure({
             codeBlock: false,
@@ -48,7 +48,8 @@ export function extensions(options: { useTypography: boolean }) {
             placeholder: "Start typing..."
         }),
         CustomCodeBlock.configure({
-            lowlight: createLowlight(lowlightAll)
+            lowlight: createLowlight(lowlightAll),
+            tabSize: options.tabSize
         }),
         ResizableImage.configure({
             allowBase64: true

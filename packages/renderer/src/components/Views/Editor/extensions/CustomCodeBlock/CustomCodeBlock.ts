@@ -7,6 +7,7 @@ import { TextSelection } from "@tiptap/pm/state";
 interface CustomCodeBlockOptions extends CodeBlockOptions {
     lowlight: any;
     defaultLanguage: string | null | undefined;
+    tabSize: number;
 }
 
 export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
@@ -132,13 +133,19 @@ export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
         return {
             // ...this.parent?.(),
             Tab: () => {
+                let TAB_TEXT = "";
+                const TAB_SIZE = this.options.tabSize > 0 ? this.options.tabSize : 4;
+                for (let i = 0; i < TAB_SIZE; i++) {
+                    TAB_TEXT += " ";
+                }
+
                 const { $anchor, $head } = this.editor.state.selection;
                 if (
                     $anchor.parent.type.name == "codeBlock" &&
                     $head.parent.type.name == "codeBlock"
                 ) {
                     if (this.editor.state.selection.empty) {
-                        this.editor.view.dispatch(this.editor.state.tr.insertText("    "));
+                        this.editor.view.dispatch(this.editor.state.tr.insertText(TAB_TEXT));
                         return true;
                     } else {
                         const state = this.editor.state;
@@ -158,13 +165,13 @@ export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
 
                         const full = node.textBetween(startLineStart, endLineEnd);
 
-                        let newFull = full.replaceAll("\n", "\n    ");
+                        let newFull = full.replaceAll("\n", "\n" + TAB_TEXT);
                         let charsAddedInFirstLine = 0;
 
                         if (start < node.textContent.indexOf("\n")) {
-                            newFull = "    " + newFull;
-                            charsAddedInFirstLine = 4;
-                        } else if (full.startsWith("\n")) charsAddedInFirstLine = 4;
+                            newFull = TAB_TEXT + newFull;
+                            charsAddedInFirstLine = TAB_SIZE;
+                        } else if (full.startsWith("\n")) charsAddedInFirstLine = TAB_SIZE;
 
                         const charsAdded = newFull.length - full.length;
 
@@ -200,6 +207,12 @@ export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
                 return false;
             },
             "Shift-Tab": () => {
+                let TAB_TEXT = "";
+                const TAB_SIZE = this.options.tabSize > 0 ? this.options.tabSize : 4;
+                for (let i = 0; i < TAB_SIZE; i++) {
+                    TAB_TEXT += " ";
+                }
+
                 const { $anchor, $head } = this.editor.state.selection;
                 if (
                     $anchor.parent.type.name == "codeBlock" &&
@@ -223,7 +236,7 @@ export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
 
                         let line = node.textBetween(lineStart, lineEnd);
 
-                        for (let i = 0; i < 4; i++) {
+                        for (let i = 0; i < TAB_SIZE; i++) {
                             const c = line.charAt(0);
                             if (c == " ") {
                                 tr.delete(lineStart + offset + 1, lineStart + offset + 2);
@@ -247,16 +260,17 @@ export const CustomCodeBlock = CodeBlock.extend<CustomCodeBlockOptions>({
 
                         const full = node.textBetween(startLineStart, endLineEnd);
 
-                        const regex = /\n {4}/gm;
+                        const regex = new RegExp("\n {" + TAB_SIZE + "}", "gm");
                         let newFull = full.replaceAll(regex, "\n");
                         let charsLostInFirstLine = 0;
 
                         if (start < node.textContent.indexOf("\n")) {
-                            if (newFull.startsWith("    ")) {
-                                newFull = newFull.substring(4, newFull.length);
-                                charsLostInFirstLine = 4;
+                            if (newFull.startsWith(TAB_TEXT)) {
+                                newFull = newFull.substring(TAB_SIZE, newFull.length);
+                                charsLostInFirstLine = TAB_SIZE;
                             }
-                        } else if (full.startsWith("\n    ")) charsLostInFirstLine = 4;
+                        } else if (full.startsWith("\n" + TAB_TEXT))
+                            charsLostInFirstLine = TAB_SIZE;
 
                         const charsLost = full.length - newFull.length;
 

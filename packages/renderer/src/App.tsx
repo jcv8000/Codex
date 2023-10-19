@@ -32,7 +32,10 @@ export function App() {
 
     const editorRef = useRef<Editor | null>(null);
     const fakeEditor = useRef<Editor>(
-        new Editor({ editable: false, extensions: extensions({ useTypography: false }) })
+        new Editor({
+            editable: false,
+            extensions: extensions({ useTypography: false, tabSize: 4 })
+        })
     );
 
     const locale = locales[prefs.current.general.locale];

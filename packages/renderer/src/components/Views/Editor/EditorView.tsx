@@ -20,7 +20,8 @@ export function EditorView({ page, setEditorRef }: Props) {
     const editor = useEditor(
         {
             extensions: extensions({
-                useTypography: appContext.prefs.editor.useTypographyExtension
+                useTypography: appContext.prefs.editor.useTypographyExtension,
+                tabSize: appContext.prefs.editor.tabSize
             }),
             autofocus: true,
             content: JSON.parse(window.api.loadPage(page.fileName))

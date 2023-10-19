@@ -202,6 +202,21 @@ export function SettingsView(props: { startPrefs: Prefs }) {
                     }}
                 />
 
+                <Select
+                    mb="xl"
+                    label={texts.code_block_tab_size.label}
+                    description={texts.code_block_tab_size.desc}
+                    value={prefs.editor.tabSize.toString()}
+                    data={[
+                        { value: "4", label: texts.code_block_tab_size.four_spaces },
+                        { value: "2", label: texts.code_block_tab_size.two_spaces }
+                    ]}
+                    icon={<Icon icon="indent-increase" />}
+                    onChange={(value) => {
+                        modifyPrefs((p) => (p.editor.tabSize = parseInt(value!)));
+                    }}
+                />
+
                 <Checkbox
                     mb="xl"
                     label={texts.code_block_word_wrap}

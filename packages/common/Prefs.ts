@@ -20,6 +20,7 @@ class EditorPrefs {
     openPDFonExport = true;
     recentCodeLangs: string[] = [];
     codeWordWrap = false;
+    tabSize = 4;
 }
 
 class MiscPrefs {

@@ -27,6 +27,12 @@ export type Locale = {
         accent_color: string;
         code_block_theme: string;
         code_block_word_wrap: string;
+        code_block_tab_size: {
+            label: string;
+            desc: string;
+            four_spaces: string;
+            two_spaces: string;
+        };
         language: string;
         contribute_language: string;
         theme: string;
@@ -288,6 +294,12 @@ export const locales: Record<SupportedLocales, Locale> = {
             accent_color: "Accent Color",
             code_block_theme: "Code Block Theme",
             code_block_word_wrap: "Word Wrap in Code Blocks",
+            code_block_tab_size: {
+                label: "Code Block Tab Size",
+                desc: "Affects how many spaces to add/remove when pressing Tab/Shift-Tab in code",
+                four_spaces: "4 Spaces (Default)",
+                two_spaces: "2 Spaces"
+            },
             language: "Language",
             contribute_language:
                 "Contribute your own translation by opening a pull request on GitHub",
