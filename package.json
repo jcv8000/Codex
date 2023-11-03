@@ -75,7 +75,7 @@
         "react-lowlight": "^3.0.0",
         "sanitize-filename": "^1.6.3",
         "semver": "^7.5.4",
-        "tiptap-markdown": "^0.8.2",
+        "tiptap-markdown": "0.8.2",
         "validator": "^13.11.0"
     },
     "devDependencies": {

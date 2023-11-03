@@ -165,7 +165,7 @@ dependencies:
     specifier: ^7.5.4
     version: 7.5.4
   tiptap-markdown:
-    specifier: ^0.8.2
+    specifier: 0.8.2
     version: 0.8.2(@tiptap/core@2.1.12)
   validator:
     specifier: ^13.11.0
