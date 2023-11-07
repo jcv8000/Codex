@@ -22,7 +22,7 @@
         "typecheck": "tsc && tsc -p packages/renderer/tsconfig.json"
     },
     "dependencies": {
-        "@electron/remote": "^2.0.12",
+        "@electron/remote": "^2.1.0",
         "@emotion/react": "^11.11.1",
         "@lukeed/uuid": "^2.0.1",
         "@mantine/core": "^6.0.21",
