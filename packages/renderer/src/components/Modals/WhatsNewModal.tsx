@@ -27,51 +27,31 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.1</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.2</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="improvements">
+            <Tabs orientation="vertical" placement="right" defaultValue="v202">
                 <Tabs.List>
-                    <Tabs.Tab value="improvements">Improvements</Tabs.Tab>
-                    <Tabs.Tab value="bugfixes">Bug Fixes</Tabs.Tab>
+                    <Tabs.Tab value="v202">2.0.2 Changelog</Tabs.Tab>
                     <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
                     <Tabs.Tab value="v2release">2.0 Changelog</Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="improvements" px="xs">
+                <Tabs.Panel value="v202" px="xs">
                     <ul style={{ paddingLeft: "16px" }}>
                         <li>
-                            Added <b>single-line and multi-line indenting and un-indenting</b> (Tab
-                            / Shift-Tab) in code blocks
+                            <b>
+                                Fixed an issue where the Editor was reloading its content and
+                                extensions while typing
+                            </b>
                         </li>
                         <li>
-                            <b>Added a Tab Size setting</b> for how many spaces to add/remove when
-                            pressing Tab/Shift-Tab in code blocks
+                            <b>
+                                Switched back to React instead of Preact in builds, the React build
+                                doesn&apos;t seem to lag while typing as much as Preact did
+                            </b>
                         </li>
-                        <li>Added a setting for word-wrap in code blocks (disabled by default)</li>
-                        <li>Icon Selector:</li>
-                        <ul>
-                            <li>
-                                Now shows the name of the selected icon below the icon in Edit menus
-                            </li>
-                            <li>The Icon Selector popup highlights the currently-selected icon</li>
-                            <li>
-                                Improved how icons are searched for, finding them by name should be
-                                easier
-                            </li>
-                        </ul>
-                        <li>Custom scrollbars for code blocks</li>
-                    </ul>
-                </Tabs.Panel>
-
-                <Tabs.Panel value="bugfixes" px="xs">
-                    <ul style={{ paddingLeft: "16px" }}>
-                        <li>
-                            Fixed not being able to tab/shift-tab in code blocks that are inside a
-                            table
-                        </li>
-                        <li>Fixed tab/shift-tab not working to sink/lift list items</li>
-                        <li>Localized the &quot;Collapse&quot; tooltip in code blocks</li>
+                        <li>18 new icons from Tabler Icons 2.40</li>
                     </ul>
                 </Tabs.Panel>
 
