@@ -50,6 +50,10 @@ export default defineConfig(async (mode) => {
     return {
         root: __dirname,
         clearScreen: false,
+        server: {
+            host: "127.0.0.1",
+            port: 5173
+        },
         base: "./",
         build: {
             sourcemap: true,
