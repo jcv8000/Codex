@@ -56,7 +56,6 @@ export default defineConfig(async (mode) => {
         },
         base: "./",
         build: {
-            sourcemap: true,
             outDir: resolve(PROJECT_ROOT, ".vite/renderer/"),
             emptyOutDir: true,
             rollupOptions: {
