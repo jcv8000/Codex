@@ -18,7 +18,7 @@
         "dir": "pnpm run build && electron-builder -c electron-builder.config.js --dir --publish=never",
         "clean": "rimraf dist/ .vite/",
         "test": "pnpm run typecheck && pnpm run lint",
-        "lint": "pnpm exec eslint . --max-warnings 0",
+        "lint": "pnpm exec eslint --ignore-path .gitignore . --max-warnings 0",
         "typecheck": "tsc && tsc -p packages/renderer/tsconfig.json"
     },
     "dependencies": {
