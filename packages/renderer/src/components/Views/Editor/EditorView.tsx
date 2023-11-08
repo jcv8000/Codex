@@ -1,7 +1,7 @@
 import "./styles.scss";
 import { Container, Paper } from "@mantine/core";
 import { Page } from "common/Save";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { AppContext } from "types/AppStore";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import Toolbar from "./Toolbar/Toolbar";
@@ -17,14 +17,22 @@ type Props = {
 export function EditorView({ page, setEditorRef }: Props) {
     const appContext = useContext(AppContext);
 
-    const editor = useEditor(
-        {
-            extensions: extensions({
+    const _extensions = useMemo(
+        () =>
+            extensions({
                 useTypography: appContext.prefs.editor.useTypographyExtension,
                 tabSize: appContext.prefs.editor.tabSize
             }),
+        [appContext.prefs.editor.tabSize, appContext.prefs.editor.useTypographyExtension]
+    );
+
+    const content = useMemo(() => JSON.parse(window.api.loadPage(page.fileName)), [page.fileName]);
+
+    const editor = useEditor(
+        {
+            extensions: _extensions,
             autofocus: true,
-            content: JSON.parse(window.api.loadPage(page.fileName))
+            content: content
         },
         [page.id]
     );
