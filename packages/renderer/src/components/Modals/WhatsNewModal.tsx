@@ -27,31 +27,29 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.2</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.3</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="v202">
+            <Tabs orientation="vertical" placement="right" defaultValue="v203">
                 <Tabs.List>
-                    <Tabs.Tab value="v202">2.0.2 Changelog</Tabs.Tab>
+                    <Tabs.Tab value="v203">2.0.3 Changelog</Tabs.Tab>
                     <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
                     <Tabs.Tab value="v2release">2.0 Changelog</Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="v202" px="xs">
+                <Tabs.Panel value="v203" px="xs">
                     <ul style={{ paddingLeft: "16px" }}>
+                        <li>18 new icons from Tabler Icons 2.41</li>
+                        <li>Fixed horizontal rules being difficult to see in dark mode</li>
+                        <li>Fixed block quote borders being difficult to see in dark mode</li>
                         <li>
-                            <b>
-                                Fixed an issue where the Editor was reloading its content and
-                                extensions while typing
-                            </b>
+                            Fixed copying and pasting text with a custom font-size not working
+                            correctly
                         </li>
                         <li>
-                            <b>
-                                Switched back to React instead of Preact in builds, the React build
-                                doesn&apos;t seem to lag while typing as much as Preact did
-                            </b>
+                            Added (mostly complete) Simplified Chinese translation thanks to
+                            @hghgthifg
                         </li>
-                        <li>18 new icons from Tabler Icons 2.40</li>
                     </ul>
                 </Tabs.Panel>
 

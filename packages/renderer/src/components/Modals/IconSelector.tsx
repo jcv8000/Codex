@@ -427,7 +427,15 @@ export function IconSelector(props: Props) {
                                     close();
                                 }}
                             >
-                                <Icon icon={icon.name} size={22} />
+                                <Icon
+                                    icon={icon.name}
+                                    size={22}
+                                    color={
+                                        appContext.prefs.general.theme == "light"
+                                            ? "black"
+                                            : "white"
+                                    }
+                                />
                             </div>
                         ))}
                     </Flex>

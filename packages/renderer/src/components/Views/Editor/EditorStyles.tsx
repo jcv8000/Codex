@@ -24,6 +24,18 @@ export function EditorStyles(props: { children: JSX.Element | JSX.Element[] }) {
                         ? "pre-wrap !important"
                         : "pre !important",
                     "word-break": prefs.editor.codeWordWrap ? "break-all !important" : "inherit"
+                },
+                ".ProseMirror hr": {
+                    borderTop:
+                        theme.colorScheme == "light"
+                            ? "2px solid rgba(13, 13, 13, 0.1)"
+                            : "2px solid rgba(256, 256, 256, 0.2)"
+                },
+                ".ProseMirror blockquote": {
+                    borderLeft:
+                        theme.colorScheme == "light"
+                            ? "2px solid rgba(13, 13, 13, 0.1)"
+                            : "2px solid rgba(256, 256, 256, 0.2)"
                 }
             })}
             mx="md"
