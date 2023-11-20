@@ -46,6 +46,10 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
                             Fixed copying and pasting text with a custom font-size not working
                             correctly
                         </li>
+                        <li>
+                            Added (mostly complete) Simplified Chinese translation thanks to
+                            @hghgthifg
+                        </li>
                     </ul>
                 </Tabs.Panel>
 
