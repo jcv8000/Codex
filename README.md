@@ -30,7 +30,7 @@ Other features:
 
 ## Other Distributions
 
-**Arch Linux**: You can install Codex from the AUR with [codex-bin](https://aur.archlinux.org/packages/codex-bin)
+**Arch Linux**: You can install Codex from the AUR with [codex-bin](https://aur.archlinux.org/packages/codex-bin) (unofficial)
 
 ## Building Locally
 
