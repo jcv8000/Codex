@@ -16,8 +16,8 @@ export const sidebarItemStyles = createStyles(
                 backgroundColor: params.active
                     ? theme.fn.primaryColor()
                     : theme.colorScheme == "light"
-                    ? theme.colors.gray[2]
-                    : theme.colors.gray[8],
+                      ? theme.colors.gray[2]
+                      : theme.colors.gray[8],
                 cursor: "pointer"
             }
         },
