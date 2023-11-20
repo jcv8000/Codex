@@ -30,6 +30,12 @@ export function EditorStyles(props: { children: JSX.Element | JSX.Element[] }) {
                         theme.colorScheme == "light"
                             ? "2px solid rgba(13, 13, 13, 0.1)"
                             : "2px solid rgba(256, 256, 256, 0.2)"
+                },
+                ".ProseMirror blockquote": {
+                    borderLeft:
+                        theme.colorScheme == "light"
+                            ? "2px solid rgba(13, 13, 13, 0.1)"
+                            : "2px solid rgba(256, 256, 256, 0.2)"
                 }
             })}
             mx="md"
