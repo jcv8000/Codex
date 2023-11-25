@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "main": ".vite/index.cjs",
-    "version": "2.0.3",
+    "version": "2.1.0",
     "description": "Note-taking app for programmers and CS students",
     "author": {
         "name": "Josh Vickery",
