@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@electron/remote':
     specifier: ^2.1.0
-    version: 2.1.0(electron@22.3.27)
+    version: 2.1.0(electron@26.6.1)
   '@emotion/react':
     specifier: ^11.11.1
     version: 11.11.1(@types/react@18.2.37)(react@18.2.0)
@@ -121,7 +121,7 @@ dependencies:
     version: 2.1.12(@tiptap/pm@2.1.12)
   '@treverix/custom-electron-titlebar':
     specifier: ^4.2.0
-    version: 4.2.0(electron@22.3.27)
+    version: 4.2.0(electron@26.6.1)
   color:
     specifier: ^4.2.3
     version: 4.2.3
@@ -209,8 +209,8 @@ devDependencies:
     specifier: ^4.2.0
     version: 4.2.0(vite@4.5.0)
   electron:
-    specifier: ^22.3.27
-    version: 22.3.27
+    specifier: ^26.6.1
+    version: 26.6.1
   electron-builder:
     specifier: ^24.6.4
     version: 24.6.4
@@ -567,12 +567,12 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/remote@2.1.0(electron@22.3.27):
+  /@electron/remote@2.1.0(electron@26.6.1):
     resolution: {integrity: sha512-38jzz2beoYTo0DNS+aoaGyLS/fHeNTAc1Aom6HlYsxKnvVWjcg4xriC7J2IUkYSEDHGKX/D7jUst+mH4dHR6QA==}
     peerDependencies:
       electron: '>= 13.0.0'
     dependencies:
-      electron: 22.3.27
+      electron: 26.6.1
     dev: false
 
   /@electron/universal@1.4.1:
@@ -1805,10 +1805,10 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /@treverix/custom-electron-titlebar@4.2.0(electron@22.3.27):
+  /@treverix/custom-electron-titlebar@4.2.0(electron@26.6.1):
     resolution: {integrity: sha512-spiCIz/YCuCZXtfrE2D+1dgvLgs9dEscRHJiCid22bdb8qNDnzdbwjz9IEsMEkjVV+DIpbDwP6Axd4x/mXmnWA==}
     dependencies:
-      '@electron/remote': 2.1.0(electron@22.3.27)
+      '@electron/remote': 2.1.0(electron@26.6.1)
     transitivePeerDependencies:
       - electron
     dev: false
@@ -2117,6 +2117,11 @@ packages:
 
   /@types/node@16.18.62:
     resolution: {integrity: sha512-/zbPnIBkef8sT+6vw6BxdvU3dCxRI0v6rBu/6IvXnRNtOPILucigqhUBPYxtQ/8JdAna0JLTAcNTCDmQ77QYkQ==}
+
+  /@types/node@18.18.13:
+    resolution: {integrity: sha512-vXYZGRrSCreZmq1rEjMRLXJhiy8MrIeVasx+PCVlP414N7CJLHnMf+juVvjdprHyH+XRy3zKZLHeNueOpJCn0g==}
+    dependencies:
+      undici-types: 5.26.5
 
   /@types/object.omit@3.0.3:
     resolution: {integrity: sha512-xrq4bQTBGYY2cw+gV4PzoG2Lv3L0pjZ1uXStRRDQoATOYW1lCsFQHhQ+OkPhIcQoqLjAq7gYif7D14Qaa6Zbew==}
@@ -3443,14 +3448,14 @@ packages:
     resolution: {integrity: sha512-zF6y5v/YfoFIgwf2dDfAqVlPPsyQeWNpEWXbAlDUS8Ax4Z2VoiiZpAPC0Jm9hXEkJm2vIZpwB6rc4KnLTQffbQ==}
     dev: true
 
-  /electron@22.3.27:
-    resolution: {integrity: sha512-7Rht21vHqj4ZFRnKuZdFqZFsvMBCmDqmjetiMqPtF+TmTBiGne1mnstVXOA/SRGhN2Qy5gY5bznJKpiqogjM8A==}
+  /electron@26.6.1:
+    resolution: {integrity: sha512-4Vz9u0Jt/khPa/en2l8Jv6SWEfsK/ieWYtchl5j0clbNSjdeTucnEFOhz9B9WwsAmfQjxBnpuMZpmdBuyxq+wg==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
     dependencies:
       '@electron/get': 2.0.3
-      '@types/node': 16.18.62
+      '@types/node': 18.18.13
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -6095,6 +6100,9 @@ packages:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
     dev: true
+
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
   /universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
