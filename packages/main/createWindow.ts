@@ -7,7 +7,6 @@ import { loadWindowState, saveWindowState } from "./windowState";
 import contextMenu from "electron-context-menu";
 import { Prefs } from "common/Prefs";
 import { locales } from "common/Locales";
-import nodeFetch from "node-fetch";
 import { lt } from "semver";
 import escape from "validator/lib/escape";
 import log from "electron-log";
@@ -16,7 +15,7 @@ async function checkForUpdates(window: BrowserWindow) {
     app.commandLine.appendSwitch("disable-http-cache");
 
     try {
-        const resp = await nodeFetch("https://api.github.com/repos/jcv8000/Codex/releases");
+        const resp = await fetch("https://api.github.com/repos/jcv8000/Codex/releases");
         const body = (await resp.json()) as any[];
 
         const latest = body[0].tag_name as string;
