@@ -43,6 +43,8 @@ export function NewModal(props: { state: NewModalState; onClose: () => void }) {
                     page.icon = icon;
                     page.color = color;
                 }
+
+                if (parent != null) parent.opened = true;
             });
             props.onClose();
         }
