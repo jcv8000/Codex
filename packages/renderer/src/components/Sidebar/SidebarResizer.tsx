@@ -24,8 +24,17 @@ export function SidebarResizer(props: { open: boolean }) {
 
     const onMouseUp = (e: MouseEvent) => {
         if (e.clientX >= SIDEBAR_MIN_WIDTH && e.clientX <= SIDEBAR_MAX_WIDTH) {
+            // Inside min & max
             setSidebarWidth(e.clientX);
             appContext.modifyPrefs((p) => (p.general.sidebarWidth = e.clientX));
+        } else if (e.clientX >= SIDEBAR_MAX_WIDTH) {
+            // Greater than max
+            setSidebarWidth(SIDEBAR_MAX_WIDTH);
+            appContext.modifyPrefs((p) => (p.general.sidebarWidth = SIDEBAR_MAX_WIDTH));
+        } else if (e.clientX <= SIDEBAR_MIN_WIDTH) {
+            // Less than min
+            setSidebarWidth(SIDEBAR_MIN_WIDTH);
+            appContext.modifyPrefs((p) => (p.general.sidebarWidth = SIDEBAR_MIN_WIDTH));
         }
 
         document.removeEventListener("mousemove", onMouseMove);
