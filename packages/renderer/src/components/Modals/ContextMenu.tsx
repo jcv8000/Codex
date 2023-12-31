@@ -178,6 +178,9 @@ export function ContextMenu(props: { state: ContextMenuState; onClose: () => voi
                                     },
                                     confirmProps: { color: "red" },
                                     onConfirm: () => {
+                                        if (appContext.activePage == item)
+                                            appContext.setView("home");
+
                                         appContext.modifySave((s) => {
                                             if (item.parent == null) {
                                                 s.items.splice(s.items.indexOf(item), 1);
