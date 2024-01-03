@@ -82,7 +82,7 @@ export const menu = (window: BrowserWindow, locale: Locale) =>
                 ...((isDev
                     ? [{ role: "reload" }, { role: "forceReload" }]
                     : []) as MenuItemConstructorOptions[]),
-                { role: "toggleDevTools" },
+                { role: "toggleDevTools", click: () => window.webContents.openDevTools() },
                 { type: "separator" },
                 {
                     label: locale.menus.zoom_in_editor,

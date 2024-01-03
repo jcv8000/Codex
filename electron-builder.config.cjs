@@ -18,7 +18,7 @@ const config = {
         },
         category: "public.app-category.productivity",
         notarize: {
-            teamId: process.env.APPLE_TEAM_ID
+            teamId: process.env.APPLE_TEAM_ID || ""
         }
     },
     win: {

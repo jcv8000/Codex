@@ -3,13 +3,12 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react";
 import { viteStaticCopy } from "vite-plugin-static-copy";
-import nodeFetch from "node-fetch";
 import pkg from "../../package.json";
 
 const PROJECT_ROOT = resolve(__dirname, "../../");
 
 const getVersions = async () => {
-    const resp = await nodeFetch("https://releases.electronjs.org/releases.json");
+    const resp = await fetch("https://releases.electronjs.org/releases.json");
     const data = (await resp.json()) as any[];
 
     const electron = pkg.devDependencies.electron.substring(1);

@@ -1,5 +1,5 @@
-import { Anchor, AppShell, Box, MantineProvider, Portal, Text } from "@mantine/core";
-import { ModalsProvider as MantineModalsProvider } from "@mantine/modals";
+import { Anchor, AppShell, Box, Button, Group, MantineProvider, Portal, Text } from "@mantine/core";
+import { ModalsProvider as MantineModalsProvider, modals } from "@mantine/modals";
 import { Sidebar } from "components/Sidebar";
 import { EditorView, HomeView, SettingsView } from "components/Views";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -29,6 +29,7 @@ export function App() {
 
     const [view, setView] = useState<View>("home");
     const [activePage, setActivePage] = useState<Page | null>(null);
+    const unsavedChanges = useRef(false);
 
     const editorRef = useRef<Editor | null>(null);
     const fakeEditor = useRef<Editor>(
@@ -63,6 +64,8 @@ export function App() {
             activePage.fileName,
             JSON.stringify(editorRef.current.getJSON())
         );
+
+        unsavedChanges.current = false;
     };
 
     const modifyPrefs = (callback: (p: Prefs) => void) => {
@@ -71,11 +74,32 @@ export function App() {
         window.api.writePrefs(prefs.current);
     };
 
-    const SetView = (newView: View, newActivePage?: Page | undefined) => {
-        // Save active page
-        if (view == "editor" && activePage != null && editorRef.current != null) {
-            saveActivePage();
-            if (prefs.current.general.showSaveNotifOnPageSwitch) {
+    const SetView = async (newView: View, newActivePage?: Page | undefined) => {
+        const finish = () => {
+            if (newActivePage != undefined) {
+                // Open parent folders (if the page was opened from a search for example)
+                let i: NoteItem | null = newActivePage;
+                while (i != null) {
+                    if (i.parent instanceof Folder) i.parent.opened = true;
+                    i = i.parent;
+                }
+
+                setView(newView);
+                setActivePage(newActivePage);
+            } else {
+                setView(newView);
+            }
+        };
+
+        if (
+            view == "editor" &&
+            activePage != null &&
+            editorRef.current != null &&
+            unsavedChanges.current == true
+        ) {
+            // Editor open WITH unsaved changes
+            if (prefs.current.general.autoSaveOnPageSwitch) {
+                await saveActivePage();
                 notifications.show({
                     id: activePage.id,
                     message: (
@@ -88,21 +112,58 @@ export function App() {
                     autoClose: 2000,
                     withBorder: true
                 });
-            }
-        }
+                finish();
+            } else {
+                modals.open({
+                    title: (
+                        <Text truncate>{locale.unsavedChangesDialog.title(activePage.name)}</Text>
+                    ),
+                    children: (
+                        <>
+                            <Group position="right">
+                                <Button variant="default" onClick={() => modals.closeAll()}>
+                                    {locale.unsavedChangesDialog.cancel}
+                                </Button>
+                                <Button
+                                    variant="default"
+                                    onClick={() => {
+                                        modals.closeAll();
+                                        unsavedChanges.current = false;
+                                        finish();
+                                    }}
+                                >
+                                    <Text c="red">{locale.unsavedChangesDialog.forget}</Text>
+                                </Button>
+                                <Button
+                                    onClick={async () => {
+                                        modals.closeAll();
+                                        await saveActivePage();
 
-        if (newActivePage != undefined) {
-            // Open parent folders (if the page was opened from a search for example)
-            let i: NoteItem | null = newActivePage;
-            while (i != null) {
-                if (i.parent instanceof Folder) i.parent.opened = true;
-                i = i.parent;
-            }
+                                        notifications.show({
+                                            id: activePage.id,
+                                            message: (
+                                                <Text truncate>
+                                                    {locale.notifications.saved} {activePage.name}
+                                                </Text>
+                                            ),
+                                            color: "green",
+                                            icon: <Icon icon="file-check" />,
+                                            autoClose: 2000,
+                                            withBorder: true
+                                        });
 
-            setView(newView);
-            setActivePage(newActivePage);
+                                        finish();
+                                    }}
+                                >
+                                    {locale.unsavedChangesDialog.save}
+                                </Button>
+                            </Group>
+                        </>
+                    )
+                });
+            }
         } else {
-            setView(newView);
+            finish();
         }
     };
 
@@ -200,8 +261,64 @@ export function App() {
     //#endregion CONTEXT FUNCTIONS
 
     window.api.onBeforeExit(async () => {
-        await saveActivePage();
-        window.api.exit();
+        if (
+            view == "editor" &&
+            editorRef.current != null &&
+            activePage != null &&
+            unsavedChanges.current == true
+        ) {
+            if (prefs.current.general.autoSaveOnPageSwitch) {
+                await saveActivePage();
+                window.api.exit();
+            } else {
+                modals.open({
+                    title: (
+                        <Text truncate>{locale.unsavedChangesDialog.title(activePage.name)}</Text>
+                    ),
+                    children: (
+                        <>
+                            <Group position="right">
+                                <Button variant="default" onClick={() => modals.closeAll()}>
+                                    {locale.unsavedChangesDialog.cancel}
+                                </Button>
+                                <Button
+                                    variant="default"
+                                    onClick={() => {
+                                        window.api.exit();
+                                    }}
+                                >
+                                    <Text c="red">{locale.unsavedChangesDialog.forget}</Text>
+                                </Button>
+                                <Button
+                                    onClick={async () => {
+                                        await saveActivePage();
+
+                                        notifications.show({
+                                            id: activePage.id,
+                                            message: (
+                                                <Text truncate>
+                                                    {locale.notifications.saved} {activePage.name}
+                                                </Text>
+                                            ),
+                                            color: "green",
+                                            icon: <Icon icon="file-check" />,
+                                            autoClose: 2000,
+                                            withBorder: true
+                                        });
+
+                                        window.api.exit();
+                                    }}
+                                >
+                                    {locale.unsavedChangesDialog.save}
+                                </Button>
+                            </Group>
+                        </>
+                    )
+                });
+            }
+        } else {
+            window.api.exit();
+        }
     });
     window.api.onSaveCurrentPage(() => {
         saveActivePage();
@@ -267,6 +384,8 @@ export function App() {
                 view: view,
                 setView: SetView,
                 activePage: activePage,
+                unsavedChanges: unsavedChanges.current,
+                setUnsavedChanges: (v) => (unsavedChanges.current = v),
                 save: save.current,
                 modifySave: modifySave,
                 draggedItem: null,

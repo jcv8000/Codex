@@ -32,25 +32,11 @@ export function EditorView({ page, setEditorRef }: Props) {
         {
             extensions: _extensions,
             autofocus: true,
-            content: content
+            content: content,
+            onUpdate: () => appContext.setUnsavedChanges(true)
         },
         [page.id]
     );
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         if (editor == undefined) return;
-
-    //         editor.commands.setContent(JSON.parse(window.api.loadPage(page.fileName)));
-    //         editor.view.updateState(
-    //             EditorState.create({
-    //                 doc: editor.state.doc,
-    //                 plugins: editor.state.plugins,
-    //                 schema: editor.state.schema
-    //             })
-    //         );
-    //     });
-    // }, [editor, page]);
 
     setEditorRef(editor);
 
