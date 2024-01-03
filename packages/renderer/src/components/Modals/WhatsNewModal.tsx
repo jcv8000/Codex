@@ -27,28 +27,65 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.3</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.4</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="v203">
+            <Tabs orientation="vertical" placement="right" defaultValue="v204">
                 <Tabs.List>
-                    <Tabs.Tab value="v203">2.0.3 Changelog</Tabs.Tab>
+                    <Tabs.Tab value="v204">2.0.4 Changelog</Tabs.Tab>
                     <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
                     <Tabs.Tab value="v2release">2.0 Changelog</Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="v203" px="xs">
-                    <ul style={{ paddingLeft: "16px" }}>
-                        <li>18 new icons from Tabler Icons 2.41</li>
-                        <li>Fixed horizontal rules being difficult to see in dark mode</li>
-                        <li>Fixed block quote borders being difficult to see in dark mode</li>
+                <Tabs.Panel value="v204" px="xs">
+                    <Title order={3}>Important</Title>
+                    <ul>
                         <li>
-                            Fixed copying and pasting text with a custom font-size not working
-                            correctly
+                            Reworked saving system
+                            <ul>
+                                <li>Now only saves when there are changes made to a page</li>
+                                <li>
+                                    New &quot;Autosave when switching pages / exiting the
+                                    editor&quot; setting
+                                    <ul>
+                                        <li>
+                                            Enabled by default (same behavior as how it used to
+                                            work)
+                                        </li>
+                                        <li>
+                                            Disabling this setting will show a popup to save/discard
+                                            unsaved changes when switching pages or exiting the
+                                            editor
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <Title order={3}>Tech Stack Upgrades</Title>
+                    <ul>
+                        <li>Updated to Node.js 18 and Electron 26</li>
+                        <li>Upgraded to Vite 5</li>
+                        <li>72 new icons from Tabler</li>
+                    </ul>
+                    <Title order={3}>Bug Fixes / Improvements</Title>
+                    <ul>
+                        <li>
+                            Fixed when deleting the active page, the editor doesn&apos;t go back to
+                            Home
                         </li>
                         <li>
-                            Added (mostly complete) Simplified Chinese translation thanks to
-                            @hghgthifg
+                            Fixed sidebar width not actually saving when dragging it all the way to
+                            the left or right
+                        </li>
+                        <li>
+                            When creating an item inside a folder the folder will open to show the
+                            new item
+                        </li>
+                        <li>Fixed &quot;Toggle Developer Tools&quot; menu item not working</li>
+                        <li>
+                            Added a tip about alt+clicking folders to recursively close its
+                            subfolders
                         </li>
                     </ul>
                 </Tabs.Panel>
