@@ -843,10 +843,10 @@ export const locales: Record<SupportedLocales, Locale> = {
             code_block_collapse: "折叠"
         },
         unsavedChangesDialog: {
-            title: (name: string) => `You have unsaved changes to "${name}"`,
-            cancel: "Cancel",
-            forget: "Discard Changes",
-            save: "Save Changes"
+            title: (name: string) => `您对 "${name}" 有未保存的更改`,
+            cancel: "取消",
+            forget: "放弃更改",
+            save: "保存更改"
         }
     }
 };
