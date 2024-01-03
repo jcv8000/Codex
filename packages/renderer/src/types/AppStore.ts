@@ -11,6 +11,8 @@ export class AppStore {
     setView: (v: View, activePage?: Page) => void = () => {};
 
     activePage: Page | null = null;
+    readonly unsavedChanges: boolean = false;
+    setUnsavedChanges: (v: boolean) => void = () => {};
 
     save: Save = exampleSave;
     modifySave: (callback: (save: Save) => void) => void = () => {};

@@ -7,7 +7,7 @@ class GeneralPrefs {
     locale: SupportedLocales = "en_US";
     theme: "light" | "dark" = "light";
     titlebarStyle: "custom" | "native" = "custom";
-    showSaveNotifOnPageSwitch = false;
+    autoSaveOnPageSwitch = true;
 }
 
 class EditorPrefs {

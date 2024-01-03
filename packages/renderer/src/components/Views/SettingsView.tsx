@@ -165,13 +165,17 @@ export function SettingsView(props: { startPrefs: Prefs }) {
                     {texts.setting_requires_restart}
                 </Alert>
 
+                <Title order={6} mb="xs">
+                    {texts.saving_section}
+                </Title>
+
                 <Checkbox
                     mb="xl"
-                    label={texts.show_page_saved_notification}
-                    checked={prefs.general.showSaveNotifOnPageSwitch}
+                    label={texts.autosave_page_on_switch}
+                    checked={prefs.general.autoSaveOnPageSwitch}
                     onChange={(e) => {
                         modifyPrefs(
-                            (p) => (p.general.showSaveNotifOnPageSwitch = e.currentTarget.checked)
+                            (p) => (p.general.autoSaveOnPageSwitch = e.currentTarget.checked)
                         );
                     }}
                 />

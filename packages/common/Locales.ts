@@ -41,7 +41,8 @@ export type Locale = {
         use_typography_extension: string;
         use_typography_description: string;
         open_pdf_on_export: string;
-        show_page_saved_notification: string;
+        saving_section: string;
+        autosave_page_on_switch: string;
         general: string;
         editor: string;
         save_folder: string;
@@ -259,6 +260,12 @@ export type Locale = {
         };
         code_block_collapse: string;
     };
+    unsavedChangesDialog: {
+        title: (name: string) => string;
+        cancel: string;
+        forget: string;
+        save: string;
+    };
 };
 
 export const supportedLocales = ["en_US", "zh_CN"] as const;
@@ -309,8 +316,9 @@ export const locales: Record<SupportedLocales, Locale> = {
             use_typography_extension: "Use Typography extension in the Editor",
             use_typography_description: 'This enables turning things like "(c)" into "©".',
             open_pdf_on_export: "Automatically open PDF after exporting",
-            show_page_saved_notification:
-                "Show 'Page saved' notification when switching between pages",
+            saving_section: "Saving Pages",
+            autosave_page_on_switch:
+                "Automatically save the current page when switching between pages/exiting the editor",
             general: "General",
             editor: "Editor",
             save_folder: "Save Folder",
@@ -545,6 +553,12 @@ export const locales: Record<SupportedLocales, Locale> = {
                 url: "URL"
             },
             code_block_collapse: "Collapse"
+        },
+        unsavedChangesDialog: {
+            title: (name: string) => `You have unsaved changes to "${name}"`,
+            cancel: "Cancel",
+            forget: "Discard Changes",
+            save: "Save Changes"
         }
     },
     zh_CN: {
@@ -591,7 +605,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             use_typography_extension: "Use Typography extension in the Editor",
             use_typography_description: '这将会把类似 "(c)" 的符号更改为 "©".',
             open_pdf_on_export: "完成导出后自动打开PDF文件",
-            show_page_saved_notification: "当切换页面时显示『已保存』通知",
+            saving_section: "保存页面",
+            autosave_page_on_switch: "页面切换/退出编辑器时自动保存当前页面",
             general: "基础设置",
             editor: "编辑器",
             save_folder: "保存文件夹",
@@ -824,6 +839,12 @@ export const locales: Record<SupportedLocales, Locale> = {
                 url: "URL"
             },
             code_block_collapse: "折叠"
+        },
+        unsavedChangesDialog: {
+            title: (name: string) => `You have unsaved changes to "${name}"`,
+            cancel: "Cancel",
+            forget: "Discard Changes",
+            save: "Save Changes"
         }
     }
 };
