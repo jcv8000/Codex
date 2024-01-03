@@ -373,7 +373,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                 "You can make a page top-level by dragging it to an empty part of the sidebar",
                 'Edit your save.json and try setting a page\'s "color" property to "rainbow"',
                 "Contribute your own language to Codex on the GitHub repository (see CONTRIBUTING.md)",
-                "Open links in your notes by holding Control (or Cmd) and clicking on it"
+                "Open links in your notes by holding Control (or Cmd) and clicking on it",
+                "You can Alt+Click a folder to recursively close all subfolders inside it"
             ],
             favorites: "Favorites"
         },
@@ -660,7 +661,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                 "You can make a page top-level by dragging it to an empty part of the sidebar",
                 'Edit your save.json and try setting a page\'s "color" property to "rainbow"',
                 "Contribute your own language to Codex on the GitHub repository (see CONTRIBUTING.md)",
-                "Open links in your notes by holding Control (or Cmd) and clicking on it"
+                "Open links in your notes by holding Control (or Cmd) and clicking on it",
+                "You can Alt+Click a folder to recursively close all subfolders inside it"
             ],
             favorites: "收藏"
         },
