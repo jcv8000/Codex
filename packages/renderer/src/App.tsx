@@ -74,7 +74,7 @@ export function App() {
         window.api.writePrefs(prefs.current);
     };
 
-    const SetView = (newView: View, newActivePage?: Page | undefined) => {
+    const SetView = async (newView: View, newActivePage?: Page | undefined) => {
         const finish = () => {
             if (newActivePage != undefined) {
                 // Open parent folders (if the page was opened from a search for example)
@@ -99,7 +99,7 @@ export function App() {
         ) {
             // Editor open WITH unsaved changes
             if (prefs.current.general.autoSaveOnPageSwitch) {
-                saveActivePage();
+                await saveActivePage();
                 notifications.show({
                     id: activePage.id,
                     message: (
@@ -135,9 +135,9 @@ export function App() {
                                     <Text c="red">{locale.unsavedChangesDialog.forget}</Text>
                                 </Button>
                                 <Button
-                                    onClick={() => {
+                                    onClick={async () => {
                                         modals.closeAll();
-                                        saveActivePage();
+                                        await saveActivePage();
 
                                         notifications.show({
                                             id: activePage.id,
