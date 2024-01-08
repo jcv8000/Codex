@@ -5,5 +5,12 @@
         "**/node_modules": true,
         "node_modules": true,
         ".vite": true
-    }
+    },
+    "cssVariables.lookupFiles": [
+        "**/*.css",
+        "**/*.scss",
+        "**/*.sass",
+        "**/*.less",
+        "node_modules/@mantine/core/styles.css"
+    ]
 }
