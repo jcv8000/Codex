@@ -7,6 +7,10 @@ so it automatically works for both custom/native titlebar */
 .container-after-titlebar .mantine-AppShell-root,
 .container-after-titlebar .mantine-AppShell-navbar {
     margin-top: 30px;
+    height: calc(100dvh - 30px) !important;
+}
+.container-after-titlebar .mantine-AppShell-main {
+    min-height: 100% !important;
 }
 
 /* Regular styling */
