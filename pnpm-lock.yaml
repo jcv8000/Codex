@@ -14,6 +14,9 @@ dependencies:
   '@lukeed/uuid':
     specifier: ^2.0.1
     version: 2.0.1
+  '@mantine/colors-generator':
+    specifier: ^7.4.1
+    version: 7.4.1(chroma-js@2.4.2)
   '@mantine/core':
     specifier: ^7.4.1
     version: 7.4.1(@mantine/hooks@7.4.1)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0)
@@ -122,6 +125,9 @@ dependencies:
   '@treverix/custom-electron-titlebar':
     specifier: ^4.2.0
     version: 4.2.0(electron@26.6.4)
+  chroma-js:
+    specifier: ^2.4.2
+    version: 2.4.2
   color:
     specifier: ^4.2.3
     version: 4.2.3
@@ -152,9 +158,6 @@ dependencies:
   mathlive:
     specifier: ^0.95.5
     version: 0.95.5
-  palettey:
-    specifier: ^1.0.4
-    version: 1.0.4
   react-lowlight:
     specifier: ^3.0.0
     version: 3.0.0(highlight.js@11.9.0)(react@18.2.0)
@@ -1063,6 +1066,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@mantine/colors-generator@7.4.1(chroma-js@2.4.2):
+    resolution: {integrity: sha512-TtotRAkfh9B2vhJgmk/a0Q2F4MD9qWvQE4T0R3nzuwJWWmZlMJtkkP3CylDggh8G6O3J7Nfn0Lv+QT/YjpS/4g==}
+    peerDependencies:
+      chroma-js: ^2.4.2
+    dependencies:
+      chroma-js: 2.4.2
+    dev: false
 
   /@mantine/core@7.4.1(@mantine/hooks@7.4.1)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-crz9BemmwR8V/h6db9FgznCp0Ssp6rCUYkBBO4JprpH8NDSEblHyWcZZo43IuA1vZptp8eyrhRNJ4nfe8CAYFQ==}
@@ -2775,6 +2786,10 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
     dev: true
+
+  /chroma-js@2.4.2:
+    resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
+    dev: false
 
   /chromium-pickle-js@0.2.0:
     resolution: {integrity: sha512-1R5Fho+jBq0DDydt+/vHWj5KJNJCKdARKOCwZUen84I5BreWoLqRLANH1U87eJy1tiASPtMnGqJJq0ZsLoRPOw==}
@@ -4903,6 +4918,7 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: true
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -5035,12 +5051,6 @@ packages:
     dependencies:
       p-limit: 3.1.0
     dev: true
-
-  /palettey@1.0.4:
-    resolution: {integrity: sha512-lUh0k6cwPGHC6QD0fH1jB4rxwwy6dCrHmOSfCze9OfB+RDYYGPfotWPHY/73b0mY0hPdg0Ay7IwpwdArr/ym3w==}
-    dependencies:
-      nanoid: 3.3.7
-    dev: false
 
   /parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}

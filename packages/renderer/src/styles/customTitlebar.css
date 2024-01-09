@@ -1,0 +1,38 @@
+/* This only applies when the custom titlebar is rendered,
+so it automatically works for both custom/native titlebar */
+.container-after-titlebar {
+    position: static !important;
+    inset: unset !important;
+}
+.container-after-titlebar .mantine-AppShell-root,
+.container-after-titlebar .mantine-AppShell-navbar {
+    margin-top: 30px;
+}
+
+/* Regular styling */
+
+.menubar-menu-container {
+    background-color: #1e2225 !important;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.menubar-menu-container .menu-item-icon {
+    width: 0px !important;
+}
+
+.menubar .menubar-menu-button:not(.disabled).open {
+    background-color: #1e2225 !important;
+}
+
+.menubar .menubar-menu-button:not(.disabled):hover {
+    background-color: #1e2225 !important;
+}
+
+a.action-menu-item {
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #1e2225 !important;
+}
+a.action-menu-item:hover {
+    background-color: #343a40 !important;
+}
