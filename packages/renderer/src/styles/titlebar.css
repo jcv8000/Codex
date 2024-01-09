@@ -1,20 +1,3 @@
-/* This only applies when the custom titlebar is rendered,
-so it automatically works for both custom/native titlebar */
-.container-after-titlebar {
-    position: static !important;
-    inset: unset !important;
-}
-.container-after-titlebar .mantine-AppShell-root,
-.container-after-titlebar .mantine-AppShell-navbar {
-    margin-top: 30px;
-    height: calc(100dvh - 30px) !important;
-}
-.container-after-titlebar .mantine-AppShell-main {
-    min-height: 100% !important;
-}
-
-/* Regular styling */
-
 .menubar-menu-container {
     background-color: #1e2225 !important;
     border-bottom-left-radius: 6px;

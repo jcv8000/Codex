@@ -1,0 +1,32 @@
+.mantine-AppShell-root,
+.mantine-AppShell-navbar {
+    max-height: 100dvh !important;
+    overflow: auto;
+}
+
+.mantine-AppShell-navbar {
+    padding-bottom: 100px;
+}
+
+/* Positioning and sizing fixes for custom titlebar
+
+This only applies when the custom titlebar is rendered,
+so it automatically works for both custom/native titlebar */
+.container-after-titlebar {
+    position: static !important;
+    inset: unset !important;
+    overflow: unset !important;
+}
+.container-after-titlebar .mantine-AppShell-root,
+.container-after-titlebar .mantine-AppShell-navbar {
+    margin-top: 30px;
+    max-height: calc(100dvh - 30px) !important;
+}
+
+/* Regular styling */
+
+.relativeBox {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}

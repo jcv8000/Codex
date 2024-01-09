@@ -1,10 +1,11 @@
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/notifications/styles.css";
-import "./styles/App.css";
-import "./styles/customTitlebar.css";
 
-import { Button, MantineProvider, Title } from "@mantine/core";
+import "./styles/positioning.css";
+import "./styles/titlebar.css";
+
+import { MantineProvider } from "@mantine/core";
 import { Prefs } from "common/Prefs";
 import { NoteItem, Save } from "common/Save";
 import { useRef, useState } from "react";
@@ -13,6 +14,7 @@ import { useSetView, useModifyPrefs, useModifySave } from "./state/hooks";
 import { CodexContext, View } from "./state/CodexStore";
 import { Shell } from "components/Shell";
 import { AppTheme } from "./state/AppTheme";
+import { HomeView } from "components/Views/HomeView";
 
 const startPrefs = JSON.parse(window.api.getPrefs()) as Prefs;
 const startSave = Save.parse(window.api.getSave());
@@ -34,6 +36,20 @@ export function App() {
     const modifyPrefs = useModifyPrefs(prefs, forceUpdate);
     const modifySave = useModifySave(save, forceUpdate);
 
+    // Render view
+    let renderedView: JSX.Element = <></>;
+    switch (view.value) {
+        case "home":
+            renderedView = <HomeView />;
+            break;
+        case "settings":
+            renderedView = <></>;
+            break;
+        case "editor":
+            renderedView = <></>;
+            break;
+    }
+
     return (
         <CodexContext.Provider
             value={{
@@ -50,22 +66,7 @@ export function App() {
             }}
         >
             <MantineProvider theme={AppTheme(prefs)}>
-                <Shell>
-                    <div
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            right: 0,
-                            zIndex: 900000,
-                            width: "16px",
-                            height: "16px",
-                            backgroundColor: "red"
-                        }}
-                    />
-                    main content
-                    <Title order={1}>test</Title>
-                    <Button>Export All Pages</Button>
-                </Shell>
+                <Shell>{renderedView}</Shell>
             </MantineProvider>
         </CodexContext.Provider>
     );
