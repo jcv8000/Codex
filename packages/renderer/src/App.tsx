@@ -2,7 +2,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/notifications/styles.css";
 
-import "./styles/positioning.css";
+//import "./styles/positioning.css";
 import "./styles/titlebar.css";
 
 import { MantineProvider } from "@mantine/core";
