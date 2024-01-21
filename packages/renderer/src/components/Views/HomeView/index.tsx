@@ -1,8 +1,8 @@
-import { Image, Center, Button } from "@mantine/core";
-import { useCodexContext } from "src/state/useCodexContext";
+import { Image, Center } from "@mantine/core";
+import { useCodexStore } from "src/state/CodexStore";
 
 export function HomeView() {
-    const { prefs } = useCodexContext();
+    const prefs = useCodexStore.use.prefs();
     return (
         <>
             <Center h="100%">

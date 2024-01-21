@@ -46,6 +46,7 @@ export function loadWindowState() {
     try {
         const read = JSON.parse(readFileSync(filePath, "utf-8").toString());
 
+        // TODO just use the spread operator and merge the objects
         if (
             read.x != undefined &&
             read.y != undefined &&

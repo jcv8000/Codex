@@ -1,24 +1,58 @@
-import { Prefs } from "common/Prefs";
-import { Page, Save, NoteItem } from "common/Save";
-import { createContext } from "react";
-import { useSetView, useModifyPrefs, useModifySave } from "./hooks";
+import { create } from "zustand";
+import { createSelectors } from "./createSelectors";
 
-export type View =
-    | { value: "home" }
-    | { value: "settings" }
-    | { value: "editor"; activePage: Page };
+import { Prefs, defaultPrefs } from "./NewPrefs";
+import { Save, Page, defaultSave } from "./newSave";
+import { produce } from "immer";
 
-class CodexStore {
-    readonly prefs: Prefs = new Prefs();
-    readonly save: Save = new Save();
-    readonly view: View = { value: "home" };
+type View = { value: "home" } | { value: "settings" } | { value: "editor"; activePage: Page };
 
-    setView: ReturnType<typeof useSetView> = () => {};
-    modifyPrefs: ReturnType<typeof useModifyPrefs> = () => {};
-    modifySave: ReturnType<typeof useModifySave> = () => {};
+type CodexStore = {
+    view: View;
+    setView: (v: View) => void;
 
-    unsavedChanges: boolean = false;
-    draggedNoteItem: NoteItem | null = null;
-}
+    prefs: Prefs;
+    modifyPrefs: (callback: (p: Prefs) => void) => void;
 
-export const CodexContext = createContext<CodexStore>(new CodexStore());
+    save: Save;
+
+    unsavedChanges: boolean;
+    setUnsavedChanges: (v: boolean) => void;
+
+    modifySave: (callback: (s: Save) => void) => void;
+    saveActivePage: () => Promise<void>;
+    exportPage: (page: Page, type: "pdf" | "md") => Promise<void>;
+};
+
+// TODO split into multiple smaller stores
+export const useCodexStore = createSelectors(
+    create<CodexStore>((set) => ({
+        view: { value: "home" },
+        setView: (v) => set({ view: v }),
+
+        prefs: defaultPrefs,
+        modifyPrefs: (callback) => {
+            set(
+                produce<CodexStore>((state) => {
+                    callback(state.prefs);
+                })
+            );
+        },
+
+        save: defaultSave,
+
+        unsavedChanges: false,
+        setUnsavedChanges: (v) => set({ unsavedChanges: v }),
+
+        modifySave: (callback) => {
+            set(
+                produce<CodexStore>((state) => {
+                    callback(state.save);
+                })
+            );
+        },
+
+        saveActivePage: () => Promise.resolve(),
+        exportPage: () => Promise.resolve()
+    }))
+);

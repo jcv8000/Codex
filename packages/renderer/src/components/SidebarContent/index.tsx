@@ -1,23 +1,28 @@
 import { locales } from "common/Locales";
-import { SidebarItem } from "src/SidebarItems/SidebarItem";
-import { useCodexContext } from "src/state/useCodexContext";
+import { SidebarItem } from "src/components/SidebarItems";
+import { useCodexStore } from "src/state/CodexStore";
 
 export function SidebarContent() {
-    const appContext = useCodexContext();
-    const locale = locales[appContext.prefs.general.locale];
+    const [prefs, view, setView] = [
+        useCodexStore.use.prefs(),
+        useCodexStore.use.view(),
+        useCodexStore.use.setView()
+    ];
+
+    const locale = locales[prefs.general.locale];
     return (
         <>
             <SidebarItem
                 icon="home"
                 text={locale.sidebar.homeTab}
-                onClick={() => appContext.setView({ value: "home" })}
-                shouldBeActive={appContext.view.value == "home"}
+                onClick={() => setView({ value: "home" })}
+                shouldBeActive={view.value == "home"}
             />
             <SidebarItem
                 icon="settings"
                 text={locale.sidebar.settings}
-                onClick={() => appContext.setView({ value: "settings" })}
-                shouldBeActive={appContext.view.value == "settings"}
+                onClick={() => setView({ value: "settings" })}
+                shouldBeActive={view.value == "settings"}
             />
             <SidebarItem icon="menu-2" text={locale.sidebar.moreTab}>
                 <SidebarItem
