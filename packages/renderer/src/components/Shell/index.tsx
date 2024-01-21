@@ -1,11 +1,11 @@
-import { Sidebar } from "components/Sidebar";
+import { SidebarContent } from "components/SidebarContent";
 import "./Shell.css";
 
 export function Shell(props: { children?: React.ReactNode }) {
     return (
         <div id="viewport">
             <div id="sidebar">
-                <Sidebar />
+                <SidebarContent />
             </div>
 
             <div id="main">

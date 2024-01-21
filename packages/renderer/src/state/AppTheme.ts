@@ -1,15 +1,31 @@
-import { Button, Modal, createTheme, rem } from "@mantine/core";
+import { ActionIcon, Button, Modal, createTheme, rem } from "@mantine/core";
 import { generateColors } from "@mantine/colors-generator";
 import { Prefs } from "common/Prefs";
+import { hexToRgb } from "common/Utils";
 
-export const AppTheme = (prefs: Prefs) =>
-    createTheme({
-        autoContrast: true,
-        luminanceThreshold: 0.48,
+export function AppTheme(prefs: Prefs) {
+    const accentColors = generateColors(prefs.general.accentColor);
+    const accentTextColor = getAccentTextColor(prefs.general.accentColor);
+
+    setCSSProperty("--accent-color-light", accentColors[4]);
+    setCSSProperty("--accent-color", accentColors[5]);
+    setCSSProperty("--accent-color-dark", accentColors[6]);
+    setCSSProperty("--accent-text-color", accentTextColor);
+
+    setCSSProperty(
+        "--code-block-word-wrap",
+        prefs.editor.codeWordWrap ? "pre-wrap !important" : "pre !important"
+    );
+    setCSSProperty(
+        "--code-block-word-break",
+        prefs.editor.codeWordWrap ? "break-all !important" : "inherit"
+    );
+
+    return createTheme({
         focusRing: "auto",
         cursorType: "pointer",
         colors: {
-            accent: generateColors(prefs.general.accentColor.substring(1, 7))
+            accent: accentColors
         },
         primaryColor: "accent",
         primaryShade: 5,
@@ -28,9 +44,17 @@ export const AppTheme = (prefs: Prefs) =>
                 }
             }),
             Button: Button.extend({
-                styles: () => ({
+                styles: (theme, props) => ({
                     label: {
-                        fontSize: rem(13)
+                        fontSize: rem(13),
+                        color: props.variant == "filled" ? accentTextColor : undefined
+                    }
+                })
+            }),
+            ActionIcon: ActionIcon.extend({
+                styles: (theme, props) => ({
+                    root: {
+                        color: props.variant == "filled" ? accentTextColor : undefined
                     }
                 })
             })
@@ -46,3 +70,16 @@ export const AppTheme = (prefs: Prefs) =>
             fontWeight: "600"
         }
     });
+}
+
+const setCSSProperty = (name: string, value: string) =>
+    document.documentElement.style.setProperty(name, value);
+
+function getAccentTextColor(accentColor: string) {
+    let textColor = "white";
+    const rgb = hexToRgb(accentColor);
+    if (rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114 > 186) {
+        textColor = "black";
+    }
+    return textColor;
+}

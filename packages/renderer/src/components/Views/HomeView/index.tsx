@@ -1,4 +1,4 @@
-import { Image, Center } from "@mantine/core";
+import { Image, Center, Button } from "@mantine/core";
 import { useCodexContext } from "src/state/useCodexContext";
 
 export function HomeView() {

@@ -1,9 +1,10 @@
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/notifications/styles.css";
-
-//import "./styles/positioning.css";
+import "@tabler/icons-webfont/tabler-icons.min.css";
 import "./styles/titlebar.css";
+
+// TODO optimize styling more with package "classnames"
 
 import { MantineProvider } from "@mantine/core";
 import { Prefs } from "common/Prefs";
