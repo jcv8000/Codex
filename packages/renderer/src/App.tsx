@@ -15,6 +15,7 @@ import { useCodexStore } from "./state/CodexStore";
 
 export function App() {
     const prefs = useCodexStore.use.prefs();
+    console.log("app rerendered");
     return (
         <MantineProvider theme={AppTheme(prefs)}>
             <div id="viewport">

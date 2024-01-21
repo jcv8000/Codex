@@ -44,7 +44,9 @@ export function SidebarItem({ icon, text, depth = 0, children, onClick, shouldBe
                 <Flex h={34} align="center" gap="sm" pr="sm">
                     <Icon icon={icon} vAlign="-3px" />
 
-                    <Text truncate>{text}</Text>
+                    <Text fz="sm" truncate>
+                        {text}
+                    </Text>
 
                     {renderedChildren != null && (
                         <span

@@ -3,14 +3,18 @@ import { generateColors } from "@mantine/colors-generator";
 import { Prefs } from "common/Prefs";
 import { hexToRgb } from "common/Utils";
 
+export function setCSSAccentColor(accentColor: string) {
+    //setCSSProperty("--accent-color-light", accentColors[4]);
+    setCSSProperty("--accent-color", accentColor);
+    //setCSSProperty("--accent-color-dark", accentColors[6]);
+    setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
+}
+
 export function AppTheme(prefs: Prefs) {
     const accentColors = generateColors(prefs.general.accentColor);
     const accentTextColor = getAccentTextColor(prefs.general.accentColor);
 
-    setCSSProperty("--accent-color-light", accentColors[4]);
-    setCSSProperty("--accent-color", accentColors[5]);
-    setCSSProperty("--accent-color-dark", accentColors[6]);
-    setCSSProperty("--accent-text-color", accentTextColor);
+    setCSSAccentColor(prefs.general.accentColor);
 
     setCSSProperty(
         "--code-block-word-wrap",
