@@ -1,10 +1,9 @@
-import { ColorInput, Container } from "@mantine/core";
+import { Button, ColorInput, Container } from "@mantine/core";
 import { setCSSAccentColor } from "src/state/AppTheme";
-import { useCodexStore } from "src/state/CodexStore";
+import { codexStore, modifyPrefs, useSnapshot } from "src/state";
 
 export function SettingsView() {
-    const prefs = useCodexStore.use.prefs();
-    const modifyPrefs = useCodexStore.use.modifyPrefs();
+    const { prefs } = useSnapshot(codexStore);
     return (
         <Container>
             <ColorInput
@@ -14,6 +13,18 @@ export function SettingsView() {
                 onChange={(value) => setCSSAccentColor(value)}
                 onChangeEnd={(value) => modifyPrefs((p) => (p.general.accentColor = value))}
             />
+            <Button
+                onClick={() =>
+                    modifyPrefs(
+                        (p) =>
+                            (p.general.autoSaveOnPageSwitch =
+                                !codexStore.prefs.general.autoSaveOnPageSwitch)
+                    )
+                }
+            >
+                Switch auto save on page switch
+            </Button>
+            Auto save on page switch: {prefs.general.autoSaveOnPageSwitch.toString()}
         </Container>
     );
 }

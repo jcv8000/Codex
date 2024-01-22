@@ -11,13 +11,15 @@ import { MantineProvider } from "@mantine/core";
 import { AppTheme } from "./state/AppTheme";
 import { SidebarContent } from "components/SidebarContent";
 import { View } from "components/Views/View";
-import { useCodexStore } from "./state/CodexStore";
+import { codexStore, useSnapshot } from "./state";
 
 export function App() {
-    const prefs = useCodexStore.use.prefs();
+    const state = useSnapshot(codexStore);
     console.log("app rerendered");
     return (
-        <MantineProvider theme={AppTheme(prefs)}>
+        <MantineProvider
+            theme={AppTheme(state.prefs.general.accentColor, state.prefs.editor.codeWordWrap)}
+        >
             <div id="viewport">
                 <div id="sidebar">
                     <SidebarContent />

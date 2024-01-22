@@ -1,8 +1,8 @@
 import { Image, Center } from "@mantine/core";
-import { useCodexStore } from "src/state/CodexStore";
+import { codexStore, useSnapshot } from "src/state";
 
 export function HomeView() {
-    const prefs = useCodexStore.use.prefs();
+    const { prefs } = useSnapshot(codexStore);
     return (
         <>
             <Center h="100%">

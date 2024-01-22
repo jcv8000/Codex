@@ -1,6 +1,5 @@
 import { ActionIcon, Button, Modal, createTheme, rem } from "@mantine/core";
 import { generateColors } from "@mantine/colors-generator";
-import { Prefs } from "common/Prefs";
 import { hexToRgb } from "common/Utils";
 
 export function setCSSAccentColor(accentColor: string) {
@@ -10,20 +9,17 @@ export function setCSSAccentColor(accentColor: string) {
     setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
 }
 
-export function AppTheme(prefs: Prefs) {
-    const accentColors = generateColors(prefs.general.accentColor);
-    const accentTextColor = getAccentTextColor(prefs.general.accentColor);
+export function AppTheme(accentColor: string, codeWordWrap: boolean) {
+    const accentColors = generateColors(accentColor);
+    const accentTextColor = getAccentTextColor(accentColor);
 
-    setCSSAccentColor(prefs.general.accentColor);
+    setCSSAccentColor(accentColor);
 
     setCSSProperty(
         "--code-block-word-wrap",
-        prefs.editor.codeWordWrap ? "pre-wrap !important" : "pre !important"
+        codeWordWrap ? "pre-wrap !important" : "pre !important"
     );
-    setCSSProperty(
-        "--code-block-word-break",
-        prefs.editor.codeWordWrap ? "break-all !important" : "inherit"
-    );
+    setCSSProperty("--code-block-word-break", codeWordWrap ? "break-all !important" : "inherit");
 
     return createTheme({
         focusRing: "auto",

@@ -1,13 +1,9 @@
 import { locales } from "common/Locales";
 import { SidebarItem } from "src/components/SidebarItems";
-import { useCodexStore } from "src/state/CodexStore";
+import { codexStore, setView, useSnapshot } from "src/state";
 
 export function SidebarContent() {
-    const [prefs, view, setView] = [
-        useCodexStore.use.prefs(),
-        useCodexStore.use.view(),
-        useCodexStore.use.setView()
-    ];
+    const { prefs, view } = useSnapshot(codexStore);
 
     const locale = locales[prefs.general.locale];
     return (

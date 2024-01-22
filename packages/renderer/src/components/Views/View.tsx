@@ -1,9 +1,9 @@
-import { useCodexStore } from "src/state/CodexStore";
+import { codexStore, useSnapshot } from "src/state";
 import { HomeView } from "./HomeView";
 import { SettingsView } from "./SettingsView";
 
 export function View() {
-    const view = useCodexStore((state) => state.view);
+    const { view } = useSnapshot(codexStore);
     let rendered = <></>;
 
     if (view.value == "home") rendered = <HomeView />;
