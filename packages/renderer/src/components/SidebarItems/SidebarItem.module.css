@@ -15,7 +15,7 @@
     color: var(--accent-text-color);
 
     @mixin hover {
-        background-color: var(--accent-color);
+        background-color: var(--accent-color-dark);
     }
 }
 

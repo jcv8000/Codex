@@ -1,19 +1,33 @@
 import { ActionIcon, Button, Modal, createTheme, rem } from "@mantine/core";
-import { generateColors } from "@mantine/colors-generator";
+import { createPaletteFromColor } from "palettey";
 import { hexToRgb } from "common/Utils";
 
-export function setCSSAccentColor(accentColor: string) {
-    //setCSSProperty("--accent-color-light", accentColors[4]);
-    setCSSProperty("--accent-color", accentColor);
-    //setCSSProperty("--accent-color-dark", accentColors[6]);
+export function setTemportaryFakeAccentColor(accentColor: string) {
+    const palete = getAccentColorPalette(accentColor);
+    setCSSProperty("--mantine-color-accent-0", palete[0]);
+    setCSSProperty("--mantine-color-accent-1", palete[1]);
+    setCSSProperty("--mantine-color-accent-2", palete[2]);
+    setCSSProperty("--mantine-color-accent-3", palete[3]);
+    setCSSProperty("--mantine-color-accent-4", palete[4]);
+    setCSSProperty("--mantine-color-accent-5", palete[5]);
+    setCSSProperty("--mantine-color-accent-6", palete[6]);
+    setCSSProperty("--mantine-color-accent-7", palete[7]);
+    setCSSProperty("--mantine-color-accent-8", palete[8]);
+    setCSSProperty("--mantine-color-accent-9", palete[9]);
+
+    setCSSProperty("--accent-color", palete[5]);
+    setCSSProperty("--accent-color-light", palete[4]);
+    setCSSProperty("--accent-color-dark", palete[6]);
     setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
 }
 
 export function AppTheme(accentColor: string, codeWordWrap: boolean) {
-    const accentColors = generateColors(accentColor);
-    const accentTextColor = getAccentTextColor(accentColor);
+    const accentColors = getAccentColorPalette(accentColor);
 
-    setCSSAccentColor(accentColor);
+    setCSSProperty("--accent-color", "var(--mantine-primary-color-filled)");
+    setCSSProperty("--accent-color-light", accentColors[4]);
+    setCSSProperty("--accent-color-dark", accentColors[6]);
+    setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
 
     setCSSProperty(
         "--code-block-word-wrap",
@@ -44,17 +58,22 @@ export function AppTheme(accentColor: string, codeWordWrap: boolean) {
                 }
             }),
             Button: Button.extend({
+                defaultProps: {
+                    variant: "filled"
+                },
                 styles: (theme, props) => ({
+                    root: {
+                        color: props.variant == "filled" ? "var(--accent-text-color)" : undefined
+                    },
                     label: {
-                        fontSize: rem(13),
-                        color: props.variant == "filled" ? accentTextColor : undefined
+                        fontSize: rem(13)
                     }
                 })
             }),
             ActionIcon: ActionIcon.extend({
                 styles: (theme, props) => ({
                     root: {
-                        color: props.variant == "filled" ? accentTextColor : undefined
+                        color: props.variant == "filled" ? "var(--accent-text-color)" : undefined
                     }
                 })
             })
@@ -74,6 +93,32 @@ export function AppTheme(accentColor: string, codeWordWrap: boolean) {
 
 const setCSSProperty = (name: string, value: string) =>
     document.documentElement.style.setProperty(name, value);
+
+function getAccentColorPalette(
+    accentColor: string
+): [string, string, string, string, string, string, string, string, string, string] {
+    const palette: string[] = [];
+    Object.entries(
+        createPaletteFromColor("accent", accentColor, {
+            useLightness: false
+        })["accent"]
+    ).forEach((entry) => {
+        const [_step, color] = entry;
+        palette.push(color);
+    });
+    return [
+        palette[0],
+        palette[1],
+        palette[2],
+        palette[3],
+        palette[4],
+        palette[5],
+        palette[6],
+        palette[7],
+        palette[8],
+        palette[9]
+    ];
+}
 
 function getAccentTextColor(accentColor: string) {
     let textColor = "white";

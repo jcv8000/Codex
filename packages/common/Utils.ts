@@ -18,6 +18,7 @@ export function pageNameToFileName(pageName: string) {
     return answer.replace(/[^a-zA-Z0-9-]/g, "").trim();
 }
 
+// TODO centralize file name generation
 export function sanitizeStringForFileName(input: string): string {
     const answer = sanitizeFileName(input);
 

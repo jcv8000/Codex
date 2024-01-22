@@ -1,5 +1,5 @@
-import { Button, ColorInput, Container } from "@mantine/core";
-import { setCSSAccentColor } from "src/state/AppTheme";
+import { Button, ColorInput, Container, Space } from "@mantine/core";
+import { setTemportaryFakeAccentColor } from "src/state/AppTheme";
 import { codexStore, modifyPrefs, useSnapshot } from "src/state";
 
 export function SettingsView() {
@@ -10,9 +10,10 @@ export function SettingsView() {
                 label="Accent Color"
                 description="Your selected accent color is used throughout the app to color things like the active page in the sidebar, buttons, outlines, etc."
                 defaultValue={prefs.general.accentColor}
-                onChange={(value) => setCSSAccentColor(value)}
+                onChange={(value) => setTemportaryFakeAccentColor(value)}
                 onChangeEnd={(value) => modifyPrefs((p) => (p.general.accentColor = value))}
             />
+            <Space h={400} />
             <Button
                 onClick={() =>
                     modifyPrefs(
