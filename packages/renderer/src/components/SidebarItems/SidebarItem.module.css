@@ -1,4 +1,4 @@
-.noteItem {
+.item {
     user-select: none;
     background-color: inherit;
     color: light-dark(black, white);
@@ -10,7 +10,7 @@
     }
 }
 
-.noteItemActive {
+.itemActive {
     background-color: var(--accent-color);
     color: var(--accent-text-color);
 

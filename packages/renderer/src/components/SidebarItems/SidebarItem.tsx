@@ -1,9 +1,9 @@
-import { Box, Collapse, Flex, Text, rem } from "@mantine/core";
-import { Icon } from "components/Icon";
-import React, { Children, MouseEventHandler, useState } from "react";
-
 import classes from "./SidebarItem.module.css";
 import clsx from "clsx";
+import { Box, Collapse, Flex, Text } from "@mantine/core";
+import { Icon } from "components/Icon";
+import React, { Children, MouseEventHandler, useState } from "react";
+import { getLeftPadding } from "./padding";
 
 type Props = {
     icon: string;
@@ -31,15 +31,13 @@ export function SidebarItem({ icon, text, depth = 0, children, onClick, shouldBe
             </Collapse>
         ) : null;
 
-    const padding = rem((depth + 1) * 12);
-
     return (
         <>
             <Box
                 onClick={clickHandler}
                 title={text}
-                className={clsx(classes.noteItem, active && classes.noteItemActive)}
-                style={{ paddingLeft: padding }}
+                className={clsx(classes.item, active && classes.itemActive)}
+                style={{ paddingLeft: getLeftPadding(depth) }}
             >
                 <Flex h={34} align="center" gap="sm" pr="sm">
                     <Icon icon={icon} />
