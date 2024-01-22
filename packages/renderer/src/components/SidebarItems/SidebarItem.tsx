@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Box, Collapse, Flex, Text } from "@mantine/core";
 import { Icon } from "components/Icon";
 import React, { Children, MouseEventHandler, useState } from "react";
-import { getLeftPadding } from "./padding";
+import { getLeftPadding, textSize, flexProps } from "./styles";
 
 type Props = {
     icon: string;
@@ -39,10 +39,10 @@ export function SidebarItem({ icon, text, depth = 0, children, onClick, shouldBe
                 className={clsx(classes.item, active && classes.itemActive)}
                 style={{ paddingLeft: getLeftPadding(depth) }}
             >
-                <Flex h={34} align="center" gap="sm" pr="sm">
+                <Flex {...flexProps}>
                     <Icon icon={icon} />
 
-                    <Text fz="sm" truncate>
+                    <Text fz={textSize} truncate>
                         {text}
                     </Text>
 
