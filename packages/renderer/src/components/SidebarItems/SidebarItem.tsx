@@ -1,8 +1,9 @@
-import { Box, Collapse, Flex, Text } from "@mantine/core";
+import { Box, Collapse, Flex, Text, rem } from "@mantine/core";
 import { Icon } from "components/Icon";
 import React, { Children, MouseEventHandler, useState } from "react";
 
 import classes from "./SidebarItem.module.css";
+import clsx from "clsx";
 
 type Props = {
     icon: string;
@@ -23,37 +24,32 @@ export function SidebarItem({ icon, text, depth = 0, children, onClick, shouldBe
         if (onClick != undefined) onClick(e);
     };
 
-    let renderedChildren: JSX.Element | null = null;
-
-    if (Children.toArray(children).length > 0) {
-        renderedChildren = (
+    const renderedChildren =
+        Children.toArray(children).length > 0 ? (
             <Collapse in={open}>
                 <div>{children}</div>
             </Collapse>
-        );
-    }
+        ) : null;
+
+    const padding = rem((depth + 1) * 12);
 
     return (
         <>
             <Box
                 onClick={clickHandler}
                 title={text}
-                className={active ? [classes.item, classes.itemActive].join(" ") : classes.item}
-                style={{ paddingLeft: `calc((${depth} + 1) * 0.75rem)` }}
+                className={clsx(classes.noteItem, active && classes.noteItemActive)}
+                style={{ paddingLeft: padding }}
             >
                 <Flex h={34} align="center" gap="sm" pr="sm">
-                    <Icon icon={icon} vAlign="-3px" />
+                    <Icon icon={icon} />
 
                     <Text fz="sm" truncate>
                         {text}
                     </Text>
 
                     {renderedChildren != null && (
-                        <span
-                            className={
-                                open ? [classes.caret, classes.caretOpen].join(" ") : classes.caret
-                            }
-                        ></span>
+                        <span className={clsx(classes.caret, open && classes.caretOpen)}></span>
                     )}
                 </Flex>
             </Box>
