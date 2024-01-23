@@ -1,5 +1,5 @@
 import { Button, ColorInput, Container, Space } from "@mantine/core";
-import { setTemportaryFakeAccentColor } from "src/state/AppTheme";
+import { setTemportaryFakeAccentColor } from "src/styles/AppTheme";
 import { codexStore, modifyPrefs, useSnapshot } from "src/state";
 
 export function SettingsView() {
