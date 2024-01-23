@@ -1,4 +1,6 @@
 .item {
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
     user-select: none;
     background-color: inherit;
     color: light-dark(black, white);
@@ -33,4 +35,18 @@
 
 .caretOpen {
     transform: rotate(-180deg);
+}
+
+.dragAbove {
+    border-top: 1px solid blue;
+}
+
+.dragBelow {
+    border-bottom: 1px solid red;
+}
+
+.dragChild {
+    border-top: 1px solid green;
+    border-right: 2px solid green;
+    border-bottom: 1px solid green;
 }

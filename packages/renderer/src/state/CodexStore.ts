@@ -1,5 +1,5 @@
 import { Prefs } from "common/Prefs";
-import { Page, Save, exampleSave } from "common/Save";
+import { NoteItem, Page, Save, exampleSave } from "common/Save";
 import { proxy } from "valtio";
 import { Editor } from "@tiptap/react";
 import { ModalStore, modalStore } from "./ModalStore";
@@ -12,12 +12,13 @@ type CodexStore = {
     save: Save;
     editor: Editor | null;
     unsavedChanges: boolean;
+    draggedItem: NoteItem | null;
     modals: ModalStore;
 };
 
-declare module "valtio" {
-    function useSnapshot<T extends object>(p: T): T;
-}
+// declare module "valtio" {
+//     function useSnapshot<T extends object>(p: T): T;
+// }
 
 export const codexStore = proxy<CodexStore>({
     view: { value: "home" },
@@ -25,6 +26,7 @@ export const codexStore = proxy<CodexStore>({
     save: exampleSave,
     editor: null,
     unsavedChanges: false,
+    draggedItem: null,
     modals: modalStore
 });
 
@@ -38,4 +40,8 @@ export function setView(v: View) {
 
 export function modifyPrefs(callback: (p: Prefs) => void) {
     callback(codexStore.prefs);
+}
+
+export function modifySave(callback: (s: Save) => void) {
+    callback(codexStore.save);
 }

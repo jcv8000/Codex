@@ -1,9 +1,12 @@
 import { locales } from "common/Locales";
-import { SidebarItem } from "src/components/SidebarItems";
+import { SidebarItem, SidebarNoteItem } from "src/components/SidebarItems";
 import { codexStore, setView, useSnapshot } from "src/state";
 
 export function SidebarContent() {
-    const { prefs, view } = useSnapshot(codexStore);
+    // Have to access "save" snapshot to trigger re-renders, but I'm passing
+    // down the actual proxy save object to the SidebarNoteItem tree
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { prefs, view, save } = useSnapshot(codexStore);
 
     const locale = locales[prefs.general.locale];
     return (
@@ -58,6 +61,10 @@ export function SidebarContent() {
                     onClick={() => window.api.openLink("feedback")}
                 />
             </SidebarItem>
+
+            {codexStore.save.items.map((item) => (
+                <SidebarNoteItem item={item} key={item.id} />
+            ))}
         </>
     );
 }
