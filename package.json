@@ -23,7 +23,7 @@
         "typecheck": "tsc && tsc -p packages/renderer/tsconfig.json"
     },
     "dependencies": {
-        "@electron/remote": "^2.1.1",
+        "@electron/remote": "^2.1.2",
         "@emotion/react": "^11.11.3",
         "@lukeed/uuid": "^2.0.1",
         "@mantine/core": "^7.4.2",
@@ -85,7 +85,7 @@
         "@types/color": "^3.0.6",
         "@types/d3": "^7.4.3",
         "@types/katex": "^0.16.7",
-        "@types/node": "^18.19.8",
+        "@types/node": "^18.19.9",
         "@types/react": "^18.2.48",
         "@types/react-dom": "^18.2.18",
         "@types/semver": "^7.5.6",
