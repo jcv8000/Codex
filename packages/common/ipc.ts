@@ -1,8 +1,89 @@
-import { BrowserWindow, ipcMain, ipcRenderer } from "electron";
-import { Prefs } from "./Prefs";
-import { Page, Save } from "./Save";
+import { Page } from "./Save";
 
-export type Link =
+// export type RendererCommands = {
+//     "get-prefs": () => Prefs;
+//     "write-prefs": (p: Prefs) => boolean;
+//     "get-save": () => Save;
+//     "write-save": (s: Save) => boolean;
+
+//     "load-page": (fileName: string) => string;
+//     "write-page": (fileName: string, content: string) => boolean;
+
+//     "export-single-pdf": (page: Page) => boolean;
+//     "export-multiple-pdf": (page: Page, directory: string) => boolean;
+//     "export-single-md": (page: Page, md: string) => boolean;
+//     "export-multiple-md": (page: Page, md: string, directory: string) => boolean;
+
+//     "get-directory": () => string | undefined;
+//     "get-default-save-location": () => string;
+//     "change-save-location": (location: string) => void;
+
+//     "open-link": (link: Link) => void;
+//     "open-external-link": (url: string) => void;
+//     "is-under-arm64-translator": () => boolean;
+
+//     restart: () => void;
+//     exit: () => void;
+// };
+// export type MainEvents = RendererCommands;
+
+// export type MainCommands = {
+//     "save-current-page": () => void;
+//     "editor-zoom-in": () => void;
+//     "editor-zoom-out": () => void;
+//     "editor-reset-zoom": () => void;
+//     "export-current-page-pdf": () => void;
+//     "toggle-sidebar": () => void;
+//     "reset-sidebar-width": () => void;
+//     "toggle-editor-toolbar": () => void;
+//     "update-available": (version: string) => void;
+//     "pre-exit": () => void;
+// };
+// export type RendererEvents = MainCommands;
+
+export type Commands = {
+    "get-prefs": () => string;
+    "write-prefs": (prefsString: string) => boolean;
+    "get-save": () => string;
+    "write-save": (saveString: string) => boolean;
+
+    "load-page": (fileName: string) => string;
+    "write-page": (fileName: string, content: string) => boolean;
+
+    "export-single-pdf": (page: Page) => boolean | undefined;
+    "export-multiple-pdf": (page: Page, directory: string) => boolean;
+    "export-single-md": (page: Page, md: string) => boolean | undefined;
+    "export-multiple-md": (page: Page, md: string, directory: string) => boolean;
+
+    "get-directory": () => string | undefined;
+    "get-default-save-location": () => string;
+
+    "is-under-arm64-translator": () => boolean;
+};
+
+export type Events = {
+    "change-save-location": (location: string) => void;
+
+    "open-link": (link: Link) => void;
+    "open-external-link": (url: string) => void;
+
+    "menu-save-current-page": () => void;
+    "menu-editor-zoom-in": () => void;
+    "menu-editor-zoom-out": () => void;
+    "menu-editor-reset-zoom": () => void;
+    "menu-export-current-page-pdf": () => void;
+    "menu-toggle-sidebar": () => void;
+    "menu-reset-sidebar-width": () => void;
+    "menu-toggle-editor-toolbar": () => void;
+
+    "update-available": (version: string) => void;
+    "pre-exit": () => void;
+
+    restart: () => void;
+    exit: () => void;
+};
+
+type Link =
     | "help"
     | "website"
     | "changelogs"
@@ -13,230 +94,16 @@ export type Link =
     | "katex_commands"
     | "mathlive_commands";
 
-export class TypedIpcMain {
-    window: BrowserWindow;
+export const linkMap: { [Property in Link]: string } = {
+    help: "https://codexnotes.com/docs",
+    website: "https://codexnotes.com/",
+    changelogs: "https://github.com/jcv8000/Codex/releases",
+    download: "https://github.com/jcv8000/Codex/releases",
+    github: "https://github.com/jcv8000/Codex",
+    issues: "https://github.com/jcv8000/Codex/issues",
+    feedback: "https://forms.gle/MgVtcPtcytTYZgxJ7",
+    mathlive_commands: "https://cortexjs.io/mathlive/reference/commands/",
+    katex_commands: "https://katex.org/docs/supported.html"
+};
 
-    constructor(window: BrowserWindow) {
-        this.window = window;
-    }
-
-    onGetPrefs = (callback: () => Prefs) => {
-        ipcMain.on("GET_PREFS", (e) => {
-            e.returnValue = JSON.stringify(callback());
-        });
-    };
-
-    onWritePrefs = (callback: (newPrefs: Prefs) => void) => {
-        ipcMain.on("WRITE_PREFS", (e, args) => {
-            callback(JSON.parse(args[0]));
-        });
-    };
-
-    onGetSave = (callback: () => Save) => {
-        ipcMain.on("GET_SAVE", (e) => {
-            e.returnValue = Save.stringify(callback());
-        });
-    };
-
-    onWriteSave = (callback: (newSave: Save) => void) => {
-        ipcMain.on("WRITE_SAVE", (e, args) => {
-            callback(Save.parse(args[0]));
-        });
-    };
-
-    onLoadPage = (callback: (fileName: string) => string) => {
-        ipcMain.on("LOAD_PAGE", (e, args) => {
-            e.returnValue = callback(args[0]);
-        });
-    };
-
-    onWritePage = (callback: (fileName: string, data: string) => void) => {
-        ipcMain.handle("WRITE_PAGE", (e, args: any[]) => {
-            callback(args[0], args[1]);
-        });
-    };
-
-    onExportPagePDF = (callback: (pageName: string) => void) => {
-        ipcMain.handle("EXPORT_PAGE_PDF", (e, args: any[]) => callback(args[0]));
-    };
-
-    onExportOneOfManyPDF = (callback: (directory: string, page: Page) => void) => {
-        ipcMain.handle("EXPORT_ONE_OF_MANY_PDF", (e, args) => callback(args[0], args[1]));
-    };
-
-    onExportPageMD = (callback: (pageName: string, md: string) => void) => {
-        ipcMain.on("EXPORT_PAGE_MD", (e, args) => callback(args[0], args[1]));
-    };
-
-    onExportOneOfManyMD = (callback: (directory: string, page: Page, md: string) => void) => {
-        ipcMain.on("EXPORT_ONE_OF_MANY_MD", (e, args) => callback(args[0], args[1], args[2]));
-    };
-
-    onGetDirectory = (callback: () => string | undefined) => {
-        ipcMain.on("GET_DIRECTORY", (e) => (e.returnValue = callback()));
-    };
-
-    onGetDefaultSaveLocation = (callback: () => string) => {
-        ipcMain.on("GET_DEFAULT_SAVE_LOCATION", (e) => {
-            e.returnValue = callback();
-        });
-    };
-
-    onChangeSaveDirectory = (callback: (newSaveLocation: string) => void) => {
-        ipcMain.on("CHANGE_SAVE_LOCATION", (e, args) => callback(args[0]));
-    };
-
-    onExit = (callback: () => void) => {
-        ipcMain.on("EXIT", callback);
-    };
-
-    onOpenLink = (callback: (link: Link) => void) => {
-        ipcMain.on("OPEN_LINK", (e, args) => callback(args[0]));
-    };
-
-    onRestart = (callback: () => void) => {
-        ipcMain.on("RESTART", callback);
-    };
-
-    isRunningUnderARM64Translation = (callback: () => boolean) => {
-        ipcMain.handle("IS_RUNNING_UNDER_ARM64_TRANSLATION", callback);
-    };
-
-    onOpenExternalLink = (callback: (href: string) => void) => {
-        ipcMain.on("OPEN_EXTERNAL_LINK", (e, args) => callback(args[0]));
-    };
-}
-
-export class TypedIpcRenderer {
-    private startPrefs: string;
-    private startSave: string;
-
-    constructor() {
-        this.startPrefs = ipcRenderer.sendSync("GET_PREFS");
-        this.startSave = ipcRenderer.sendSync("GET_SAVE");
-    }
-
-    getPrefs = (): string => {
-        return this.startPrefs;
-    };
-
-    writePrefs = (prefs: Prefs): void => {
-        ipcRenderer.send("WRITE_PREFS", [JSON.stringify(prefs)]);
-    };
-
-    getSave = (): string => {
-        return this.startSave;
-    };
-
-    writeSave = (save: Save) => {
-        ipcRenderer.send("WRITE_SAVE", [Save.stringify(save)]);
-    };
-
-    loadPage = (fileName: string): string => {
-        return ipcRenderer.sendSync("LOAD_PAGE", [fileName]);
-    };
-
-    writePage = async (fileName: string, data: string) => {
-        await ipcRenderer.invoke("WRITE_PAGE", [fileName, data]);
-    };
-
-    exportPagePDF = async (page: Page) => {
-        await ipcRenderer.invoke("EXPORT_PAGE_PDF", [page.name]);
-    };
-
-    exportOneOfManyPDF = async (directory: string, page: Page) => {
-        await ipcRenderer.invoke("EXPORT_ONE_OF_MANY_PDF", [directory, page]);
-    };
-
-    exportPageMD = (page: Page, md: string) => {
-        ipcRenderer.send("EXPORT_PAGE_MD", [page.name, md]);
-    };
-
-    exportOneOfManyMD = (directory: string, page: Page, md: string) => {
-        ipcRenderer.send("EXPORT_ONE_OF_MANY_MD", [directory, page, md]);
-    };
-
-    getDirectory = (): string | undefined => {
-        return ipcRenderer.sendSync("GET_DIRECTORY");
-    };
-
-    getDefaultSaveLocation = (): string => {
-        return ipcRenderer.sendSync("GET_DEFAULT_SAVE_LOCATION");
-    };
-
-    changeSaveLocation = (newSaveLocation: string) => {
-        ipcRenderer.send("CHANGE_SAVE_LOCATION", [newSaveLocation]);
-    };
-
-    onBeforeExit = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("EXIT");
-        ipcRenderer.on("EXIT", callback);
-    };
-
-    exit = () => {
-        ipcRenderer.send("EXIT");
-    };
-
-    onSaveCurrentPage = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("SAVE_ACTIVE_PAGE");
-        ipcRenderer.on("SAVE_ACTIVE_PAGE", () => callback());
-    };
-
-    onEditorZoomIn = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_ZOOM_IN");
-        ipcRenderer.on("MENU_ZOOM_IN", () => callback());
-    };
-
-    onEditorZoomOut = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_ZOOM_OUT");
-        ipcRenderer.on("MENU_ZOOM_OUT", () => callback());
-    };
-
-    onEditorResetZoom = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_ZOOM_RESET");
-        ipcRenderer.on("MENU_ZOOM_RESET", () => callback());
-    };
-
-    onExportPagePdf = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_EXPORT_PAGE_PDF");
-        ipcRenderer.on("MENU_EXPORT_PAGE_PDF", () => callback());
-    };
-
-    onToggleSidebar = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_TOGGLE_SIDEBAR");
-        ipcRenderer.on("MENU_TOGGLE_SIDEBAR", () => callback());
-    };
-
-    onResetSidebarWidth = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_RESET_SIDEBAR_WIDTH");
-        ipcRenderer.on("MENU_RESET_SIDEBAR_WIDTH", () => callback());
-    };
-
-    onToggleEditorToolbar = (callback: () => void) => {
-        ipcRenderer.removeAllListeners("MENU_TOGGLE_EDITOR_TOOLBAR");
-        ipcRenderer.on("MENU_TOGGLE_EDITOR_TOOLBAR", () => callback());
-    };
-
-    openLink = (link: Link) => {
-        ipcRenderer.send("OPEN_LINK", [link]);
-    };
-
-    restart = () => {
-        ipcRenderer.send("RESTART");
-    };
-
-    onUpdateAvailable = (callback: (newVersion: string) => void) => {
-        ipcRenderer.removeAllListeners("UPDATE_AVAILABLE");
-        ipcRenderer.on("UPDATE_AVAILABLE", (e, args) => callback(args[0]));
-    };
-
-    isMac = () => process.platform === "darwin";
-
-    isRunningUnderARM64Translation = () => {
-        return ipcRenderer.invoke("IS_RUNNING_UNDER_ARM64_TRANSLATION");
-    };
-
-    openExternalLink = (href: string) => {
-        ipcRenderer.send("OPEN_EXTERNAL_LINK", [href]);
-    };
-}
+export type { TypedIpcMain, TypedIpcRenderer, TypedWebContents } from "./TypedIpc";

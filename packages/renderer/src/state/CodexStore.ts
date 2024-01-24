@@ -16,9 +16,9 @@ type CodexStore = {
     modals: ModalStore;
 };
 
-// declare module "valtio" {
-//     function useSnapshot<T extends object>(p: T): T;
-// }
+declare module "valtio" {
+    function useSnapshot<T extends object>(p: T): T;
+}
 
 export const codexStore = proxy<CodexStore>({
     view: { value: "home" },

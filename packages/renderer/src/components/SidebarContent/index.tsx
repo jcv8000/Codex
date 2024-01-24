@@ -28,37 +28,37 @@ export function SidebarContent() {
                     icon="help"
                     text={locale.sidebar.more_help}
                     depth={1}
-                    onClick={() => window.api.openLink("help")}
+                    onClick={() => window.ipc.send("open-link", "help")}
                 />
                 <SidebarItem
                     icon="world-www"
                     text={locale.sidebar.more_website}
                     depth={1}
-                    onClick={() => window.api.openLink("website")}
+                    onClick={() => window.ipc.send("open-link", "website")}
                 />
                 <SidebarItem
                     icon="file-text"
                     text={locale.sidebar.more_changelogs}
                     depth={1}
-                    onClick={() => window.api.openLink("changelogs")}
+                    onClick={() => window.ipc.send("open-link", "changelogs")}
                 />
                 <SidebarItem
                     icon="brand-github"
                     text={locale.sidebar.more_github_repo}
                     depth={1}
-                    onClick={() => window.api.openLink("github")}
+                    onClick={() => window.ipc.send("open-link", "github")}
                 />
                 <SidebarItem
                     icon="alert-circle"
                     text={locale.sidebar.more_issues}
                     depth={1}
-                    onClick={() => window.api.openLink("issues")}
+                    onClick={() => window.ipc.send("open-link", "issues")}
                 />
                 <SidebarItem
                     icon="thumb-up"
                     text={locale.sidebar.more_give_feedback}
                     depth={1}
-                    onClick={() => window.api.openLink("feedback")}
+                    onClick={() => window.ipc.send("open-link", "feedback")}
                 />
             </SidebarItem>
 

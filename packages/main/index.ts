@@ -1,15 +1,18 @@
-import { BrowserWindow, app, dialog, shell } from "electron";
+import { BrowserWindow, app, dialog, shell, ipcMain } from "electron";
 import { loadPrefs, loadSave, writePrefs, writeSave, loadPage, writePage } from "./data";
 import { createWindow } from "./createWindow";
-import { TypedIpcMain } from "common/ipc";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { sanitizeStringForFileName } from "common/Utils";
 import { join } from "path";
 import isDev from "electron-is-dev";
 import { electronSecurity } from "./security";
-import { setupLogger } from "./logger";
+import { logError, setupLogger } from "./logger";
 import { saveWindowState } from "./windowState";
 import { locales } from "common/Locales";
+import { Commands, Events, TypedIpcMain, linkMap } from "common/ipc";
+import { Save } from "common/Save";
+
+const ipc = ipcMain as TypedIpcMain<Events, Commands>;
 
 if (app.requestSingleInstanceLock()) {
     app.whenReady().then(() => {
@@ -38,36 +41,49 @@ if (app.requestSingleInstanceLock()) {
             if (BrowserWindow.getAllWindows().length === 0) createWindow(prefs);
         });
 
-        const typedIpcMain = new TypedIpcMain(window);
-
-        typedIpcMain.onGetPrefs(() => {
-            return prefs;
+        ipc.handle("get-prefs", () => {
+            return JSON.stringify(prefs);
         });
 
-        typedIpcMain.onWritePrefs((newPrefs) => {
-            prefs = newPrefs;
-            writePrefs(newPrefs);
+        ipc.handle("write-prefs", (e, newPrefs) => {
+            try {
+                prefs = JSON.parse(newPrefs);
+                writePrefs(prefs);
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onGetSave(() => {
-            return save;
+        ipc.handle("get-save", () => {
+            return Save.stringify(save);
         });
 
-        typedIpcMain.onWriteSave((newSave) => {
-            save = newSave;
-            writeSave(prefs.general.saveFolder, newSave);
+        ipc.handle("write-save", (e, newSave) => {
+            try {
+                save = Save.parse(newSave);
+                writeSave(prefs.general.saveFolder, save);
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onLoadPage((fileName) => {
+        ipc.handle("load-page", (e, fileName) => {
             return loadPage(prefs.general.saveFolder, fileName);
         });
 
-        typedIpcMain.onWritePage((fileName, data) => {
-            writePage(prefs.general.saveFolder, fileName, data);
+        ipc.handle("write-page", (e, fileName, data) => {
+            try {
+                writePage(prefs.general.saveFolder, fileName, data);
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onExportPagePDF(async (pageName) => {
-            const sanitizedName = sanitizeStringForFileName(pageName);
+        ipc.handle("export-single-pdf", async (e, page) => {
+            const sanitizedName = sanitizeStringForFileName(page.name);
 
             const saveResult = await dialog.showSaveDialog(window, {
                 filters: [{ extensions: ["pdf"], name: "PDF" }],
@@ -75,21 +91,26 @@ if (app.requestSingleInstanceLock()) {
             });
 
             if (saveResult.canceled || saveResult.filePath == undefined) {
-                return;
+                return undefined;
             }
 
-            const data = await window.webContents.printToPDF({
-                pageSize: "A4",
-                printBackground: true
-            });
+            try {
+                const data = await window.webContents.printToPDF({
+                    pageSize: "A4",
+                    printBackground: true
+                });
 
-            writeFileSync(saveResult.filePath, data, { flag: "w" });
+                writeFileSync(saveResult.filePath, data, { flag: "w" });
 
-            if (prefs.editor.openPDFonExport) shell.openPath(saveResult.filePath);
+                if (prefs.editor.openPDFonExport) shell.openPath(saveResult.filePath);
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onExportPageMD(async (pageName, md) => {
-            const sanitizedName = sanitizeStringForFileName(pageName);
+        ipc.handle("export-single-md", async (e, page, md) => {
+            const sanitizedName = sanitizeStringForFileName(page.name);
 
             const saveResult = await dialog.showSaveDialog(window, {
                 filters: [{ extensions: ["md"], name: "Markdown" }],
@@ -97,32 +118,47 @@ if (app.requestSingleInstanceLock()) {
             });
 
             if (saveResult.canceled || saveResult.filePath == undefined) {
-                return;
+                return undefined;
             }
 
-            writeFileSync(saveResult.filePath, md, { flag: "w" });
+            try {
+                writeFileSync(saveResult.filePath, md, { flag: "w" });
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onExportOneOfManyPDF(async (directory, page) => {
+        ipc.handle("export-multiple-pdf", async (e, page, directory) => {
             // TODO make folders for parent folders somehow
             const sanitizedName = sanitizeStringForFileName(page.name) + "_" + page.id + ".pdf";
 
-            const data = await window.webContents.printToPDF({
-                pageSize: "A4",
-                printBackground: true
-            });
+            try {
+                const data = await window.webContents.printToPDF({
+                    pageSize: "A4",
+                    printBackground: true
+                });
 
-            writeFileSync(join(directory, sanitizedName), data, { flag: "w" });
+                writeFileSync(join(directory, sanitizedName), data, { flag: "w" });
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onExportOneOfManyMD((directory, page, md) => {
+        ipc.handle("export-multiple-md", (e, page, md, directory) => {
             // TODO make folders for parent folders somehow
             const sanitizedName = sanitizeStringForFileName(page.name) + "_" + page.id + ".md";
 
-            writeFileSync(join(directory, sanitizedName), md, { flag: "w" });
+            try {
+                writeFileSync(join(directory, sanitizedName), md, { flag: "w" });
+                return true;
+            } catch (e) {
+                return false;
+            }
         });
 
-        typedIpcMain.onGetDirectory(() => {
+        ipc.handle("get-directory", () => {
             const results = dialog.showOpenDialogSync(window, { properties: ["openDirectory"] });
 
             if (results == undefined) return undefined;
@@ -130,11 +166,11 @@ if (app.requestSingleInstanceLock()) {
             return results[0];
         });
 
-        typedIpcMain.onGetDefaultSaveLocation(() => {
+        ipc.handle("get-default-save-location", () => {
             return app.getPath("userData");
         });
 
-        typedIpcMain.onChangeSaveDirectory((newSaveLocation) => {
+        ipc.on("change-save-location", (e, newSaveLocation) => {
             if (prefs == undefined) return;
 
             prefs.general.saveFolder = newSaveLocation;
@@ -145,68 +181,64 @@ if (app.requestSingleInstanceLock()) {
             app.exit();
         });
 
-        typedIpcMain.onExit(() => app.exit());
+        ipc.on("exit", () => app.exit());
 
-        typedIpcMain.onOpenLink((link) => {
-            if (link == "help") shell.openExternal("https://codexnotes.com/docs");
-            if (link == "website") shell.openExternal("https://codexnotes.com/");
-            if (link == "changelogs")
-                shell.openExternal("https://github.com/jcv8000/Codex/releases");
-            if (link == "download") shell.openExternal("https://github.com/jcv8000/Codex/releases");
-            if (link == "github") shell.openExternal("https://github.com/jcv8000/Codex");
-            if (link == "issues") shell.openExternal("https://github.com/jcv8000/Codex/issues");
-            if (link == "feedback") shell.openExternal("https://forms.gle/MgVtcPtcytTYZgxJ7");
-            if (link == "mathlive_commands")
-                shell.openExternal("https://cortexjs.io/mathlive/reference/commands/");
-            if (link == "katex_commands")
-                shell.openExternal("https://katex.org/docs/supported.html");
+        ipc.on("open-link", (e, link) => {
+            shell.openExternal(linkMap[link]);
         });
 
-        typedIpcMain.onRestart(() => {
+        ipc.on("restart", () => {
             saveWindowState(window);
             if (!isDev) app.relaunch();
             app.exit();
         });
 
-        typedIpcMain.isRunningUnderARM64Translation(() => {
+        ipc.handle("is-under-arm64-translator", () => {
             return app.runningUnderARM64Translation;
         });
 
-        typedIpcMain.onOpenExternalLink((href) => {
-            const filePath = join(app.getPath("userData"), "trusted-link-domains.json");
-            if (!existsSync(filePath)) {
-                writeFileSync(filePath, JSON.stringify([]), "utf-8");
-            }
-            const trusted: string[] = JSON.parse(readFileSync(filePath).toString());
+        ipc.on("open-external-link", (e, href) => {
+            try {
+                const filePath = join(app.getPath("userData"), "trusted-link-domains.json");
+                if (!existsSync(filePath)) {
+                    writeFileSync(filePath, JSON.stringify([]), "utf-8");
+                }
+                const trusted: string[] = JSON.parse(readFileSync(filePath).toString());
 
-            const url = new URL(href);
-            const origin = url.origin;
+                const url = new URL(href);
+                const origin = url.origin;
 
-            if (trusted.includes(origin)) {
-                shell.openExternal(href);
-                return;
-            }
+                if (trusted.includes(origin)) {
+                    shell.openExternal(href);
+                    return;
+                }
 
-            const result = dialog.showMessageBoxSync(window, {
-                type: "question",
-                noLink: true,
-                message: locales[prefs.general.locale].shellDialogs.open_external_link.title,
-                detail: href + "\n\nTrusted domains are stored here:\n" + filePath,
-                buttons: [
-                    locales[prefs.general.locale].shellDialogs.open_external_link.yes,
-                    locales[prefs.general.locale].shellDialogs.open_external_link.trust_domain,
-                    locales[prefs.general.locale].shellDialogs.open_external_link.cancel
-                ]
-            });
+                const result = dialog.showMessageBoxSync(window, {
+                    type: "question",
+                    noLink: true,
+                    message: locales[prefs.general.locale].shellDialogs.open_external_link.title,
+                    detail: href + "\n\nTrusted domains are stored here:\n" + filePath,
+                    buttons: [
+                        locales[prefs.general.locale].shellDialogs.open_external_link.yes,
+                        locales[prefs.general.locale].shellDialogs.open_external_link.trust_domain,
+                        locales[prefs.general.locale].shellDialogs.open_external_link.cancel
+                    ]
+                });
 
-            if (result == 0) {
-                // Yes
-                shell.openExternal(href);
-            } else if (result == 1) {
-                // Trust domain
-                shell.openExternal(href);
-                trusted.push(origin);
-                writeFileSync(filePath, JSON.stringify(trusted), "utf-8");
+                if (result == 0) {
+                    // Yes
+                    shell.openExternal(href);
+                } else if (result == 1) {
+                    // Trust domain
+                    shell.openExternal(href);
+                    trusted.push(origin);
+                    writeFileSync(filePath, JSON.stringify(trusted), "utf-8");
+                }
+            } catch (e) {
+                logError(
+                    "Error",
+                    "Error occurred either while loading or saving the trusted domains file, or opening the link"
+                );
             }
         });
     });
