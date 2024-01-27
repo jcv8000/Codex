@@ -13,23 +13,17 @@ import { codexStore, useSnapshot } from "./state";
 import { ModalsWrapper } from "components/Modals";
 
 export function App() {
-    const state = useSnapshot(codexStore);
-    console.log("app rerendered");
-    return (
-        <MantineProvider
-            theme={AppTheme(state.prefs.general.accentColor, state.prefs.editor.codeWordWrap)}
-        >
-            <ModalsWrapper>
-                <div id="viewport">
-                    <div id="sidebar">
-                        <SidebarContent />
-                    </div>
+    const { prefs } = useSnapshot(codexStore);
 
-                    <div id="main">
-                        <div id="main-content">
-                            <View />
-                        </div>
-                    </div>
+    return (
+        <MantineProvider theme={AppTheme(prefs.general.accentColor, prefs.editor.codeWordWrap)}>
+            <ModalsWrapper>
+                <div id="sidebar">
+                    <SidebarContent />
+                </div>
+
+                <div id="main">
+                    <View />
                 </div>
             </ModalsWrapper>
         </MantineProvider>

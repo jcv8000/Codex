@@ -1,36 +1,33 @@
-#sidebar {
+:root {
+    --sidebar-width: 300px;
+    --titlebar-height: 30px;
+}
+
+#root {
     contain: layout;
+}
+
+#sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-    width: 300px;
-    border-right: 1px solid var(--mantine-color-gray-5);
-    overflow-y: auto;
+    width: var(--sidebar-width);
+    border-right: 1px solid var(--mantine-color-gray-4);
+    overflow: auto;
     padding-top: var(--mantine-spacing-md);
     padding-bottom: var(--mantine-spacing-md);
 }
 
 #main {
     background-color: (--mantine-color-white);
-    margin-left: 300px;
-    contain: layout;
+    margin-left: var(--sidebar-width);
     height: 100dvh;
-}
-
-#main-content {
-    //background-color: var(mantine-);
-    scrollbar-gutter: stable;
-    height: 100dvh;
-    overflow-y: auto;
+    overflow: auto;
     padding: var(--mantine-spacing-md);
 }
 
 /* Custom titlebar sizing fixes */
-.container-after-titlebar #sidebar {
-    top: 30px;
-}
-.container-after-titlebar #main,
-.container-after-titlebar #main-content {
-    height: calc(100dvh - 30px);
+.container-after-titlebar #main {
+    height: calc(100dvh - var(--titlebar-height));
 }
