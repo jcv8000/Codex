@@ -21,6 +21,7 @@ export function setTemportaryFakeAccentColor(accentColor: string) {
     setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
 }
 
+// TODO CustomCodeBlock/Wrapper.tsx => calculate the code block scrollbar colors in AppTheme and just set css variables for it.
 export function AppTheme(accentColor: string, codeWordWrap: boolean) {
     const accentColors = getAccentColorPalette(accentColor);
 
