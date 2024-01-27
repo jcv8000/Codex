@@ -7,7 +7,7 @@ import "./styles/titlebar.css";
 
 import { MantineProvider } from "@mantine/core";
 import { AppTheme } from "./styles/AppTheme";
-import { SidebarContent } from "components/SidebarContent";
+import { Sidebar } from "components/Sidebar";
 import { View } from "components/Views/View";
 import { codexStore, useSnapshot } from "./state";
 import { ModalsWrapper } from "components/Modals";
@@ -16,11 +16,9 @@ export function App() {
     const { prefs } = useSnapshot(codexStore);
 
     return (
-        <MantineProvider theme={AppTheme(prefs.general.accentColor, prefs.editor.codeWordWrap)}>
+        <MantineProvider theme={AppTheme(prefs)}>
             <ModalsWrapper>
-                <div id="sidebar">
-                    <SidebarContent />
-                </div>
+                <Sidebar />
 
                 <div id="main">
                     <View />

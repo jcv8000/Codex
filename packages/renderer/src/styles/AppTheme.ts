@@ -1,6 +1,7 @@
 import { ActionIcon, Button, Modal, createTheme, rem } from "@mantine/core";
 import { createPaletteFromColor } from "palettey";
 import { hexToRgb } from "common/Utils";
+import { Prefs } from "common/Prefs";
 
 export function setTemportaryFakeAccentColor(accentColor: string) {
     const palete = getAccentColorPalette(accentColor);
@@ -22,19 +23,24 @@ export function setTemportaryFakeAccentColor(accentColor: string) {
 }
 
 // TODO CustomCodeBlock/Wrapper.tsx => calculate the code block scrollbar colors in AppTheme and just set css variables for it.
-export function AppTheme(accentColor: string, codeWordWrap: boolean) {
-    const accentColors = getAccentColorPalette(accentColor);
+export function AppTheme(prefs: Prefs) {
+    const accentColors = getAccentColorPalette(prefs.general.accentColor);
 
     setCSSProperty("--accent-color", "var(--mantine-primary-color-filled)");
     setCSSProperty("--accent-color-light", accentColors[4]);
     setCSSProperty("--accent-color-dark", accentColors[6]);
-    setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
+    setCSSProperty("--accent-text-color", getAccentTextColor(prefs.general.accentColor));
 
     setCSSProperty(
         "--code-block-word-wrap",
-        codeWordWrap ? "pre-wrap !important" : "pre !important"
+        prefs.editor.codeWordWrap ? "pre-wrap !important" : "pre !important"
     );
-    setCSSProperty("--code-block-word-break", codeWordWrap ? "break-all !important" : "inherit");
+    setCSSProperty(
+        "--code-block-word-break",
+        prefs.editor.codeWordWrap ? "break-all !important" : "inherit"
+    );
+
+    setCSSProperty("--sidebar-width", `${prefs.general.sidebarWidth}px`);
 
     return createTheme({
         focusRing: "auto",

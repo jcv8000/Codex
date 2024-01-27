@@ -13,7 +13,6 @@
     bottom: 0;
     left: 0;
     width: var(--sidebar-width);
-    border-right: 1px solid var(--mantine-color-gray-4);
     overflow: auto;
     padding-top: var(--mantine-spacing-md);
     padding-bottom: var(--mantine-spacing-md);

@@ -1,0 +1,20 @@
+.outer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--sidebar-width) - 1px);
+    width: 4px;
+    cursor: col-resize;
+
+    @mixin hover {
+        background-color: var(--mantine-color-gray-4);
+    }
+}
+
+.inner {
+    width: 2px;
+    position: absolute;
+    left: 1px;
+    height: 100%;
+    background-color: var(--mantine-color-gray-4);
+}
