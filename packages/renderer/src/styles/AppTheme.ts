@@ -86,11 +86,7 @@ export function AppTheme(prefs: Prefs) {
             })
         },
         fontSizes: {
-            // xs: rem(10),
-            // sm: rem(11),
-            // md: rem(13),
-            // lg: rem(16),
-            // xl: rem(20)
+            sm: rem(13)
         },
         headings: {
             fontWeight: "600"
