@@ -14,8 +14,13 @@
     left: 0;
     width: var(--sidebar-width);
     overflow: auto;
+
     padding-top: var(--mantine-spacing-md);
     padding-bottom: var(--mantine-spacing-md);
+
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-9));
+    box-shadow: rgba(0, 0, 0, 0.07) 2px 4px 7px;
+    border-right: 0.0625rem solid rgb(233, 236, 239);
 }
 
 #main {

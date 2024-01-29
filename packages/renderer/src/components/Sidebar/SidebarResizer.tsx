@@ -1,6 +1,9 @@
 import { modifyPrefs } from "src/state";
 import classes from "./SidebarResizer.module.css";
 
+const SIDEBAR_MIN_WIDTH = 200;
+const SIDEBAR_MAX_WIDTH = 600;
+
 export function SidebarResizer() {
     return (
         <div
@@ -14,6 +17,13 @@ export function SidebarResizer() {
 
                         modifyPrefs((p) => {
                             p.general.sidebarWidth = e.clientX;
+
+                            if (e.clientX >= SIDEBAR_MIN_WIDTH && e.clientX <= SIDEBAR_MAX_WIDTH)
+                                p.general.sidebarWidth = e.clientX;
+                            else if (e.clientX < SIDEBAR_MIN_WIDTH)
+                                p.general.sidebarWidth = SIDEBAR_MIN_WIDTH;
+                            else if (e.clientX > SIDEBAR_MAX_WIDTH)
+                                p.general.sidebarWidth = SIDEBAR_MAX_WIDTH;
                         });
                     },
                     { once: true }
@@ -26,5 +36,10 @@ export function SidebarResizer() {
 }
 
 function resize(e: MouseEvent) {
-    document.documentElement.style.setProperty("--sidebar-width", `${e.clientX}px`);
+    if (e.clientX >= SIDEBAR_MIN_WIDTH && e.clientX <= SIDEBAR_MAX_WIDTH)
+        document.documentElement.style.setProperty("--sidebar-width", `${e.clientX}px`);
+    else if (e.clientX < SIDEBAR_MIN_WIDTH)
+        document.documentElement.style.setProperty("--sidebar-width", `${SIDEBAR_MIN_WIDTH}px`);
+    else if (e.clientX > SIDEBAR_MAX_WIDTH)
+        document.documentElement.style.setProperty("--sidebar-width", `${SIDEBAR_MAX_WIDTH}px`);
 }
