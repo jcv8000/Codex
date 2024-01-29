@@ -1,18 +1,18 @@
 import { proxy } from "valtio";
-import { ContextMenuState, defaultContextMenuState } from "components/ContextMenu";
 import {
+    ContextMenuState,
+    NewModalState,
     EditModalState,
+    WhatsNewModalState,
     EditorImageModalState,
     EditorLinkModalState,
     EditorMathModalState,
-    NewModalState,
-    WhatsNewModalState,
+    defaultNewModalState,
     defaultEditModalState,
+    defaultWhatsNewModalState,
     defaultEditorImageModalState,
     defaultEditorLinkModalState,
-    defaultEditorMathModalState,
-    defaultNewModalState,
-    defaultWhatsNewModalState
+    defaultEditorMathModalState
 } from "components/Modals";
 
 export type ModalStore = {
@@ -28,7 +28,7 @@ export type ModalStore = {
 };
 
 export const modalStore = proxy<ModalStore>({
-    contextMenuState: defaultContextMenuState,
+    contextMenuState: { opened: false, item: null, x: 0, y: 0 },
 
     newModalState: defaultNewModalState,
     editModalState: defaultEditModalState,

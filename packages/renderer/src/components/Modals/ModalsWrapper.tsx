@@ -1,6 +1,6 @@
 import { codexStore, useSnapshot } from "src/state";
-import { ContextMenu, defaultContextMenuState } from "components/ContextMenu";
 import {
+    ContextMenu,
     EditModal,
     EditorImageModal,
     EditorLinkModal,
@@ -20,10 +20,7 @@ export function ModalsWrapper(props: { children?: React.ReactNode }) {
 
     return (
         <>
-            <ContextMenu
-                state={modals.contextMenuState}
-                onClose={() => (codexStore.modals.contextMenuState = defaultContextMenuState)}
-            />
+            <ContextMenu state={modals.contextMenuState} />
 
             <NewModal
                 state={modals.newModalState}
