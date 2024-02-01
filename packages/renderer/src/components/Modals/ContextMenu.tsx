@@ -50,35 +50,33 @@ export function ContextMenu(props: { state: ContextMenuState }) {
                 }
             }}
         >
-            <Menu.Dropdown maw={220}>
-                <div ref={mergedRef}>
-                    {item != null && (
-                        <>
-                            <Menu.Label>
-                                <Text fz="sm" truncate>
-                                    {item.name}
-                                </Text>
-                            </Menu.Label>
+            <Menu.Dropdown maw={220} ref={mergedRef}>
+                {item != null && (
+                    <>
+                        <Menu.Label>
+                            <Text fz="sm" truncate>
+                                {item.name}
+                            </Text>
+                        </Menu.Label>
 
-                            {item instanceof Folder && folderNewItems(item)}
+                        {item instanceof Folder && folderNewItems(item)}
 
-                            <Menu.Item
-                                leftSection={<Icon icon="pencil" />}
-                                onClick={() => {
-                                    modalStore.editModalState = { opened: true, item: item };
-                                }}
-                            >
-                                {locale.contextMenu.edit_item}
-                            </Menu.Item>
+                        <Menu.Item
+                            leftSection={<Icon icon="pencil" />}
+                            onClick={() => {
+                                modalStore.editModalState = { opened: true, item: item };
+                            }}
+                        >
+                            {locale.contextMenu.edit_item}
+                        </Menu.Item>
 
-                            {item instanceof Page && pageItems(item)}
+                        {item instanceof Page && pageItems(item)}
 
-                            {item instanceof Folder && folderExports(item)}
+                        {item instanceof Folder && folderExports(item)}
 
-                            {deleteItem(item)}
-                        </>
-                    )}
-                </div>
+                        {deleteItem(item)}
+                    </>
+                )}
             </Menu.Dropdown>
         </Menu>
     );
