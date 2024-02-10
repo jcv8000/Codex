@@ -174,8 +174,8 @@ dependencies:
     specifier: ^13.11.0
     version: 13.11.0
   valtio:
-    specifier: ^1.13.0
-    version: 1.13.0(@types/react@18.2.51)(react@18.2.0)
+    specifier: ^1.13.1
+    version: 1.13.1(@types/react@18.2.51)(react@18.2.0)
 
 devDependencies:
   '@types/color':
@@ -3273,12 +3273,12 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /derive-valtio@0.1.0(valtio@1.13.0):
+  /derive-valtio@0.1.0(valtio@1.13.1):
     resolution: {integrity: sha512-OCg2UsLbXK7GmmpzMXhYkdO64vhJ1ROUUGaTFyHjVwEdMEcTTRj7W1TxLbSBxdY8QLBPCcp66MTyaSy0RpO17A==}
     peerDependencies:
       valtio: '*'
     dependencies:
-      valtio: 1.13.0(@types/react@18.2.51)(react@18.2.0)
+      valtio: 1.13.1(@types/react@18.2.51)(react@18.2.0)
     dev: false
 
   /detect-node-es@1.1.0:
@@ -5377,8 +5377,8 @@ packages:
       prosemirror-transform: 1.8.0
     dev: false
 
-  /proxy-compare@2.5.1:
-    resolution: {integrity: sha512-oyfc0Tx87Cpwva5ZXezSp5V9vht1c7dZBhvuV/y3ctkgMVUmiAGDVeeB0dKhGSyT0v1ZTEQYpe/RXlBVBNuCLA==}
+  /proxy-compare@2.6.0:
+    resolution: {integrity: sha512-8xuCeM3l8yqdmbPoYeLbrAXCBWu19XEYc5/F28f5qOaoAIMyfmBUkl5axiK+x9olUvRlcekvnm98AP9RDngOIw==}
     dev: false
 
   /proxy-from-env@1.1.0:
@@ -6341,8 +6341,8 @@ packages:
     engines: {node: '>= 0.10'}
     dev: false
 
-  /valtio@1.13.0(@types/react@18.2.51)(react@18.2.0):
-    resolution: {integrity: sha512-s2VkxxFyaJwjpIheJonRa/34HWS1EpsEjw9OW9l3j8G4cbIw7lruspOjyv+z2o4BrGx351BH+VWb8sZHkrlyYA==}
+  /valtio@1.13.1(@types/react@18.2.51)(react@18.2.0):
+    resolution: {integrity: sha512-zowA+lrJPnj6YfIMrVzLKlpBJ/mrIJtMoStPoVLfFMQzvmqdB/JAFNBsxRJ707Oso0lyRgxRfaq4QbE9Uz0tYg==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=16.8'
@@ -6354,8 +6354,8 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.51
-      derive-valtio: 0.1.0(valtio@1.13.0)
-      proxy-compare: 2.5.1
+      derive-valtio: 0.1.0(valtio@1.13.1)
+      proxy-compare: 2.6.0
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
