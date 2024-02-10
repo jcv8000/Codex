@@ -19,7 +19,7 @@ export function MainFloat({ children, pos }: FloatProps) {
 
                 setStyles(newStyles);
             } else if (pos.top && pos.right) {
-                const right = pos.right - (main.offsetWidth - main.clientWidth);
+                const right = pos.right + (main.offsetWidth - main.clientWidth);
                 newStyles.top = `${pos.top}px`;
                 newStyles.right = `${right}px`;
 
@@ -31,7 +31,7 @@ export function MainFloat({ children, pos }: FloatProps) {
 
                 setStyles(newStyles);
             } else if (pos.bottom && pos.right) {
-                const right = pos.right - (main.offsetWidth - main.clientWidth);
+                const right = pos.right + (main.offsetWidth - main.clientWidth);
                 newStyles.bottom = `${pos.bottom}px`;
                 newStyles.right = `${right}px`;
 
