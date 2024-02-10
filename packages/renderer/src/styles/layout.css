@@ -7,6 +7,10 @@
     contain: layout;
 }
 
+.container-after-titlebar {
+    position: fixed !important;
+}
+
 #sidebar {
     position: fixed;
     top: 0;
@@ -24,7 +28,7 @@
 }
 
 #main {
-    background-color: (--mantine-color-white);
+    background-color: var(--mantine-color-white);
     margin-left: var(--sidebar-width);
     height: 100dvh;
     overflow: auto;
