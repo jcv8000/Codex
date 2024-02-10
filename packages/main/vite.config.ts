@@ -6,6 +6,7 @@ process.env.VITE_APP_VERSION = process.env.npm_package_version;
 export default defineConfig({
     plugins: [tsconfigPaths()],
     build: {
+        target: "esnext",
         outDir: ".vite/",
         emptyOutDir: false,
         lib: {

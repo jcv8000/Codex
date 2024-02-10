@@ -35,8 +35,7 @@ const getVersions = async () => {
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default defineConfig(async (mode) => {
+export default defineConfig(async () => {
     process.env.VITE_APP_VERSION = process.env.npm_package_version;
 
     const versions = await getVersions();
@@ -55,6 +54,7 @@ export default defineConfig(async (mode) => {
         },
         base: "./",
         build: {
+            target: "esnext",
             outDir: resolve(PROJECT_ROOT, ".vite/renderer/"),
             emptyOutDir: true,
             rollupOptions: {
