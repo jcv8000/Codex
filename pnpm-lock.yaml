@@ -15,23 +15,23 @@ dependencies:
     specifier: ^2.0.1
     version: 2.0.1
   '@mantine/core':
-    specifier: ^7.5.1
-    version: 7.5.1(@mantine/hooks@7.5.1)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.5.2
+    version: 7.5.2(@mantine/hooks@7.5.2)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/dropzone':
-    specifier: ^7.5.1
-    version: 7.5.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.5.2
+    version: 7.5.2(@mantine/core@7.5.2)(@mantine/hooks@7.5.2)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/form':
-    specifier: ^7.5.1
-    version: 7.5.1(react@18.2.0)
+    specifier: ^7.5.2
+    version: 7.5.2(react@18.2.0)
   '@mantine/hooks':
-    specifier: ^7.5.1
-    version: 7.5.1(react@18.2.0)
+    specifier: ^7.5.2
+    version: 7.5.2(react@18.2.0)
   '@mantine/modals':
-    specifier: ^7.5.1
-    version: 7.5.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.5.2
+    version: 7.5.2(@mantine/core@7.5.2)(@mantine/hooks@7.5.2)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/notifications':
-    specifier: ^7.5.1
-    version: 7.5.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.5.2
+    version: 7.5.2(@mantine/core@7.5.2)(@mantine/hooks@7.5.2)(react-dom@18.2.0)(react@18.2.0)
   '@tabler/icons':
     specifier: ^2.46.0
     version: 2.46.0
@@ -237,7 +237,7 @@ devDependencies:
     version: 0.6.2
   postcss-preset-mantine:
     specifier: ^1.13.0
-    version: 1.13.0(postcss@8.4.33)
+    version: 1.13.0(postcss@8.4.35)
   prettier:
     specifier: ^3.2.4
     version: 3.2.4
@@ -1073,15 +1073,15 @@ packages:
       - supports-color
     dev: true
 
-  /@mantine/core@7.5.1(@mantine/hooks@7.5.1)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-V7apuQuRubqxTRXb1uxOM43K7tkLRzpbb1ONJ/sj8QRp/26bShkdYp7EVuSKyrQ8DQ5EGYyBBGyzBOQARh41gA==}
+  /@mantine/core@7.5.2(@mantine/hooks@7.5.2)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-e58qTiLEp9qLxQ5JZlPNykJWBR+oi0q2J8JPKTjTJD+4UM58uh9oL4wuMEdUyBgiYGvDc/cVYF+rftMpuCt+KQ==}
     peerDependencies:
-      '@mantine/hooks': 7.5.1
+      '@mantine/hooks': 7.5.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
       '@floating-ui/react': 0.24.8(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.5.1(react@18.2.0)
+      '@mantine/hooks': 7.5.2(react@18.2.0)
       clsx: 2.0.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -1093,23 +1093,23 @@ packages:
       - '@types/react'
     dev: false
 
-  /@mantine/dropzone@7.5.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-pUQt7EwhDkTWbj4OLCbsvbkbp1vCXS6nGm8Y4pTrca1vR9S4+hilR6oULEY0UbQgHq+hfsWKDtnlhLkf45tJXA==}
+  /@mantine/dropzone@7.5.2(@mantine/core@7.5.2)(@mantine/hooks@7.5.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-YjzaBEppLhb5F+lKpBSVeIGneCdisC+0nSertcjjo7QXPc++NR+WbVuTiPMYZoUuRbpJ2GRRTFZndmK1FvO+7w==}
     peerDependencies:
-      '@mantine/core': 7.5.1
-      '@mantine/hooks': 7.5.1
+      '@mantine/core': 7.5.2
+      '@mantine/hooks': 7.5.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.5.1(@mantine/hooks@7.5.1)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.5.1(react@18.2.0)
+      '@mantine/core': 7.5.2(@mantine/hooks@7.5.2)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.5.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-dropzone-esm: 15.0.1(react@18.2.0)
     dev: false
 
-  /@mantine/form@7.5.1(react@18.2.0):
-    resolution: {integrity: sha512-NPc6sYXZGImFsZvr9Md5DM8C+vpC14rqLcOJlW4DFqze1/MBblVxR+abCNM12r5hrqUxHXEu55yPzxcR9Hoj3Q==}
+  /@mantine/form@7.5.2(react@18.2.0):
+    resolution: {integrity: sha512-Kz4UNLvAvxB1utKflt4gr5Uzt1Dxj17thcnlLzB2JX6unzV3OkvC36b5XoXAtuoFxt/RzEyUrp5M38jZLwCLEA==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
@@ -1118,46 +1118,46 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mantine/hooks@7.5.1(react@18.2.0):
-    resolution: {integrity: sha512-LfrEOkX8U2KbkYAU5BMA7FPbMva/TSd65c45W35wHSx3iqYMsoPN9+Ll1zc/HT0XNFp73jGet9cU7VREbAl0/A==}
+  /@mantine/hooks@7.5.2(react@18.2.0):
+    resolution: {integrity: sha512-4POujH5Xx84VB/xfM6EttDq725dqqL2DntoeMjHz3Ua94aK5Y0VSc1IwlETxCuF7yNV5/w/Z8kgeVVa5cDgrPg==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
       react: 18.2.0
     dev: false
 
-  /@mantine/modals@7.5.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-s0+kGsYbm4sM6xjgR5njAAp5laOw7g9E4rf7kRpcAWadYTGH8ooKnSFuYfLJFm+viYHDHXRQGH6qvo4VAbOrLQ==}
+  /@mantine/modals@7.5.2(@mantine/core@7.5.2)(@mantine/hooks@7.5.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-QRdFZtaGvyE9/nYgnsyMPsWEy+o0vaTzD+Sle6c/CaZ4MPk0ok3Au8bd04LnSMmoinYgLeei9IsmP78UXO9kNA==}
     peerDependencies:
-      '@mantine/core': 7.5.1
-      '@mantine/hooks': 7.5.1
+      '@mantine/core': 7.5.2
+      '@mantine/hooks': 7.5.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.5.1(@mantine/hooks@7.5.1)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.5.1(react@18.2.0)
+      '@mantine/core': 7.5.2(@mantine/hooks@7.5.2)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.5.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@mantine/notifications@7.5.1(@mantine/core@7.5.1)(@mantine/hooks@7.5.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-IQDOAz+U9G6IkYXAXG9qL5EESmnhWV3JBJrxwBOPPdi1e9S/akQlsmABWS/voB9WFnOnbMbrkF067RVBA7W4dg==}
+  /@mantine/notifications@7.5.2(@mantine/core@7.5.2)(@mantine/hooks@7.5.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-wGRDeOG2NGng202k/vZPfkRJMHtflvIORYe4cJaQAd9EhP646xr/ji8zzdXeXvUO5PrKlBpu+K+HSF1bQQY4og==}
     peerDependencies:
-      '@mantine/core': 7.5.1
-      '@mantine/hooks': 7.5.1
+      '@mantine/core': 7.5.2
+      '@mantine/hooks': 7.5.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.5.1(@mantine/hooks@7.5.1)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.5.1(react@18.2.0)
-      '@mantine/store': 7.5.1(react@18.2.0)
+      '@mantine/core': 7.5.2(@mantine/hooks@7.5.2)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.5.2(react@18.2.0)
+      '@mantine/store': 7.5.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@mantine/store@7.5.1(react@18.2.0):
-    resolution: {integrity: sha512-sDaPXB3v9JlJghNTnRTFT2hC3HN6pdBcCXj0CqO/QrJgtRA7A3FxW+mnY7YQOaBxHJ1MIRr+zsv0Qy1f/pu1dw==}
+  /@mantine/store@7.5.2(react@18.2.0):
+    resolution: {integrity: sha512-au53HLLH/LfHLOR2Zb00TgG11xAXZNJb4jqsEhAr90axCIw6mlBDIAhbb+Yu6OwDaV7TscE/sonkUstmRjLh/w==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
@@ -5135,47 +5135,47 @@ packages:
       xmlbuilder: 15.1.1
     dev: true
 
-  /postcss-js@4.0.1(postcss@8.4.33):
+  /postcss-js@4.0.1(postcss@8.4.35):
     resolution: {integrity: sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==}
     engines: {node: ^12 || ^14 || >= 16}
     peerDependencies:
       postcss: ^8.4.21
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.33
+      postcss: 8.4.35
     dev: true
 
-  /postcss-mixins@9.0.4(postcss@8.4.33):
+  /postcss-mixins@9.0.4(postcss@8.4.35):
     resolution: {integrity: sha512-XVq5jwQJDRu5M1XGkdpgASqLk37OqkH4JCFDXl/Dn7janOJjCTEKL+36cnRVy7bMtoBzALfO7bV7nTIsFnUWLA==}
     engines: {node: '>=14.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
       fast-glob: 3.3.2
-      postcss: 8.4.33
-      postcss-js: 4.0.1(postcss@8.4.33)
-      postcss-simple-vars: 7.0.1(postcss@8.4.33)
-      sugarss: 4.0.1(postcss@8.4.33)
+      postcss: 8.4.35
+      postcss-js: 4.0.1(postcss@8.4.35)
+      postcss-simple-vars: 7.0.1(postcss@8.4.35)
+      sugarss: 4.0.1(postcss@8.4.35)
     dev: true
 
-  /postcss-nested@6.0.1(postcss@8.4.33):
+  /postcss-nested@6.0.1(postcss@8.4.35):
     resolution: {integrity: sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.33
+      postcss: 8.4.35
       postcss-selector-parser: 6.0.15
     dev: true
 
-  /postcss-preset-mantine@1.13.0(postcss@8.4.33):
+  /postcss-preset-mantine@1.13.0(postcss@8.4.35):
     resolution: {integrity: sha512-1bv/mQz2K+/FixIMxYd83BYH7PusDZaI7LpUtKbb1l/5N5w6t1p/V9ONHfRJeeAZyfa6Xc+AtR+95VKdFXRH1g==}
     peerDependencies:
       postcss: '>=8.0.0'
     dependencies:
-      postcss: 8.4.33
-      postcss-mixins: 9.0.4(postcss@8.4.33)
-      postcss-nested: 6.0.1(postcss@8.4.33)
+      postcss: 8.4.35
+      postcss-mixins: 9.0.4(postcss@8.4.35)
+      postcss-nested: 6.0.1(postcss@8.4.35)
     dev: true
 
   /postcss-selector-parser@6.0.15:
@@ -5186,17 +5186,26 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss-simple-vars@7.0.1(postcss@8.4.33):
+  /postcss-simple-vars@7.0.1(postcss@8.4.35):
     resolution: {integrity: sha512-5GLLXaS8qmzHMOjVxqkk1TZPf1jMqesiI7qLhnlyERalG0sMbHIbJqrcnrpmZdKCLglHnRHoEBB61RtGTsj++A==}
     engines: {node: '>=14.0'}
     peerDependencies:
       postcss: ^8.2.1
     dependencies:
-      postcss: 8.4.33
+      postcss: 8.4.35
     dev: true
 
   /postcss@8.4.33:
     resolution: {integrity: sha512-Kkpbhhdjw2qQs2O2DGX+8m5OVqEcbB9HRBvuYM9pgrjEFUg30A9LmXNlTAUj4S9kgtGyrMbTzVjH7E+s5Re2yg==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.7
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
+    dev: true
+
+  /postcss@8.4.35:
+    resolution: {integrity: sha512-u5U8qYpBCpN13BsiEB0CbR1Hhh4Gc0zLFuedrHJKMctHCHAGrMdG0PRM/KErzAL3CU6/eckEtmHNB3x6e3c0vA==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
       nanoid: 3.3.7
@@ -5991,13 +6000,13 @@ packages:
     resolution: {integrity: sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==}
     dev: false
 
-  /sugarss@4.0.1(postcss@8.4.33):
+  /sugarss@4.0.1(postcss@8.4.35):
     resolution: {integrity: sha512-WCjS5NfuVJjkQzK10s8WOBY+hhDxxNt/N6ZaGwxFZ+wN3/lKKFSaaKUNecULcTTvE4urLcKaZFQD8vO0mOZujw==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.3.3
     dependencies:
-      postcss: 8.4.33
+      postcss: 8.4.35
     dev: true
 
   /sumchecker@3.0.1:
