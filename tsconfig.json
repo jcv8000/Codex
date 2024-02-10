@@ -7,8 +7,6 @@
         "skipLibCheck": true,
         "isolatedModules": true,
         "strict": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
         "noEmit": true,
