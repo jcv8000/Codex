@@ -24,7 +24,6 @@
     },
     "dependencies": {
         "@electron/remote": "^2.1.2",
-        "@emotion/react": "^11.11.3",
         "@lukeed/uuid": "^2.0.1",
         "@mantine/core": "^7.5.3",
         "@mantine/dropzone": "^7.5.3",
