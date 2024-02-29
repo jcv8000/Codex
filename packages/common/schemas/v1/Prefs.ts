@@ -1,16 +1,14 @@
-import { SupportedLocales } from "./Locales";
-
-class GeneralPrefs {
+export class GeneralPrefs {
     saveFolder = "";
     accentColor = "#ff7926";
     sidebarWidth = 300;
-    locale: SupportedLocales = "en_US";
+    locale: "en_US" | "zh_CN" = "en_US"; // SupportedLocales
     theme: "light" | "dark" = "light";
     titlebarStyle: "custom" | "native" = "custom";
     autoSaveOnPageSwitch = true;
 }
 
-class EditorPrefs {
+export class EditorPrefs {
     codeBlockTheme = "github-dark-dimmed";
     useTypographyExtension = false;
     border = true;
@@ -23,7 +21,7 @@ class EditorPrefs {
     tabSize = 4;
 }
 
-class MiscPrefs {
+export class MiscPrefs {
     lastOpenedVersion = "0.0.0";
 }
 

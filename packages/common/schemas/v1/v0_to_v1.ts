@@ -1,35 +1,48 @@
-import { Prefs } from "common/Prefs";
-import { Folder, Page, Save } from "common/Save";
-import { existsSync, readFileSync } from "fs";
-import { join } from "path";
+import { Save as Save_v0, Notebook as Notebook_v0, Page as Page_v0 } from "common/schemas/v0/Save";
+import { Save as Save_v1, Folder as Folder_v1, Page as Page_v1 } from "./Save";
+import { UserPrefs as Prefs_v0 } from "common/schemas/v0/Prefs";
+import { Prefs as Prefs_v1 } from "./Prefs";
 import { v4 as uuid } from "@lukeed/uuid";
-import { writePage } from "./data";
+import { join } from "path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 
-export function convertOldPrefs(obj: any): Prefs {
-    const prefs = new Prefs();
+export function is_prefs_v0(prefs: any) {
+    return prefs["dataDir"] != undefined;
+}
 
-    prefs.general.saveFolder = obj["dataDir"];
-    prefs.general.accentColor = obj["accentColor"];
+export function is_save_v0(save: any) {
+    return save["schema_version"] == undefined;
+}
+
+export function convert_prefs_v0_to_v1(old: Prefs_v0): Prefs_v1 {
+    const prefs = new Prefs_v1();
+
+    if (old.dataDir != undefined && old.dataDir != "") {
+        prefs.general.saveFolder = old.dataDir;
+    }
+    if (old.accentColor != undefined && old.accentColor != "") {
+        prefs.general.accentColor = old.accentColor;
+    }
 
     return prefs;
 }
 
-export function convertOldSave(obj: any, saveFolderPath: string): Save {
-    const save = new Save();
-    const notebooks = obj["notebooks"];
+export function convert_save_v0_to_v1(old: Save_v0, saveFolderPath: string): Save_v1 {
+    const save = new Save_v1();
+    save.schema_version = 1;
+    const notebooks = old.notebooks;
 
-    notebooks.forEach((nb: any) => {
-        const f = new Folder(nb["name"], null);
+    notebooks.forEach((nb: Notebook_v0) => {
+        const f = new Folder_v1(nb.name, null);
 
-        f.color = nb["color"];
-        // TODO replace missing tabler icons
-        f.icon = replaceFeatherWithTabler(nb["icon"]);
+        f.color = nb.color;
+        f.icon = replaceFeatherWithTabler(nb.icon);
         f.id = uuid();
 
-        nb["pages"].forEach((child: any) => {
-            const p = new Page(child["title"], f);
-            p.fileName = child["fileName"];
-            p.favorited = child["favorite"];
+        nb.pages.forEach((child: Page_v0) => {
+            const p = new Page_v1(child.title, f);
+            p.fileName = child.fileName;
+            p.favorited = child.favorite;
 
             const docFilePath = join(saveFolderPath, "/notes/", p.fileName);
             if (existsSync(docFilePath)) {
@@ -49,6 +62,13 @@ export function convertOldSave(obj: any, saveFolderPath: string): Save {
     });
 
     return save;
+}
+
+function writePage(saveFolderPath: string, pageFileName: string, data: string) {
+    if (!existsSync(join(saveFolderPath, "/notes/"))) mkdirSync(join(saveFolderPath, "/notes/"));
+
+    const filePath = join(saveFolderPath, "/notes/", pageFileName);
+    writeFileSync(filePath, data, "utf-8");
 }
 
 /**
@@ -153,8 +173,10 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "book") return "book-2";
     else if (s == "columns") return "columns-2";
     else if (s == "compass") return "brand-safari";
-    else if (s == "crosshair") return "crosshair"; // eh
-    else if (s == "disc") return "disc"; // maybe "vinyl" or "playstation-circle"
+    else if (s == "crosshair")
+        return "crosshair"; // eh
+    else if (s == "disc")
+        return "disc"; // maybe "vinyl" or "playstation-circle"
     else if (s == "globe") return "world";
     else if (s == "layout") return "table";
     else if (s == "menu") return "menu-2";
@@ -198,7 +220,8 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "github") return "brand-github";
     else if (s == "gitlab") return "brand-gitlab";
     else if (s == "grid") return "layout-grid";
-    else if (s == "hard-drive") return "server"; // this one sucks
+    else if (s == "hard-drive")
+        return "server"; // this one sucks
     else if (s == "image") return "photo";
     else if (s == "info") return "info-circle";
     else if (s == "instagram") return "brand-instagram";
@@ -222,20 +245,23 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "mouse-pointer") return "pointer";
     else if (s == "move") return "arrows-move";
     else if (s == "navigation-2") return "navigation";
-    else if (s == "pause-circle") return "clock-pause"; // sucks
+    else if (s == "pause-circle")
+        return "clock-pause"; // sucks
     else if (s == "pause") return "player-pause";
     else if (s == "pen-tool") return "ballpen";
     else if (s == "percent") return "percentage";
     else if (s == "phone-forwarded") return "phone-outgoing";
     else if (s == "phone-missed") return "phone-x";
     else if (s == "pie-chart") return "chart-pie";
-    else if (s == "play-circle") return "clock-play"; // sucks
+    else if (s == "play-circle")
+        return "clock-play"; // sucks
     else if (s == "play") return "player-play";
     else if (s == "plus-circle") return "circle-plus";
     else if (s == "plus-square") return "square-plus";
     else if (s == "pocket") return "brand-pocket";
     else if (s == "refresh-ccw") return "refresh";
-    else if (s == "refresh-cw") return "rotate-clockwise"; // sucks
+    else if (s == "refresh-cw")
+        return "rotate-clockwise"; // sucks
     else if (s == "rewind") return "player-track-prev";
     else if (s == "rotate-ccw") return "rotate";
     else if (s == "rotate-cw") return "rotate-clockwise";
@@ -266,7 +292,8 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "volume-x") return "volume-3";
     else if (s == "watch") return "device-watch";
     else if (s == "x-circle") return "circle-x";
-    else if (s == "x-octagon") return "circle-x"; // sucks
+    else if (s == "x-octagon")
+        return "circle-x"; // sucks
     else if (s == "x-square") return "square-x";
     else if (s == "youtube") return "brand-youtube";
     else if (s == "zap-off") return "bolt-off";

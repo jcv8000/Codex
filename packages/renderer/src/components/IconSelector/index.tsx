@@ -6,6 +6,7 @@ import {
     Divider,
     Flex,
     Grid,
+    Input,
     Modal,
     Select,
     Space,
@@ -17,8 +18,8 @@ import { Icon } from "components/Icon";
 import { useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";
 import { useDebouncedState } from "@mantine/hooks";
-import { Locale, locales } from "common/Locales";
-import { codexStore } from "src/state";
+import { codexStore, useLocale } from "src/state";
+import { Locale } from "common/Locales";
 
 import classes from "./IconSelector.module.css";
 import tablerJSON from "../../../../../node_modules/@tabler/icons/tags.json";
@@ -28,10 +29,13 @@ type Props = {
     onChangeIcon: (value: string) => void;
     color: string;
     onChangeColor: (value: string) => void;
+
+    label?: string;
 };
 
 export function IconSelector(props: Props) {
-    const locale = locales[codexStore.prefs.general.locale];
+    const locale = useLocale();
+    const texts = locale.mutateModals.iconSelector;
 
     const tablerIcons = useMemo(() => {
         const list = Object.values(tablerJSON).map((icon) => ({
@@ -104,56 +108,56 @@ export function IconSelector(props: Props) {
 
     return (
         <>
-            <Grid mb="xl">
-                <Grid.Col span="auto">
-                    <Center h="100%">
-                        <div>
-                            <Tooltip
-                                label={locale.mutateModals.iconSelector.tooltip}
-                                withArrow
-                                withinPortal
-                            >
-                                <ActionIcon size={96} variant="default" onClick={open}>
-                                    <Icon icon={props.icon} color={props.color} size={64} />
-                                </ActionIcon>
-                            </Tooltip>
+            <Input.Wrapper label={props.label}>
+                <Grid mb="xl">
+                    <Grid.Col span="auto">
+                        <Center h="100%">
+                            <div>
+                                <Tooltip label={texts.tooltip} withArrow withinPortal>
+                                    <ActionIcon size={96} variant="default" onClick={open}>
+                                        <Icon icon={props.icon} color={props.color} size={64} />
+                                    </ActionIcon>
+                                </Tooltip>
 
-                            <Space h={4} />
+                                <Space h={4} />
 
-                            <Text ta="center">{props.icon}</Text>
-                        </div>
-                    </Center>
-                </Grid.Col>
-                <Grid.Col span="auto">
-                    <Center>
-                        {props.color == "rainbow" ? (
-                            <Center h="230px">
-                                <Button
-                                    variant="default"
-                                    onClick={() => props.onChangeColor("#999999")}
-                                >
-                                    {locale.mutateModals.iconSelector.reset_color_from_rainbow}
-                                </Button>
-                            </Center>
-                        ) : (
-                            <ColorPicker
-                                value={props.color}
-                                onChangeEnd={(value) => props.onChangeColor(value)}
-                                swatchesPerRow={7}
-                                swatches={colorSwatches}
-                            />
-                        )}
-                    </Center>
-                </Grid.Col>
-            </Grid>
+                                <Text ta="center" fz="sm">
+                                    {props.icon}
+                                </Text>
+                            </div>
+                        </Center>
+                    </Grid.Col>
+                    <Grid.Col span="auto">
+                        <Center>
+                            {props.color == "rainbow" ? (
+                                <Center h="230px">
+                                    <Button
+                                        variant="default"
+                                        onClick={() => props.onChangeColor("#999999")}
+                                    >
+                                        {texts.reset_color_from_rainbow}
+                                    </Button>
+                                </Center>
+                            ) : (
+                                <ColorPicker
+                                    value={props.color}
+                                    onChangeEnd={(value) => props.onChangeColor(value)}
+                                    swatchesPerRow={7}
+                                    swatches={colorSwatches}
+                                />
+                            )}
+                        </Center>
+                    </Grid.Col>
+                </Grid>
+            </Input.Wrapper>
 
             <Modal
                 opened={showPickerModal}
                 onClose={close}
                 size="xl"
-                zIndex={99999}
+                zIndex={300}
                 overlayProps={{ opacity: 0, blur: 0 }}
-                title={<Text mb={4}>{locale.mutateModals.iconSelector.modal.title}</Text>}
+                title={texts.modal.title}
             >
                 <Grid mb="xs">
                     <Grid.Col span={9}>
@@ -161,9 +165,7 @@ export function IconSelector(props: Props) {
                             ref={filterInputRef}
                             onChange={(e) => setFilter(e.currentTarget.value)}
                             data-autofocus
-                            placeholder={
-                                locale.mutateModals.iconSelector.modal.searh_bar_placeholder
-                            }
+                            placeholder={texts.modal.searh_bar_placeholder}
                             rightSection={
                                 filter != "" && (
                                     <ActionIcon
@@ -182,7 +184,7 @@ export function IconSelector(props: Props) {
                     <Grid.Col span={3}>
                         <Select
                             clearable
-                            placeholder={locale.mutateModals.iconSelector.modal.category}
+                            placeholder={texts.modal.category}
                             value={category}
                             onChange={(value) => setCategory(value)}
                             data={categories(locale)}
@@ -194,8 +196,7 @@ export function IconSelector(props: Props) {
                     my="xs"
                     label={
                         <span>
-                            {iconList.length.toLocaleString()}{" "}
-                            {locale.mutateModals.iconSelector.modal.results}
+                            {iconList.length.toLocaleString()} {texts.modal.results}
                         </span>
                     }
                     labelPosition="center"
@@ -207,11 +208,7 @@ export function IconSelector(props: Props) {
                             <div
                                 key={icon.name}
                                 title={icon.name}
-                                className={
-                                    props.icon == icon.name
-                                        ? classes.active + " " + classes.iconButton
-                                        : classes.iconButton
-                                }
+                                className={classes.iconButton}
                                 onClick={() => {
                                     props.onChangeIcon(icon.name);
                                     close();

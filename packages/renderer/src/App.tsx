@@ -10,20 +10,36 @@ import { AppTheme } from "./styles/AppTheme";
 import { Sidebar } from "components/Sidebar";
 import { View } from "components/Views/View";
 import { codexStore, useSnapshot } from "./state";
-import { ModalsWrapper } from "components/Modals";
+import { ModalsProvider } from "components/Modals";
+import { ModalsProvider as MantineModalsProvider } from "@mantine/modals";
 
 export function App() {
-    const { prefs } = useSnapshot(codexStore);
-
     return (
-        <MantineProvider theme={AppTheme(prefs)}>
-            <ModalsWrapper>
+        <MantineWrapper>
+            <MantineModalsProvider>
                 <Sidebar />
 
                 <div id="main">
                     <View />
                 </div>
-            </ModalsWrapper>
+
+                <ModalsProvider />
+            </MantineModalsProvider>
+        </MantineWrapper>
+    );
+}
+
+function MantineWrapper(props: { children?: React.ReactNode }) {
+    const { general, editor } = useSnapshot(codexStore).prefs;
+    return (
+        <MantineProvider
+            theme={AppTheme({
+                accentColor: general.accentColor,
+                codeWordWrap: editor.codeWordWrap,
+                sidebarWidth: general.sidebarWidth
+            })}
+        >
+            {props.children}
         </MantineProvider>
     );
 }

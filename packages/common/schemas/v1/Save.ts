@@ -1,5 +1,5 @@
 import { v4 as NewUUID } from "@lukeed/uuid";
-import { pageNameToFileName } from "./Utils";
+import { pageNameToFileName } from "common/Utils";
 
 export class NoteItem {
     name: string;

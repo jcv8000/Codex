@@ -1,4 +1,4 @@
-export * from "./ModalsWrapper";
+export * from "./ModalsProvider";
 export * from "./ContextMenu";
 export * from "./NewModal";
 export * from "./EditModal";

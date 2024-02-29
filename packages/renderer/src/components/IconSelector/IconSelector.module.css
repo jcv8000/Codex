@@ -20,12 +20,12 @@
     }
 }
 
-.active {
+/* .active {
     background-color: var(--accent-color);
-    color: white;
-    fill: white;
+    color: var(--accent-text-color) !important;
+    fill: var(--accent-text-color) !important;
 
     @mixin hover {
         background-color: var(--accent-color-dark);
     }
-}
+} */

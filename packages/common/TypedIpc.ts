@@ -1,6 +1,6 @@
 /**
  * @see https://github.com/deiucanta/electron-typed-ipc
- * Package has an electron peerDependency of an old verison
+ * Package has a very old Electron peerDependency
  */
 
 import {

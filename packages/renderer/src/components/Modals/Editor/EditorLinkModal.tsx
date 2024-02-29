@@ -5,12 +5,7 @@ export type EditorLinkModalState = {
     editor: Editor | null;
     initialUrl: string;
 };
-export const defaultEditorLinkModalState: EditorLinkModalState = {
-    opened: false,
-    editor: null,
-    initialUrl: ""
-};
 
-export function EditorLinkModal(props: { state: EditorLinkModalState; onClose: () => void }) {
+export function EditorLinkModal(props: { state: EditorLinkModalState }) {
     return <></>;
 }

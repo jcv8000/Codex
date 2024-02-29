@@ -1,9 +1,8 @@
 import { Menu, Text, Title } from "@mantine/core";
 import { useClickOutside, useElementSize, useMergedRef } from "@mantine/hooks";
-import { locales } from "common/Locales";
-import { Folder, NoteItem, Page } from "common/Save";
+import { Folder, NoteItem, Page, isFolder, isPage } from "common/schemas/v2/Save";
 import { Icon } from "components/Icon";
-import { codexStore, modifySave, setView } from "src/state";
+import { codexStore, modifyItem, deleteItem, useLocale } from "src/state";
 import { modalStore } from "src/state";
 import { openConfirmModal } from "@mantine/modals";
 import { truncate } from "common/Utils";
@@ -21,7 +20,6 @@ function close() {
 
 export function ContextMenu(props: { state: ContextMenuState }) {
     const { item, opened, x } = props.state;
-    const locale = locales[codexStore.prefs.general.locale];
 
     const clickOutsideRef = useClickOutside(() => {
         if (props.state.opened) close();
@@ -59,22 +57,15 @@ export function ContextMenu(props: { state: ContextMenuState }) {
                             </Text>
                         </Menu.Label>
 
-                        {item instanceof Folder && folderNewItems(item)}
+                        {isFolder(item) && <FolderNewMenuItems item={item} />}
 
-                        <Menu.Item
-                            leftSection={<Icon icon="pencil" />}
-                            onClick={() => {
-                                modalStore.editModalState = { opened: true, item: item };
-                            }}
-                        >
-                            {locale.contextMenu.edit_item}
-                        </Menu.Item>
+                        <EditMenuItem item={item} />
 
-                        {item instanceof Page && pageItems(item)}
+                        {isPage(item) && <PageMenuItems item={item} />}
 
-                        {item instanceof Folder && folderExports(item)}
+                        {isFolder(item) && <FolderExportMenuItems item={item} />}
 
-                        {deleteItem(item)}
+                        <DeleteMenuItem item={item} />
                     </>
                 )}
             </Menu.Dropdown>
@@ -82,8 +73,9 @@ export function ContextMenu(props: { state: ContextMenuState }) {
     );
 }
 
-function folderNewItems(item: Folder) {
-    const locale = locales[codexStore.prefs.general.locale];
+function FolderNewMenuItems(props: { item: Folder }) {
+    const locale = useLocale();
+    const item = props.item;
     return (
         <>
             <Menu.Item
@@ -114,16 +106,30 @@ function folderNewItems(item: Folder) {
     );
 }
 
-function pageItems(item: Page) {
-    const locale = locales[codexStore.prefs.general.locale];
+function EditMenuItem(props: { item: NoteItem }) {
+    const locale = useLocale();
+    const item = props.item;
+    return (
+        <Menu.Item
+            leftSection={<Icon icon="pencil" />}
+            onClick={() => {
+                modalStore.editModalState = { opened: true, item: item };
+            }}
+        >
+            {locale.contextMenu.edit_item}
+        </Menu.Item>
+    );
+}
+
+function PageMenuItems(props: { item: Page }) {
+    const locale = useLocale();
+    const item = props.item;
     return (
         <>
             <Menu.Item
                 leftSection={<Icon icon="star" />}
                 onClick={() => {
-                    modifySave(() => {
-                        item.favorited = !item.favorited;
-                    });
+                    modifyItem(item.id, { favorited: !item.favorited });
                 }}
             >
                 {locale.contextMenu.favorite_page(item.favorited)}
@@ -154,8 +160,9 @@ function pageItems(item: Page) {
     );
 }
 
-function folderExports(item: Folder) {
-    const locale = locales[codexStore.prefs.general.locale];
+function FolderExportMenuItems(props: { item: Folder }) {
+    const locale = useLocale();
+    const item = props.item;
     return (
         <>
             <Menu.Divider />
@@ -183,8 +190,9 @@ function folderExports(item: Folder) {
     );
 }
 
-function deleteItem(item: NoteItem) {
-    const locale = locales[codexStore.prefs.general.locale];
+function DeleteMenuItem(props: { item: NoteItem }) {
+    const locale = useLocale();
+    const item = props.item;
     return (
         <Menu.Item
             color="red"
@@ -194,7 +202,7 @@ function deleteItem(item: NoteItem) {
                     title: <Title order={3}>{locale.mutateModals.delete_item_title}</Title>,
                     children: (
                         <Text>
-                            {item instanceof Folder
+                            {isFolder(item)
                                 ? locale.mutateModals.delete_folder_text(truncate(item.name, 25))
                                 : locale.mutateModals.delete_page_text(truncate(item.name, 25))}
                         </Text>
@@ -205,17 +213,13 @@ function deleteItem(item: NoteItem) {
                     },
                     confirmProps: { color: "red" },
                     onConfirm: () => {
-                        if (codexStore.view.value == "editor" && codexStore.view.activePage == item)
-                            setView({ value: "home" });
+                        if (
+                            codexStore.view.value == "editor" &&
+                            codexStore.view.activePageId == item.id
+                        )
+                            codexStore.view = { value: "home" };
 
-                        modifySave((s) => {
-                            if (item.parent == null) {
-                                s.items.splice(s.items.indexOf(item), 1);
-                            } else {
-                                const parent = item.parent as Folder;
-                                parent.children.splice(parent.children.indexOf(item), 1);
-                            }
-                        });
+                        deleteItem(item.id);
                     }
                 });
             }}

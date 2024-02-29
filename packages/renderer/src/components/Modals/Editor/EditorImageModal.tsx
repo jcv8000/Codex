@@ -5,8 +5,6 @@ export type EditorImageModalState = {
     editor: Editor | null;
 };
 
-export const defaultEditorImageModalState: EditorImageModalState = { opened: false, editor: null };
-
-export function EditorImageModal(props: { state: EditorImageModalState; onClose: () => void }) {
+export function EditorImageModal(props: { state: EditorImageModalState }) {
     return <></>;
 }

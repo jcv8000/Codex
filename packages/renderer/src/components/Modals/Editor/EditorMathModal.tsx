@@ -6,12 +6,6 @@ export type EditorMathModalState = {
     startLatex: string;
 };
 
-export const defaultEditorMathModalState: EditorMathModalState = {
-    opened: false,
-    editor: null,
-    startLatex: ""
-};
-
-export function EditorMathModal(props: { state: EditorMathModalState; onClose: () => void }) {
+export function EditorMathModal(props: { state: EditorMathModalState }) {
     return <></>;
 }

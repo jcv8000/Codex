@@ -5,7 +5,7 @@ import { menu } from "./menu";
 import * as remote from "@electron/remote/main";
 import { loadWindowState, saveWindowState } from "./windowState";
 import contextMenu from "electron-context-menu";
-import { Prefs } from "common/Prefs";
+import { Prefs } from "common/schemas/v1";
 import { locales } from "common/Locales";
 import { lt } from "semver";
 import escape from "validator/lib/escape";

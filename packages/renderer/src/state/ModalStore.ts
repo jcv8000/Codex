@@ -6,13 +6,7 @@ import {
     WhatsNewModalState,
     EditorImageModalState,
     EditorLinkModalState,
-    EditorMathModalState,
-    defaultNewModalState,
-    defaultEditModalState,
-    defaultWhatsNewModalState,
-    defaultEditorImageModalState,
-    defaultEditorLinkModalState,
-    defaultEditorMathModalState
+    EditorMathModalState
 } from "components/Modals";
 
 export type ModalStore = {
@@ -30,11 +24,11 @@ export type ModalStore = {
 export const modalStore = proxy<ModalStore>({
     contextMenuState: { opened: false, item: null, x: 0, y: 0 },
 
-    newModalState: defaultNewModalState,
-    editModalState: defaultEditModalState,
-    whatsNewModalState: defaultWhatsNewModalState,
+    newModalState: { opened: false, parent: null, type: "folder" },
+    editModalState: { opened: false, item: null },
+    whatsNewModalState: { opened: false },
 
-    editorImageModalState: defaultEditorImageModalState,
-    editorLinkModalState: defaultEditorLinkModalState,
-    editorMathModalState: defaultEditorMathModalState
+    editorImageModalState: { opened: false, editor: null },
+    editorLinkModalState: { opened: false, editor: null, initialUrl: "" },
+    editorMathModalState: { opened: false, editor: null, startLatex: "" }
 });

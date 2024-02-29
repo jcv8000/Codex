@@ -1,4 +1,4 @@
-import { modifyPrefs } from "src/state";
+import { codexStore } from "src/state";
 import classes from "./SidebarResizer.module.css";
 
 const SIDEBAR_MIN_WIDTH = 200;
@@ -15,16 +15,12 @@ export function SidebarResizer() {
                     (e) => {
                         document.removeEventListener("mousemove", resize);
 
-                        modifyPrefs((p) => {
-                            p.general.sidebarWidth = e.clientX;
-
-                            if (e.clientX >= SIDEBAR_MIN_WIDTH && e.clientX <= SIDEBAR_MAX_WIDTH)
-                                p.general.sidebarWidth = e.clientX;
-                            else if (e.clientX < SIDEBAR_MIN_WIDTH)
-                                p.general.sidebarWidth = SIDEBAR_MIN_WIDTH;
-                            else if (e.clientX > SIDEBAR_MAX_WIDTH)
-                                p.general.sidebarWidth = SIDEBAR_MAX_WIDTH;
-                        });
+                        if (e.clientX >= SIDEBAR_MIN_WIDTH && e.clientX <= SIDEBAR_MAX_WIDTH)
+                            codexStore.prefs.general.sidebarWidth = e.clientX;
+                        else if (e.clientX < SIDEBAR_MIN_WIDTH)
+                            codexStore.prefs.general.sidebarWidth = SIDEBAR_MIN_WIDTH;
+                        else if (e.clientX > SIDEBAR_MAX_WIDTH)
+                            codexStore.prefs.general.sidebarWidth = SIDEBAR_MAX_WIDTH;
                     },
                     { once: true }
                 );

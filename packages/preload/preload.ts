@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { Commands, Events, TypedIpcRenderer } from "common/ipc";
 import { Titlebar, Color } from "@treverix/custom-electron-titlebar";
-import { Prefs } from "common/Prefs";
+import { Prefs } from "common/schemas/v1";
 
 declare global {
     interface Window {

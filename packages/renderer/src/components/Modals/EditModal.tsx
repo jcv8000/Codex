@@ -1,12 +1,10 @@
-import { NoteItem } from "common/Save";
+import { NoteItem } from "common/schemas/v2/Save";
 
 export type EditModalState = {
     opened: boolean;
     item: NoteItem | null;
 };
 
-export const defaultEditModalState: EditModalState = { opened: false, item: null };
-
-export function EditModal(props: { state: EditModalState; onClose: () => void }) {
+export function EditModal(props: { state: EditModalState }) {
     return <></>;
 }

@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "main": ".vite/index.cjs",
-    "version": "2.0.5",
+    "version": "3.0.0",
     "description": "Note-taking app for programmers and CS students",
     "author": {
         "name": "Josh Vickery",
@@ -79,7 +79,8 @@
         "semver": "^7.6.0",
         "tiptap-markdown": "0.8.2",
         "validator": "^13.11.0",
-        "valtio": "^1.13.1"
+        "valtio": "^1.13.1",
+        "zod": "^3.22.4"
     },
     "devDependencies": {
         "@types/color": "^3.0.6",

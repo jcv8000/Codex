@@ -1,9 +1,9 @@
 import { Box, Collapse, Flex, Text, rem } from "@mantine/core";
 import { Icon } from "components/Icon";
 import React, { useRef, useState } from "react";
-import { Folder, NoteItem, Page, Save } from "common/Save";
+import { NoteItem, isFolder, isPage } from "common/schemas/v2/Save";
 import { locales } from "common/Locales";
-import { codexStore, modifySave, setView, useSnapshot } from "src/state";
+import { codexStore, modalStore, modifyItem, useSnapshot } from "src/state";
 import clsx from "clsx";
 
 import classes from "./SidebarItem.module.css";
@@ -25,7 +25,7 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
 
     const children = new Array<JSX.Element>();
 
-    if (item instanceof Folder) {
+    if (isFolder(item)) {
         item.children.forEach((child) => {
             children.push(<SidebarNoteItem item={child} key={child.id} depth={depth + 1} />);
         });
@@ -46,7 +46,7 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
         }
     }
 
-    const active = codexStore.view.value == "editor" && codexStore.view.activePage == item;
+    const active = codexStore.view.value == "editor" && codexStore.view.activePageId == item.id;
 
     return (
         <>
@@ -62,10 +62,10 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
                 onClick={onClick(item)}
                 onContextMenu={onContextMenu(item)}
                 draggable={true}
-                onDragStart={onDragStart(setDragStatus, dragImageRef, item)}
-                onDragOver={onDragOver(setDragStatus, item)}
-                onDragLeave={onDragLeave(setDragStatus)}
-                onDrop={onDrop(dragStatus, setDragStatus, dragImageRef, item)}
+                // onDragStart={onDragStart(setDragStatus, dragImageRef, item)}
+                // onDragOver={onDragOver(setDragStatus, item)}
+                // onDragLeave={onDragLeave(setDragStatus)}
+                // onDrop={onDrop(dragStatus, setDragStatus, dragImageRef, item)}
                 style={{
                     paddingLeft: getLeftPadding(depth)
                 }}
@@ -80,13 +80,13 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
                         {item.name}
                     </Text>
 
-                    {item instanceof Folder && (
+                    {isFolder(item) && (
                         <span
                             className={clsx(classes.caret, item.opened && classes.caretOpen)}
                         ></span>
                     )}
 
-                    {item instanceof Page && item.favorited && (
+                    {isPage(item) && item.favorited && (
                         <span style={{ marginLeft: "auto" }}>
                             <Icon
                                 icon="star-filled"
@@ -99,7 +99,7 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
                 </Flex>
             </Box>
 
-            {item instanceof Folder && (
+            {isFolder(item) && (
                 <Collapse in={item.opened}>
                     <div>{children}</div>
                 </Collapse>
@@ -110,35 +110,37 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
 
 function onClick(item: NoteItem): React.MouseEventHandler {
     return (e) => {
-        if (item instanceof Folder) {
-            modifySave(() => {
-                if (item.opened == true && e.altKey) {
-                    // Recursively close folder and all children
-                    const recurseClose = (f: Folder) => {
-                        f.opened = false;
+        // if (item instanceof Folder) {
+        //     modifySave(() => {
+        //         if (item.opened == true && e.altKey) {
+        //             // Recursively close folder and all children
+        //             const recurseClose = (f: Folder) => {
+        //                 f.opened = false;
 
-                        f.children.forEach((child) => {
-                            if (child instanceof Folder) {
-                                recurseClose(child);
-                            }
-                        });
-                    };
+        //                 f.children.forEach((child) => {
+        //                     if (child instanceof Folder) {
+        //                         recurseClose(child);
+        //                     }
+        //                 });
+        //             };
 
-                    recurseClose(item);
-                } else {
-                    item.opened = !item.opened;
-                }
-            });
-        } else if (item instanceof Page) {
-            setView({ value: "editor", activePage: item });
-        }
+        //             recurseClose(item);
+        //         } else {
+        //             item.opened = !item.opened;
+        //         }
+        //     });
+        // } else if (item instanceof Page) {
+        //     setView({ value: "editor", activePage: item });
+        // }
+
+        if (isFolder(item)) modifyItem(item.id, { opened: !item.opened });
     };
 }
 
 function onContextMenu(item: NoteItem): React.MouseEventHandler<HTMLDivElement> {
     return (e) => {
         e.preventDefault();
-        codexStore.modals.contextMenuState = {
+        modalStore.contextMenuState = {
             opened: true,
             item: item,
             x: e.clientX,
@@ -147,71 +149,71 @@ function onContextMenu(item: NoteItem): React.MouseEventHandler<HTMLDivElement> 
     };
 }
 
-function onDragStart(
-    setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>,
-    dragImageRef: React.RefObject<HTMLDivElement>,
-    item: NoteItem
-): React.DragEventHandler<HTMLDivElement> {
-    return (e) => {
-        e.dataTransfer.setDragImage(dragImageRef.current!, 0, -24);
-        codexStore.draggedItem = item;
-        setDragStatus("beingDragged");
-    };
-}
+// function onDragStart(
+//     setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>,
+//     dragImageRef: React.RefObject<HTMLDivElement>,
+//     item: NoteItem
+// ): React.DragEventHandler<HTMLDivElement> {
+//     return (e) => {
+//         e.dataTransfer.setDragImage(dragImageRef.current!, 0, -24);
+//         codexStore.draggedItem = item;
+//         setDragStatus("beingDragged");
+//     };
+// }
 
-function onDragOver(
-    setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>,
-    item: NoteItem
-): React.DragEventHandler<HTMLDivElement> {
-    return (e) => {
-        // THIS is the item receiving the drop
+// function onDragOver(
+//     setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>,
+//     item: NoteItem
+// ): React.DragEventHandler<HTMLDivElement> {
+//     return (e) => {
+//         // THIS is the item receiving the drop
 
-        if (codexStore.draggedItem == null) return;
+//         if (codexStore.draggedItem == null) return;
 
-        // Don't let the user try to parent an ancestor to it's descendant, or to itself
-        if (!Save.isDescendantOf(item, codexStore.draggedItem) && item != codexStore.draggedItem) {
-            e.preventDefault();
+//         // Don't let the user try to parent an ancestor to it's descendant, or to itself
+//         if (!Save.isDescendantOf(item, codexStore.draggedItem) && item != codexStore.draggedItem) {
+//             e.preventDefault();
 
-            const rect = e.currentTarget.getBoundingClientRect();
-            const yPercent = ((e.clientY - rect.y) / rect.height) * 100;
-            const xPercent = (e.clientX / rect.width) * 100;
+//             const rect = e.currentTarget.getBoundingClientRect();
+//             const yPercent = ((e.clientY - rect.y) / rect.height) * 100;
+//             const xPercent = (e.clientX / rect.width) * 100;
 
-            if (xPercent > 75 && item instanceof Folder) setDragStatus("child");
-            else if (yPercent < 50) setDragStatus("above");
-            else setDragStatus("below");
-        }
-    };
-}
+//             if (xPercent > 75 && item instanceof Folder) setDragStatus("child");
+//             else if (yPercent < 50) setDragStatus("above");
+//             else setDragStatus("below");
+//         }
+//     };
+// }
 
-function onDragLeave(
-    setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>
-): React.DragEventHandler<HTMLDivElement> {
-    return () => {
-        setDragStatus("none");
-    };
-}
+// function onDragLeave(
+//     setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>
+// ): React.DragEventHandler<HTMLDivElement> {
+//     return () => {
+//         setDragStatus("none");
+//     };
+// }
 
-function onDrop(
-    dragStatus: DragStatus,
-    setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>,
-    dragImageRef: React.RefObject<HTMLDivElement>,
-    item: NoteItem
-): React.DragEventHandler<HTMLDivElement> {
-    return (e) => {
-        // THIS is the item receiving the drop
-        e.preventDefault();
+// function onDrop(
+//     dragStatus: DragStatus,
+//     setDragStatus: React.Dispatch<React.SetStateAction<DragStatus>>,
+//     dragImageRef: React.RefObject<HTMLDivElement>,
+//     item: NoteItem
+// ): React.DragEventHandler<HTMLDivElement> {
+//     return (e) => {
+//         // THIS is the item receiving the drop
+//         e.preventDefault();
 
-        let where: "above" | "below" | "child" = "below";
-        if (dragStatus == "above") where = "above";
-        else if (dragStatus == "below") where = "below";
-        else if (dragStatus == "child") where = "child";
+//         let where: "above" | "below" | "child" = "below";
+//         if (dragStatus == "above") where = "above";
+//         else if (dragStatus == "below") where = "below";
+//         else if (dragStatus == "child") where = "child";
 
-        modifySave((s) => {
-            if (codexStore.draggedItem != null) {
-                s.dragDropItem(codexStore.draggedItem, item, where);
-            }
-        });
+//         modifySave((s) => {
+//             if (codexStore.draggedItem != null) {
+//                 s.dragDropItem(codexStore.draggedItem, item, where);
+//             }
+//         });
 
-        setDragStatus("none");
-    };
-}
+//         setDragStatus("none");
+//     };
+// }

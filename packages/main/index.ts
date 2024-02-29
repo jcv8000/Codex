@@ -10,7 +10,6 @@ import { logError, setupLogger } from "./logger";
 import { saveWindowState } from "./windowState";
 import { locales } from "common/Locales";
 import { Commands, Events, TypedIpcMain, linkMap } from "common/ipc";
-import { Save } from "common/Save";
 
 const ipc = ipcMain as TypedIpcMain<Events, Commands>;
 
@@ -56,12 +55,12 @@ if (app.requestSingleInstanceLock()) {
         });
 
         ipc.handle("get-save", () => {
-            return Save.stringify(save);
+            return JSON.stringify(save);
         });
 
         ipc.handle("write-save", (e, newSave) => {
             try {
-                save = Save.parse(newSave);
+                save = JSON.parse(newSave);
                 writeSave(prefs.general.saveFolder, save);
                 return true;
             } catch (e) {

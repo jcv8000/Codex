@@ -1,11 +1,8 @@
 import { locales } from "common/Locales";
 import { SidebarItem, SidebarNoteItem } from "src/components/SidebarItems";
-import { codexStore, setView, useSnapshot } from "src/state";
+import { codexStore, useSnapshot } from "src/state";
 
 export function SidebarContent() {
-    // Have to access "save" snapshot to trigger re-renders, but I'm passing
-    // down the actual proxy save object to the SidebarNoteItem tree
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { prefs, view, save } = useSnapshot(codexStore);
 
     const locale = locales[prefs.general.locale];
@@ -14,13 +11,13 @@ export function SidebarContent() {
             <SidebarItem
                 icon="home"
                 text={locale.sidebar.homeTab}
-                onClick={() => setView({ value: "home" })}
+                onClick={() => (codexStore.view = { value: "home" })}
                 shouldBeActive={view.value == "home"}
             />
             <SidebarItem
                 icon="settings"
                 text={locale.sidebar.settings}
-                onClick={() => setView({ value: "settings" })}
+                onClick={() => (codexStore.view = { value: "settings" })}
                 shouldBeActive={view.value == "settings"}
             />
             <SidebarItem icon="menu-2" text={locale.sidebar.moreTab}>
@@ -62,7 +59,7 @@ export function SidebarContent() {
                 />
             </SidebarItem>
 
-            {codexStore.save.items.map((item) => (
+            {save.items.map((item) => (
                 <SidebarNoteItem item={item} key={item.id} />
             ))}
         </>

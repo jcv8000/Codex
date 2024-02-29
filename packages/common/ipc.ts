@@ -1,4 +1,4 @@
-import { Page } from "./Save";
+import { Page } from "common/schemas/v1";
 
 // export type RendererCommands = {
 //     "get-prefs": () => Prefs;
