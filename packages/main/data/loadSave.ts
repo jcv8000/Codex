@@ -14,7 +14,7 @@ export function loadSave(saveFolderPath: string): Save | null {
             const saveText = readFileSync(saveFilePath, "utf-8").toString();
             const saveObj = JSON.parse(saveText);
 
-            const save = convertOldSave(saveObj, saveFolderPath);
+            const save = convertSaveIfOld(saveObj, saveFolderPath);
 
             if (save != null) writeFileSync(saveFilePath, JSON.stringify(save, null, 4), "utf-8");
 
@@ -29,19 +29,19 @@ export function loadSave(saveFolderPath: string): Save | null {
     }
 }
 
-function convertOldSave(old: any, saveFolderPath: string): Save | null {
-    if (is_save_v0(old)) {
+function convertSaveIfOld(save: any, saveFolderPath: string): Save | null {
+    if (is_save_v0(save)) {
         if (askToConvert(saveFolderPath) == "yes") {
-            const v1 = convert_save_v0_to_v1(old, saveFolderPath);
+            const v1 = convert_save_v0_to_v1(save, saveFolderPath);
             v1.schema_version = 2;
             return v1 as unknown as Save;
         } else return null;
-    } else if (is_save_v1(old)) {
+    } else if (is_save_v1(save)) {
         // v1 and v2 are identical
-        old.schema_version = 2;
-        return old as Save;
-    } else if (old.schema_version == 2) {
-        return old as Save;
+        save.schema_version = 2;
+        return save as Save;
+    } else if (save.schema_version == 2) {
+        return save as Save;
     } else {
         throw new Error("Failed to convert Save to a known format");
     }

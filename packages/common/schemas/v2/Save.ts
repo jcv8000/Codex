@@ -20,7 +20,7 @@ export type Folder = NoteItemBase & {
 
 export type NoteItem = Page | Folder;
 
-export type Save = { schema: number; items: NoteItem[] };
+export type Save = { schema_version: number; items: NoteItem[] };
 
 export function isPage(item: Readonly<NoteItem>): item is Readonly<Page> {
     return (item as Page).fileName !== undefined;
@@ -92,4 +92,4 @@ items.push({
         } as Page
     ]
 } as Folder);
-export const exampleSave: Save = { schema: 2, items: items };
+export const exampleSave: Save = { schema_version: 2, items: items };
