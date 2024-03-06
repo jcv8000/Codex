@@ -7,28 +7,32 @@ import { loadWindowState, saveWindowState } from "./windowState";
 import contextMenu from "electron-context-menu";
 import { Prefs } from "common/schemas/v1";
 import { locales } from "common/Locales";
-import { lt } from "semver";
+import { lt as lessThan } from "semver";
 import escape from "validator/lib/escape";
 import log from "electron-log";
+import { TypedIpcMain } from "common/ipc";
 
-async function checkForUpdates(window: BrowserWindow) {
+async function checkForUpdates(ipc: TypedIpcMain) {
     app.commandLine.appendSwitch("disable-http-cache");
 
     try {
         const resp = await fetch("https://api.github.com/repos/jcv8000/Codex/releases");
         const body = (await resp.json()) as any[];
 
-        const latest = body[0].tag_name as string;
+        const latest = body[0].tag_name as string | undefined;
 
-        if (latest != undefined && import.meta.env.VITE_APP_VERSION != undefined)
-            if (lt(import.meta.env.VITE_APP_VERSION, latest))
-                window.webContents.send("UPDATE_AVAILABLE", [escape(latest)]);
+        if (latest && import.meta.env.VITE_APP_VERSION) {
+            if (lessThan(import.meta.env.VITE_APP_VERSION, latest)) {
+                const escapedVersion = escape(latest);
+                ipc.send("update-available", escapedVersion);
+            }
+        }
     } catch (e) {
         log.info("Unable to check for updates");
     }
 }
 
-export function createWindow(prefs: Prefs) {
+export function createWindow(prefs: Prefs, ipc: TypedIpcMain) {
     const windowState = loadWindowState();
 
     let icon = "icon.ico";
@@ -67,12 +71,12 @@ export function createWindow(prefs: Prefs) {
         if (windowState.maximized) window.maximize();
         else window.show();
 
-        setTimeout(() => checkForUpdates(window), 2000);
+        setTimeout(() => checkForUpdates(ipc), 2000);
     });
 
     window.on("close", (e) => {
         e.preventDefault();
-        window.webContents.send("EXIT");
+        ipc.send("pre-exit");
         saveWindowState(window);
     });
 

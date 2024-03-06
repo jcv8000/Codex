@@ -1,21 +1,23 @@
-import { contextBridge, ipcRenderer } from "electron";
-import { Commands, Events, TypedIpcRenderer } from "common/ipc";
+import { contextBridge } from "electron";
 import { Titlebar, Color } from "@treverix/custom-electron-titlebar";
-import { Prefs } from "common/schemas/v1";
+import { TypedIpcRenderer } from "common/ipc";
 
 declare global {
     interface Window {
-        ipc: TypedIpcRenderer<Events, Commands>;
+        ipc: TypedIpcRenderer;
     }
 }
 
 // Only grab prefs and save from across the IPC bridge at the start
-const typedIpcRenderer = ipcRenderer as TypedIpcRenderer<Events, Commands>;
+const typedIpcRenderer = new TypedIpcRenderer();
 
-contextBridge.exposeInMainWorld("ipc", typedIpcRenderer);
+contextBridge.exposeInMainWorld("ipc", {
+    on: typedIpcRenderer.on,
+    invoke: typedIpcRenderer.invoke
+});
 
 async function titlebar() {
-    const prefs = JSON.parse(await typedIpcRenderer.invoke("get-prefs")) as Prefs;
+    const prefs = await typedIpcRenderer.invoke("get-prefs");
     if (prefs.general.titlebarStyle == "custom" && process.platform !== "darwin") {
         window.addEventListener("DOMContentLoaded", () => {
             new Titlebar({

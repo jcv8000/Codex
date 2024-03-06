@@ -5,6 +5,7 @@ import { join } from "path";
 import { logError } from "../logger";
 import { convert_save_v0_to_v1, is_save_v0 } from "common/schemas/v1/v0_to_v1";
 import { is_save_v1 } from "common/schemas/v2/v1_to_v2";
+import isDev from "electron-is-dev";
 
 export function loadSave(saveFolderPath: string): Save | null {
     const saveFilePath = join(saveFolderPath, "save.json");
@@ -16,7 +17,10 @@ export function loadSave(saveFolderPath: string): Save | null {
 
             const save = convertSaveIfOld(saveObj, saveFolderPath);
 
-            if (save != null) writeFileSync(saveFilePath, JSON.stringify(save, null, 4), "utf-8");
+            if (save != null) {
+                writeFileSync(saveFilePath, JSON.stringify(save, null, 4), "utf-8");
+                if (isDev) console.log(`Read save from disk successfully`);
+            }
 
             return save;
         } catch (error) {
@@ -25,6 +29,7 @@ export function loadSave(saveFolderPath: string): Save | null {
         }
     } else {
         writeFileSync(saveFilePath, JSON.stringify(exampleSave, null, 4), "utf-8");
+        if (isDev) console.log(`No save file found, creating empty save`);
         return structuredClone(exampleSave);
     }
 }
@@ -33,12 +38,14 @@ function convertSaveIfOld(save: any, saveFolderPath: string): Save | null {
     if (is_save_v0(save)) {
         if (askToConvert(saveFolderPath) == "yes") {
             const v1 = convert_save_v0_to_v1(save, saveFolderPath);
+            if (isDev) console.log(`Converted save from schema v0 to v2`);
             v1.schema_version = 2;
             return v1 as unknown as Save;
         } else return null;
     } else if (is_save_v1(save)) {
         // v1 and v2 are identical
         save.schema_version = 2;
+        if (isDev) console.log(`Converted save from schema v1 to v2`);
         return save as Save;
     } else if (save.schema_version == 2) {
         return save as Save;

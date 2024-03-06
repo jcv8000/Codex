@@ -1,51 +1,13 @@
-import { Page } from "common/schemas/v1";
+import { IpcMainInvokeEvent, IpcRendererEvent, ipcMain, ipcRenderer, webContents } from "electron";
+import { Page, Prefs, Save } from "./schemas/v2";
 
-// export type RendererCommands = {
-//     "get-prefs": () => Prefs;
-//     "write-prefs": (p: Prefs) => boolean;
-//     "get-save": () => Save;
-//     "write-save": (s: Save) => boolean;
+type OptionalPromise<T> = T | Promise<T>;
 
-//     "load-page": (fileName: string) => string;
-//     "write-page": (fileName: string, content: string) => boolean;
-
-//     "export-single-pdf": (page: Page) => boolean;
-//     "export-multiple-pdf": (page: Page, directory: string) => boolean;
-//     "export-single-md": (page: Page, md: string) => boolean;
-//     "export-multiple-md": (page: Page, md: string, directory: string) => boolean;
-
-//     "get-directory": () => string | undefined;
-//     "get-default-save-location": () => string;
-//     "change-save-location": (location: string) => void;
-
-//     "open-link": (link: Link) => void;
-//     "open-external-link": (url: string) => void;
-//     "is-under-arm64-translator": () => boolean;
-
-//     restart: () => void;
-//     exit: () => void;
-// };
-// export type MainEvents = RendererCommands;
-
-// export type MainCommands = {
-//     "save-current-page": () => void;
-//     "editor-zoom-in": () => void;
-//     "editor-zoom-out": () => void;
-//     "editor-reset-zoom": () => void;
-//     "export-current-page-pdf": () => void;
-//     "toggle-sidebar": () => void;
-//     "reset-sidebar-width": () => void;
-//     "toggle-editor-toolbar": () => void;
-//     "update-available": (version: string) => void;
-//     "pre-exit": () => void;
-// };
-// export type RendererEvents = MainCommands;
-
-export type Commands = {
-    "get-prefs": () => string;
-    "write-prefs": (prefsString: string) => boolean;
-    "get-save": () => string;
-    "write-save": (saveString: string) => boolean;
+type RendererCommands = {
+    "get-prefs": () => Prefs;
+    "write-prefs": (prefs: Prefs) => boolean;
+    "get-save": () => Save;
+    "write-save": (save: Save) => boolean;
 
     "load-page": (fileName: string) => string;
     "write-page": (fileName: string, content: string) => boolean;
@@ -59,31 +21,65 @@ export type Commands = {
     "get-default-save-location": () => string;
 
     "is-under-arm64-translator": () => boolean;
-};
 
-export type Events = {
     "change-save-location": (location: string) => void;
 
     "open-link": (link: Link) => void;
     "open-external-link": (url: string) => void;
 
-    "menu-save-current-page": () => void;
-    "menu-editor-zoom-in": () => void;
-    "menu-editor-zoom-out": () => void;
-    "menu-editor-reset-zoom": () => void;
-    "menu-export-current-page-pdf": () => void;
-    "menu-toggle-sidebar": () => void;
-    "menu-reset-sidebar-width": () => void;
-    "menu-toggle-editor-toolbar": () => void;
-
-    "update-available": (version: string) => void;
-    "pre-exit": () => void;
-
     restart: () => void;
     exit: () => void;
 };
 
-type Link =
+type MainCommands = {
+    "pre-exit": () => void;
+    "update-available": (version: string) => void;
+};
+
+export class TypedIpcRenderer {
+    invoke<K extends keyof RendererCommands>(
+        channel: K,
+        ...args: Parameters<RendererCommands[K]>
+    ): Promise<ReturnType<RendererCommands[K]>> {
+        return ipcRenderer.invoke(channel, args);
+    }
+
+    // send<K extends keyof RendererCommands>(channel: K, ...args: Parameters<RendererCommands[K]>) {
+    //     ipcRenderer.send(channel, args);
+    // }
+
+    on<K extends keyof MainCommands>(
+        channel: K,
+        listener: (event: IpcRendererEvent, args: Parameters<MainCommands[K]>) => void
+    ) {
+        ipcRenderer.on(channel, listener);
+    }
+}
+
+export class TypedIpcMain {
+    send<K extends keyof MainCommands>(channel: K, ...args: Parameters<MainCommands[K]>): void {
+        webContents.getAllWebContents().forEach((wc) => wc.send(channel, args));
+    }
+
+    // on<K extends keyof RendererCommands>(
+    //     channel: K,
+    //     listener: (event: IpcMainEvent, args: Parameters<RendererCommands[K]>) => void
+    // ) {
+    //     ipcMain.on(channel, listener);
+    // }
+
+    handle<K extends keyof RendererCommands>(
+        channel: K,
+        listener: (
+            event: IpcMainInvokeEvent,
+            args: Parameters<RendererCommands[K]>
+        ) => OptionalPromise<ReturnType<RendererCommands[K]>>
+    ) {
+        ipcMain.handle(channel, listener);
+    }
+}
+
+export type Link =
     | "help"
     | "website"
     | "changelogs"
@@ -105,5 +101,3 @@ export const linkMap: { [Property in Link]: string } = {
     mathlive_commands: "https://cortexjs.io/mathlive/reference/commands/",
     katex_commands: "https://katex.org/docs/supported.html"
 };
-
-export type { TypedIpcMain, TypedIpcRenderer, TypedWebContents } from "./TypedIpc";

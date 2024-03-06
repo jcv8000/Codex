@@ -1,4 +1,4 @@
-import { BrowserWindow, app, dialog, shell, ipcMain } from "electron";
+import { BrowserWindow, app, dialog, shell } from "electron";
 import { loadPrefs, loadSave, writePrefs, writeSave, loadPage, writePage } from "./data";
 import { createWindow } from "./createWindow";
 import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -9,9 +9,7 @@ import { electronSecurity } from "./security";
 import { logError, setupLogger } from "./logger";
 import { saveWindowState } from "./windowState";
 import { locales } from "common/Locales";
-import { Commands, Events, TypedIpcMain, linkMap } from "common/ipc";
-
-const ipc = ipcMain as TypedIpcMain<Events, Commands>;
+import { TypedIpcMain, linkMap } from "common/ipc";
 
 if (app.requestSingleInstanceLock()) {
     app.whenReady().then(() => {
@@ -32,21 +30,21 @@ if (app.requestSingleInstanceLock()) {
         }
         let save = _save;
 
-        const window = createWindow(prefs);
+        const ipc = new TypedIpcMain();
 
         app.on("activate", () => {
             // On macOS it's common to re-create a window in the app when the
             // dock icon is clicked and there are no other windows open.
-            if (BrowserWindow.getAllWindows().length === 0) createWindow(prefs);
+            if (BrowserWindow.getAllWindows().length === 0) createWindow(prefs, ipc);
         });
 
         ipc.handle("get-prefs", () => {
-            return JSON.stringify(prefs);
+            return prefs;
         });
 
-        ipc.handle("write-prefs", (e, newPrefs) => {
+        ipc.handle("write-prefs", (e, [newPrefs]) => {
             try {
-                prefs = JSON.parse(newPrefs);
+                prefs = newPrefs;
                 writePrefs(prefs);
                 return true;
             } catch (e) {
@@ -55,12 +53,12 @@ if (app.requestSingleInstanceLock()) {
         });
 
         ipc.handle("get-save", () => {
-            return JSON.stringify(save);
+            return save;
         });
 
-        ipc.handle("write-save", (e, newSave) => {
+        ipc.handle("write-save", (e, [newSave]) => {
             try {
-                save = JSON.parse(newSave);
+                save = newSave;
                 writeSave(prefs.general.saveFolder, save);
                 return true;
             } catch (e) {
@@ -68,11 +66,11 @@ if (app.requestSingleInstanceLock()) {
             }
         });
 
-        ipc.handle("load-page", (e, fileName) => {
+        ipc.handle("load-page", (e, [fileName]) => {
             return loadPage(prefs.general.saveFolder, fileName);
         });
 
-        ipc.handle("write-page", (e, fileName, data) => {
+        ipc.handle("write-page", (e, [fileName, data]) => {
             try {
                 writePage(prefs.general.saveFolder, fileName, data);
                 return true;
@@ -81,7 +79,7 @@ if (app.requestSingleInstanceLock()) {
             }
         });
 
-        ipc.handle("export-single-pdf", async (e, page) => {
+        ipc.handle("export-single-pdf", async (e, [page]) => {
             const sanitizedName = sanitizeStringForFileName(page.name);
 
             const saveResult = await dialog.showSaveDialog(window, {
@@ -108,7 +106,7 @@ if (app.requestSingleInstanceLock()) {
             }
         });
 
-        ipc.handle("export-single-md", async (e, page, md) => {
+        ipc.handle("export-single-md", async (e, [page, md]) => {
             const sanitizedName = sanitizeStringForFileName(page.name);
 
             const saveResult = await dialog.showSaveDialog(window, {
@@ -128,7 +126,7 @@ if (app.requestSingleInstanceLock()) {
             }
         });
 
-        ipc.handle("export-multiple-pdf", async (e, page, directory) => {
+        ipc.handle("export-multiple-pdf", async (e, [page, directory]) => {
             // TODO make folders for parent folders somehow
             const sanitizedName = sanitizeStringForFileName(page.name) + "_" + page.id + ".pdf";
 
@@ -145,7 +143,7 @@ if (app.requestSingleInstanceLock()) {
             }
         });
 
-        ipc.handle("export-multiple-md", (e, page, md, directory) => {
+        ipc.handle("export-multiple-md", (e, [page, md, directory]) => {
             // TODO make folders for parent folders somehow
             const sanitizedName = sanitizeStringForFileName(page.name) + "_" + page.id + ".md";
 
@@ -169,7 +167,7 @@ if (app.requestSingleInstanceLock()) {
             return app.getPath("userData");
         });
 
-        ipc.on("change-save-location", (e, newSaveLocation) => {
+        ipc.handle("change-save-location", (e, [newSaveLocation]) => {
             if (prefs == undefined) return;
 
             prefs.general.saveFolder = newSaveLocation;
@@ -180,13 +178,13 @@ if (app.requestSingleInstanceLock()) {
             app.exit();
         });
 
-        ipc.on("exit", () => app.exit());
+        ipc.handle("exit", () => app.exit());
 
-        ipc.on("open-link", (e, link) => {
+        ipc.handle("open-link", (e, [link]) => {
             shell.openExternal(linkMap[link]);
         });
 
-        ipc.on("restart", () => {
+        ipc.handle("restart", () => {
             saveWindowState(window);
             if (!isDev) app.relaunch();
             app.exit();
@@ -196,7 +194,7 @@ if (app.requestSingleInstanceLock()) {
             return app.runningUnderARM64Translation;
         });
 
-        ipc.on("open-external-link", (e, href) => {
+        ipc.handle("open-external-link", (e, [href]) => {
             try {
                 const filePath = join(app.getPath("userData"), "trusted-link-domains.json");
                 if (!existsSync(filePath)) {
@@ -240,6 +238,8 @@ if (app.requestSingleInstanceLock()) {
                 );
             }
         });
+
+        const window = createWindow(prefs, ipc);
     });
 
     // Quit when all windows are closed, except on macOS. There, it's common

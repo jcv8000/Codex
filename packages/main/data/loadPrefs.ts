@@ -6,6 +6,7 @@ import { app } from "electron";
 import { existsSync, readFileSync, writeFileSync, lstatSync } from "fs";
 import { join } from "path";
 import { logError } from "../logger";
+import isDev from "electron-is-dev";
 
 export function loadPrefs(): Prefs | null {
     const prefsPath = join(app.getPath("userData"), "/prefs.json");
@@ -18,6 +19,9 @@ export function loadPrefs(): Prefs | null {
             fixPrefs(prefs);
 
             writeFileSync(prefsPath, JSON.stringify(prefs, null, 4), "utf-8");
+
+            if (isDev) console.log(`Read prefs from disk successfully`);
+
             return prefs;
         } catch (error) {
             logError(
@@ -34,6 +38,9 @@ export function loadPrefs(): Prefs | null {
         }
 
         writeFileSync(prefsPath, JSON.stringify(prefs, null, 4), "utf-8");
+
+        if (isDev) console.log(`No prefs file found, creating default`);
+
         return prefs;
     }
 }

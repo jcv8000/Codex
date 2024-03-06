@@ -19,8 +19,14 @@ type CodexStore = {
     draggedItem: NoteItem | null;
 };
 
-const startPrefs = JSON.parse(await window.ipc.invoke("get-prefs")) as Prefs;
-const startSave = JSON.parse(await window.ipc.invoke("get-save")) as Save;
+const startPrefs = await window.ipc.invoke("get-prefs");
+const startSave = await window.ipc.invoke("get-save");
+
+window.ipc.on("pre-exit", () => {
+    writeSave();
+    writePrefs();
+    window.ipc.invoke("exit");
+});
 
 export const codexStore = proxy<CodexStore>({
     view: { value: "home" },
@@ -30,6 +36,10 @@ export const codexStore = proxy<CodexStore>({
     unsavedChanges: false,
     draggedItem: null
 });
+
+export function deproxy<T>(proxy: any) {
+    return JSON.parse(JSON.stringify(proxy)) as T;
+}
 
 export function saveActivePage() {}
 
@@ -63,7 +73,14 @@ export function useLocale() {
     return locales[prefs.general.locale];
 }
 
-async function writeSave() {
-    const saved = await window.ipc.invoke("write-save", JSON.stringify(codexStore.save));
+export async function writeSave() {
+    const deproxied = deproxy<Save>(codexStore.save);
+    const saved = await window.ipc.invoke("write-save", deproxied);
+    // TODO show error notification if save isnt saved
+}
+
+export async function writePrefs() {
+    const deproxied = deproxy<Prefs>(codexStore.prefs);
+    const saved = await window.ipc.invoke("write-prefs", deproxied);
     // TODO show error notification if save isnt saved
 }
