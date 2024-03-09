@@ -38,4 +38,7 @@ function resize(e: MouseEvent) {
         document.documentElement.style.setProperty("--sidebar-width", `${SIDEBAR_MIN_WIDTH}px`);
     else if (e.clientX > SIDEBAR_MAX_WIDTH)
         document.documentElement.style.setProperty("--sidebar-width", `${SIDEBAR_MAX_WIDTH}px`);
+
+    const resizeEvent = new CustomEvent("sidebar-resize");
+    window.dispatchEvent(resizeEvent);
 }

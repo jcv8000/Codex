@@ -42,9 +42,11 @@ export function SidebarFloat({ children, pos }: FloatProps) {
 
         set();
         window.addEventListener("resize", set);
+        window.addEventListener("sidebar-resize", set);
 
         return () => {
             window.removeEventListener("resize", set);
+            window.removeEventListener("sidebar-resize", set);
         };
     }, [pos.top, pos.right, pos.bottom, pos.left]);
 
