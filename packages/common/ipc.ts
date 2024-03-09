@@ -41,6 +41,7 @@ export class TypedIpcRenderer {
         channel: K,
         ...args: Parameters<RendererCommands[K]>
     ): Promise<ReturnType<RendererCommands[K]>> {
+        // TODO add channel whitelist
         return ipcRenderer.invoke(channel, args);
     }
 
@@ -52,6 +53,7 @@ export class TypedIpcRenderer {
         channel: K,
         listener: (event: IpcRendererEvent, args: Parameters<MainCommands[K]>) => void
     ) {
+        // TODO add channel whitelist
         ipcRenderer.on(channel, listener);
     }
 }
@@ -75,6 +77,7 @@ export class TypedIpcMain {
             args: Parameters<RendererCommands[K]>
         ) => OptionalPromise<ReturnType<RendererCommands[K]>>
     ) {
+        // TODO add channel whitelist
         ipcMain.handle(channel, listener);
     }
 }
