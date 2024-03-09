@@ -21,7 +21,11 @@ export function openAboutWindow(parent: BrowserWindow) {
     });
 
     if (isDev) {
-        about.loadURL("http://localhost:5173/about/about.html");
+        if (process.env.VITE_DEV_SERVER_URL)
+            about.loadURL(process.env.VITE_DEV_SERVER_URL + "/about/about.html");
+        else {
+            console.error("About page: Vite dev server URL not defined");
+        }
     } else {
         about.loadFile(".vite/renderer/about/about.html");
     }
