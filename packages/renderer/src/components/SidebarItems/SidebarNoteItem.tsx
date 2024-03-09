@@ -133,6 +133,7 @@ function onClick(item: NoteItem): React.MouseEventHandler {
         //     setView({ value: "editor", activePage: item });
         // }
 
+        // TODO write store function to open/close folders without writing to disk
         if (isFolder(item)) modifyItem(item.id, { opened: !item.opened });
     };
 }
