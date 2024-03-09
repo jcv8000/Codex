@@ -15,6 +15,23 @@ function startElectron() {
             "Electron process has exited. Press Enter to restart the app, or Ctrl+C to kill the dev process."
         )
     );
+
+    // Blocks electron's stderr because it just spams the console
+    electronApp.stdout.setEncoding("utf8");
+    electronApp.stdout.on("data", (data) => {
+        const text = data.toString().trim();
+        if (text != "" && text != "\n") {
+            console.log(text);
+        }
+    });
+
+    electronApp.stderr.setEncoding("utf8");
+    electronApp.stderr.on("data", (data) => {
+        const text = data.toString();
+        if (!text.includes("Attempting to call a function in a renderer")) {
+            console.log(text.trim());
+        }
+    });
 }
 
 function restartElectron() {
