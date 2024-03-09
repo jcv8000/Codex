@@ -13,8 +13,8 @@
     "homepage": "https://codexnotes.com/",
     "license": "CC-BY-NC-4.0",
     "scripts": {
-        "build": "pnpm run typecheck && node ./scripts/build.js",
-        "dev": "node ./scripts/dev.js",
+        "build": "pnpm run typecheck && node ./scripts/build.mjs",
+        "dev": "node ./scripts/dev.mjs",
         "dist": "pnpm run build && electron-builder -c electron-builder.config.cjs --publish=never",
         "dir": "pnpm run build && electron-builder -c electron-builder.config.cjs --dir --publish=never",
         "clean": "rimraf dist/ .vite/",
@@ -110,7 +110,6 @@
         "typescript": "^5.4.2",
         "vite": "^5.1.5",
         "vite-plugin-static-copy": "^1.0.1",
-        "vite-tsconfig-paths": "^4.3.1",
-        "wait-on": "^7.2.0"
+        "vite-tsconfig-paths": "^4.3.1"
     }
 }

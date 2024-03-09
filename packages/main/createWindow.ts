@@ -55,12 +55,11 @@ export function createWindow(prefs: Prefs, ipc: TypedIpcMain) {
     });
 
     if (isDev) {
-        // if (process.env.VITE_DEV_SERVER_URL) mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
-        // else {
-        //     console.error("Vite dev server URL not defined");
-        //     app.exit();
-        // }
-        window.loadURL("http://localhost:5173");
+        if (process.env.VITE_DEV_SERVER_URL) window.loadURL(process.env.VITE_DEV_SERVER_URL);
+        else {
+            console.error("Vite dev server URL not defined");
+            app.exit();
+        }
     } else {
         window.loadFile(".vite/renderer/index.html");
     }
