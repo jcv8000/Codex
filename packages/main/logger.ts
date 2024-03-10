@@ -1,29 +1,32 @@
 import { dialog, app } from "electron";
-import log from "electron-log";
+import log from "electron-log/main";
 
 export function setupLogger() {
-    log.catchErrors({
+    log.errorHandler.startCatching({
         showDialog: false,
-        onError(error, versions, submitIssue) {
+        onError({ createIssue, error, processType, versions }) {
+            if (processType === "renderer") {
+                return;
+            }
+
             dialog
                 .showMessageBox({
                     title: "An error occurred",
                     message: error.message,
                     detail: error.stack,
                     type: "error",
-                    buttons: ["Report", "Exit"]
+                    buttons: ["Ignore", "Report", "Exit"]
                 })
                 .then((result) => {
-                    if (result.response === 0) {
-                        if (submitIssue && versions)
-                            submitIssue("https://github.com/jcv8000/Codex/issues/new", {
-                                title: `Error report for ${versions.app}`,
-                                body: "Error:\n```" + error.stack + "\n```\n" + `OS: ${versions.os}`
-                            });
+                    if (result.response === 1) {
+                        createIssue("https://github.com/jcv8000/Codex/issues/new", {
+                            title: `Error report for ${versions.app}`,
+                            body: "Error:\n```" + error.stack + "\n```\n" + `OS: ${versions.os}`
+                        });
                         return;
                     }
 
-                    if (result.response === 1) {
+                    if (result.response === 2) {
                         app.quit();
                     }
                 });

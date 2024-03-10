@@ -132,11 +132,11 @@ dependencies:
     specifier: ^3.6.1
     version: 3.6.1
   electron-is-dev:
-    specifier: ^2.0.0
-    version: 2.0.0
+    specifier: ^3.0.1
+    version: 3.0.1
   electron-log:
-    specifier: ^4.4.8
-    version: 4.4.8
+    specifier: ^5.1.1
+    version: 5.1.1
   fuse.js:
     specifier: ^7.0.0
     version: 7.0.0
@@ -3346,8 +3346,14 @@ packages:
     resolution: {integrity: sha512-3X99K852Yoqu9AcW50qz3ibYBWY79/pBhlMCab8ToEWS48R0T9tyxRiQhwylE7zQdXrMnx2JKqUJyMPmt5FBqA==}
     dev: false
 
-  /electron-log@4.4.8:
-    resolution: {integrity: sha512-QQ4GvrXO+HkgqqEOYbi+DHL7hj5JM+nHi/j+qrN9zeeXVKy8ZABgbu4CnG+BBqDZ2+tbeq9tUC4DZfIWFU5AZA==}
+  /electron-is-dev@3.0.1:
+    resolution: {integrity: sha512-8TjjAh8Ec51hUi3o4TaU0mD3GMTOESi866oRNavj9A3IQJ7pmv+MJVmdZBFGw4GFT36X7bkqnuDNYvkQgvyI8Q==}
+    engines: {node: '>=18'}
+    dev: false
+
+  /electron-log@5.1.1:
+    resolution: {integrity: sha512-If7HU4Slbh2xfjOXOLxifkbgu6HmWDNJyXPLW+XNTOHMfFKisg0trA3d/7syyu25S+lHosfsd0VMfDSjGn1+Pw==}
+    engines: {node: '>= 14'}
     dev: false
 
   /electron-publish@24.13.1:
