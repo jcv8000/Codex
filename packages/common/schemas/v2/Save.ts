@@ -73,6 +73,31 @@ export function getItemFromID(save: Save, id: string) {
     return bfs(save, (i) => i.id == id);
 }
 
+export function isDescendantOf(descendant: NoteItem, ancestor: NoteItem) {
+    if (isPage(ancestor)) return false;
+
+    const queue: NoteItem[] = [];
+
+    ancestor.children.forEach((item) => {
+        queue.push(item);
+    });
+
+    while (queue.length > 0) {
+        const i = queue.shift();
+        if (i == undefined) return false;
+
+        if (i.id == descendant.id) return true;
+
+        if (isFolder(i)) {
+            i.children.forEach((c) => {
+                queue.push(c);
+            });
+        }
+    }
+
+    return false;
+}
+
 const items: NoteItem[] = [];
 items.push({
     name: "CS 432",
