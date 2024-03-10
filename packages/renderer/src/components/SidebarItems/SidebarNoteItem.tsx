@@ -3,7 +3,7 @@ import { Icon } from "components/Icon";
 import React, { useRef, useState } from "react";
 import { NoteItem, isDescendantOf, isFolder, isPage } from "common/schemas/v2/Save";
 import { locales } from "common/Locales";
-import { codexStore, dragDropItem, modalStore, modifyItem, useSnapshot } from "src/state";
+import { codexStore, dragDropItem, modalStore, toggleOpened, useSnapshot } from "src/state";
 import clsx from "clsx";
 
 import classes from "./SidebarItem.module.css";
@@ -133,8 +133,7 @@ function onClick(item: NoteItem): React.MouseEventHandler {
         //     setView({ value: "editor", activePage: item });
         // }
 
-        // TODO write store function to open/close folders without writing to disk
-        if (isFolder(item)) modifyItem(item.id, { opened: !item.opened });
+        if (isFolder(item)) toggleOpened(item.id);
     };
 }
 
