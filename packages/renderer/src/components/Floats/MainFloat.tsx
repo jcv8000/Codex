@@ -6,38 +6,26 @@ export function MainFloat({ children, pos }: FloatProps) {
     const [styles, setStyles] = useState<React.CSSProperties>({ ...defaultStyles });
 
     useEffect(() => {
-        const set = () => {
+        function set() {
             const main = document.getElementById("main");
             if (main == null) return;
 
             const newStyles: React.CSSProperties = { ...defaultStyles };
 
-            if (pos.top && pos.left) {
+            if (pos.top) newStyles.top = `${pos.top}px`;
+            if (pos.bottom) newStyles.bottom = `${pos.bottom}px`;
+
+            if (pos.left) {
                 const left = pos.left + main.getBoundingClientRect().left;
-                newStyles.top = `${pos.top}px`;
                 newStyles.left = `${left}px`;
-
-                setStyles(newStyles);
-            } else if (pos.top && pos.right) {
-                const right = pos.right + (main.offsetWidth - main.clientWidth);
-                newStyles.top = `${pos.top}px`;
-                newStyles.right = `${right}px`;
-
-                setStyles(newStyles);
-            } else if (pos.bottom && pos.left) {
-                const left = pos.left + main.getBoundingClientRect().left;
-                newStyles.bottom = `${pos.bottom}px`;
-                newStyles.left = `${left}px`;
-
-                setStyles(newStyles);
-            } else if (pos.bottom && pos.right) {
-                const right = pos.right + (main.offsetWidth - main.clientWidth);
-                newStyles.bottom = `${pos.bottom}px`;
-                newStyles.right = `${right}px`;
-
-                setStyles(newStyles);
             }
-        };
+            if (pos.right) {
+                const right = pos.right + (main.offsetWidth - main.clientWidth);
+                newStyles.right = `${right}px`;
+            }
+
+            setStyles(newStyles);
+        }
 
         set();
         window.addEventListener("resize", set);

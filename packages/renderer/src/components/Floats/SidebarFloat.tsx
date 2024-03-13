@@ -6,39 +6,25 @@ export function SidebarFloat({ children, pos }: FloatProps) {
     const [styles, setStyles] = useState<React.CSSProperties>({ ...defaultStyles });
 
     useEffect(() => {
-        const set = () => {
+        function set() {
             const sidebar = document.getElementById("sidebar");
             const main = document.getElementById("main");
             if (sidebar == null || main == null) return;
 
             const newStyles: React.CSSProperties = { ...defaultStyles };
 
-            if (pos.top && pos.left) {
-                newStyles.top = `${pos.top}px`;
-                newStyles.left = `${pos.left}px`;
+            if (pos.top) newStyles.top = `${pos.top}px`;
+            if (pos.bottom) newStyles.bottom = `${pos.bottom}px`;
 
-                setStyles(newStyles);
-            } else if (pos.top && pos.right) {
+            if (pos.left) newStyles.left = `${pos.left}px`;
+            if (pos.right) {
                 const right =
                     main.offsetWidth + pos.right + (sidebar.offsetWidth - sidebar.clientWidth);
-                newStyles.top = `${pos.top}px`;
                 newStyles.right = `${right}px`;
-
-                setStyles(newStyles);
-            } else if (pos.bottom && pos.left) {
-                newStyles.bottom = `${pos.bottom}px`;
-                newStyles.left = `${pos.left}px`;
-
-                setStyles(newStyles);
-            } else if (pos.bottom && pos.right) {
-                const right =
-                    main.offsetWidth + pos.right + (sidebar.offsetWidth - sidebar.clientWidth);
-                newStyles.bottom = `${pos.bottom}px`;
-                newStyles.right = `${right}px`;
-
-                setStyles(newStyles);
             }
-        };
+
+            setStyles(newStyles);
+        }
 
         set();
         window.addEventListener("resize", set);
