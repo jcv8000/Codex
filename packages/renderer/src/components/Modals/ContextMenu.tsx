@@ -213,10 +213,7 @@ function DeleteMenuItem(props: { item: NoteItem }) {
                     },
                     confirmProps: { color: "red" },
                     onConfirm: () => {
-                        if (
-                            codexStore.view.value == "editor" &&
-                            codexStore.view.activePageId == item.id
-                        )
+                        if (codexStore.view.value == "editor" && codexStore.view.page.id == item.id)
                             codexStore.view = { value: "home" };
 
                         deleteItem(item.id);

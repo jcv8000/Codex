@@ -61,7 +61,7 @@ export function TableOfContents(props: { editor: Editor }) {
         <>
             <MainFloat pos={{ top: 16, left: 16 }}>
                 <Tooltip withArrow label={texts.table_of_contents} position="right">
-                    <ActionIcon onClick={() => setOpen(!open)}>
+                    <ActionIcon variant="transparent" color="gray" onClick={() => setOpen(!open)}>
                         <Icon icon="list-search" />
                     </ActionIcon>
                 </Tooltip>
@@ -69,7 +69,7 @@ export function TableOfContents(props: { editor: Editor }) {
 
             <Transition mounted={open} transition="pop-top-left" duration={200} exitDuration={200}>
                 {(styles) => (
-                    <MainFloat pos={{ top: 48, left: 16 }}>
+                    <MainFloat pos={{ top: 56, left: 16 }}>
                         <Paper className={classes.body} withBorder style={styles}>
                             <Text fz="xs">{texts.table_of_contents}</Text>
                             <Space h="sm" />

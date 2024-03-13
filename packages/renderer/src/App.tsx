@@ -2,6 +2,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/notifications/styles.css";
 import "@tabler/icons-webfont/tabler-icons.min.css";
+import "katex/dist/katex.min.css";
 import "./styles/layout.css";
 import "./styles/titlebar.css";
 
@@ -55,7 +56,7 @@ function MainView() {
     if (view.value == "home") rendered = <HomeView />;
     else if (view.value == "settings") rendered = <SettingsView />;
     else if (view.value == "editor") {
-        rendered = <EditorView />;
+        rendered = <EditorView initialContentString={view.initialContentString} />;
     }
 
     return rendered;

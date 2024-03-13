@@ -9,7 +9,7 @@ type RendererCommands = {
     "get-save": () => Save;
     "write-save": (save: Save) => boolean;
 
-    "load-page": (fileName: string) => string;
+    "load-page": (fileName: string) => string | null;
     "write-page": (fileName: string, content: string) => boolean;
 
     "export-single-pdf": (page: Page) => boolean | undefined;

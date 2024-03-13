@@ -59,8 +59,8 @@ export function NewModal(props: { state: NewModalState }) {
                             icon: icon,
                             color: color,
                             favorited: false,
-                            fileName: "",
-                            textContent: pageNameToFileName(name + "_" + id + ".json")
+                            textContent: "",
+                            fileName: pageNameToFileName(name + "_" + id + ".json")
                         };
                         push(page);
                     }

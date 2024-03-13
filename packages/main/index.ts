@@ -67,7 +67,11 @@ if (app.requestSingleInstanceLock()) {
         });
 
         ipc.handle("load-page", (e, [fileName]) => {
-            return loadPage(prefs.general.saveFolder, fileName);
+            try {
+                return loadPage(prefs.general.saveFolder, fileName);
+            } catch (e) {
+                return null;
+            }
         });
 
         ipc.handle("write-page", (e, [fileName, data]) => {
