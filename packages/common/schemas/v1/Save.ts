@@ -1,5 +1,13 @@
 import { v4 as NewUUID } from "@lukeed/uuid";
-import { pageNameToFileName } from "common/Utils";
+import sanitizeFileName from "sanitize-filename";
+
+function pageNameToFileName(pageName: string) {
+    let answer = sanitizeFileName(pageName.replaceAll(" ", "-"));
+
+    if (answer.length > 30) answer = answer.substring(0, 29);
+
+    return answer.replace(/[^a-zA-Z0-9-]/g, "").trim();
+}
 
 export class NoteItem {
     name: string;
