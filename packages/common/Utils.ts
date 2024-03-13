@@ -10,20 +10,30 @@ export function truncate(input: string, maxLength: number): string {
     return input;
 }
 
-// TODO make it so new pages fileName = sanitizeAndTruncateName(name, 20) + "_" + id + ".json"
-export function pageNameToFileName(pageName: string) {
-    let answer = sanitizeFileName(pageName.replaceAll(" ", "-"));
+export function generatePageFileName(pageName: string, id: string) {
+    // Trim
+    let name = pageName.trim();
 
-    if (answer.length > 30) answer = answer.substring(0, 29);
+    // Limit to only alphanumerical, dahes, underscores, and spaces
+    name = name.replace(/[^a-zA-Z0-9-_ ]/g, "");
 
-    return answer.replace(/[^a-zA-Z0-9-]/g, "").trim();
+    // Limit to 30 characters
+    if (name.length > 30) name = name.substring(0, 29);
+
+    // Final sanitization
+    name = sanitizeFileName(name);
+
+    // Shortened ID
+    const shortId = id.substring(0, 18);
+
+    return `${name}__${shortId}.json`;
 }
 
-// TODO centralize file name generation
+// For PDF and Markdown file name generation
 export function sanitizeStringForFileName(input: string): string {
     const answer = sanitizeFileName(input);
 
-    return answer.replace(/[^a-zA-Z0-9- ]/g, "").trim();
+    return answer.replace(/[^a-zA-Z0-9-_ ]/g, "").trim();
 }
 
 export function hexToRgb(hex: string): { r: number; g: number; b: number } {

@@ -1,7 +1,7 @@
 import { Folder, NoteItem, Page } from "common/schemas/v2/Save";
 import { codexStore, modalStore, modifyItem, useLocale } from "src/state";
 import { v4 as uuid } from "@lukeed/uuid";
-import { pageNameToFileName } from "common/Utils";
+import { generatePageFileName } from "common/Utils";
 import { MutateModal, FormValues } from "./_MutateModal";
 
 export type NewModalState = {
@@ -45,7 +45,7 @@ export function NewModal(props: { state: NewModalState }) {
                     if (type == "folder") {
                         const folder: Folder = {
                             name: name,
-                            id: uuid(),
+                            id: id,
                             icon: icon,
                             color: color,
                             opened: true,
@@ -55,12 +55,12 @@ export function NewModal(props: { state: NewModalState }) {
                     } else if (type == "page") {
                         const page: Page = {
                             name: name,
-                            id: uuid(),
+                            id: id,
                             icon: icon,
                             color: color,
                             favorited: false,
                             textContent: "",
-                            fileName: pageNameToFileName(name + "_" + id + ".json")
+                            fileName: generatePageFileName(name, id)
                         };
                         push(page);
                     }

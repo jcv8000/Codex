@@ -1,4 +1,6 @@
 import { v4 as uuid } from "@lukeed/uuid";
+import { generatePageFileName } from "../../Utils";
+
 type NoteItemBase = {
     name: string;
     id: string;
@@ -98,23 +100,30 @@ export function isDescendantOf(descendant: NoteItem, ancestor: NoteItem) {
     return false;
 }
 
-const items: NoteItem[] = [];
-items.push({
+// vvvvvvvvvvvv
+//
+// EXAMPLE SAVE
+//
+// vvvvvvvvvvvv
+
+const _pageId = uuid();
+const _page: Page = {
+    name: "intro",
+    id: _pageId,
+    icon: "file-text",
+    color: "#999999",
+    favorited: false,
+    textContent: "",
+    fileName: generatePageFileName("intro", _pageId)
+};
+
+const _folder: Folder = {
     name: "CS 432",
     id: uuid(),
     icon: "book-2",
     color: "#000000",
     opened: true,
-    children: [
-        {
-            name: "intro",
-            id: uuid(),
-            icon: "file-text",
-            color: "#999999",
-            favorited: false,
-            fileName: "intro.json",
-            textContent: ""
-        } as Page
-    ]
-} as Folder);
-export const exampleSave: Save = { schema_version: 2, items: items };
+    children: [_page]
+};
+
+export const exampleSave: Save = { schema_version: 2, items: [_folder] };
