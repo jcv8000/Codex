@@ -1,7 +1,7 @@
 import { Box, Collapse, Flex, Text, rem } from "@mantine/core";
 import { Icon } from "components/Icon";
 import React, { useRef, useState } from "react";
-import { NoteItem, isDescendantOf, isFolder, isPage } from "common/schemas/v2/Save";
+import { NoteItem, getItemFromID, isDescendantOf, isFolder, isPage } from "common/schemas/v2/Save";
 import { locales } from "common/Locales";
 import { codexStore, dragDropItem, modalStore, toggleOpened, useSnapshot } from "src/state";
 import clsx from "clsx";
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export function SidebarNoteItem({ item, depth = 0 }: Props) {
-    const { prefs } = useSnapshot(codexStore);
+    const { prefs, view } = useSnapshot(codexStore);
     const locale = locales[prefs.general.locale];
 
     const [dragStatus, setDragStatus] = useState<DragStatus>("none");
@@ -46,7 +46,7 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
         }
     }
 
-    const active = codexStore.view.value == "editor" && codexStore.view.activePageId == item.id;
+    const active = view.value == "editor" && view.activePageId == item.id;
 
     return (
         <>
@@ -109,31 +109,10 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
 }
 
 function onClick(item: NoteItem): React.MouseEventHandler {
-    return (e) => {
-        // if (item instanceof Folder) {
-        //     modifySave(() => {
-        //         if (item.opened == true && e.altKey) {
-        //             // Recursively close folder and all children
-        //             const recurseClose = (f: Folder) => {
-        //                 f.opened = false;
-
-        //                 f.children.forEach((child) => {
-        //                     if (child instanceof Folder) {
-        //                         recurseClose(child);
-        //                     }
-        //                 });
-        //             };
-
-        //             recurseClose(item);
-        //         } else {
-        //             item.opened = !item.opened;
-        //         }
-        //     });
-        // } else if (item instanceof Page) {
-        //     setView({ value: "editor", activePage: item });
-        // }
-
+    return () => {
+        // TODO recursive opening/closing for alt click
         if (isFolder(item)) toggleOpened(item.id);
+        else if (isPage(item)) codexStore.view = { value: "editor", activePageId: item.id };
     };
 }
 

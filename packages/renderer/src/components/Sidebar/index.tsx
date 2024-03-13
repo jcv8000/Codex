@@ -7,6 +7,7 @@ import { modalStore, useLocale } from "src/state";
 
 export function Sidebar() {
     const locale = useLocale();
+
     return (
         <>
             <div id="sidebar">

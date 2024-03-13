@@ -1,0 +1,16 @@
+.body {
+    padding: var(--mantine-spacing-md);
+    max-width: 300px;
+}
+
+.link {
+    display: block;
+    padding: 6px 3px;
+    border-left: 1px solid light-dark(var(--mantine-colors-gray-3), var(--mantine-colors-dark-4));
+    text-decoration: none;
+    color: light-dark(black, var(--mantine-color-dark-4));
+
+    @mixin hover {
+        background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    }
+}

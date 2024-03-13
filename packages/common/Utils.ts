@@ -10,6 +10,7 @@ export function truncate(input: string, maxLength: number): string {
     return input;
 }
 
+// TODO make it so new pages fileName = sanitizeAndTruncateName(name, 20) + "_" + id + ".json"
 export function pageNameToFileName(pageName: string) {
     let answer = sanitizeFileName(pageName.replaceAll(" ", "-"));
 

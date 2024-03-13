@@ -1,24 +1,23 @@
-import { locales } from "common/Locales";
 import { SidebarItem, SidebarNoteItem } from "src/components/SidebarItems";
-import { codexStore, useSnapshot } from "src/state";
+import { codexStore, useLocale, useSnapshot } from "src/state";
 
 export function SidebarContent() {
-    const { prefs, view, save } = useSnapshot(codexStore);
+    const { view, save } = useSnapshot(codexStore);
+    const locale = useLocale();
 
-    const locale = locales[prefs.general.locale];
     return (
         <>
             <SidebarItem
                 icon="home"
                 text={locale.sidebar.homeTab}
-                onClick={() => (codexStore.view = { value: "home" })}
                 shouldBeActive={view.value == "home"}
+                onClick={() => (codexStore.view = { value: "home" })}
             />
             <SidebarItem
                 icon="settings"
                 text={locale.sidebar.settings}
-                onClick={() => (codexStore.view = { value: "settings" })}
                 shouldBeActive={view.value == "settings"}
+                onClick={() => (codexStore.view = { value: "settings" })}
             />
             <SidebarItem icon="menu-2" text={locale.sidebar.moreTab}>
                 <SidebarItem
