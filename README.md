@@ -34,7 +34,7 @@ Other features:
 
 ## Building Locally
 
-Requires Node.js 16 or higher
+Requires Node.js 20 or higher
 
 ```sh
 pnpm install
