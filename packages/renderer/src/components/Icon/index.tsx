@@ -4,8 +4,8 @@ import clsx from "clsx";
 import { CodexIconSVGPaths } from "./CodexIconSVGPaths";
 
 /*
-    Tabler webfont icons use fontSize and color,
-    custom Codex svg uses width/height and fill
+    Tabler webfont icons use FONT SIZE and COLOR,
+    custom Codex svg uses WIDTH / HEIGHT and FILL
 */
 
 type Props = {
