@@ -1,6 +1,6 @@
 import { ActionIcon, Button, Modal, createTheme, rem } from "@mantine/core";
 import { createPaletteFromColor } from "palettey";
-import { hexToRgb } from "common/Utils";
+import { hexToRgb, px } from "common/Utils";
 
 export function setTemportaryFakeAccentColor(accentColor: string) {
     const palete = getAccentColorPalette(accentColor);
@@ -43,7 +43,7 @@ export function AppTheme(props: {
         props.codeWordWrap ? "break-all !important" : "inherit"
     );
 
-    setCSSProperty("--sidebar-width", `${props.sidebarWidth}px`);
+    setCSSProperty("--sidebar-width", px(props.sidebarWidth));
 
     return createTheme({
         focusRing: "auto",

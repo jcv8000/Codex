@@ -5,7 +5,7 @@ import { Icon } from "components/Icon";
 import { codexStore, modifyItem, deleteItem, useLocale } from "src/state";
 import { modalStore } from "src/state";
 import { openConfirmModal } from "@mantine/modals";
-import { truncate } from "common/Utils";
+import { px, truncate } from "common/Utils";
 
 export type ContextMenuState = {
     opened: boolean;
@@ -43,8 +43,8 @@ export function ContextMenu(props: { state: ContextMenuState }) {
             styles={{
                 dropdown: {
                     position: "fixed",
-                    top: `${y}px`,
-                    left: `${x}px`
+                    top: px(y),
+                    left: px(x)
                 }
             }}
         >

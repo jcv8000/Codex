@@ -1,5 +1,6 @@
 import { codexStore } from "src/state";
 import classes from "./SidebarResizer.module.css";
+import { px } from "common/Utils";
 
 const SIDEBAR_MIN_WIDTH = 200;
 const SIDEBAR_MAX_WIDTH = 600;
@@ -33,11 +34,11 @@ export function SidebarResizer() {
 
 function resize(e: MouseEvent) {
     if (e.clientX >= SIDEBAR_MIN_WIDTH && e.clientX <= SIDEBAR_MAX_WIDTH)
-        document.documentElement.style.setProperty("--sidebar-width", `${e.clientX}px`);
+        document.documentElement.style.setProperty("--sidebar-width", px(e.clientX));
     else if (e.clientX < SIDEBAR_MIN_WIDTH)
-        document.documentElement.style.setProperty("--sidebar-width", `${SIDEBAR_MIN_WIDTH}px`);
+        document.documentElement.style.setProperty("--sidebar-width", px(SIDEBAR_MIN_WIDTH));
     else if (e.clientX > SIDEBAR_MAX_WIDTH)
-        document.documentElement.style.setProperty("--sidebar-width", `${SIDEBAR_MAX_WIDTH}px`);
+        document.documentElement.style.setProperty("--sidebar-width", px(SIDEBAR_MAX_WIDTH));
 
     const resizeEvent = new CustomEvent("sidebar-resize");
     window.dispatchEvent(resizeEvent);

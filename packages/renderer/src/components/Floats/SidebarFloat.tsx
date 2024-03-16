@@ -1,6 +1,7 @@
 import { Portal } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { FloatProps, defaultStyles } from ".";
+import { px } from "common/Utils";
 
 export function SidebarFloat({ children, pos }: FloatProps) {
     const [styles, setStyles] = useState<React.CSSProperties>({ ...defaultStyles });
@@ -13,14 +14,14 @@ export function SidebarFloat({ children, pos }: FloatProps) {
 
             const newStyles: React.CSSProperties = { ...defaultStyles };
 
-            if (pos.top) newStyles.top = `${pos.top}px`;
-            if (pos.bottom) newStyles.bottom = `${pos.bottom}px`;
+            if (pos.top) newStyles.top = px(pos.top);
+            if (pos.bottom) newStyles.bottom = px(pos.bottom);
 
-            if (pos.left) newStyles.left = `${pos.left}px`;
+            if (pos.left) newStyles.left = px(pos.left);
             if (pos.right) {
                 const right =
                     main.offsetWidth + pos.right + (sidebar.offsetWidth - sidebar.clientWidth);
-                newStyles.right = `${right}px`;
+                newStyles.right = px(right);
             }
 
             setStyles(newStyles);

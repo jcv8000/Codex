@@ -1,6 +1,7 @@
 import { Portal } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { FloatProps, defaultStyles } from ".";
+import { px } from "common/Utils";
 
 export function MainFloat({ children, pos }: FloatProps) {
     const [styles, setStyles] = useState<React.CSSProperties>({ ...defaultStyles });
@@ -12,16 +13,16 @@ export function MainFloat({ children, pos }: FloatProps) {
 
             const newStyles: React.CSSProperties = { ...defaultStyles };
 
-            if (pos.top) newStyles.top = `${pos.top}px`;
-            if (pos.bottom) newStyles.bottom = `${pos.bottom}px`;
+            if (pos.top) newStyles.top = px(pos.top);
+            if (pos.bottom) newStyles.bottom = px(pos.bottom);
 
             if (pos.left) {
                 const left = pos.left + main.getBoundingClientRect().left;
-                newStyles.left = `${left}px`;
+                newStyles.left = px(left);
             }
             if (pos.right) {
                 const right = pos.right + (main.offsetWidth - main.clientWidth);
-                newStyles.right = `${right}px`;
+                newStyles.right = px(right);
             }
 
             setStyles(newStyles);
