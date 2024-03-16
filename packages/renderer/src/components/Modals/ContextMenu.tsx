@@ -73,9 +73,8 @@ export function ContextMenu(props: { state: ContextMenuState }) {
     );
 }
 
-function FolderNewMenuItems(props: { item: Folder }) {
+function FolderNewMenuItems({ item }: { item: Folder }) {
     const locale = useLocale();
-    const item = props.item;
     return (
         <>
             <Menu.Item
@@ -106,9 +105,8 @@ function FolderNewMenuItems(props: { item: Folder }) {
     );
 }
 
-function EditMenuItem(props: { item: NoteItem }) {
+function EditMenuItem({ item }: { item: NoteItem }) {
     const locale = useLocale();
-    const item = props.item;
     return (
         <Menu.Item
             leftSection={<Icon icon="pencil" />}
@@ -121,9 +119,8 @@ function EditMenuItem(props: { item: NoteItem }) {
     );
 }
 
-function PageMenuItems(props: { item: Page }) {
+function PageMenuItems({ item }: { item: Page }) {
     const locale = useLocale();
-    const item = props.item;
     return (
         <>
             <Menu.Item
@@ -160,9 +157,8 @@ function PageMenuItems(props: { item: Page }) {
     );
 }
 
-function FolderExportMenuItems(props: { item: Folder }) {
+function FolderExportMenuItems({ item }: { item: Folder }) {
     const locale = useLocale();
-    const item = props.item;
     return (
         <>
             <Menu.Divider />
@@ -190,9 +186,8 @@ function FolderExportMenuItems(props: { item: Folder }) {
     );
 }
 
-function DeleteMenuItem(props: { item: NoteItem }) {
+function DeleteMenuItem({ item }: { item: NoteItem }) {
     const locale = useLocale();
-    const item = props.item;
     return (
         <Menu.Item
             color="red"
