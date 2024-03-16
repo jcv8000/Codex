@@ -56,3 +56,10 @@ export function rgbToHex(rgb: { r: number; g: number; b: number }): string {
     if (_b.length == 1) _b = "0" + _b;
     return "#" + _r + _g + _b;
 }
+
+/**
+ * Turns the number 64 to string "64px"
+ */
+export function px(pixels: number) {
+    return `${pixels}px`;
+}

@@ -6,6 +6,8 @@
 
 .rainbow {
     animation: colorRotate 7s linear 0s infinite;
+    stroke: #00000060;
+    stroke-width: 0.3;
 }
 
 @keyframes colorRotate {
@@ -18,8 +20,8 @@
         fill: #0099ff;
     }
     50% {
-        color: #00ff00;
-        fill: #00ff00;
+        color: #13e613;
+        fill: #13e613;
     }
     75% {
         color: #ff3399;
