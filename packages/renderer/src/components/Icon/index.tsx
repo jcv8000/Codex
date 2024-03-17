@@ -32,7 +32,15 @@ export function Icon({ icon, color = "inherit", vAlign = "middle", size = 18 }: 
 }
 
 function CodexIcon({ color, vAlign, size }: Required<Omit<Props, "icon">>) {
-    let styles: React.CSSProperties = { width: px(size), height: px(size), verticalAlign: vAlign };
+    let styles: React.CSSProperties = {
+        width: px(size),
+        minWidth: px(size),
+
+        height: px(size),
+        minHeight: px(size),
+
+        verticalAlign: vAlign
+    };
     if (color != "rainbow") styles = { ...styles, fill: color };
 
     return (
