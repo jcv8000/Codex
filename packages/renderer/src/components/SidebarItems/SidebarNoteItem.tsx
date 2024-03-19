@@ -1,4 +1,16 @@
-import { Box, Collapse, Flex, Text, rem } from "@mantine/core";
+import {
+    Badge,
+    Center,
+    Collapse,
+    Divider,
+    Flex,
+    Group,
+    HoverCard,
+    Popover,
+    Space,
+    Text,
+    rem
+} from "@mantine/core";
 import { Icon } from "components/Icon";
 import React, { useRef, useState } from "react";
 import { NoteItem, isDescendantOf, isFolder, isPage } from "common/schemas/v2/Save";
@@ -8,6 +20,7 @@ import clsx from "clsx";
 
 import classes from "./SidebarItem.module.css";
 import { flexProps, getLeftPadding, textSize } from "./styles";
+import { px } from "common/Utils";
 
 type DragStatus = "none" | "above" | "below" | "child" | "beingDragged";
 
@@ -17,7 +30,7 @@ type Props = {
 };
 
 export function SidebarNoteItem({ item, depth = 0 }: Props) {
-    const { prefs, view } = useSnapshot(codexStore);
+    const { prefs, view, save } = useSnapshot(codexStore);
     const locale = locales[prefs.general.locale];
 
     const [dragStatus, setDragStatus] = useState<DragStatus>("none");
@@ -50,54 +63,97 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
 
     return (
         <>
-            <Box
-                title={item.name}
-                className={clsx(
-                    classes.item,
-                    active && classes.itemActive,
-                    dragStatus == "above" && classes.dragAbove,
-                    dragStatus == "below" && classes.dragBelow,
-                    dragStatus == "child" && classes.dragChild
-                )}
-                onClick={onClick(item)}
-                onContextMenu={onContextMenu(item)}
-                draggable={true}
-                onDragStart={onDragStart(setDragStatus, dragImageRef, item)}
-                onDragOver={onDragOver(setDragStatus, item)}
-                onDragLeave={onDragLeave(setDragStatus)}
-                onDrop={onDrop(dragStatus, setDragStatus, dragImageRef, item)}
-                style={{
-                    paddingLeft: getLeftPadding(depth)
-                }}
-            >
-                <Flex {...flexProps}>
-                    <Icon
-                        icon={item.icon}
-                        color={active ? "var(--accent-text-color)" : item.color}
-                    />
-
-                    <Text fz={textSize} truncate ref={dragImageRef}>
-                        {item.name}
-                    </Text>
-
-                    {isFolder(item) && (
-                        <span
-                            className={clsx(classes.caret, item.opened && classes.caretOpen)}
-                        ></span>
-                    )}
-
-                    {isPage(item) && item.favorited && (
-                        <span style={{ marginLeft: "auto" }}>
+            <HoverCard withArrow shadow="md" position="right" openDelay={1100} width={300}>
+                <HoverCard.Target>
+                    <div
+                        className={clsx(
+                            classes.item,
+                            active && classes.itemActive,
+                            dragStatus == "above" && classes.dragAbove,
+                            dragStatus == "below" && classes.dragBelow,
+                            dragStatus == "child" && classes.dragChild
+                        )}
+                        onClick={onClick(item)}
+                        onContextMenu={onContextMenu(item)}
+                        draggable={true}
+                        onDragStart={onDragStart(setDragStatus, dragImageRef, item)}
+                        onDragOver={onDragOver(setDragStatus, item)}
+                        onDragLeave={onDragLeave(setDragStatus)}
+                        onDrop={onDrop(dragStatus, setDragStatus, dragImageRef, item)}
+                        style={{
+                            paddingLeft: getLeftPadding(depth)
+                        }}
+                    >
+                        <Flex {...flexProps}>
                             <Icon
-                                icon="star-filled"
-                                color={active ? "var(--accent-text-color)" : "orange"}
-                                vAlign="-1px"
-                                size={14}
+                                icon={item.icon}
+                                color={active ? "var(--accent-text-color)" : item.color}
                             />
-                        </span>
+
+                            <Text fz={textSize} truncate ref={dragImageRef}>
+                                {item.name}
+                            </Text>
+
+                            {isFolder(item) && (
+                                <span
+                                    className={clsx(
+                                        classes.caret,
+                                        item.opened && classes.caretOpen
+                                    )}
+                                ></span>
+                            )}
+
+                            {isPage(item) && item.favorited && (
+                                <span style={{ marginLeft: "auto" }}>
+                                    <Icon
+                                        icon="star-filled"
+                                        color={active ? "var(--accent-text-color)" : "orange"}
+                                        vAlign="-1px"
+                                        size={14}
+                                    />
+                                </span>
+                            )}
+                        </Flex>
+                    </div>
+                </HoverCard.Target>
+                <HoverCard.Dropdown>
+                    <Flex gap="xs" align="center" wrap="nowrap">
+                        <Icon icon={item.icon} color={item.color} size={24} />
+
+                        <Text fw={500} truncate title={item.name}>
+                            {item.name}
+                        </Text>
+                    </Flex>
+
+                    <Divider my="sm" />
+
+                    {isPage(item) && (
+                        <div>
+                            <Group gap={3}>
+                                {save.tags
+                                    .filter((t) => item.tags.includes(t.id))
+                                    .map((tag) => (
+                                        <Badge color={tag.color} key={tag.id} autoContrast>
+                                            {tag.name}
+                                        </Badge>
+                                    ))}
+                            </Group>
+                        </div>
                     )}
-                </Flex>
-            </Box>
+
+                    <Space h="xl" />
+
+                    {isPage(item) && (
+                        <Text fz="xs" c="gray" fs="italic">
+                            Last edited{" "}
+                            {new Date(item.lastModified).toLocaleString([], {
+                                dateStyle: "long",
+                                timeStyle: "short"
+                            })}
+                        </Text>
+                    )}
+                </HoverCard.Dropdown>
+            </HoverCard>
 
             {isFolder(item) && (
                 <Collapse in={item.opened}>

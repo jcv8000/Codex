@@ -13,6 +13,8 @@ export type Page = NoteItemBase & {
     // TODO move textContent to a separate text file Map
     textContent: string;
     favorited: boolean;
+    tags: string[];
+    lastModified: number;
 };
 
 export type Folder = NoteItemBase & {
@@ -22,7 +24,9 @@ export type Folder = NoteItemBase & {
 
 export type NoteItem = Page | Folder;
 
-export type Save = { schema_version: number; items: NoteItem[] };
+export type Tag = { id: string; name: string; color: string };
+
+export type Save = { schema_version: number; tags: Tag[]; items: NoteItem[] };
 
 export function isPage(item: Readonly<NoteItem>): item is Readonly<Page> {
     return (item as Page).fileName !== undefined;
@@ -107,6 +111,7 @@ export function isDescendantOf(descendant: NoteItem, ancestor: NoteItem) {
 // vvvvvvvvvvvv
 
 const _pageId = uuid();
+const _tagId = uuid();
 const _page: Page = {
     name: "intro",
     id: _pageId,
@@ -114,7 +119,9 @@ const _page: Page = {
     color: "#999999",
     favorited: false,
     textContent: "",
-    fileName: generatePageFileName("intro", _pageId)
+    fileName: generatePageFileName("intro", _pageId),
+    tags: [_tagId],
+    lastModified: Date.now()
 };
 
 const _folder: Folder = {
@@ -126,4 +133,11 @@ const _folder: Folder = {
     children: [_page]
 };
 
-export const exampleSave: Save = { schema_version: 2, items: [_folder] };
+export const exampleSave: Save = {
+    schema_version: 2,
+    tags: [
+        { id: _tagId, name: "OOP", color: "#800080" },
+        { id: uuid(), name: "Networking", color: "#FF0000" }
+    ],
+    items: [_folder]
+};

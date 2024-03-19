@@ -9,6 +9,7 @@ declare module "valtio" {
 type View =
     | { value: "home" }
     | { value: "settings" }
+    | { value: "tags" }
     | { value: "editor"; page: Page; initialContentString: string };
 
 type CodexStore = {

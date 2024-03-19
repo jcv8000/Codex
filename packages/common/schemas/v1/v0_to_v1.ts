@@ -6,11 +6,11 @@ import { v4 as uuid } from "@lukeed/uuid";
 import { join } from "path";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 
-export function is_prefs_v0(prefs: any) {
+export function is_prefs_v0(prefs: any): prefs is Prefs_v0 {
     return prefs["dataDir"] != undefined;
 }
 
-export function is_save_v0(save: any) {
+export function is_save_v0(save: any): save is Save_v0 {
     return save["schema_version"] == undefined;
 }
 

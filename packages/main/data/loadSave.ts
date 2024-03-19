@@ -4,7 +4,7 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { logError } from "../logger";
 import { convert_save_v0_to_v1, is_save_v0 } from "common/schemas/v1/v0_to_v1";
-import { is_save_v1 } from "common/schemas/v2/v1_to_v2";
+import { convert_save_v1_to_v2, is_save_v1 } from "common/schemas/v2/v1_to_v2";
 import isDev from "electron-is-dev";
 
 export function loadSave(saveFolderPath: string): Save | null {
@@ -38,15 +38,18 @@ function convertSaveIfOld(save: any, saveFolderPath: string): Save | null {
     if (is_save_v0(save)) {
         if (askToConvert(saveFolderPath) == "yes") {
             const v1 = convert_save_v0_to_v1(save, saveFolderPath);
+            const v2 = convert_save_v1_to_v2(v1, saveFolderPath);
+
             if (isDev) console.log(`Converted save from schema v0 to v2`);
-            v1.schema_version = 2;
-            return v1 as unknown as Save;
+            return v2 as unknown as Save;
         } else return null;
     } else if (is_save_v1(save)) {
-        // v1 and v2 are identical
-        save.schema_version = 2;
-        if (isDev) console.log(`Converted save from schema v1 to v2`);
-        return save as Save;
+        if (askToConvert(saveFolderPath) == "yes") {
+            const v2 = convert_save_v1_to_v2(save, saveFolderPath);
+
+            if (isDev) console.log(`Converted save from schema v1 to v2`);
+            return v2 as unknown as Save;
+        } else return null;
     } else if (save.schema_version == 2) {
         return save as Save;
     } else {
@@ -59,7 +62,7 @@ function askToConvert(saveFilePath: string): "yes" | "no" {
         title: "Codex",
         message: "Please backup your save.json and notes folder.",
         detail:
-            "Codex 2.0 has to convert your save.json to a new format, " +
+            "Codex 3.0 has to convert your save.json to a new format, " +
             "and convert all individual pages to a new format.\n\n" +
             "Please back up your 'save.json' and 'notes' folder before converting\n\n" +
             `Your save.json location:\n${saveFilePath}\n\n` +

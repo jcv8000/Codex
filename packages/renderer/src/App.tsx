@@ -15,6 +15,7 @@ import { ModalsProvider as MantineModalsProvider } from "@mantine/modals";
 import { HomeView } from "components/HomeView";
 import { SettingsView } from "components/SettingsView";
 import { EditorView } from "components/Editor";
+import { TagsView } from "components/TagsView";
 
 export function App() {
     return (
@@ -55,6 +56,7 @@ function MainView() {
 
     if (view.value == "home") rendered = <HomeView />;
     else if (view.value == "settings") rendered = <SettingsView />;
+    else if (view.value == "tags") rendered = <TagsView />;
     else if (view.value == "editor") {
         rendered = <EditorView initialContentString={view.initialContentString} />;
     }

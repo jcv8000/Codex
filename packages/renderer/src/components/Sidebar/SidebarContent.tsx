@@ -19,6 +19,12 @@ export function SidebarContent() {
                 shouldBeActive={view.value == "settings"}
                 onClick={() => (codexStore.view = { value: "settings" })}
             />
+            <SidebarItem
+                icon="tags"
+                text="Tags" // TODO localize
+                shouldBeActive={view.value == "tags"}
+                onClick={() => (codexStore.view = { value: "tags" })}
+            />
             <SidebarItem icon="menu-2" text={locale.sidebar.moreTab}>
                 <SidebarItem
                     icon="help"
