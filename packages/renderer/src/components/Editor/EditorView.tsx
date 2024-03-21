@@ -26,11 +26,14 @@ export function EditorView({ initialContentString }: Props) {
         });
     }, []);
 
-    const editor = useEditor({
-        autofocus: true,
-        content: JSON.parse(initialContentString),
-        extensions: extensions
-    });
+    const editor = useEditor(
+        {
+            autofocus: true,
+            content: JSON.parse(initialContentString),
+            extensions: extensions
+        },
+        [initialContentString]
+    );
     if (editor == null) return;
 
     return (
