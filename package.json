@@ -108,7 +108,7 @@
         "rimraf": "^5.0.5",
         "sass": "^1.72.0",
         "typescript": "^5.4.3",
-        "vite": "^5.2.2",
+        "vite": "^5.2.3",
         "vite-plugin-static-copy": "^1.0.1",
         "vite-tsconfig-paths": "^4.3.2"
     }
