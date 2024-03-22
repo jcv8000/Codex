@@ -17,7 +17,7 @@ function startElectron() {
     );
 
     // Blocks electron's stderr because it just spams the console
-    electronApp.stdout.setEncoding("utf8");
+    electronApp.stdout.setEncoding("utf-8");
     electronApp.stdout.on("data", (data) => {
         const text = data.toString().trim();
         if (text != "" && text != "\n") {
@@ -25,7 +25,7 @@ function startElectron() {
         }
     });
 
-    electronApp.stderr.setEncoding("utf8");
+    electronApp.stderr.setEncoding("utf-8");
     electronApp.stderr.on("data", (data) => {
         const text = data.toString();
         if (!text.includes("Attempting to call a function in a renderer")) {
