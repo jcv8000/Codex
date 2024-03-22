@@ -19,12 +19,20 @@
     width: var(--sidebar-width);
     overflow: auto;
 
-    padding-top: var(--mantine-spacing-md);
-    padding-bottom: var(--mantine-spacing-md);
-
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-9));
     box-shadow: rgba(0, 0, 0, 0.07) 2px 4px 7px;
     border-right: 0.0625rem solid rgb(233, 236, 239);
+}
+
+#sidebar-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* Width is set by useElementSize() */
+    contain: layout;
+    pointer-events: none;
+    z-index: var(--mantine-z-index-popover);
 }
 
 #main {
@@ -32,10 +40,20 @@
     margin-left: var(--sidebar-width);
     height: 100dvh;
     overflow: auto;
-    padding: var(--mantine-spacing-md);
+}
+
+#main-overlay {
+    margin-left: var(--sidebar-width);
+    height: 100dvh;
+    /* Width is set by useElementSize() */
+    position: fixed;
+    contain: layout;
+    pointer-events: none;
+    z-index: var(--mantine-z-index-popover);
 }
 
 /* Custom titlebar sizing fixes */
-.container-after-titlebar #main {
+.container-after-titlebar #main,
+.container-after-titlebar #main-overlay {
     height: calc(100dvh - var(--titlebar-height));
 }

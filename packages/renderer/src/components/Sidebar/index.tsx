@@ -4,13 +4,16 @@ import { SidebarResizer } from "./SidebarResizer";
 import { ActionIcon, Tooltip } from "@mantine/core";
 import { Icon } from "components/Icon";
 import { modalStore, useLocale } from "src/state";
+import { useElementSize } from "@mantine/hooks";
 
 export function Sidebar() {
     const locale = useLocale();
+    const { ref, width } = useElementSize();
 
     return (
         <>
-            <div id="sidebar">
+            <div id="sidebar-overlay" style={{ width: width }} />
+            <div id="sidebar" ref={ref}>
                 <SidebarContent />
             </div>
 

@@ -1,3 +1,4 @@
+import { Box } from "@mantine/core";
 import { SidebarItem, SidebarNoteItem } from "src/components/SidebarItems";
 import { codexStore, useLocale, useSnapshot } from "src/state";
 
@@ -6,7 +7,7 @@ export function SidebarContent() {
     const locale = useLocale();
 
     return (
-        <>
+        <Box my="md">
             <SidebarItem
                 icon="home"
                 text={locale.sidebar.homeTab}
@@ -61,6 +62,6 @@ export function SidebarContent() {
             {save.items.map((item) => (
                 <SidebarNoteItem item={item} key={item.id} />
             ))}
-        </>
+        </Box>
     );
 }

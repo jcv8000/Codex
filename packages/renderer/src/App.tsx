@@ -15,6 +15,8 @@ import { ModalsProvider as MantineModalsProvider } from "@mantine/modals";
 import { HomeView } from "components/HomeView";
 import { SettingsView } from "components/SettingsView";
 import { EditorView } from "components/Editor";
+import { useElementSize } from "@mantine/hooks";
+import { px } from "common/Utils";
 
 export function App() {
     return (
@@ -22,9 +24,7 @@ export function App() {
             <MantineModalsProvider>
                 <Sidebar />
 
-                <div id="main">
-                    <MainView />
-                </div>
+                <MainView />
 
                 <ModalsProvider />
             </MantineModalsProvider>
@@ -50,6 +50,7 @@ function MantineWrapper(props: { children?: React.ReactNode }) {
 
 function MainView() {
     const { view } = useSnapshot(codexStore);
+    const { ref, width } = useElementSize();
 
     let rendered = <></>;
 
@@ -59,5 +60,12 @@ function MainView() {
         rendered = <EditorView initialContentString={view.initialContentString} />;
     }
 
-    return rendered;
+    return (
+        <>
+            <div id="main-overlay" style={{ width: px(width) }} />
+            <div id="main" ref={ref}>
+                {rendered}
+            </div>
+        </>
+    );
 }
