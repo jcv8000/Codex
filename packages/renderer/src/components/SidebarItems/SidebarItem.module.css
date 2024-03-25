@@ -8,16 +8,20 @@
     cursor: pointer;
 
     @mixin hover {
-        background-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-gray-8));
+        background-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
     }
 }
 
 .itemActive {
     background-color: var(--accent-color);
-    color: var(--accent-text-color);
+    color: var(--accent-text-color) !important;
 
     @mixin hover {
-        background-color: var(--accent-color-dark);
+        /* background-color: light-dark(
+            var(--accent-color-dark) !important,
+            var(--accent-color-light) !important
+        ); */
+        background-color: var(--accent-color) !important;
     }
 }
 

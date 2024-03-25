@@ -1,25 +1,25 @@
-import { ActionIcon, Button, Modal, createTheme, rem } from "@mantine/core";
+import { ActionIcon, Button, ColorInput, Modal, Select, createTheme, rem } from "@mantine/core";
 import { createPaletteFromColor } from "palettey";
 import { hexToRgb, px } from "common/Utils";
 
-export function setTemportaryFakeAccentColor(accentColor: string) {
-    const palete = getAccentColorPalette(accentColor);
-    setCSSProperty("--mantine-color-accent-0", palete[0]);
-    setCSSProperty("--mantine-color-accent-1", palete[1]);
-    setCSSProperty("--mantine-color-accent-2", palete[2]);
-    setCSSProperty("--mantine-color-accent-3", palete[3]);
-    setCSSProperty("--mantine-color-accent-4", palete[4]);
-    setCSSProperty("--mantine-color-accent-5", palete[5]);
-    setCSSProperty("--mantine-color-accent-6", palete[6]);
-    setCSSProperty("--mantine-color-accent-7", palete[7]);
-    setCSSProperty("--mantine-color-accent-8", palete[8]);
-    setCSSProperty("--mantine-color-accent-9", palete[9]);
+// export function setTemportaryFakeAccentColor(accentColor: string) {
+//     const palete = getAccentColorPalette(accentColor);
+//     setCSSProperty("--mantine-color-accent-0", palete[0]);
+//     setCSSProperty("--mantine-color-accent-1", palete[1]);
+//     setCSSProperty("--mantine-color-accent-2", palete[2]);
+//     setCSSProperty("--mantine-color-accent-3", palete[3]);
+//     setCSSProperty("--mantine-color-accent-4", palete[4]);
+//     setCSSProperty("--mantine-color-accent-5", palete[5]);
+//     setCSSProperty("--mantine-color-accent-6", palete[6]);
+//     setCSSProperty("--mantine-color-accent-7", palete[7]);
+//     setCSSProperty("--mantine-color-accent-8", palete[8]);
+//     setCSSProperty("--mantine-color-accent-9", palete[9]);
 
-    setCSSProperty("--accent-color", palete[5]);
-    setCSSProperty("--accent-color-light", palete[4]);
-    setCSSProperty("--accent-color-dark", palete[6]);
-    setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
-}
+//     setCSSProperty("--accent-color", palete[5]);
+//     setCSSProperty("--accent-color-light", palete[4]);
+//     setCSSProperty("--accent-color-dark", palete[6]);
+//     setCSSProperty("--accent-text-color", getAccentTextColor(accentColor));
+// }
 
 // TODO CustomCodeBlock/Wrapper.tsx => calculate the code block scrollbar colors in AppTheme and just set css variables for it.
 export function AppTheme(props: {
@@ -86,6 +86,17 @@ export function AppTheme(props: {
                         color: props.variant == "filled" ? "var(--accent-text-color)" : undefined
                     }
                 })
+            }),
+            Select: Select.extend({
+                defaultProps: {
+                    checkIconPosition: "right",
+                    leftSectionPointerEvents: "none",
+                    comboboxProps: { shadow: "sm" },
+                    allowDeselect: false
+                }
+            }),
+            ColorInput: ColorInput.extend({
+                defaultProps: { leftSectionPointerEvents: "none" }
             })
         },
         fontSizes: {

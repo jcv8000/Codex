@@ -19,9 +19,10 @@
     width: var(--sidebar-width);
     overflow: auto;
 
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-gray-9));
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
     box-shadow: rgba(0, 0, 0, 0.07) 2px 4px 7px;
-    border-right: 0.0625rem solid rgb(233, 236, 239);
+    border-right: 0.0625rem solid
+        light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-8));
 }
 
 #sidebar-overlay {
@@ -36,7 +37,6 @@
 }
 
 #main {
-    background-color: var(--mantine-color-white);
     margin-left: var(--sidebar-width);
     height: 100dvh;
     overflow: auto;

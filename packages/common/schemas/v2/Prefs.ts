@@ -32,7 +32,7 @@ export const defaultPrefs: Prefs = {
     schema_version: 2,
     general: {
         saveFolder: "",
-        accentColor: "#FF7926",
+        accentColor: "#ff7926",
         sidebarWidth: 300,
         locale: "en_US",
         theme: "light",

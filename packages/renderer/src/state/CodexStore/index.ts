@@ -14,19 +14,21 @@ type View =
 type CodexStore = {
     view: View;
     prefs: Prefs;
+    initialPrefs: Readonly<Prefs>;
     save: Save;
     editor: Editor | null;
     unsavedChanges: boolean;
     draggedItem: NoteItem | null;
 };
 
-const startPrefs = await window.ipc.invoke("get-prefs");
-const startSave = await window.ipc.invoke("get-save");
+const initialPrefs = await window.ipc.invoke("get-prefs");
+const initialSave = await window.ipc.invoke("get-save");
 
 export const codexStore = proxy<CodexStore>({
     view: { value: "home" },
-    prefs: startPrefs,
-    save: startSave,
+    prefs: structuredClone(initialPrefs),
+    initialPrefs: initialPrefs,
+    save: initialSave,
     editor: null,
     unsavedChanges: false,
     draggedItem: null

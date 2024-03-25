@@ -63,3 +63,8 @@ export function rgbToHex(rgb: { r: number; g: number; b: number }): string {
 export function px(pixels: number) {
     return `${pixels}px`;
 }
+
+export function renderDebug(componentName: string) {
+    // console.debug is the "verbose" log level
+    if (import.meta.env.MODE == "development") console.debug(`${componentName} re-rendered.`);
+}

@@ -7,12 +7,13 @@
     cursor: col-resize;
 
     @mixin hover {
-        background-color: var(--mantine-color-gray-3);
+        /* background-color: var(--mantine-color-gray-3); */
+        background-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-9));
     }
 }
 
 .outer:active {
-    background-color: var(--mantine-color-gray-4);
+    background-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-9));
 }
 
 .inner {

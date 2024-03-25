@@ -8,8 +8,3 @@
     --table-border-color: #d0d7de;
     --table-bg-color: #f6f8fa;
 }
-
-.hljs {
-    border-radius: var(--mantine-radius-sm);
-    border: 1px solid light-dark(#00000015, #ffffff30);
-}

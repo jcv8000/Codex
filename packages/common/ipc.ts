@@ -23,6 +23,7 @@ type RendererCommands = {
     "is-under-arm64-translator": () => boolean;
 
     "change-save-location": (location: string) => void;
+    "reset-to-default-save-location": () => void;
 
     "open-link": (link: Link) => void;
     "open-external-link": (url: string) => void;

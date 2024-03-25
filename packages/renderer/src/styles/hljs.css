@@ -1,0 +1,6 @@
+.hljs {
+    border-radius: var(--mantine-radius-md);
+    border: 1px solid light-dark(#00000015, #ffffff30);
+    font-size: 13px;
+    font-family: var(--mantine-font-family-monospace);
+}

@@ -5,6 +5,8 @@ import { TypedIpcRenderer } from "common/ipc";
 declare global {
     interface Window {
         ipc: TypedIpcRenderer;
+        platform: NodeJS.Platform;
+        defaultSaveLocation: string;
     }
 }
 
@@ -16,7 +18,15 @@ contextBridge.exposeInMainWorld("ipc", {
     invoke: typedIpcRenderer.invoke
 });
 
-async function titlebar() {
+const platform = process.platform;
+contextBridge.exposeInMainWorld("platform", platform);
+
+(async () => {
+    const defaultSaveLocation = await typedIpcRenderer.invoke("get-default-save-location");
+    contextBridge.exposeInMainWorld("defaultSaveLocation", defaultSaveLocation);
+})();
+
+(async () => {
     const prefs = await typedIpcRenderer.invoke("get-prefs");
     if (prefs.general.titlebarStyle == "custom" && process.platform !== "darwin") {
         window.addEventListener("DOMContentLoaded", () => {
@@ -27,5 +37,4 @@ async function titlebar() {
             });
         });
     }
-}
-titlebar();
+})();

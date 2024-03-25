@@ -3,10 +3,12 @@ import "@mantine/dropzone/styles.css";
 import "@mantine/notifications/styles.css";
 import "@tabler/icons-webfont/tabler-icons.min.css";
 import "katex/dist/katex.min.css";
+
 import "./styles/layout.css";
 import "./styles/titlebar.css";
+import "./styles/hljs.css";
 
-import { MantineProvider } from "@mantine/core";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { AppTheme } from "./styles/AppTheme";
 import { Sidebar } from "components/Sidebar";
 import { codexStore, useSnapshot } from "./state";
@@ -16,9 +18,10 @@ import { HomeView } from "components/HomeView";
 import { SettingsView } from "components/SettingsView";
 import { EditorView } from "components/Editor";
 import { useElementSize } from "@mantine/hooks";
-import { px } from "common/Utils";
+import { px, renderDebug } from "common/Utils";
 
 export function App() {
+    renderDebug("App");
     return (
         <MantineWrapper>
             <MantineModalsProvider>
@@ -34,23 +37,30 @@ export function App() {
 
 function MantineWrapper(props: { children?: React.ReactNode }) {
     const { general, editor } = useSnapshot(codexStore).prefs;
+    renderDebug("MantineWrapper");
 
     return (
-        <MantineProvider
-            theme={AppTheme({
-                accentColor: general.accentColor,
-                codeWordWrap: editor.codeWordWrap,
-                sidebarWidth: general.sidebarWidth
-            })}
-        >
-            {props.children}
-        </MantineProvider>
+        <>
+            <link rel="stylesheet" href={`assets/hljs/${editor.codeBlockTheme}.css`} />
+            <ColorSchemeScript forceColorScheme={general.theme} />
+            <MantineProvider
+                theme={AppTheme({
+                    accentColor: general.accentColor,
+                    codeWordWrap: editor.codeWordWrap,
+                    sidebarWidth: general.sidebarWidth
+                })}
+                forceColorScheme={general.theme}
+            >
+                {props.children}
+            </MantineProvider>
+        </>
     );
 }
 
 function MainView() {
     const { view } = useSnapshot(codexStore);
     const { ref, width } = useElementSize();
+    renderDebug("MainView");
 
     let rendered = <></>;
 

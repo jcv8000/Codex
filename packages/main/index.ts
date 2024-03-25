@@ -182,6 +182,17 @@ if (app.requestSingleInstanceLock()) {
             app.exit();
         });
 
+        ipc.handle("reset-to-default-save-location", () => {
+            if (prefs == undefined) return;
+
+            prefs.general.saveFolder = app.getPath("userData");
+            writePrefs(prefs);
+
+            saveWindowState(window);
+            if (!isDev) app.relaunch();
+            app.exit();
+        });
+
         ipc.handle("exit", () => app.exit());
 
         ipc.handle("open-link", (e, [link]) => {
