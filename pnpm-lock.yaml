@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@electron/remote':
     specifier: ^2.1.2
-    version: 2.1.2(electron@29.1.5)
+    version: 2.1.2(electron@29.1.6)
   '@lukeed/uuid':
     specifier: ^2.0.1
     version: 2.0.1
@@ -118,7 +118,7 @@ dependencies:
     version: 2.2.4(@tiptap/pm@2.2.4)
   '@treverix/custom-electron-titlebar':
     specifier: ^4.2.0
-    version: 4.2.0(electron@29.1.5)
+    version: 4.2.0(electron@29.1.6)
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
@@ -209,8 +209,8 @@ devDependencies:
     specifier: ^4.2.1
     version: 4.2.1(vite@5.2.6)
   electron:
-    specifier: ^29.1.5
-    version: 29.1.5
+    specifier: ^29.1.6
+    version: 29.1.6
   electron-builder:
     specifier: ^24.13.3
     version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -574,12 +574,12 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/remote@2.1.2(electron@29.1.5):
+  /@electron/remote@2.1.2(electron@29.1.6):
     resolution: {integrity: sha512-EPwNx+nhdrTBxyCqXt/pftoQg/ybtWDW3DUWHafejvnB1ZGGfMpv6e15D8KeempocjXe78T7WreyGGb3mlZxdA==}
     peerDependencies:
       electron: '>= 13.0.0'
     dependencies:
-      electron: 29.1.5
+      electron: 29.1.6
     dev: false
 
   /@electron/universal@1.5.1:
@@ -1667,10 +1667,10 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
-  /@treverix/custom-electron-titlebar@4.2.0(electron@29.1.5):
+  /@treverix/custom-electron-titlebar@4.2.0(electron@29.1.6):
     resolution: {integrity: sha512-spiCIz/YCuCZXtfrE2D+1dgvLgs9dEscRHJiCid22bdb8qNDnzdbwjz9IEsMEkjVV+DIpbDwP6Axd4x/mXmnWA==}
     dependencies:
-      '@electron/remote': 2.1.2(electron@29.1.5)
+      '@electron/remote': 2.1.2(electron@29.1.6)
     transitivePeerDependencies:
       - electron
     dev: false
@@ -3389,8 +3389,8 @@ packages:
     resolution: {integrity: sha512-6FpOapKxHuRNUoNQEP54sAacMod/XX68/Oaau+UoTEC8yxy5lR8jAvTlyrb60oZ9OtuUuAEtKvCQOJm6S4MtBQ==}
     dev: true
 
-  /electron@29.1.5:
-    resolution: {integrity: sha512-1uWGRw/ffA62lcrklxGUgVxVtOHojsg/nwsYr+/F9cVjipZJn8iPv/ABGIIexhmUqWcho8BqfTJ4osCBa29gBg==}
+  /electron@29.1.6:
+    resolution: {integrity: sha512-UIYfpHR9gRBFKHyejHuXUVQ7nNzZRnoPVOHlijkvqR+DSLwgJ2ZcVVt0LNduNeO8PhPkY1+6kHonL52OTC1cOw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
