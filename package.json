@@ -85,12 +85,12 @@
         "@types/d3": "^7.4.3",
         "@types/katex": "^0.16.7",
         "@types/node": "^20.11.30",
-        "@types/react": "^18.2.69",
+        "@types/react": "^18.2.73",
         "@types/react-dom": "^18.2.22",
         "@types/semver": "^7.5.8",
         "@types/validator": "^13.11.9",
-        "@typescript-eslint/eslint-plugin": "^7.3.1",
-        "@typescript-eslint/parser": "^7.3.1",
+        "@typescript-eslint/eslint-plugin": "^7.4.0",
+        "@typescript-eslint/parser": "^7.4.0",
         "@vitejs/plugin-react": "^4.2.1",
         "electron": "^29.1.5",
         "electron-builder": "^24.13.3",
@@ -108,7 +108,7 @@
         "sass": "^1.72.0",
         "typescript": "^5.4.3",
         "vite": "^5.2.6",
-        "vite-plugin-static-copy": "^1.0.1",
+        "vite-plugin-static-copy": "^1.0.2",
         "vite-tsconfig-paths": "^4.3.2"
     }
 }
