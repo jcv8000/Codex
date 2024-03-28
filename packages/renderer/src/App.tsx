@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import "@mantine/notifications/styles.css";
-import "@tabler/icons-webfont/tabler-icons.min.css";
+import "@tabler/icons-webfont/dist/tabler-icons.min.css";
 import "katex/dist/katex.min.css";
 
 import "./styles/layout.css";

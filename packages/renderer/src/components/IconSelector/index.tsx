@@ -22,7 +22,7 @@ import { codexStore, useLocale } from "src/state";
 import { Locale } from "common/Locales";
 
 import classes from "./IconSelector.module.css";
-import tablerJSON from "../../../../../node_modules/@tabler/icons/tags.json";
+import tablerJSON from "../../../../../node_modules/@tabler/icons/icons.json";
 
 type Props = {
     icon: string;
@@ -33,16 +33,34 @@ type Props = {
     label?: string;
 };
 
+type Icon = {
+    name: string;
+    category: string;
+    tags: string[];
+};
+
 export function IconSelector(props: Props) {
     const locale = useLocale();
     const texts = locale.mutateModals.iconSelector;
 
     const tablerIcons = useMemo(() => {
-        const list = Object.values(tablerJSON).map((icon) => ({
-            name: icon.name,
-            category: icon.category,
-            tags: icon.tags
-        }));
+        const list = new Array<Icon>();
+        Object.values(tablerJSON).forEach((icon: any) => {
+            list.push({
+                name: icon.name,
+                category: icon.category,
+                tags: icon.tags.length ? (icon.tags as string[]) : []
+            });
+
+            // Add filled variants of icons
+            if (icon.styles.filled !== undefined) {
+                list.push({
+                    name: icon.name + "-filled",
+                    category: icon.category,
+                    tags: icon.tags.length ? (icon.tags as string[]) : []
+                });
+            }
+        });
 
         // Insert custom Codex icon in-order
         for (let i = 0; i < list.length; i++) {
@@ -84,11 +102,7 @@ export function IconSelector(props: Props) {
         let temp = [...tablerIcons];
 
         if (category != null) {
-            const newTemp: { name: string; category: string; tags: string[] }[] = [];
-            temp.forEach((icon) => {
-                if (icon.category == category) newTemp.push(icon);
-            });
-            temp = newTemp;
+            temp = temp.filter((icon) => icon.category == category);
         }
 
         if (filter != "") {
@@ -99,7 +113,6 @@ export function IconSelector(props: Props) {
                 minMatchCharLength: 2
             });
             const results = fuse.search(filter);
-            temp = [];
             temp = results.map((result) => result.item);
         }
 
@@ -207,7 +220,7 @@ export function IconSelector(props: Props) {
                         {iconList.map((icon) => (
                             <div
                                 key={icon.name}
-                                title={icon.name}
+                                title={`"${icon.name}"\n\nCategory: ${icon.category}\nTags: ${icon.tags.join(", ")}`}
                                 className={classes.iconButton}
                                 onClick={() => {
                                     props.onChangeIcon(icon.name);
@@ -250,146 +263,159 @@ const colorSwatches = [
 ];
 
 function categories(locale: Locale) {
+    const categories = locale.mutateModals.iconSelector.modal.categories;
     return [
         {
             value: "Animals",
-            label: locale.mutateModals.iconSelector.modal.categories.animals
+            label: categories.animals
         },
         {
             value: "Arrows",
-            label: locale.mutateModals.iconSelector.modal.categories.arrows
+            label: categories.arrows
         },
         {
             value: "Brand",
-            label: locale.mutateModals.iconSelector.modal.categories.brand
+            label: categories.brand
         },
         {
             value: "Buildings",
-            label: locale.mutateModals.iconSelector.modal.categories.buildings
+            label: categories.buildings
         },
         {
             value: "Charts",
-            label: locale.mutateModals.iconSelector.modal.categories.charts
+            label: categories.charts
         },
         {
             value: "Communication",
-            label: locale.mutateModals.iconSelector.modal.categories.communication
+            label: categories.communication
         },
         {
             value: "Computers",
-            label: locale.mutateModals.iconSelector.modal.categories.computers
+            label: categories.computers
         },
         {
             value: "Currencies",
-            label: locale.mutateModals.iconSelector.modal.categories.currencies
+            label: categories.currencies
         },
         {
             value: "Database",
-            label: locale.mutateModals.iconSelector.modal.categories.database
+            label: categories.database
         },
         {
             value: "Design",
-            label: locale.mutateModals.iconSelector.modal.categories.design
+            label: categories.design
         },
         {
             value: "Devices",
-            label: locale.mutateModals.iconSelector.modal.categories.devices
+            label: categories.devices
         },
         {
             value: "Document",
-            label: locale.mutateModals.iconSelector.modal.categories.document
+            label: categories.document
         },
         {
             value: "E-commerce",
-            label: locale.mutateModals.iconSelector.modal.categories.ecommerce
+            label: categories.ecommerce
         },
         {
             value: "Electrical",
-            label: locale.mutateModals.iconSelector.modal.categories.electrical
+            label: categories.electrical
         },
         {
-            value: "Filled",
-            label: locale.mutateModals.iconSelector.modal.categories.filled
+            value: "Extensions",
+            label: categories.extensions
         },
         {
             value: "Food",
-            label: locale.mutateModals.iconSelector.modal.categories.food
+            label: categories.food
+        },
+        {
+            value: "Games",
+            label: categories.games
         },
         {
             value: "Gestures",
-            label: locale.mutateModals.iconSelector.modal.categories.gestures
+            label: categories.gestures
         },
         {
             value: "Health",
-            label: locale.mutateModals.iconSelector.modal.categories.health
+            label: categories.health
+        },
+        {
+            value: "Laundry",
+            label: categories.laundry
         },
         {
             value: "Letters",
-            label: locale.mutateModals.iconSelector.modal.categories.letters
+            label: categories.letters
         },
         {
             value: "Logic",
-            label: locale.mutateModals.iconSelector.modal.categories.logic
+            label: categories.logic
         },
         {
             value: "Map",
-            label: locale.mutateModals.iconSelector.modal.categories.map
+            label: categories.map
         },
         {
             value: "Math",
-            label: locale.mutateModals.iconSelector.modal.categories.math
+            label: categories.math
         },
         {
             value: "Media",
-            label: locale.mutateModals.iconSelector.modal.categories.media
+            label: categories.media
         },
         {
             value: "Mood",
-            label: locale.mutateModals.iconSelector.modal.categories.mood
+            label: categories.mood
         },
         {
             value: "Nature",
-            label: locale.mutateModals.iconSelector.modal.categories.nature
+            label: categories.nature
         },
         {
             value: "Numbers",
-            label: locale.mutateModals.iconSelector.modal.categories.numbers
+            label: categories.numbers
         },
         {
             value: "Photography",
-            label: locale.mutateModals.iconSelector.modal.categories.photography
+            label: categories.photography
         },
         {
             value: "Shapes",
-            label: locale.mutateModals.iconSelector.modal.categories.shapes
+            label: categories.shapes
         },
         {
             value: "Sport",
-            label: locale.mutateModals.iconSelector.modal.categories.sport
+            label: categories.sport
         },
         {
             value: "Symbols",
-            label: locale.mutateModals.iconSelector.modal.categories.symbols
+            label: categories.symbols
         },
         {
             value: "System",
-            label: locale.mutateModals.iconSelector.modal.categories.system
+            label: categories.system
         },
         {
             value: "Text",
-            label: locale.mutateModals.iconSelector.modal.categories.text
+            label: categories.text
         },
         {
             value: "Vehicles",
-            label: locale.mutateModals.iconSelector.modal.categories.vehicles
+            label: categories.vehicles
         },
         {
             value: "Version control",
-            label: locale.mutateModals.iconSelector.modal.categories.versionControl
+            label: categories.versionControl
         },
         {
             value: "Weather",
-            label: locale.mutateModals.iconSelector.modal.categories.weather
+            label: categories.weather
+        },
+        {
+            value: "Zodiac",
+            label: categories.zodiac
         }
     ];
 }

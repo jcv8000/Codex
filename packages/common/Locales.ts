@@ -144,10 +144,12 @@ export type Locale = {
                     document: string;
                     ecommerce: string;
                     electrical: string;
-                    filled: string;
+                    extensions: string;
                     food: string;
+                    games: string;
                     gestures: string;
                     health: string;
+                    laundry: string;
                     letters: string;
                     logic: string;
                     map: string;
@@ -165,6 +167,7 @@ export type Locale = {
                     vehicles: string;
                     versionControl: string;
                     weather: string;
+                    zodiac: string;
                 };
             };
         };
@@ -436,10 +439,12 @@ export const locales: Record<SupportedLocales, Locale> = {
                         document: "Document",
                         ecommerce: "E-Commerce",
                         electrical: "Electrical",
-                        filled: "Filled",
+                        extensions: "Extensions",
                         food: "Food",
+                        games: "Games",
                         gestures: "Gestures",
                         health: "Health",
+                        laundry: "Laundry",
                         letters: "Letters",
                         logic: "Logic",
                         map: "Map",
@@ -456,7 +461,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                         text: "Text",
                         vehicles: "Vehicles",
                         versionControl: "Version Control",
-                        weather: "Weather"
+                        weather: "Weather",
+                        zodiac: "Zodiac"
                     }
                 }
             },
@@ -726,10 +732,12 @@ export const locales: Record<SupportedLocales, Locale> = {
                         document: "文档",
                         ecommerce: "电商",
                         electrical: "电路",
-                        filled: "填充的",
+                        extensions: "文件扩展名",
                         food: "食物",
+                        games: "游戏",
                         gestures: "手势",
                         health: "健康",
+                        laundry: "洗衣店",
                         letters: "字母",
                         logic: "逻辑电路",
                         map: "地图",
@@ -746,7 +754,8 @@ export const locales: Record<SupportedLocales, Locale> = {
                         text: "文本编辑",
                         vehicles: "交通",
                         versionControl: "版本控制",
-                        weather: "天气"
+                        weather: "天气",
+                        zodiac: "十二生肖"
                     }
                 }
             },
