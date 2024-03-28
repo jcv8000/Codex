@@ -86,7 +86,7 @@
         "@types/katex": "^0.16.7",
         "@types/node": "^20.11.30",
         "@types/react": "^18.2.73",
-        "@types/react-dom": "^18.2.22",
+        "@types/react-dom": "^18.2.23",
         "@types/semver": "^7.5.8",
         "@types/validator": "^13.11.9",
         "@typescript-eslint/eslint-plugin": "^7.4.0",
