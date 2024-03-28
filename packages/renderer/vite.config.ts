@@ -3,7 +3,9 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import { visualizer } from "rollup-plugin-visualizer";
 import pkg from "../../package.json";
+import { UserConfig } from "vite";
 
 const PROJECT_ROOT = resolve(__dirname, "../../");
 
@@ -45,7 +47,7 @@ export default defineConfig(async () => {
 
     console.log("Building app with \x1b[96mReact\x1b[0m");
 
-    return {
+    const config: UserConfig = {
         root: __dirname,
         clearScreen: false,
         server: {
@@ -64,8 +66,14 @@ export default defineConfig(async () => {
                 }
             }
         },
-        appType: "mpa",
         plugins: [
+            visualizer({
+                template: "treemap",
+                open: true,
+                gzipSize: true,
+                brotliSize: true,
+                filename: "bundle-analysis.html" // Will be saved in project's root
+            }),
             tsconfigPaths({ root: __dirname }),
             viteStaticCopy({
                 targets: [
@@ -82,4 +90,6 @@ export default defineConfig(async () => {
             react()
         ]
     };
+
+    return config;
 });

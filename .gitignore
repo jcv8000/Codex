@@ -6,6 +6,7 @@ packages/renderer/node_modules
 # build output
 .vite
 dist
+bundle-analysis.html
 
 # debug
 npm-debug.log*

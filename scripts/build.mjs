@@ -2,7 +2,7 @@ import { build } from "vite";
 import { readdirSync, rmSync, statSync } from "fs";
 import { join } from "path";
 
-process.env.NODE_ENV = "PRODUCTION";
+process.env.NODE_ENV = "production";
 
 await build({ configFile: "packages/main/vite.config.ts" });
 await build({ configFile: "packages/preload/vite.config.ts" });

@@ -6,7 +6,7 @@ import electron from "electron";
 let electronApp = null;
 let killable = false;
 
-process.env.NODE_ENV = "DEVELOPMENT";
+process.env.NODE_ENV = "development";
 
 function startElectron() {
     electronApp = spawn(electron, ["."], { stdio: "pipe" });
