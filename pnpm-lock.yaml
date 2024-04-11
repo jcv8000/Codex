@@ -12,23 +12,23 @@ dependencies:
     specifier: ^2.0.1
     version: 2.0.1
   '@mantine/core':
-    specifier: ^7.7.1
-    version: 7.7.1(@mantine/hooks@7.7.1)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.7.2
+    version: 7.7.2(@mantine/hooks@7.7.2)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/dropzone':
-    specifier: ^7.7.1
-    version: 7.7.1(@mantine/core@7.7.1)(@mantine/hooks@7.7.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.7.2
+    version: 7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/form':
-    specifier: ^7.7.1
-    version: 7.7.1(react@18.2.0)
+    specifier: ^7.7.2
+    version: 7.7.2(react@18.2.0)
   '@mantine/hooks':
-    specifier: ^7.7.1
-    version: 7.7.1(react@18.2.0)
+    specifier: ^7.7.2
+    version: 7.7.2(react@18.2.0)
   '@mantine/modals':
-    specifier: ^7.7.1
-    version: 7.7.1(@mantine/core@7.7.1)(@mantine/hooks@7.7.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.7.2
+    version: 7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/notifications':
-    specifier: ^7.7.1
-    version: 7.7.1(@mantine/core@7.7.1)(@mantine/hooks@7.7.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^7.7.2
+    version: 7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0)
   '@tabler/icons':
     specifier: ^3.1.0
     version: 3.1.0
@@ -978,15 +978,15 @@ packages:
       - supports-color
     dev: true
 
-  /@mantine/core@7.7.1(@mantine/hooks@7.7.1)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-SdPzjvqvEK7uHFuVD3a8w3OZyQVoCwIXLSUfOtRNouDMQgsq6Ac7QjKXBBOk3wNweOWFVOU1vATLHobSmow0lQ==}
+  /@mantine/core@7.7.2(@mantine/hooks@7.7.2)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-5kpAB6GWxywAiiVNBrSOYD68IRmr5Sj8nbXiotvPhypc2cvDlhJ3EI6JQhN+DS9xZHBzgAY4zjvXpk8CDKBCsA==}
     peerDependencies:
-      '@mantine/hooks': 7.7.1
+      '@mantine/hooks': 7.7.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
       '@floating-ui/react': 0.26.10(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.7.1(react@18.2.0)
+      '@mantine/hooks': 7.7.2(react@18.2.0)
       clsx: 2.1.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -998,23 +998,23 @@ packages:
       - '@types/react'
     dev: false
 
-  /@mantine/dropzone@7.7.1(@mantine/core@7.7.1)(@mantine/hooks@7.7.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-B5DmWGX0F7yDem+Y+fQy4ZIBy/DkTd9TmlqPhCy8MYdC33I3GSv9o/MAnqbeG0tEnS0X1Aw6h5mnqnsVFYpf2w==}
+  /@mantine/dropzone@7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-s2fik+FyGVblDQzjxcwYFjN53f62IWJ5R/PzfAYOJoCl+m6cHO48B2mXP416R1kTDJvMLP32PGfYPzGCig2y/w==}
     peerDependencies:
-      '@mantine/core': 7.7.1
-      '@mantine/hooks': 7.7.1
+      '@mantine/core': 7.7.2
+      '@mantine/hooks': 7.7.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.7.1(@mantine/hooks@7.7.1)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.7.1(react@18.2.0)
+      '@mantine/core': 7.7.2(@mantine/hooks@7.7.2)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.7.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-dropzone-esm: 15.0.1(react@18.2.0)
     dev: false
 
-  /@mantine/form@7.7.1(react@18.2.0):
-    resolution: {integrity: sha512-NRbVdHsbs634dZIq6IQhqL0uCtF4nYK3OPuPhkBzQ3faqri7TZvYgVQU4KGFTMqPl0UdwC6TkrnnqTZBK6HJMw==}
+  /@mantine/form@7.7.2(react@18.2.0):
+    resolution: {integrity: sha512-6HaWG5dIha/ZskSaor3M519HH1y4VD+xOUChYop8ZH2cYOmbrIi6y5Oyt+UuZspsCklRH76vJY6bR0T08XVlPQ==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
@@ -1023,46 +1023,46 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mantine/hooks@7.7.1(react@18.2.0):
-    resolution: {integrity: sha512-3YH2FzKMlg840tb04PBDcDXyBCi9puFOxEBVgc6Y/pN6KFqfOoAnQE/YvgOtwSNXZlbTWyDlQoYj+3je7pA7og==}
+  /@mantine/hooks@7.7.2(react@18.2.0):
+    resolution: {integrity: sha512-fupbyZvH/hK7YPVlrRnx3uV5eOaMzFFF2Ll3RKMTRQnMhk4uvddzt9uUgGLIIsnZKfhPUZSIr54LZkHQTbPXhg==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
       react: 18.2.0
     dev: false
 
-  /@mantine/modals@7.7.1(@mantine/core@7.7.1)(@mantine/hooks@7.7.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-r7Zk6gZnUNiEEwbnzhIue+d8qjVDmV3umX5/FZgW0ugyB6U8C+ZIPDTlHUaPOF45F+Pu1ahdlK6N+YoRT/lxSg==}
+  /@mantine/modals@7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-xm2rjz6EnXIslcyceSyWdTrDVEkFNCUi6CiuTsnYrz3pKUkbXBomdEAFGs7OSkuDePEfZViXE2iyCJDRpcvH0Q==}
     peerDependencies:
-      '@mantine/core': 7.7.1
-      '@mantine/hooks': 7.7.1
+      '@mantine/core': 7.7.2
+      '@mantine/hooks': 7.7.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.7.1(@mantine/hooks@7.7.1)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.7.1(react@18.2.0)
+      '@mantine/core': 7.7.2(@mantine/hooks@7.7.2)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.7.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@mantine/notifications@7.7.1(@mantine/core@7.7.1)(@mantine/hooks@7.7.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-UGs3r4CU2hy1Vt0TVtdorDufpI7LWCd4P7qZP0US+mXVeeZqHkNTCiwRTwlledhfaIdqERmmQn9OD2lJu8Wblg==}
+  /@mantine/notifications@7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-HUhxLCO8vaq+F/2gw9zh69/Onbs+1YzaCvXlbNnsqZzKPNPgiHnkJZjd+5qtMdWITHWQpQJAF5/noiEoGV666w==}
     peerDependencies:
-      '@mantine/core': 7.7.1
-      '@mantine/hooks': 7.7.1
+      '@mantine/core': 7.7.2
+      '@mantine/hooks': 7.7.2
       react: ^18.2.0
       react-dom: ^18.2.0
     dependencies:
-      '@mantine/core': 7.7.1(@mantine/hooks@7.7.1)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
-      '@mantine/hooks': 7.7.1(react@18.2.0)
-      '@mantine/store': 7.7.1(react@18.2.0)
+      '@mantine/core': 7.7.2(@mantine/hooks@7.7.2)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.7.2(react@18.2.0)
+      '@mantine/store': 7.7.2(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@mantine/store@7.7.1(react@18.2.0):
-    resolution: {integrity: sha512-dmuCOLCFlVHYhZARFsi5YckFQR2Vr4giOgs0X1hczqCVUnRDRIgRusAO5GjUhQrtNxfN0EWwFywjLdcrLkA6Lg==}
+  /@mantine/store@7.7.2(react@18.2.0):
+    resolution: {integrity: sha512-COZJnAWesVZoDcC59vpl5b5oGhXbv1yyaOp+cprcS9POM+jh0P30t8pCsAeRtyuoFcwK6rFDCCMm9tKa3kIjuw==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
