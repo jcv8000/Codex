@@ -12,5 +12,10 @@
         "**/*.sass",
         "**/*.less",
         "node_modules/@mantine/core/styles.css"
-    ]
+    ],
+    "workbench.editor.customLabels.enabled": true,
+    "workbench.editor.customLabels.patterns": {
+        "**/*/index.ts": "${dirname}",
+        "**/*/index.tsx": "${dirname}"
+    }
 }
