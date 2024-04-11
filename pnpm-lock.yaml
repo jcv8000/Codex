@@ -30,11 +30,11 @@ dependencies:
     specifier: ^7.7.2
     version: 7.7.2(@mantine/core@7.7.2)(@mantine/hooks@7.7.2)(react-dom@18.2.0)(react@18.2.0)
   '@tabler/icons':
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^3.2.0
+    version: 3.2.0
   '@tabler/icons-webfont':
-    specifier: ^3.1.0
-    version: 3.1.0
+    specifier: ^3.2.0
+    version: 3.2.0
   '@tiptap/core':
     specifier: ^2.3.0
     version: 2.3.0(@tiptap/pm@2.3.0)
@@ -1235,14 +1235,14 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
 
-  /@tabler/icons-webfont@3.1.0:
-    resolution: {integrity: sha512-eYqGUTeD0qBvToVjWhfSOCYEwGfkJinPflHU59ShGE1Fv1VmQjYybMPbJIa5M4MpVBSazHJb1Sr3b9XnyvG0aA==}
+  /@tabler/icons-webfont@3.2.0:
+    resolution: {integrity: sha512-5IMB+KGlI6ELlW4QQGHXeXUWHOJ3ZvlFsb4E4VmhFV4OfaNn3kaO/Vh8dUqlaPCBhk40fDNyBFOkmurOwBMwWA==}
     dependencies:
-      '@tabler/icons': 3.1.0
+      '@tabler/icons': 3.2.0
     dev: false
 
-  /@tabler/icons@3.1.0:
-    resolution: {integrity: sha512-CpZGyS1IVJKFcv88yZ2sYZIpWWhQ6oy76BQKQ5SF0fGgOqgyqKdBGG/YGyyMW632on37MX7VqQIMTzN/uQqmFg==}
+  /@tabler/icons@3.2.0:
+    resolution: {integrity: sha512-h8GQ2rtxgiSjltrVz4vcopAxTPSpUSUi5nBfJ09H3Bk4fJk6wZ/dVUjzhv/BHfDwGTkAxZBiYe/Q/T95cPeg5Q==}
     dev: false
 
   /@tiptap/core@2.3.0(@tiptap/pm@2.3.0):
