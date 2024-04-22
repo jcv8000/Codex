@@ -1,4 +1,4 @@
-import { Image, Center } from "@mantine/core";
+import { Image, Center, Button } from "@mantine/core";
 import { codexStore, useSnapshot } from "src/state";
 
 export function HomeView() {

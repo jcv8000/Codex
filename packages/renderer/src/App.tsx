@@ -9,6 +9,7 @@ import "./styles/titlebar.css";
 import "./styles/hljs.css";
 
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import { AppTheme } from "./styles/AppTheme";
 import { Sidebar } from "components/Sidebar";
 import { codexStore, useSnapshot } from "./state";
@@ -73,6 +74,12 @@ function MainView() {
     return (
         <>
             <div id="main-overlay" style={{ width: px(width) }} />
+
+            <Notifications
+                portalProps={{ target: "#main-overlay" }}
+                style={{ pointerEvents: "auto" }}
+            />
+
             <div id="main" ref={ref}>
                 {rendered}
             </div>
