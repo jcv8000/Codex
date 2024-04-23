@@ -66,7 +66,7 @@ export function createWindow(prefs: Prefs, ipc: TypedIpcMain) {
 
     //mainWindow.webContents.openDevTools();
 
-    window.webContents.on("did-finish-load", () => {
+    window.webContents.on("dom-ready", () => {
         if (windowState.maximized) window.maximize();
         else window.show();
 
