@@ -268,7 +268,7 @@ export type Locale = {
     };
 };
 
-export const supportedLocales = ["en_US", "zh_CN"] as const;
+export const supportedLocales = ["en_US", "zh_CN", "ru_RU"] as const;
 export type SupportedLocales = (typeof supportedLocales)[number];
 
 export const locales: Record<SupportedLocales, Locale> = {
@@ -338,7 +338,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             },
             languages: {
                 en_US: "English (United States)",
-                zh_CN: "简体中文"
+                zh_CN: "简体中文",
+                ru_RU: "Русский (Российская Федерация)"
             },
             titlebarStyles: {
                 custom: "Custom",
@@ -626,7 +627,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             },
             languages: {
                 en_US: "English (United States)",
-                zh_CN: "简体中文"
+                zh_CN: "简体中文",
+                ru_RU: "Русский (Российская Федерация)"
             },
             titlebarStyles: {
                 custom: "Custom",
@@ -847,6 +849,296 @@ export const locales: Record<SupportedLocales, Locale> = {
             cancel: "取消",
             forget: "放弃更改",
             save: "保存更改"
+        }
+    },
+    ru_RU: {
+        name: "Русский (Российская Федерация)",
+        notifications: {
+            saved: "Сохранено",
+            exported: "Экспортировано",
+            exported_all_pages_in: "Все страницы экспортированы в",
+            update_available: "Доступна новая версия",
+            running_under_arm_translation_desc: "Запущенно из транслятора под arm64",
+            running_under_arm_translation_title: "Скачать версию для ARM с GitHub",
+        },
+        sidebar: {
+            homeTab: "Домашняя страница",
+            settings: "Настройки",
+            moreTab: "Больше вкладок",
+            more_help: "Помощь / Документация",
+            more_website: "Сайт",
+            more_changelogs: "Список изменений",
+            more_github_repo: "Репозиторий GitHub",
+            more_issues: "Вопросы / баг-репорты",
+            more_give_feedback: "Оставьте отзыв (Google Forms)",
+            search_bar_text: "Поиск по страницам",
+            search_contains: "Включает",
+            new_folder: "Новая папка",
+            nothing_here: "Здесь ничего пока нет..."
+        },
+        settings: {
+            accent_color: "Главный цвет",
+            code_block_theme:  "Тема блока кода",
+            code_block_word_wrap: "Перенос текста в блоках кода",
+            code_block_tab_size: {
+                label: "Размер отступа в блоке кода",
+                desc: "Влияет на количество пробелов к удалению/добавлению когда нижимаются Tab/Shift-Tab в блоке кода",
+                four_spaces: "4 пробела (по умолчанию)",
+                two_spaces: "2 пробела"
+            },
+            language: "Язык",
+            contribute_language: "Добавьте свой язык, открыв pull request на GitHub",
+            theme: "Тема",
+            titlebar_style: "Стиль панели заголовка",
+            setting_requires_restart: "Чтобы увидеть изменения потребуется перезагрузка",
+            use_typography_extension: "Использовать расширение Typography в редакторе",
+            use_typography_description: 'Это превращает вещи типа "(c)" в "©".',
+            open_pdf_on_export: "Автоматически открыть PDF после экспортирования",
+            saving_section: "Сохранение страниц",
+            autosave_page_on_switch:
+                "Автоматически сохранять текущую страницу при переключении между страницами или выходе из редактора",
+            general: "Главная",
+            editor: "Редактор",
+            save_folder: "Сохранить папку",
+            editor_width: "Ширина редактора",
+            editor_border: "Граница редактора",
+            editor_spellcheck: "Проверка орфографии в редакторе",
+            save_folder_location: "Место сохранения папок",
+            save_folder_alert_title:
+                "Изменение этого параметра приведет к немедленному перезапуску приложения.",
+            save_folder_alert_desc:
+                "Смена местоположения не приведет к перезаписи или копированию старых данных в новое место. Если вам нужно сохранить данные, то скопируйте файл save.json и папку notes в новое место.",
+            change_save_folder_location: "Изменить местоположение папки",
+            reset_save_folder_location: "Сброс на место по умолчанию",
+            themes: {
+                light: "Светлая",
+                dark: "Тёмная"
+            },
+            languages: {
+                en_US: "English (United States)",
+                zh_CN: "简体中文",
+                ru_RU: "Русский (Российская Федерация)"
+            },
+            titlebarStyles: {
+                custom: "Кастомная",
+                native: "Системная"
+            },
+            editorWidths: {
+                md: "Средний (по умолчанию)",
+                lg: "Большой",
+                xl: "Очень большой"
+            },
+            restartToApply: "Перезагрузить для применеия"
+        },
+        contextMenu: {
+            new_page: "Новая страница",
+            new_folder: "Новая папка",
+            edit_item: "Изменить",
+            favorite_page: (favorited) => (favorited ? "Обычная страница" : "Избранная страница"),
+            delete_item: "Удалить",
+            export_page_pdf: "Экспорт страницы в PDF",
+            export_page_md: "Экспорт страницы в MD",
+            export_all_pages_pdf: "Экспорт всех страниц в PDF",
+            export_all_pages_md: "Экспорт всех страниц в MD"
+        },
+        home: {
+            version: "Версия",
+            whats_new: "Что нового",
+            tip: "Заметка",
+            tips: [
+                "Если вы пытаетесь добавить изображение из Интернета или из буфера обмена, вы можете просто скопировать + вставить изображение прямо в редактор",
+                "Регулярно создавайте резервные копии заметок (файл save.json и папка Notes)",
+                "Вы можете вложить папки внутрь папок",
+                "Вы можете сделать страницу верхнего уровня, перетащив ее в пустую часть боковой панели.",
+                'Отредактируйте файл save.json и попробуйте установить свойство «color» страницы на «rainbow».',
+                "Внесите свой собственный язык в Codex в репозиторий GitHub (см. CONTRIBUTING.md).",
+                "Открывайте ссылки в заметках, удерживая Control (или Cmd) и нажимая на них.",
+                "Вы можете щелкнуть папку Alt+Click, чтобы рекурсивно закрыть все вложенные в нее папки."
+            ],
+            favorites: "Избранные"
+        },
+        menus: {
+            save_current_page: "Сохранить текущую страницу",
+            export_page_to_pdf: "Экспорт текущей страницы в PDF",
+            zoom_in_editor: "Увеличить редактор",
+            zoom_out_editor: "Уменьшить редактор",
+            reset_editor_zoom: "Сбросить размер редактора",
+            toggle_sidebar: "Переключить боковую панель",
+            reset_sidebar_width: "Сбросить размер боковой панели",
+            toggle_editor_toolbar: "Переключение панели инструментов редактора",
+            help_docs: "Помощь/Документация",
+            website: "Сайт",
+            changelogs: "Изменения",
+            about: "О программе"
+        },
+        shellDialogs: {
+            open_external_link: {
+                title: "Вы уверены, что хотите открыть эту ссылку?",
+                yes: "Да",
+                cancel: "Отмена",
+                trust_domain: "Всегда доверять этому домену"
+            }
+        },
+        mutateModals: {
+            edit_modal_title: (itemName: string) => `Изменить ${itemName}`,
+            new_page_modal_title: (parentName) => `Новая страница в ${parentName}`,
+            new_folder_modal_title: (parentName) => {
+                return parentName == undefined ? "Новая папка" : `Новая папка в ${parentName}`;
+            },
+            item_icon: "Значок",
+            item_name: "Имя",
+            enter_a_name: "Введите имя",
+            cancel: "Отмена",
+            save: "Сохранить",
+            create: "Создать",
+            delete: "Удалить",
+            iconSelector: {
+                tooltip: "Нажмите, чтобы изменить значок",
+                reset_color_from_rainbow: "Сбросить цвет с радуги",
+                modal: {
+                    title: "Выберите значок",
+                    searh_bar_placeholder: "Поиск значков...",
+                    category: "Категория",
+                    results: "Результаты",
+                    categories: {
+                        animals: "Животные",
+                        arrows: "Стрелки",
+                        brand: "Марка",
+                        buildings: "Здания",
+                        charts: "Графики",
+                        communication: "Общение",
+                        computers: "Компьютеры",
+                        currencies: "Валюты",
+                        database: "Базы данных",
+                        design: "Дизайн",
+                        devices: "Устройства",
+                        document: "Документ",
+                        ecommerce: "Электронная коммерция",
+                        electrical: "Электрика",
+                        filled: "Заполненный",
+                        food: "Еда",
+                        gestures: "Жесты",
+                        health: "Здоровья",
+                        letters: "Буквы",
+                        logic: "Логика",
+                        map: "Карта",
+                        math: "Математика",
+                        media: "СМИ",
+                        mood: "Настроение",
+                        nature: "Природа",
+                        numbers: "Числа",
+                        photography: "Фотография",
+                        shapes: "Формы",
+                        sport: "Спорт",
+                        symbols: "Символы",
+                        system: "Система",
+                        text: "Текст",
+                        vehicles: "Машины",
+                        versionControl: "Контроль версий",
+                        weather: "Погода"
+                    }
+                }
+            },
+            delete_item_title: "Удалить элемент",
+            delete_page_text: (itemName: string) =>
+                `Вы уверены, что хотите удалить "${itemName}"?`,
+            delete_folder_text: (itemName: string) =>
+                `Вы уверены, что хотите удалить "${itemName}" вместе со всеми его дочерними элементами?`
+        },
+        editor: {
+            table_of_contents: "Оглавление",
+            toggle_toolbar: "Переключение панели инструментов",
+            toolbar: {
+                undo: "Назад",
+                redo: "Вперёд",
+                bold: "Полужирный",
+                italic: "Курсив",
+                underline: "Подчёркнутый",
+                strikethrough: "Зачёркнутый",
+                inline_code: "Встроить код",
+                superscript: "Надстрочный индекс",
+                subscript: "Нижний индекс",
+                link: "Ссылка",
+                align_left: "Выровнять по левому краю",
+                align_right: "Выровнять по правому краю",
+                align_center: "Выровнять по центру",
+                align_justified: "Выравнивание по ширине",
+                image: "Вставить/заменить изображение",
+                paragraph: "Установить на абзац",
+                blockquote: "Установить на блок цитаты",
+                heading: "Заголовок",
+                heading_level: "Уровень",
+                horizontal_rule: "Вставить горизонтальную линейку",
+                bullet_list: "Маркированный список",
+                ordered_list: "Упорядоченный список",
+                check_list: "Контрольный список",
+                code_block: "Блок кода",
+                codeBlockMenu: {
+                    all_languages: "Все языки",
+                    recently_used: "Недавно использованные"
+                },
+                table: "Создать таблицу",
+                tableMenu: {
+                    create_table: "Создать таблицу",
+                    add_column_before: "Создать таблицу до",
+                    add_column_after: "Создать таблицу после",
+                    delete_column: "Удалить колонку",
+                    add_row_before: "Вставить строку до",
+                    add_row_after: "Вставить строку после",
+                    delete_row: "Удалить строку",
+                    merge_cells: "Объединить выделенные ячейки",
+                    split_cell: "Разделить выделенную ячейку",
+                    toggle_header_col: "Переключение колонки заголовка",
+                    toggle_header_row: "Переключить строку заголовка",
+                    toggle_header_cell: "Переключение ячеек заголовка",
+                    delete_table: "Удалить таблицу"
+                },
+                math_block: "Математический блок",
+                clear_formatting: "Удалить форматирование",
+                text_color: "Цвет текста",
+                default_font: "По умолчанию (шрифт)",
+                highlight: "Выделение",
+                reset_text_color: "Сбросить цвет текста",
+                reset_highlight: "Сбросить выделение"
+            },
+            imageModal: {
+                dropzone_title: "Перетащите изображение сюда или нажмите, чтобы выбрать файл",
+                dropzone_desc: "Предел - 1 файл изображения",
+                tip_title: "Заметка",
+                tip_text:
+                    "Если вы пытаетесь добавить изображение из Интернета или скриншот/изображение из буфера обмена, вы можете просто скопировать + вставить изображение прямо в редактор.",
+                cancel: "Отмена",
+                add_image: "Добавить изображение",
+                replace_image: "Заменить изображение"
+            },
+            mathModal: {
+                edit_math: "Редактировать математическое выражение",
+                insert_math: "Вставить математическое выражение",
+                visual_editor: "Визуальный редактор",
+                manual_editor: "Ручной ввод KaTeX",
+                about: "Подробнее",
+                aboutMenu: {
+                    title: "Поддержка Math/TeX/KaTeX",
+                    text: "Визуальный редактор математики использует математический редактор с открытым исходным кодом под названием MathLive. Фактический редактор/документ Codex, который вы используете для написания своих заметок, использует KaTeX для отображения математики в ваших заметках. MathLive и KaTeX поддерживают большинство одних и тех же функций/команд/формул, но они не совместимы на 100%. Это означает, что некоторые специфические/сложные выражения KaTeX не будут корректно отображаться в редакторе Visual Math Editor, но вы все равно сможете увидеть их в своих заметках, введя KaTeX вручную с помощью кнопки Manual KaTeX. Например, вы можете скопировать сложную формулу KaTeX из интернета, выбрать кнопку Manual KaTeX и вставить формулу в текстовое поле.",
+                    mathlive_link: "Поддерживаемые функции MathLive",
+                    katex_link: "Поддерживаемые функции KaTeX"
+                },
+                cancel: "Отмена",
+                edit: "Редактировать",
+                insert: "Вставить"
+            },
+            linkModal: {
+                cancel: "Отмена",
+                create_link: "Создать ссылку",
+                url: "URL"
+            },
+            code_block_collapse: "Свернуть"
+        },
+        unsavedChangesDialog: {
+            title: (name: string) => `Вы имеете несохранённые изменения в "${name}"`,
+            cancel: "Отмена",
+            forget: "Не сохранять изменения",
+            save: "Сохранить изменения"
         }
     }
 };
