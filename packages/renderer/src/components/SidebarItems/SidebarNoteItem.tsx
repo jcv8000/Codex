@@ -2,7 +2,7 @@ import { Box, Collapse, Flex, Text, rem } from "@mantine/core";
 import { Icon } from "components/Icon";
 import React, { useRef, useState } from "react";
 import { NoteItem, isDescendantOf, isFolder, isPage } from "common/schemas/v2/Save";
-import { locales } from "common/Locales";
+import { locales } from "common/locales";
 import { codexStore, dragDropItem, modalStore, toggleOpened, useSnapshot } from "src/state";
 import clsx from "clsx";
 

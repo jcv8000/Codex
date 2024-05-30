@@ -1,4 +1,4 @@
-import { SupportedLocales } from "common/Locales";
+import { SupportedLocales } from "common/locales";
 
 export type Prefs = {
     schema_version: number;

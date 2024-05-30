@@ -1,4 +1,4 @@
-import { supportedLocales } from "common/Locales";
+import { supportedLocales } from "common/locales";
 import { is_prefs_v0, convert_prefs_v0_to_v1 } from "common/schemas/v1/v0_to_v1";
 import { Prefs, defaultPrefs } from "common/schemas/v2";
 import { convert_prefs_v1_to_v2, is_prefs_v1 } from "common/schemas/v2/v1_to_v2";

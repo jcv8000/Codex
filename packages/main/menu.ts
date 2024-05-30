@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, MenuItemConstructorOptions, shell } from "electron";
 import isDev from "electron-is-dev";
 import { openAboutWindow } from "./about";
-import { Locale } from "common/Locales";
+import { Locale } from "common/locales";
 
 const isMac = process.platform === "darwin";
 

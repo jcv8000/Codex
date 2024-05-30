@@ -8,7 +8,7 @@ import isDev from "electron-is-dev";
 import { electronSecurity } from "./security";
 import { logError, setupLogger } from "./logger";
 import { saveWindowState } from "./windowState";
-import { locales } from "common/Locales";
+import { locales } from "common/locales";
 import { TypedIpcMain, linkMap } from "common/ipc";
 
 if (app.requestSingleInstanceLock()) {

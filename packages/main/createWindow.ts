@@ -6,7 +6,7 @@ import * as remote from "@electron/remote/main";
 import { loadWindowState, saveWindowState } from "./windowState";
 import contextMenu from "electron-context-menu";
 import { Prefs } from "common/schemas/v1";
-import { locales } from "common/Locales";
+import { locales } from "common/locales";
 import { lt as lessThan } from "semver";
 import escape from "validator/lib/escape";
 import log from "electron-log";

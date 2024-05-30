@@ -1,14 +1,34 @@
 # Contributing a new Translation/Language to Codex
 
-All translations for the app interface are defined in [packages/common/Locales.ts](../packages/common/Locales.ts)
+All translations for the app interface are defined in [packages/common/locales](../packages/common/locales), each locale is now a separate file.
 
-If you want to contribute your own translation/language, first fork the repository, and then edit `packages/common/Locales.ts`.
+If you want to contribute your own translation/language, first fork the repository.
 
-The first object in the file is a `Locale` type which defines all of the text variables used in the app. You don't need to change this at all.
+Go to `packages/common/locales`, copy + paste `en_US.ts` and rename it to the new locale's name, for example `es_MX.ts`
 
-You will need to add the locale name of your translation to `supportedLocales`. For example if you were adding Spanish (Mexico) you would add `"es_MX"` to the array:
+In the new file, rename the exported object from `en_US` to `es_MX`
 
- <table><tr><th>Before</th><th>After</th></tr><tr><td>
+<table><tr><th>Before</th><th>After</th></tr><tr><td>
+
+```ts
+export const en_US: Locale = {
+//           ^^^^^
+```
+
+</td><td>
+
+```ts
+export const es_MX: Locale = {
+//           ^^^^^
+```
+
+</td></tr></table>
+
+**Then go through the file and replace all of the strings with your translations.**
+
+You will need to add the locale name of your translation to `supportedLocales` which is defined in [packages/common/locales/index.ts](../packages/common/locales/index.ts).
+
+<table><tr><th>Before</th><th>After</th></tr><tr><td>
 
 ```ts
 export const supportedLocales = ["en_US"] as const;
@@ -24,33 +44,27 @@ export const supportedLocales = ["en_US", "es_MX"] as const;
 
 </td></tr></table>
 
-The next line generates a type from the array (you don't have to change this):
-
-```ts
-export type SupportedLocales = (typeof supportedLocales)[number]; // would be: "en_US" | "es_MX"
-```
-
-Then, the last object in the file is `export const locales`. Select the entire `en_US: { ... }` object and copy/paste it below:
+Then, add your locale to the exported `locales` object:
 
 <table><tr><th>Before</th><th>After</th></tr><tr><td>
 
 ```ts
 export const locales: Record<SupportedLocales, Locale> = {
-    en_US: { ... }
+    en_US: en_US
 };
 ```
 
 </td><td>
 
 ```ts
+import { es_MX } from "./es_MX"; // at the top of the file
+
 export const locales: Record<SupportedLocales, Locale> = {
-    en_US: { ... },
-    es_MX: { ... } // New translation
+    en_US: en_US,
+    es_MX: es_MX
 };
 ```
 
 </td></tr></table>
-
-Then you can go through the new object and change the strings to your own translation.
 
 Finally, create a pull request on the original repository with your new changes.

@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Tooltip, ActionIcon, Box } from "@mantine/core";
 import { NodeViewContent, NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { Icon } from "components/Icon";
-import { locales } from "common/Locales";
+import { locales } from "common/locales";
 import Color from "color";
 
 export function CustomCodeBlockWrapper({ node, updateAttributes }: NodeViewProps) {

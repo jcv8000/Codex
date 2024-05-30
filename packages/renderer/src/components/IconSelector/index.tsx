@@ -19,7 +19,7 @@ import { useMemo, useRef, useState } from "react";
 import Fuse from "fuse.js";
 import { useDebouncedState } from "@mantine/hooks";
 import { codexStore, useLocale } from "src/state";
-import { Locale } from "common/Locales";
+import { Locale } from "common/locales";
 
 import classes from "./IconSelector.module.css";
 import tablerJSON from "../../../../../node_modules/@tabler/icons/icons.json";

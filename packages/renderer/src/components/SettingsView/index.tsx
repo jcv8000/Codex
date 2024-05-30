@@ -16,7 +16,7 @@ import {
 import { codexStore, useLocale, useSnapshot, writePrefs } from "src/state";
 import { renderDebug } from "common/Utils";
 import { Icon } from "components/Icon";
-import { Locale, SupportedLocales, locales } from "common/Locales";
+import { Locale, SupportedLocales, locales } from "common/locales";
 import { hljsStyles } from "./hljs_styles";
 import { ExampleCode } from "./exampleCode";
 import { Prefs } from "common/schemas/v2";

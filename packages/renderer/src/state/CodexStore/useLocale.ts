@@ -1,6 +1,6 @@
 import { useSnapshot } from "valtio";
 import { codexStore } from ".";
-import { locales } from "common/Locales";
+import { locales } from "common/locales";
 
 export function useLocale() {
     const { prefs } = useSnapshot(codexStore);
