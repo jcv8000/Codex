@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@electron/remote':
         specifier: ^2.1.2
-        version: 2.1.2(electron@30.0.8)
+        version: 2.1.2(electron@30.0.9)
       '@lukeed/uuid':
         specifier: ^2.0.1
         version: 2.0.1
@@ -121,7 +121,7 @@ importers:
         version: 2.4.0(@tiptap/pm@2.4.0)
       '@treverix/custom-electron-titlebar':
         specifier: ^4.2.0
-        version: 4.2.0(electron@30.0.8)
+        version: 4.2.0(electron@30.0.9)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -206,10 +206,10 @@ importers:
         version: 7.11.0(eslint@8.57.0)(typescript@5.4.5)
       '@vitejs/plugin-react':
         specifier: ^4.3.0
-        version: 4.3.0(vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38)))
+        version: 4.3.0(vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38)))
       electron:
-        specifier: ^30.0.8
-        version: 30.0.8
+        specifier: ^30.0.9
+        version: 30.0.9
       electron-builder:
         specifier: ^24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
@@ -250,20 +250,20 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0(rollup@4.18.0)
       sass:
-        specifier: ^1.77.2
-        version: 1.77.2
+        specifier: ^1.77.3
+        version: 1.77.3
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
       vite:
         specifier: ^5.2.12
-        version: 5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38))
+        version: 5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38))
       vite-plugin-static-copy:
         specifier: ^1.0.5
-        version: 1.0.5(vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38)))
+        version: 1.0.5(vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38)))
       vite-tsconfig-paths:
         specifier: ^4.3.2
-        version: 4.3.2(typescript@5.4.5)(vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38)))
+        version: 4.3.2(typescript@5.4.5)(vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38)))
 
 packages:
 
@@ -1913,11 +1913,11 @@ packages:
   electron-publish@24.13.1:
     resolution: {integrity: sha512-2ZgdEqJ8e9D17Hwp5LEq5mLQPjqU3lv/IALvgp+4W8VeNhryfGhYEQC/PgDPMrnWUp+l60Ou5SJLsu+k4mhQ8A==}
 
-  electron-to-chromium@1.4.784:
-    resolution: {integrity: sha512-9CZwh+sDrhDAeOEFh8s3PqwduzTyYIeYwZolc1b9ENAUt3ePu7R1sJSCWr/820ISssRxCJUyHI9Wb7j+0Uo1AA==}
+  electron-to-chromium@1.4.786:
+    resolution: {integrity: sha512-i/A2UB0sxYViMN0M2zIotQFRIOt1jLuVXudACHBDiJ5gGuAUzf/crZxwlBTdA0O52Hy4CNtTzS7AKRAacs/08Q==}
 
-  electron@30.0.8:
-    resolution: {integrity: sha512-ivzXJJ/9gdb4oOw+5SDuaZpSInz8C+Z021dKZfFLMltKbDa4sSqt5cRBiUg7J36Z2kdus+Jai0bdHWutYE9wAA==}
+  electron@30.0.9:
+    resolution: {integrity: sha512-ArxgdGHVu3o5uaP+Tqj8cJDvU03R6vrGrOqiMs7JXLnvQHMqXJIIxmFKQAIdJW8VoT3ac3hD21tA7cPO10RLow==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -3190,8 +3190,8 @@ packages:
   sanitize-filename@1.6.3:
     resolution: {integrity: sha512-y/52Mcy7aw3gRm7IrcGDFx/bCk4AhRh2eI9luHOQM86nZsqwiRkkq2GekHXBBD+SmPidc8i2PqtYZl+pWJ8Oeg==}
 
-  sass@1.77.2:
-    resolution: {integrity: sha512-eb4GZt1C3avsX3heBNlrc7I09nyT00IUuo4eFhAbeXWU2fvA7oXI53SxODVAA+zgZCk9aunAZgO+losjR3fAwA==}
+  sass@1.77.3:
+    resolution: {integrity: sha512-WJHo+jmFp0dwRuymPmIovuxHaBntcCyja5hCB0yYY9wWrViEp4kF5Cdai98P72v6FzroPuABqu+ddLMbQWmwzA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -3877,9 +3877,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@30.0.8)':
+  '@electron/remote@2.1.2(electron@30.0.9)':
     dependencies:
-      electron: 30.0.8
+      electron: 30.0.9
 
   '@electron/universal@1.5.1':
     dependencies:
@@ -4437,9 +4437,9 @@ snapshots:
 
   '@tootallnate/once@2.0.0': {}
 
-  '@treverix/custom-electron-titlebar@4.2.0(electron@30.0.8)':
+  '@treverix/custom-electron-titlebar@4.2.0(electron@30.0.9)':
     dependencies:
-      '@electron/remote': 2.1.2(electron@30.0.8)
+      '@electron/remote': 2.1.2(electron@30.0.9)
     transitivePeerDependencies:
       - electron
 
@@ -4755,14 +4755,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.3.0(vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38)))':
+  '@vitejs/plugin-react@4.3.0(vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38)))':
     dependencies:
       '@babel/core': 7.24.6
       '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.24.6)
       '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.24.6)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38))
+      vite: 5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38))
     transitivePeerDependencies:
       - supports-color
 
@@ -5004,7 +5004,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001625
-      electron-to-chromium: 1.4.784
+      electron-to-chromium: 1.4.786
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
@@ -5538,9 +5538,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron-to-chromium@1.4.784: {}
+  electron-to-chromium@1.4.786: {}
 
-  electron@30.0.8:
+  electron@30.0.9:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.12.13
@@ -6990,7 +6990,7 @@ snapshots:
     dependencies:
       truncate-utf8-bytes: 1.0.2
 
-  sass@1.77.2:
+  sass@1.77.3:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.6
@@ -7383,26 +7383,26 @@ snapshots:
       extsprintf: 1.4.1
     optional: true
 
-  vite-plugin-static-copy@1.0.5(vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38))):
+  vite-plugin-static-copy@1.0.5(vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38))):
     dependencies:
       chokidar: 3.6.0
       fast-glob: 3.3.2
       fs-extra: 11.2.0
       picocolors: 1.0.1
-      vite: 5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38))
+      vite: 5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38))
 
-  vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38))):
+  vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38))):
     dependencies:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 3.1.0(typescript@5.4.5)
     optionalDependencies:
-      vite: 5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38))
+      vite: 5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38))
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@5.2.12(@types/node@20.12.13)(sass@1.77.2)(sugarss@4.0.1(postcss@8.4.38)):
+  vite@5.2.12(@types/node@20.12.13)(sass@1.77.3)(sugarss@4.0.1(postcss@8.4.38)):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
@@ -7410,7 +7410,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.12.13
       fsevents: 2.3.3
-      sass: 1.77.2
+      sass: 1.77.3
       sugarss: 4.0.1(postcss@8.4.38)
 
   w3c-keyname@2.2.8: {}
