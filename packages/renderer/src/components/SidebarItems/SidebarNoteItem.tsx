@@ -3,7 +3,14 @@ import { Icon } from "components/Icon";
 import React, { useRef, useState } from "react";
 import { NoteItem, isDescendantOf, isFolder, isPage } from "common/schemas/v2/Save";
 import { locales } from "common/locales";
-import { codexStore, dragDropItem, modalStore, toggleOpened, useSnapshot } from "src/state";
+import {
+    codexStore,
+    dragDropItem,
+    modalStore,
+    setView,
+    toggleOpened,
+    useSnapshot
+} from "src/state";
 import clsx from "clsx";
 
 import classes from "./SidebarItem.module.css";
@@ -113,13 +120,7 @@ function onClick(item: NoteItem): React.MouseEventHandler {
         // TODO recursive opening/closing for alt click
         if (isFolder(item)) toggleOpened(item.id);
         else if (isPage(item)) {
-            // Open page in editor
-            const text = await window.ipc.invoke("load-page", item.fileName);
-            if (text == null) {
-                console.error("Unable to load page data from '" + item.fileName + "'");
-            } else {
-                codexStore.view = { value: "editor", page: item, initialContentString: text };
-            }
+            setView({ value: "editor", page: item, initialContentString: "" });
         }
     };
 }
@@ -143,7 +144,7 @@ function onDragStart(
 ): React.DragEventHandler<HTMLDivElement> {
     return (e) => {
         e.dataTransfer.setDragImage(dragImageRef.current!, 0, -24);
-        codexStore.draggedItem = item;
+        window.draggedItem = item;
         setDragStatus("beingDragged");
     };
 }
@@ -155,10 +156,10 @@ function onDragOver(
     return (e) => {
         // THIS is the item receiving the drop
 
-        if (codexStore.draggedItem == null) return;
+        if (window.draggedItem == null) return;
 
         // Don't let the user try to parent an ancestor to it's descendant, or to itself
-        if (!isDescendantOf(item, codexStore.draggedItem) && item.id != codexStore.draggedItem.id) {
+        if (!isDescendantOf(item, window.draggedItem) && item.id != window.draggedItem.id) {
             e.preventDefault();
 
             const rect = e.currentTarget.getBoundingClientRect();
@@ -195,8 +196,8 @@ function onDrop(
         else if (dragStatus == "below") where = "below";
         else if (dragStatus == "child") where = "child";
 
-        if (codexStore.draggedItem != null) {
-            dragDropItem(codexStore.draggedItem.id, item.id, where);
+        if (window.draggedItem != null) {
+            dragDropItem(window.draggedItem.id, item.id, where);
         }
 
         setDragStatus("none");

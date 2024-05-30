@@ -1,6 +1,6 @@
 import { Box } from "@mantine/core";
 import { SidebarItem, SidebarNoteItem } from "src/components/SidebarItems";
-import { codexStore, useLocale, useSnapshot } from "src/state";
+import { codexStore, setView, useLocale, useSnapshot } from "src/state";
 
 export function SidebarContent() {
     const { view, save } = useSnapshot(codexStore);
@@ -12,13 +12,13 @@ export function SidebarContent() {
                 icon="home"
                 text={locale.sidebar.homeTab}
                 shouldBeActive={view.value == "home"}
-                onClick={() => (codexStore.view = { value: "home" })}
+                onClick={() => setView({ value: "home" })}
             />
             <SidebarItem
                 icon="settings"
                 text={locale.sidebar.settings}
                 shouldBeActive={view.value == "settings"}
-                onClick={() => (codexStore.view = { value: "settings" })}
+                onClick={() => setView({ value: "settings" })}
             />
             <SidebarItem icon="menu-2" text={locale.sidebar.moreTab}>
                 <SidebarItem

@@ -1,12 +1,11 @@
-import { Editor } from "@tiptap/core";
-import { Page, Prefs, Save, NoteItem } from "common/schemas/v2";
+import { Page, Prefs, Save } from "common/schemas/v2";
 import { proxy } from "valtio";
 
 declare module "valtio" {
     function useSnapshot<T extends object>(p: T): T;
 }
 
-type View =
+export type View =
     | { value: "home" }
     | { value: "settings" }
     | { value: "editor"; page: Page; initialContentString: string };
@@ -14,11 +13,7 @@ type View =
 type CodexStore = {
     view: View;
     prefs: Prefs;
-    initialPrefs: Readonly<Prefs>;
     save: Save;
-    editor: Editor | null;
-    unsavedChanges: boolean;
-    draggedItem: NoteItem | null;
 };
 
 const initialPrefs = await window.ipc.invoke("get-prefs");
@@ -26,12 +21,8 @@ const initialSave = await window.ipc.invoke("get-save");
 
 export const codexStore = proxy<CodexStore>({
     view: { value: "home" },
-    prefs: structuredClone(initialPrefs),
-    initialPrefs: initialPrefs,
-    save: initialSave,
-    editor: null,
-    unsavedChanges: false,
-    draggedItem: null
+    prefs: initialPrefs,
+    save: initialSave
 });
 
 export function deproxy<T>(proxy: any) {
@@ -45,3 +36,4 @@ export * from "./dragDropItem";
 export * from "./useLocale";
 export * from "./writePrefs";
 export * from "./writeSave";
+export * from "./setView";

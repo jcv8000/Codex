@@ -2,14 +2,6 @@ import { contextBridge } from "electron";
 import { Titlebar, Color } from "@treverix/custom-electron-titlebar";
 import { TypedIpcRenderer } from "common/ipc";
 
-declare global {
-    interface Window {
-        ipc: TypedIpcRenderer;
-        platform: NodeJS.Platform;
-        defaultSaveLocation: string;
-    }
-}
-
 // Only grab prefs and save from across the IPC bridge at the start
 const typedIpcRenderer = new TypedIpcRenderer();
 

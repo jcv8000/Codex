@@ -2,7 +2,7 @@ import { Menu, Text, Title } from "@mantine/core";
 import { useClickOutside, useElementSize, useMergedRef } from "@mantine/hooks";
 import { Folder, NoteItem, Page, isFolder, isPage } from "common/schemas/v2/Save";
 import { Icon } from "components/Icon";
-import { codexStore, modifyItem, deleteItem, useLocale } from "src/state";
+import { codexStore, modifyItem, deleteItem, useLocale, setView } from "src/state";
 import { modalStore } from "src/state";
 import { openConfirmModal } from "@mantine/modals";
 import { px, truncate } from "common/Utils";
@@ -209,7 +209,7 @@ function DeleteMenuItem({ item }: { item: NoteItem }) {
                     confirmProps: { color: "red" },
                     onConfirm: () => {
                         if (codexStore.view.value == "editor" && codexStore.view.page.id == item.id)
-                            codexStore.view = { value: "home" };
+                            setView({ value: "home" });
 
                         deleteItem(item.id);
                     }

@@ -68,7 +68,7 @@ function MainView() {
     if (view.value == "home") rendered = <HomeView />;
     else if (view.value == "settings") rendered = <SettingsView />;
     else if (view.value == "editor") {
-        rendered = <EditorView initialContentString={view.initialContentString} />;
+        rendered = <EditorView page={view.page} initialContentString={view.initialContentString} />;
     }
 
     return (

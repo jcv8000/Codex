@@ -8,15 +8,17 @@ import { Icon } from "components/Icon";
 import { useMemo, useState } from "react";
 import { Toolbar } from "components/EditorToolbar";
 import { editorExtensions } from ".";
+import { Page } from "common/schemas/v2";
 
 type Props = {
     initialContentString: string;
+    page: Page;
 };
 
-export function EditorView({ initialContentString }: Props) {
+export function EditorView({ initialContentString, page }: Props) {
     const { prefs } = useSnapshot(codexStore);
-    const [showToolbar, setShowToolbar] = useState(true);
     const texts = useLocale().editor;
+    const [showToolbar, setShowToolbar] = useState(true);
 
     const extensions = useMemo(() => {
         console.log("generated editor extensions");
@@ -30,12 +32,16 @@ export function EditorView({ initialContentString }: Props) {
         {
             autofocus: true,
             content: JSON.parse(initialContentString),
-            extensions: extensions
+            extensions: extensions,
+            onUpdate: () => {
+                window.unsavedChanges = true;
+            }
         },
-        [initialContentString]
+        [page.id]
     );
-    if (editor == null) return;
+    window.editor = editor;
 
+    if (editor == null) return;
     return (
         <>
             <TableOfContents editor={editor} />
