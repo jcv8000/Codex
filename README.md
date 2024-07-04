@@ -12,7 +12,8 @@
 
 ## About
 
-> _**Notice**: If you're upgrading from Codex v1, make sure to **back up your save data** (save.json and notes folder) for all of your saves before updating._
+> [!IMPORTANT]
+> If you're upgrading from Codex v1 or v2, make sure to **back up your save data** (`save.json` and `notes` folder) for all of your saves before updating.
 
 Codex is a note-taking app that allows you to save **styled and highlighted code snippets** in your notes.
 
