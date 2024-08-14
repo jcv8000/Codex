@@ -33,11 +33,11 @@ importers:
         specifier: ^7.12.1
         version: 7.12.1(@mantine/core@7.12.1(@mantine/hooks@7.12.1(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.12.1(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tabler/icons':
-        specifier: ^3.5.0
-        version: 3.5.0
+        specifier: ^3.12.0
+        version: 3.12.0
       '@tabler/icons-webfont':
-        specifier: ^3.5.0
-        version: 3.5.0
+        specifier: ^3.12.0
+        version: 3.12.0
       '@tiptap/core':
         specifier: ^2.6.2
         version: 2.6.2(@tiptap/pm@2.6.2)
@@ -798,11 +798,11 @@ packages:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
     engines: {node: '>=10'}
 
-  '@tabler/icons-webfont@3.5.0':
-    resolution: {integrity: sha512-U+b18h9PqMXq4vB6uxeHe9a++O8QE0tCVNGs40p8nvkw9JMXp6G/ns0OuPnYrwwTsVxFkrRPwZWJrWwSzM17RA==}
+  '@tabler/icons-webfont@3.12.0':
+    resolution: {integrity: sha512-vTSPYQ8Dq2NB5DB7ii9hj9jQ2iCX02xRa6BiUG3kNx6SMznlXBC/zNas9xVcxPiumO4IN75c1V1Hy3eg+Bd5Mg==}
 
-  '@tabler/icons@3.5.0':
-    resolution: {integrity: sha512-I53dC3ZSHQ2MZFGvDYJelfXm91L2bTTixS4w5jTAulLhHbCZso5Bih4Rk/NYZxlngLQMKHvEYwZQ+6w/WluKiA==}
+  '@tabler/icons@3.12.0':
+    resolution: {integrity: sha512-Im37ar/mQkqLb6XUXsU7nOc4/66VB9/3KLuZ+6tUsJKHHNLaDUkYfCTNG3pnGDI03laByxVf5+umSNK2yPTx8A==}
 
   '@tiptap/core@2.6.2':
     resolution: {integrity: sha512-Okhh2QddIT86Dm1xBKhD8PLoIRJdlm4uqtvllrOp8Wdp5nkeuanaSFr0pU7BgqIxJ9GkZcoLgqUXj3Q++k5HIA==}
@@ -4202,11 +4202,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tabler/icons-webfont@3.5.0':
+  '@tabler/icons-webfont@3.12.0':
     dependencies:
-      '@tabler/icons': 3.5.0
+      '@tabler/icons': 3.12.0
 
-  '@tabler/icons@3.5.0': {}
+  '@tabler/icons@3.12.0': {}
 
   '@tiptap/core@2.6.2(@tiptap/pm@2.6.2)':
     dependencies:
