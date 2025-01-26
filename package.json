@@ -107,7 +107,7 @@
         "vite": "^5.4.14",
         "vite-plugin-static-copy": "^1.0.0",
         "vite-tsconfig-paths": "^4.2.3",
-        "wait-on": "^7.2.0"
+        "wait-on": "^8.0.2"
     },
     "pnpm": {
         "overrides": {
