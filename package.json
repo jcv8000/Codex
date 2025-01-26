@@ -111,7 +111,8 @@
     },
     "pnpm": {
         "overrides": {
-            "braces": "3.0.3"
+            "braces": "3.0.3",
+            "palettey>nanoid": "3.3.8"
         }
     }
 }
