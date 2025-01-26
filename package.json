@@ -104,7 +104,7 @@
         "rimraf": "^5.0.5",
         "sass": "^1.69.7",
         "typescript": "^5.3.3",
-        "vite": "^5.0.10",
+        "vite": "^5.4.14",
         "vite-plugin-static-copy": "^1.0.0",
         "vite-tsconfig-paths": "^4.2.3",
         "wait-on": "^7.2.0"
