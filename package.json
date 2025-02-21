@@ -117,6 +117,10 @@
             "tar": "6.2.1",
             "ejs": "3.1.10",
             "micromatch": "4.0.8"
-        }
+        },
+        "onlyBuiltDependencies": [
+            "electron",
+            "esbuild"
+        ]
     }
 }
