@@ -83,7 +83,7 @@
         "@types/color": "^3.0.6",
         "@types/d3": "^7.4.3",
         "@types/katex": "^0.16.7",
-        "@types/node": "^18.19.4",
+        "@types/node": "^20.17.16",
         "@types/react": "^18.2.46",
         "@types/react-dom": "^18.2.18",
         "@types/semver": "^7.5.6",
