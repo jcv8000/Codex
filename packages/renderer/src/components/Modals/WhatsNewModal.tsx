@@ -1,4 +1,4 @@
-import { Anchor, Modal, Space, Tabs, Title } from "@mantine/core";
+import { Anchor, Box, Modal, Space, Tabs, Text, Title } from "@mantine/core";
 import { useContext, useEffect } from "react";
 import { AppContext } from "types/AppStore";
 import semver from "semver";
@@ -27,67 +27,50 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.4</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.5</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="v204">
+            <Tabs orientation="vertical" placement="right" defaultValue="v205">
                 <Tabs.List>
-                    <Tabs.Tab value="v204">2.0.4 Changelog</Tabs.Tab>
+                    <Tabs.Tab value="v205">2.0.5 Changelog</Tabs.Tab>
                     <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
                     <Tabs.Tab value="v2release">2.0 Changelog</Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="v204" px="xs">
-                    <Title order={3}>Important</Title>
+                <Tabs.Panel value="v205" px="xs">
+                    <Title order={3}>New Survey</Title>
+                    <Text>Please take this short survey about future versions of Codex:</Text>
+                    <Anchor onClick={() => window.api.openLink("feedback")}>
+                        https://forms.gle/r4HqxLb6Yh663LV28
+                    </Anchor>
+
+                    <Space h="lg" />
+
+                    <Title order={3}>General</Title>
+                    <ul>
+                        <li>Updated to Electron 32 and Node.js 20</li>
+                        <li>Added Russian localization (@wennerryle)</li>
+                    </ul>
+
+                    <Title order={3}>Bug Fixes</Title>
                     <ul>
                         <li>
-                            Reworked saving system
-                            <ul>
-                                <li>Now only saves when there are changes made to a page</li>
-                                <li>
-                                    New &quot;Autosave when switching pages / exiting the
-                                    editor&quot; setting
-                                    <ul>
-                                        <li>
-                                            Enabled by default (same behavior as how it used to
-                                            work)
-                                        </li>
-                                        <li>
-                                            Disabling this setting will show a popup to save/discard
-                                            unsaved changes when switching pages or exiting the
-                                            editor
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            Fixed an issue where favoriting / unfavoriting pages doesn&apos;t work.
                         </li>
                     </ul>
-                    <Title order={3}>Tech Stack Upgrades</Title>
-                    <ul>
-                        <li>Updated to Node.js 18 and Electron 26</li>
-                        <li>Upgraded to Vite 5</li>
-                        <li>72 new icons from Tabler</li>
-                    </ul>
-                    <Title order={3}>Bug Fixes / Improvements</Title>
-                    <ul>
-                        <li>
-                            Fixed when deleting the active page, the editor doesn&apos;t go back to
-                            Home
-                        </li>
-                        <li>
-                            Fixed sidebar width not actually saving when dragging it all the way to
-                            the left or right
-                        </li>
-                        <li>
-                            When creating an item inside a folder the folder will open to show the
-                            new item
-                        </li>
-                        <li>Fixed &quot;Toggle Developer Tools&quot; menu item not working</li>
-                        <li>
-                            Added a tip about alt+clicking folders to recursively close its
-                            subfolders
-                        </li>
-                    </ul>
+
+                    <Space h="lg" />
+
+                    <Title order={3}>Other</Title>
+                    <Text>
+                        Codex v3 (full rewrite) is something that I want to do soon. Currently
+                        waiting on TipTap v3 before I start again.{" "}
+                        <Anchor onClick={() => window.api.openLink("feedback")}>
+                            Take the new survey
+                        </Anchor>{" "}
+                        for suggestions and input. As always bug reports and issues go on the{" "}
+                        <Anchor onClick={() => window.api.openLink("issues")}>GitHub</Anchor>.
+                    </Text>
                 </Tabs.Panel>
 
                 <Tabs.Panel value="bugs" px="xs">

@@ -155,7 +155,8 @@ if (app.requestSingleInstanceLock()) {
             if (link == "download") shell.openExternal("https://github.com/jcv8000/Codex/releases");
             if (link == "github") shell.openExternal("https://github.com/jcv8000/Codex");
             if (link == "issues") shell.openExternal("https://github.com/jcv8000/Codex/issues");
-            if (link == "feedback") shell.openExternal("https://forms.gle/MgVtcPtcytTYZgxJ7");
+            // if (link == "feedback") shell.openExternal("https://forms.gle/MgVtcPtcytTYZgxJ7");
+            if (link == "feedback") shell.openExternal("https://forms.gle/r4HqxLb6Yh663LV28");
             if (link == "mathlive_commands")
                 shell.openExternal("https://cortexjs.io/mathlive/reference/commands/");
             if (link == "katex_commands")
