@@ -50,6 +50,15 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
                     <ul>
                         <li>Updated to Electron 32 and Node.js 20</li>
                         <li>Added Russian localization (@wennerryle)</li>
+                        <li>
+                            Updated MathLive to 0.104
+                            <ul>
+                                <li>
+                                    This adds a new menu in the Math Editor to insert common math
+                                    expressions easily, like a matrix.
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
 
                     <Title order={3}>Bug Fixes</Title>

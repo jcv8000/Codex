@@ -71,7 +71,7 @@
         "highlight.js": "^11.9.0",
         "katex": "^0.16.21",
         "lowlight": "^3.1.0",
-        "mathlive": "^0.95.5",
+        "mathlive": "^0.104.0",
         "palettey": "^1.0.4",
         "react-lowlight": "^3.0.0",
         "sanitize-filename": "^1.6.3",

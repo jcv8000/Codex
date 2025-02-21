@@ -161,8 +161,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       mathlive:
-        specifier: ^0.95.5
-        version: 0.95.5
+        specifier: ^0.104.0
+        version: 0.104.0
       palettey:
         specifier: ^1.0.4
         version: 1.0.4
@@ -387,8 +387,8 @@ packages:
     resolution: {integrity: sha512-+uarb83brBzPKN38NX1MkB6vb6+mwvR6amUulqAE7ccQw1pEl+bCia9TbdG1lsnFP7lZySvUn37CHyXQdfTwzg==}
     engines: {node: '>=6.9.0'}
 
-  '@cortex-js/compute-engine@0.12.3':
-    resolution: {integrity: sha512-LuiSWMSlgsLFcRWm5ifR8ZeE9HXWOrJ+hE6F211eVI+S+w9SQQvZhhCdUCBusyspW0+29R8lksJPH4qFFr3Xag==}
+  '@cortex-js/compute-engine@0.27.0':
+    resolution: {integrity: sha512-iMK2F/iwZGVCB4L/GiTmeQsRaor/5DvLgUfBNZEskfMAYxDeRu3qM1I68QnZ3c0oqMW2bTFn8GX+SEWmNNkMKA==}
     engines: {node: '>=16.14.2', npm: '>=8.5.0'}
 
   '@develar/schema-utils@2.6.5':
@@ -1770,8 +1770,9 @@ packages:
     resolution: {integrity: sha512-pJDh5/4wrEnXX/VWRZvruAGHkzKdr46z11OlTPN+VrATlWWhSKewNCJ1futCO5C7eJB3nPMFZA1LeYtcFboZ2A==}
     engines: {node: '>=0.10.0'}
 
-  complex.js@2.1.1:
-    resolution: {integrity: sha512-8njCHOTtFFLtegk6zQo0kkVX1rngygb/KQI6z1qZxlFI3scluC+LVTCFbrkWjBv4vvLlbQ9t88IPMC6k95VTTg==}
+  complex-esm@2.1.1-esm1:
+    resolution: {integrity: sha512-IShBEWHILB9s7MnfyevqNGxV0A1cfcSnewL/4uPFiSxkcQL4Mm3FxJ0pXMtCXuWLjYz3lRRyk6OfkeDZcjD6nw==}
+    engines: {node: '>=16.14.2', npm: '>=8.5.0'}
 
   compress-commons@4.1.2:
     resolution: {integrity: sha512-D3uMHtGc/fcO1Gt1/L7i1e33VOvD4A9hfQLP+6ewd+BvG/gQ84Yh4oftEhAdjSMgBgwGL+jsppT7JYNpo6MHHg==}
@@ -2821,9 +2822,9 @@ packages:
     resolution: {integrity: sha512-OkeDaAZ/bQCxeFAozM55PKcKU0yJMPGifLwV4Qgjitu+5MoAfSQN4lsLJeXZ1b8w0x+/Emda6MZgXS1jvsapng==}
     engines: {node: '>=10'}
 
-  mathlive@0.95.5:
-    resolution: {integrity: sha512-FAAyx0m7hcYNIZKdmQ3/x+vk1lwSmQU30aGYRN2c5+Zz4H0z+B8+0h9fZgUN7SRvc1MmoeaOrO2iGvC2/RYDEg==}
-    engines: {node: '>=16.14.2', npm: '>=8.5.0'}
+  mathlive@0.104.0:
+    resolution: {integrity: sha512-RFVJajzFfhPxq+guj6VWsQ2HOjY3J0VEiZ2V6PvR0i5cj0ncUyNl9BMtQ4KZ6ROL7dB5RQmwuoFDKtgfMFuprg==}
+    engines: {node: '>=21.0.0', npm: '>=10.5.0'}
 
   mdurl@1.0.1:
     resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
@@ -3954,9 +3955,9 @@ snapshots:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  '@cortex-js/compute-engine@0.12.3':
+  '@cortex-js/compute-engine@0.27.0':
     dependencies:
-      complex.js: 2.1.1
+      complex-esm: 2.1.1-esm1
       decimal.js: 10.4.3
 
   '@develar/schema-utils@2.6.5':
@@ -5487,7 +5488,7 @@ snapshots:
 
   compare-version@0.1.2: {}
 
-  complex.js@2.1.1: {}
+  complex-esm@2.1.1-esm1: {}
 
   compress-commons@4.1.2:
     dependencies:
@@ -6737,9 +6738,9 @@ snapshots:
       escape-string-regexp: 4.0.0
     optional: true
 
-  mathlive@0.95.5:
+  mathlive@0.104.0:
     dependencies:
-      '@cortex-js/compute-engine': 0.12.3
+      '@cortex-js/compute-engine': 0.27.0
 
   mdurl@1.0.1: {}
 
