@@ -1,4 +1,4 @@
-import { Anchor, Box, Modal, Space, Tabs, Text, Title } from "@mantine/core";
+import { Anchor, Modal, Space, Tabs, Text, Title } from "@mantine/core";
 import { useContext, useEffect } from "react";
 import { AppContext } from "types/AppStore";
 import semver from "semver";
