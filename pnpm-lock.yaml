@@ -18,7 +18,7 @@ importers:
     dependencies:
       '@electron/remote':
         specifier: ^2.1.2
-        version: 2.1.2(electron@32.3.0)
+        version: 2.1.2(electron@32.3.1)
       '@emotion/react':
         specifier: ^11.11.3
         version: 11.11.3(@types/react@18.2.46)(react@18.2.0)
@@ -132,7 +132,7 @@ importers:
         version: 2.1.13(@tiptap/pm@2.1.13)
       '@treverix/custom-electron-titlebar':
         specifier: ^4.2.0
-        version: 4.2.0(electron@32.3.0)
+        version: 4.2.0(electron@32.3.1)
       color:
         specifier: ^4.2.3
         version: 4.2.3
@@ -216,8 +216,8 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1(vite@5.4.14(@types/node@20.17.19)(sass@1.69.7))
       electron:
-        specifier: ^32.3.0
-        version: 32.3.0
+        specifier: ^32.3.1
+        version: 32.3.1
       electron-builder:
         specifier: ^24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -2075,8 +2075,8 @@ packages:
   electron-to-chromium@1.4.618:
     resolution: {integrity: sha512-mTM2HieHLxs1RbD/R/ZoQLMsGI8lWIkP17G7cx32mJRBJt9wlNPkXwE3sYg/OnNb5GBkus98lXatSthoL8Y5Ag==}
 
-  electron@32.3.0:
-    resolution: {integrity: sha512-CyX6K1INQdlgTePmP3wuAueUi5ePqw0IpiGOyyzULGU9gBQI3idwW6apR3W/R1cES2j1gWLrkty3cD40qRV9sg==}
+  electron@32.3.1:
+    resolution: {integrity: sha512-gjHN9NagNajvllKrTZVwGuCqX1hPF7OI6hkCDFRCbqT5Zr05d17qjDhjyTNBmTca2DpvZIYQMRbqieNCcglVYQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -4003,9 +4003,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@32.3.0)':
+  '@electron/remote@2.1.2(electron@32.3.1)':
     dependencies:
-      electron: 32.3.0
+      electron: 32.3.1
 
   '@electron/universal@1.5.1':
     dependencies:
@@ -4746,9 +4746,9 @@ snapshots:
 
   '@tootallnate/once@2.0.0': {}
 
-  '@treverix/custom-electron-titlebar@4.2.0(electron@32.3.0)':
+  '@treverix/custom-electron-titlebar@4.2.0(electron@32.3.1)':
     dependencies:
-      '@electron/remote': 2.1.2(electron@32.3.0)
+      '@electron/remote': 2.1.2(electron@32.3.1)
     transitivePeerDependencies:
       - electron
 
@@ -5855,7 +5855,7 @@ snapshots:
 
   electron-to-chromium@1.4.618: {}
 
-  electron@32.3.0:
+  electron@32.3.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.17.19
