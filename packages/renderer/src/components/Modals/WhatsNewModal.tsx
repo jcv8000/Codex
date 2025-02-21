@@ -38,7 +38,7 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
                 </Tabs.List>
 
                 <Tabs.Panel value="v205" px="xs">
-                    <Title order={3}>New Survey</Title>
+                    <Title order={3}>*New Survey*</Title>
                     <Text>Please take this short survey about future versions of Codex:</Text>
                     <Anchor onClick={() => window.api.openLink("feedback")}>
                         https://forms.gle/r4HqxLb6Yh663LV28
@@ -66,14 +66,24 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
                         <li>
                             Fixed an issue where favoriting / unfavoriting pages doesn&apos;t work.
                         </li>
+                        <li>
+                            Fixed an issue where the &quot;textContent&quot; of notes was not being
+                            saved, which is what the search bar uses to find text.
+                            <br />
+                            <b>
+                                If the search bar is not correctly finding text in your notes, you
+                                might need to go through your pages manually and re-save them to
+                                generate each page&apos;s text content for searching.
+                            </b>
+                        </li>
                     </ul>
 
                     <Space h="lg" />
 
                     <Title order={3}>Other</Title>
                     <Text>
-                        Codex v3 (full rewrite) is something that I want to do soon. Currently
-                        waiting on TipTap v3 before I start again.{" "}
+                        Codex v3 (a full rewrite) is something that I want to do soon, with a new
+                        website and docs. Currently waiting on TipTap v3 before I start again.{" "}
                         <Anchor onClick={() => window.api.openLink("feedback")}>
                             Take the new survey
                         </Anchor>{" "}
