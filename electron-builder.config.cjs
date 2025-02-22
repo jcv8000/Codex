@@ -24,9 +24,10 @@ const config = {
     win: {
         target: ["nsis", "zip"],
         icon: "./assets/icon.ico",
-        signingHashAlgorithms: ["sha256", "sha1"],
         signAndEditExecutable: true,
-        publisherName: "Joshua Vickery"
+        signtoolOptions: {
+            publisherName: "Joshua Vickery"
+        }
     },
     nsis: {
         oneClick: false,
