@@ -1,4 +1,4 @@
-import { Anchor, Modal, Space, Tabs, Title } from "@mantine/core";
+import { Anchor, Modal, Space, Text, Title } from "@mantine/core";
 import { useContext, useEffect } from "react";
 import { AppContext } from "types/AppStore";
 import semver from "semver";
@@ -27,88 +27,61 @@ export function WhatsNewModal(props: { state: { opened: boolean }; onClose: () =
         <Modal
             opened={props.state.opened}
             onClose={props.onClose}
-            title={<Title order={3}>What&apos;s New in 2.0.4</Title>}
+            title={<Title order={3}>What&apos;s New in 2.0.5</Title>}
             size="lg"
         >
-            <Tabs orientation="vertical" placement="right" defaultValue="v204">
-                <Tabs.List>
-                    <Tabs.Tab value="v204">2.0.4 Changelog</Tabs.Tab>
-                    <Tabs.Tab value="bugs">Bug Reports</Tabs.Tab>
-                    <Tabs.Tab value="v2release">2.0 Changelog</Tabs.Tab>
-                </Tabs.List>
+            <Modal.Body>
+                <Title order={3}>*New Survey*</Title>
+                <Text>Please take this short survey about future versions of Codex:</Text>
+                <Anchor onClick={() => window.api.openLink("feedback")}>
+                    https://forms.gle/r4HqxLb6Yh663LV28
+                </Anchor>
 
-                <Tabs.Panel value="v204" px="xs">
-                    <Title order={3}>Important</Title>
-                    <ul>
-                        <li>
-                            Reworked saving system
-                            <ul>
-                                <li>Now only saves when there are changes made to a page</li>
-                                <li>
-                                    New &quot;Autosave when switching pages / exiting the
-                                    editor&quot; setting
-                                    <ul>
-                                        <li>
-                                            Enabled by default (same behavior as how it used to
-                                            work)
-                                        </li>
-                                        <li>
-                                            Disabling this setting will show a popup to save/discard
-                                            unsaved changes when switching pages or exiting the
-                                            editor
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <Title order={3}>Tech Stack Upgrades</Title>
-                    <ul>
-                        <li>Updated to Node.js 18 and Electron 26</li>
-                        <li>Upgraded to Vite 5</li>
-                        <li>72 new icons from Tabler</li>
-                    </ul>
-                    <Title order={3}>Bug Fixes / Improvements</Title>
-                    <ul>
-                        <li>
-                            Fixed when deleting the active page, the editor doesn&apos;t go back to
-                            Home
-                        </li>
-                        <li>
-                            Fixed sidebar width not actually saving when dragging it all the way to
-                            the left or right
-                        </li>
-                        <li>
-                            When creating an item inside a folder the folder will open to show the
-                            new item
-                        </li>
-                        <li>Fixed &quot;Toggle Developer Tools&quot; menu item not working</li>
-                        <li>
-                            Added a tip about alt+clicking folders to recursively close its
-                            subfolders
-                        </li>
-                    </ul>
-                </Tabs.Panel>
+                <Space h="lg" />
 
-                <Tabs.Panel value="bugs" px="xs">
-                    If you find any bugs/issues with the new release of Codex, create an Issue on
-                    the GitHub Repository{" "}
-                    <Anchor onClick={() => window.api.openLink("issues")}>here</Anchor>.
-                    <Space h="md" />
-                    Please include your platform (Windows, Linux, macOS) and the version of Codex
-                    that you&apos;re running.
-                    <Space h="md" />
-                    There&apos;s also a new feedback survey{" "}
-                    <Anchor onClick={() => window.api.openLink("feedback")}>here</Anchor> for
-                    suggestions, and a question about Windows 7/8/8.1 support.
-                </Tabs.Panel>
+                <Title order={3}>General</Title>
+                <ul>
+                    <li>Updated to Electron 32 and Node.js 20</li>
+                    <li>Added Russian localization (@wennerryle)</li>
+                    <li>
+                        Updated MathLive to 0.104
+                        <ul>
+                            <li>
+                                This adds a new menu in the Math Editor to insert common math
+                                expressions easily, like a matrix.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
 
-                <Tabs.Panel value="v2release" px="xs">
-                    <Anchor onClick={() => window.api.openLink("changelogs")}>
-                        Codex 2.0.0 Changelogs
-                    </Anchor>
-                </Tabs.Panel>
-            </Tabs>
+                <Title order={3}>Bug Fixes</Title>
+                <ul>
+                    <li>Fixed an issue where favoriting / unfavoriting pages doesn&apos;t work.</li>
+                    <li>
+                        Fixed an issue where the &quot;textContent&quot; of notes was not being
+                        saved, which is what the search bar uses to find text.
+                        <br />
+                        <b>
+                            If the search bar is not correctly finding text in your notes, you might
+                            need to go through your pages manually and re-save them to generate each
+                            page&apos;s text content for searching.
+                        </b>
+                    </li>
+                </ul>
+
+                <Space h="lg" />
+
+                <Title order={3}>Other</Title>
+                <Text>
+                    Codex v3 (a full rewrite) is something that I would like to do soon, with a new
+                    website and docs. Currently waiting on TipTap v3 before I start again.{" "}
+                    <Anchor onClick={() => window.api.openLink("feedback")}>
+                        Take the new survey
+                    </Anchor>{" "}
+                    for suggestions and input. As always bug reports and issues go on the{" "}
+                    <Anchor onClick={() => window.api.openLink("issues")}>GitHub</Anchor>.
+                </Text>
+            </Modal.Body>
         </Modal>
     );
 }

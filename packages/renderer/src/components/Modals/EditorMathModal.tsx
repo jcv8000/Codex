@@ -54,15 +54,15 @@ export function EditorMathModal(props: { state: EditorMathModalState; onClose: (
     }, []);
 
     // This is to fix the "Toggle Virtual Keyboard" tooltip going off to the right in the modal
-    useEffect(() => {
-        setTimeout(() => {
-            if (mathRef.current && mathRef.current.shadowRoot) {
-                const style = document.createElement("style");
-                style.innerHTML = "[data-ml__tooltip]::after { left: auto !important; }";
-                mathRef.current.shadowRoot.appendChild(style);
-            }
-        }, 100);
-    });
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         if (mathRef.current && mathRef.current.shadowRoot) {
+    //             const style = document.createElement("style");
+    //             style.innerHTML = "[data-ml__tooltip]::after { left: auto !important; }";
+    //             mathRef.current.shadowRoot.appendChild(style);
+    //         }
+    //     }, 100);
+    // });
 
     const onClose = () => {
         props.onClose();
@@ -70,7 +70,7 @@ export function EditorMathModal(props: { state: EditorMathModalState; onClose: (
     };
     return (
         <Modal
-            size="lg"
+            size="xl"
             opened={opened}
             onClose={onClose}
             title={

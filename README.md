@@ -18,11 +18,11 @@ Codex is a note-taking app that allows you to save **styled and highlighted code
 
 Other features:
 
--   Support for highlighting 190+ programming languages
--   Over 240 code themes
--   Sort your notes into nestable notebooks/folders, customizable icons for notebooks and pages
--   KaTeX math expressions
--   PDF and Markdown exporting
+- Support for highlighting 190+ programming languages
+- Over 240 code themes
+- Sort your notes into nestable notebooks/folders, customizable icons for notebooks and pages
+- KaTeX math expressions
+- PDF and Markdown exporting
 
 ## Screenshot
 

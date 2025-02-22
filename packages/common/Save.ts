@@ -128,6 +128,7 @@ export class Save {
                 p.icon = obj.icon;
                 p.fileName = obj.fileName;
                 p.textContent = obj.textContent;
+                p.favorited = obj.favorited;
 
                 if (parent == null) save.items.push(p);
             }

@@ -153,8 +153,10 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "book") return "book-2";
     else if (s == "columns") return "columns-2";
     else if (s == "compass") return "brand-safari";
-    else if (s == "crosshair") return "crosshair"; // eh
-    else if (s == "disc") return "disc"; // maybe "vinyl" or "playstation-circle"
+    else if (s == "crosshair")
+        return "crosshair"; // eh
+    else if (s == "disc")
+        return "disc"; // maybe "vinyl" or "playstation-circle"
     else if (s == "globe") return "world";
     else if (s == "layout") return "table";
     else if (s == "menu") return "menu-2";
@@ -198,7 +200,8 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "github") return "brand-github";
     else if (s == "gitlab") return "brand-gitlab";
     else if (s == "grid") return "layout-grid";
-    else if (s == "hard-drive") return "server"; // this one sucks
+    else if (s == "hard-drive")
+        return "server"; // this one sucks
     else if (s == "image") return "photo";
     else if (s == "info") return "info-circle";
     else if (s == "instagram") return "brand-instagram";
@@ -222,20 +225,23 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "mouse-pointer") return "pointer";
     else if (s == "move") return "arrows-move";
     else if (s == "navigation-2") return "navigation";
-    else if (s == "pause-circle") return "clock-pause"; // sucks
+    else if (s == "pause-circle")
+        return "clock-pause"; // sucks
     else if (s == "pause") return "player-pause";
     else if (s == "pen-tool") return "ballpen";
     else if (s == "percent") return "percentage";
     else if (s == "phone-forwarded") return "phone-outgoing";
     else if (s == "phone-missed") return "phone-x";
     else if (s == "pie-chart") return "chart-pie";
-    else if (s == "play-circle") return "clock-play"; // sucks
+    else if (s == "play-circle")
+        return "clock-play"; // sucks
     else if (s == "play") return "player-play";
     else if (s == "plus-circle") return "circle-plus";
     else if (s == "plus-square") return "square-plus";
     else if (s == "pocket") return "brand-pocket";
     else if (s == "refresh-ccw") return "refresh";
-    else if (s == "refresh-cw") return "rotate-clockwise"; // sucks
+    else if (s == "refresh-cw")
+        return "rotate-clockwise"; // sucks
     else if (s == "rewind") return "player-track-prev";
     else if (s == "rotate-ccw") return "rotate";
     else if (s == "rotate-cw") return "rotate-clockwise";
@@ -266,7 +272,8 @@ function replaceFeatherWithTabler(featherIcon: string) {
     else if (s == "volume-x") return "volume-3";
     else if (s == "watch") return "device-watch";
     else if (s == "x-circle") return "circle-x";
-    else if (s == "x-octagon") return "circle-x"; // sucks
+    else if (s == "x-octagon")
+        return "circle-x"; // sucks
     else if (s == "x-square") return "square-x";
     else if (s == "youtube") return "brand-youtube";
     else if (s == "zap-off") return "bolt-off";

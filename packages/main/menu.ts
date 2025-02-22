@@ -147,7 +147,7 @@ export const menu = (window: BrowserWindow, locale: Locale) =>
                 },
                 {
                     label: locale.menus.changelogs,
-                    click: () => shell.openExternal("https://codexnotes.com/updates/")
+                    click: () => shell.openExternal("https://github.com/jcv8000/Codex/releases")
                 },
                 { type: "separator" },
                 { label: locale.menus.about, click: () => openAboutWindow(window) }

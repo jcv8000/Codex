@@ -58,12 +58,17 @@ export function App() {
     const saveActivePage = async () => {
         if (activePage == null || editorRef.current == null) return;
 
-        activePage.textContent = editorRef.current.getText();
-
         await window.api.writePage(
             activePage.fileName,
             JSON.stringify(editorRef.current.getJSON())
         );
+
+        const text = editorRef.current.getText();
+        if (activePage.textContent != text) {
+            modifySave(() => {
+                activePage.textContent = text;
+            });
+        }
 
         unsavedChanges.current = false;
     };

@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "main": ".vite/index.cjs",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "description": "Note-taking app for programmers and CS students",
     "author": {
         "name": "Josh Vickery",
@@ -23,7 +23,7 @@
         "typecheck": "tsc && tsc -p packages/renderer/tsconfig.json"
     },
     "dependencies": {
-        "@electron/remote": "^2.1.1",
+        "@electron/remote": "^2.1.2",
         "@emotion/react": "^11.11.3",
         "@lukeed/uuid": "^2.0.1",
         "@mantine/core": "^6.0.21",
@@ -69,9 +69,9 @@
         "electron-log": "^4.4.8",
         "fuse.js": "^7.0.0",
         "highlight.js": "^11.9.0",
-        "katex": "^0.16.9",
+        "katex": "^0.16.21",
         "lowlight": "^3.1.0",
-        "mathlive": "^0.95.5",
+        "mathlive": "^0.104.0",
         "palettey": "^1.0.4",
         "react-lowlight": "^3.0.0",
         "sanitize-filename": "^1.6.3",
@@ -83,7 +83,7 @@
         "@types/color": "^3.0.6",
         "@types/d3": "^7.4.3",
         "@types/katex": "^0.16.7",
-        "@types/node": "^18.19.4",
+        "@types/node": "^20.17.19",
         "@types/react": "^18.2.46",
         "@types/react-dom": "^18.2.18",
         "@types/semver": "^7.5.6",
@@ -91,8 +91,8 @@
         "@typescript-eslint/eslint-plugin": "^6.17.0",
         "@typescript-eslint/parser": "^6.17.0",
         "@vitejs/plugin-react": "^4.2.1",
-        "electron": "^26.6.3",
-        "electron-builder": "^24.9.1",
+        "electron": "^32.3.1",
+        "electron-builder": "^24.13.3",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-react": "^7.33.2",
@@ -104,9 +104,23 @@
         "rimraf": "^5.0.5",
         "sass": "^1.69.7",
         "typescript": "^5.3.3",
-        "vite": "^5.0.10",
+        "vite": "^5.4.14",
         "vite-plugin-static-copy": "^1.0.0",
         "vite-tsconfig-paths": "^4.2.3",
-        "wait-on": "^7.2.0"
+        "wait-on": "^8.0.2"
+    },
+    "pnpm": {
+        "overrides": {
+            "braces": "3.0.3",
+            "palettey>nanoid": "3.3.8",
+            "cross-spawn": "7.0.5",
+            "tar": "6.2.1",
+            "ejs": "3.1.10",
+            "micromatch": "4.0.8"
+        },
+        "onlyBuiltDependencies": [
+            "electron",
+            "esbuild"
+        ]
     }
 }
