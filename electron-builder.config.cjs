@@ -16,10 +16,7 @@ const config = {
         extendInfo: {
             CFBundleDisplayName: "Codex"
         },
-        category: "public.app-category.productivity",
-        notarize: {
-            teamId: process.env.APPLE_TEAM_ID || ""
-        }
+        category: "public.app-category.productivity"
     },
     win: {
         target: ["nsis", "zip"],
