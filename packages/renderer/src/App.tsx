@@ -186,7 +186,9 @@ export function App() {
 
         fakeEditor.current.commands.setContent(JSON.parse(window.api.loadPage(page.fileName)));
         if (type == "pdf") {
+            document.title = page.name;
             await window.api.exportPagePDF(page);
+            document.title = "Codex";
         } else {
             window.api.exportPageMD(page, fakeEditor.current.storage.markdown.getMarkdown());
         }
@@ -238,7 +240,9 @@ export function App() {
             fakeEditor.current.commands.setContent(JSON.parse(window.api.loadPage(page.fileName)));
 
             if (type == "pdf") {
+                document.title = page.name;
                 await window.api.exportOneOfManyPDF(dir, page);
+                document.title = "Codex";
             } else {
                 window.api.exportOneOfManyMD(
                     dir,
