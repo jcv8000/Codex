@@ -1,5 +1,7 @@
 #fake-editor {
-    display: none;
+    // display: none;
+    position: absolute;
+    visibility: hidden;
 
     .ProseMirror {
         pre {
@@ -18,7 +20,8 @@
         display: none !important;
     }
     #fake-editor {
-        display: block;
+        // display: block;
+        visibility: visible;
         width: 720px !important;
     }
 }
