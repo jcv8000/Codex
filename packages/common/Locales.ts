@@ -268,7 +268,7 @@ export type Locale = {
     };
 };
 
-export const supportedLocales = ["en_US", "zh_CN", "ru_RU"] as const;
+export const supportedLocales = ["en_US", "zh_CN", "ru_RU", "es_MX"] as const;
 export type SupportedLocales = (typeof supportedLocales)[number];
 
 export const locales: Record<SupportedLocales, Locale> = {
@@ -339,7 +339,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             languages: {
                 en_US: "English (United States)",
                 zh_CN: "简体中文",
-                ru_RU: "Русский (Российская Федерация)"
+                ru_RU: "Русский (Российская Федерация)",
+                es_MX: "Español (México)"
             },
             titlebarStyles: {
                 custom: "Custom",
@@ -628,7 +629,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             languages: {
                 en_US: "English (United States)",
                 zh_CN: "简体中文",
-                ru_RU: "Русский (Российская Федерация)"
+                ru_RU: "Русский (Российская Федерация)",
+                es_MX: "Español (México)"
             },
             titlebarStyles: {
                 custom: "Custom",
@@ -917,7 +919,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             languages: {
                 en_US: "English (United States)",
                 zh_CN: "简体中文",
-                ru_RU: "Русский (Российская Федерация)"
+                ru_RU: "Русский (Российская Федерация)",
+                es_MX: "Español (México)"
             },
             titlebarStyles: {
                 custom: "Кастомная",
@@ -1138,6 +1141,296 @@ export const locales: Record<SupportedLocales, Locale> = {
             cancel: "Отмена",
             forget: "Не сохранять изменения",
             save: "Сохранить изменения"
+        },
+        
+    },
+    es_MX: {
+        name: "Español (México)",
+        notifications: {
+            saved: "Guardado",
+            exported: "Exportado",
+            exported_all_pages_in: "Todas las páginas exportadas en",
+            update_available: "Nueva versión disponible",
+            running_under_arm_translation_title: "Ejecutándose bajo traductor arm64",
+            running_under_arm_translation_desc: "Descarga una versión única para ARM desde GitHub"
+        },
+        sidebar: {
+            homeTab: "Inicio",
+            settings: "Configuración",
+            moreTab: "Más",
+            more_help: "Ayuda/Documentación",
+            more_website: "Sitio web",
+            more_changelogs: "Registro de cambios",
+            more_github_repo: "Repositorio de GitHub",
+            more_issues: "Reporte de errores",
+            more_give_feedback: "Sugerencias (Google Forms)",
+            search_bar_text: "Buscar páginas",
+            search_contains: "Contiene",
+            new_folder: "Nueva carpeta",
+            nothing_here: "Aquí todavía no hay nada..."
+        },
+        settings: {
+            accent_color: "Color de acento",
+            code_block_theme: "Tema de bloques de código",
+            code_block_word_wrap: "Ajuste de línea en bloques de código",
+            code_block_tab_size: {
+                label: "Tamaño de tabulación en bloques de código",
+                desc: "Define cuántos espacios se agregan/eliminan al presionar Tab/Shift-Tab en el código",
+                four_spaces: "4 espacios (predeterminado)",
+                two_spaces: "2 espacios"
+            },
+            language: "Idioma",
+            contribute_language: "Contribuye tu propia traducción abriendo un pull request en GitHub",
+            theme: "Tema",
+            titlebar_style: "Estilo de la barra de título",
+            setting_requires_restart: "Cambiar esta configuración requiere reiniciar la aplicación.",
+            use_typography_extension: "Usar extensión tipográfica en el editor",
+            use_typography_description: 'Esto convierte, por ejemplo, "(c)" en "©".',
+            open_pdf_on_export: "Abrir automáticamente el PDF después de exportar",
+            saving_section: "Guardando páginas",
+            autosave_page_on_switch: "Guardar automáticamente la página actual al cambiar de página/salir del editor",
+            general: "General",
+            editor: "Editor",
+            save_folder: "Carpeta de guardado",
+            editor_width: "Ancho del editor",
+            editor_border: "Borde del editor",
+            editor_spellcheck: "Corrector ortográfico del editor",
+            save_folder_location: "Ubicación de la carpeta de guardado",
+            save_folder_alert_title: "Cambiar esta configuración reiniciará la aplicación de inmediato.",
+            save_folder_alert_desc: "Cambiar la ubicación no corromperá ni copiará los datos antiguos. Debes copiar manualmente el archivo 'save.json' y la carpeta 'notes' en la nueva ubicación.",
+            change_save_folder_location: "Cambiar ubicación de guardado",
+            reset_save_folder_location: "Restablecer a la ubicación predeterminada",
+            themes: {
+                light: "Claro",
+                dark: "Oscuro"
+            },
+            languages: {
+                en_US: "Inglés (Estados Unidos)",
+                zh_CN: "简体中文",
+                ru_RU: "Русский (Российская Федерация)",
+                es_MX: "Español (México)"
+            },
+            titlebarStyles: {
+                custom: "Personalizado",
+                native: "Nativo"
+            },
+            editorWidths: {
+                md: "Mediano (Predeterminado)",
+                lg: "Grande",
+                xl: "Extra grande"
+            },
+            restartToApply: "Reiniciar para aplicar"
+        },
+        contextMenu: {
+            new_page: "Nueva página",
+            new_folder: "Nueva carpeta",
+            edit_item: "Editar elemento",
+            favorite_page: (favorited) => (favorited ? "Quitar de favoritos" : "Agregar a favoritos"),
+            delete_item: "Eliminar",
+            export_page_pdf: "Exportar página como PDF",
+            export_page_md: "Exportar página como MD",
+            export_all_pages_pdf: "Exportar todas las páginas como PDF",
+            export_all_pages_md: "Exportar todas las páginas como MD"
+        },
+        home: {
+            version: "Versión",
+            whats_new: "Novedades",
+            tip: "Consejos",
+            tips: [
+                "Si intentas añadir una imagen desde la web o desde tu portapapeles, simplemente copia y pega la imagen directamente en el editor",
+                "Haz respaldos de tus notas (save.json y carpeta notes) regularmente",
+                "Puedes colocar carpetas dentro de otras carpetas",
+                "Puedes hacer que una página sea parte del nivel superior arrastrándola a una parte vacía de la barra lateral",
+                'Edita tu save.json y prueba cambiar la propiedad "color" de una página a "rainbow"',
+                "Contribuye con tu propio idioma a Codex en el repositorio de GitHub (ver CONTRIBUTING.md)",
+                "Abre enlaces en tus notas manteniendo presionada la tecla Control (o Cmd) y haciendo clic",
+                "Puedes Alt+clic en una carpeta para cerrar todas las subcarpetas dentro de ella"
+            ],
+            favorites: "Favoritos"
+        },
+        menus: {
+            save_current_page: "Guardar página actual",
+            export_page_to_pdf: "Exportar página actual como PDF",
+            zoom_in_editor: "Maximizar el editor",
+            zoom_out_editor: "Minimizar el editor",
+            reset_editor_zoom: "Restablecer zoom del editor",
+            toggle_sidebar: "Mostrar/Ocultar barra lateral",
+            reset_sidebar_width: "Restablecer ancho de la barra lateral",
+            toggle_editor_toolbar: "Mostrar/Ocultar barra de herramientas del editor",
+            help_docs: "Ayuda/Documentación",
+            website: "Sitio web",
+            changelogs: "Registro de cambios",
+            about: "Acerca de"
+        },
+        shellDialogs: {
+            open_external_link: {
+                title: "¿Seguro que quieres abrir este enlace?",
+                yes: "Sí",
+                cancel: "Cancelar",
+                trust_domain: "Confiar siempre en este dominio"
+            }
+        },
+        mutateModals: {
+            edit_modal_title: (itemName: string) => `Editar ${itemName}`,
+            new_page_modal_title: (parentName) => `Nueva página en ${parentName}`,
+            new_folder_modal_title: (parentName) => {
+                return parentName == undefined ? "Nueva carpeta" : `Nueva carpeta en ${parentName}`;
+            },
+            item_icon: "Ícono",
+            item_name: "Nombre del ícono",
+            enter_a_name: "Ingresa un nombre",
+            cancel: "Cancelar",
+            save: "Guardar",
+            create: "Crear",
+            delete: "Eliminar",
+            iconSelector: {
+                tooltip: "Haz clic para cambiar de ícono",
+                reset_color_from_rainbow: "Restablecer color de arcoíris",
+                modal: {
+                    title: "Elige un ícono",
+                    searh_bar_placeholder: "Buscar íconos...",
+                    category: "Categoría",
+                    results: "resultados",
+                    categories: {
+                        animals: "Animales",
+                        arrows: "Flechas",
+                        brand: "Marca",
+                        buildings: "Edificios",
+                        charts: "Gráficas",
+                        communication: "Comunicación",
+                        computers: "Computadoras",
+                        currencies: "Monedas",
+                        database: "Base de datos",
+                        design: "Diseño",
+                        devices: "Dispositivos",
+                        document: "Documento",
+                        ecommerce: "Comercio electrónico",
+                        electrical: "Eléctrico",
+                        filled: "Rellenados",
+                        food: "Comida",
+                        gestures: "Gestos",
+                        health: "Salud",
+                        letters: "Letras",
+                        logic: "Lógica",
+                        map: "Mapa",
+                        math: "Matemáticas",
+                        media: "Medios",
+                        mood: "Estado de ánimo",
+                        nature: "Naturaleza",
+                        numbers: "Números",
+                        photography: "Fotografía",
+                        shapes: "Formas",
+                        sport: "Deporte",
+                        symbols: "Símbolos",
+                        system: "Sistema",
+                        text: "Texto",
+                        vehicles: "Vehículos",
+                        versionControl: "Control de versiones",
+                        weather: "Clima"
+                    }
+                }
+            },
+            delete_item_title: "Eliminar elemento",
+            delete_page_text: (itemName: string) =>
+                `¿Seguro que quieres eliminar "${itemName}"?`,
+            delete_folder_text: (itemName: string) =>
+                `¿Seguro que quieres eliminar "${itemName}" y todos sus contenidos?`
+        },
+        editor: {
+            table_of_contents: "Tabla de contenido",
+            toggle_toolbar: "Mostrar/Ocultar barra de herramientas",
+            toolbar: {
+                undo: "Deshacer",
+                redo: "Rehacer",
+                bold: "Negrita",
+                italic: "Cursiva",
+                underline: "Subrayado",
+                strikethrough: "Tachado",
+                inline_code: "Código entre línea",
+                superscript: "Superíndice",
+                subscript: "Subíndice",
+                link: "Enlace",
+                align_left: "Alinear a la izquierda",
+                align_right: "Alinear a la derecha",
+                align_center: "Centrar",
+                align_justified: "Justificar",
+                image: "Insertar/Reemplazar imagen",
+                paragraph: "Convertir en párrafo",
+                blockquote: "Convertir en cita",
+                heading: "Encabezado",
+                heading_level: "Nivel",
+                horizontal_rule: "Insertar línea horizontal",
+                bullet_list: "Lista con viñetas",
+                ordered_list: "Lista numerada",
+                check_list: "Lista de verificación",
+                code_block: "Bloque de código",
+                codeBlockMenu: {
+                    all_languages: "Todos los lenguajes",
+                    recently_used: "Usados recientemente"
+                },
+                table: "Crear tabla",
+                tableMenu: {
+                    create_table: "Crear tabla",
+                    add_column_before: "Agregar columna antes",
+                    add_column_after: "Agregar columna después",
+                    delete_column: "Eliminar columna",
+                    add_row_before: "Agregar fila antes",
+                    add_row_after: "Agregar fila después",
+                    delete_row: "Eliminar fila",
+                    merge_cells: "Combinar celdas seleccionadas",
+                    split_cell: "Dividir celda seleccionada",
+                    toggle_header_col: "Alternar columna de encabezado",
+                    toggle_header_row: "Alternar fila de encabezado",
+                    toggle_header_cell: "Alternar celda de encabezado",
+                    delete_table: "Eliminar tabla"
+                },
+                math_block: "Bloque matemático",
+                clear_formatting: "Quitar formato",
+                text_color: "Color de texto",
+                default_font: "Fuente predeterminada",
+                highlight: "Resaltar",
+                reset_text_color: "Restablecer color de texto",
+                reset_highlight: "Quitar resaltado"
+            },
+            imageModal: {
+                dropzone_title: "Arrastra una imagen aquí o haz clic para seleccionar un archivo",
+                dropzone_desc: "Límite: 1 archivo de imagen",
+                tip_title: "Consejo",
+                tip_text:
+                    "Si intentas añadir una imagen desde la web o desde el portapapeles, simplemente copia y pega la imagen directamente en el editor.",
+                cancel: "Cancelar",
+                add_image: "Agregar imagen",
+                replace_image: "Reemplazar imagen"
+            },
+            mathModal: {
+                edit_math: "Editar expresión matemática",
+                insert_math: "Insertar expresión matemática",
+                visual_editor: "Editor visual",
+                manual_editor: "KaTeX manual",
+                about: "Acerca de",
+                aboutMenu: {
+                    title: "Soporte para Math/TeX/KaTeX",
+                    text: "El editor matemático visual usa un editor de código abierto llamado MathLive. El editor de documentos Codex, que utilizas para escribir tus notas, usa KaTeX para mostrar las expresiones matemáticas. MathLive y KaTeX son compatibles en la mayoría de funciones/comandos/fórmulas, pero no al 100%. Esto significa que ciertas expresiones complejas de KaTeX no aparecerán correctamente en el editor visual, aunque aún podrás verlas en tus notas ingresándolas manualmente con el botón KaTeX manual. Por ejemplo, puedes copiar una fórmula complicada desde internet, seleccionar el botón KaTeX manual y pegar la fórmula en la caja de texto.",
+                    mathlive_link: "Funciones soportadas por MathLive",
+                    katex_link: "Funciones soportadas por KaTeX"
+                },
+                cancel: "Cancelar",
+                edit: "Editar",
+                insert: "Insertar"
+            },
+            linkModal: {
+                cancel: "Cancelar",
+                create_link: "Crear enlace",
+                url: "URL"
+            },
+            code_block_collapse: "Colapsar"
+        },
+        unsavedChangesDialog: {
+            title: (name: string) => `Tienes cambios no guardados en "${name}"`,
+            cancel: "Cancelar",
+            forget: "Descartar cambios",
+            save: "Guardar cambios"
         }
-    }
+    },
+
 };
