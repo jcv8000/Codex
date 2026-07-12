@@ -43,10 +43,13 @@ export type Locale = {
         open_pdf_on_export: string;
         saving_section: string;
         autosave_page_on_switch: string;
+        autosave: string;
+        autosave_interval: string;
         general: string;
         editor: string;
         save_folder: string;
         editor_width: string;
+        toolbar_size: string;
         editor_border: string;
         editor_spellcheck: string;
         save_folder_location: string;
@@ -80,6 +83,7 @@ export type Locale = {
         export_page_md: string;
         export_all_pages_pdf: string;
         export_all_pages_md: string;
+        delete_multiple_items: (count: number) => string;
     };
     home: {
         version: string;
@@ -171,6 +175,8 @@ export type Locale = {
         delete_item_title: string;
         delete_page_text: (itemName: string) => string;
         delete_folder_text: (itemName: string) => string;
+        delete_multiple_text: (count: number) => string;
+        delete_from_disk_checkbox: string;
     };
     editor: {
         table_of_contents: string;
@@ -191,6 +197,7 @@ export type Locale = {
             align_center: string;
             align_justified: string;
             image: string;
+            crop: string;
             paragraph: string;
             blockquote: string;
             heading: string;
@@ -258,7 +265,22 @@ export type Locale = {
             create_link: string;
             url: string;
         };
+        cropModal: {
+            title: string;
+            cancel: string;
+            save: string;
+        };
+        textFinder: {
+            find: string;
+            next: string;
+            previous: string;
+            no_results: string;
+        };
         code_block_collapse: string;
+        revision_notes: string;
+        no_revision_notes: string;
+        move_up: string;
+        move_down: string;
     };
     unsavedChangesDialog: {
         title: (name: string) => string;
@@ -316,13 +338,16 @@ export const locales: Record<SupportedLocales, Locale> = {
             use_typography_extension: "Use Typography extension in the Editor",
             use_typography_description: 'This enables turning things like "(c)" into "©".',
             open_pdf_on_export: "Automatically open PDF after exporting",
-            saving_section: "Saving Pages",
+            saving_section: "Saving",
             autosave_page_on_switch:
                 "Automatically save the current page when switching between pages/exiting the editor",
+            autosave: "Auto Save",
+            autosave_interval: "Auto Save Interval (minutes)",
             general: "General",
             editor: "Editor",
             save_folder: "Save Folder",
             editor_width: "Editor Width",
+            toolbar_size: "Toolbar Size (requires restart)",
             editor_border: "Editor Border",
             editor_spellcheck: "Editor Spellcheck",
             save_folder_location: "Save Folder Location",
@@ -361,7 +386,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             export_page_pdf: "Export Page as PDF",
             export_page_md: "Export Page as MD",
             export_all_pages_pdf: "Export All Pages as PDF",
-            export_all_pages_md: "Export All Pages as MD"
+            export_all_pages_md: "Export All Pages as MD",
+            delete_multiple_items: (count) => `Delete ${count} Items`
         },
         home: {
             version: "Version",
@@ -465,7 +491,10 @@ export const locales: Record<SupportedLocales, Locale> = {
             delete_page_text: (itemName: string) =>
                 `Are you sure you want to delete "${itemName}"?`,
             delete_folder_text: (itemName: string) =>
-                `Are you sure you want to delete "${itemName}" and all of its children?`
+                `Are you sure you want to delete "${itemName}" and all of its children?`,
+            delete_multiple_text: (count: number) =>
+                `Are you sure you want to delete these ${count} items?`,
+            delete_from_disk_checkbox: "Also permanently delete from disk"
         },
         editor: {
             table_of_contents: "Table of Contents",
@@ -486,6 +515,7 @@ export const locales: Record<SupportedLocales, Locale> = {
                 align_center: "Align Center",
                 align_justified: "Align Justified",
                 image: "Insert/Replace Image",
+                crop: "Crop Image",
                 paragraph: "Set to Paragraph",
                 blockquote: "Set to Block Quote",
                 heading: "Heading",
@@ -554,7 +584,22 @@ export const locales: Record<SupportedLocales, Locale> = {
                 create_link: "Create Link",
                 url: "URL"
             },
-            code_block_collapse: "Collapse"
+            cropModal: {
+                title: "Crop Image",
+                cancel: "Cancel",
+                save: "Save Crop"
+            },
+            textFinder: {
+                find: "Find in document...",
+                next: "Next",
+                previous: "Previous",
+                no_results: "No results"
+            },
+            code_block_collapse: "Collapse",
+            revision_notes: "Revision Notes",
+            no_revision_notes: "No revision notes found",
+            move_up: "Move Up",
+            move_down: "Move Down"
         },
         unsavedChangesDialog: {
             title: (name: string) => `You have unsaved changes to "${name}"`,
@@ -609,10 +654,13 @@ export const locales: Record<SupportedLocales, Locale> = {
             open_pdf_on_export: "完成导出后自动打开PDF文件",
             saving_section: "保存页面",
             autosave_page_on_switch: "页面切换/退出编辑器时自动保存当前页面",
+            autosave: "自动保存",
+            autosave_interval: "自动保存间隔(分钟)",
             general: "基础设置",
             editor: "编辑器",
             save_folder: "保存文件夹",
             editor_width: "编辑器宽度",
+            toolbar_size: "Toolbar Size (requires restart)",
             editor_border: "编辑器边框",
             editor_spellcheck: "拼写检查",
             save_folder_location: "保存位置",
@@ -650,7 +698,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             export_page_pdf: "导出为PDF",
             export_page_md: "导出为Markdown",
             export_all_pages_pdf: "导出所有页面为PDF",
-            export_all_pages_md: "导出所有页面为Markdown"
+            export_all_pages_md: "导出所有页面为Markdown",
+            delete_multiple_items: (count) => `Delete ${count} Items`
         },
         home: {
             version: "版本号",
@@ -754,7 +803,10 @@ export const locales: Record<SupportedLocales, Locale> = {
             },
             delete_item_title: "删除项",
             delete_page_text: (itemName: string) => `你确定要删除 "${itemName}" 吗?`,
-            delete_folder_text: (itemName: string) => `你确定要删除 "${itemName}" 及其所有子项吗?`
+            delete_folder_text: (itemName: string) => `你确定要删除 "${itemName}" 及其所有子项吗?`,
+            delete_multiple_text: (count: number) =>
+                `Are you sure you want to delete these ${count} items?`,
+            delete_from_disk_checkbox: "Also permanently delete from disk"
         },
         editor: {
             table_of_contents: "Table of Contents",
@@ -775,6 +827,7 @@ export const locales: Record<SupportedLocales, Locale> = {
                 align_center: "居中对齐",
                 align_justified: "两端对齐",
                 image: "插入/替换图片",
+                crop: "Crop Image",
                 paragraph: "设置为段落",
                 blockquote: "设置为块引用",
                 heading: "标题",
@@ -842,7 +895,22 @@ export const locales: Record<SupportedLocales, Locale> = {
                 create_link: "创建超链接",
                 url: "URL"
             },
-            code_block_collapse: "折叠"
+            cropModal: {
+                title: "Crop Image",
+                cancel: "Cancel",
+                save: "Save"
+            },
+            textFinder: {
+                find: "Find in document...",
+                next: "Next",
+                previous: "Previous",
+                no_results: "No results"
+            },
+            code_block_collapse: "折叠",
+            revision_notes: "Revision Notes",
+            no_revision_notes: "No revision notes found",
+            move_up: "Move Up",
+            move_down: "Move Down"
         },
         unsavedChangesDialog: {
             title: (name: string) => `您对 "${name}" 有未保存的更改`,
@@ -897,10 +965,13 @@ export const locales: Record<SupportedLocales, Locale> = {
             saving_section: "Сохранение страниц",
             autosave_page_on_switch:
                 "Автоматически сохранять текущую страницу при переключении между страницами или выходе из редактора",
+            autosave: "Auto Save",
+            autosave_interval: "Auto Save Interval (minutes)",
             general: "Главная",
             editor: "Редактор",
             save_folder: "Сохранить папку",
             editor_width: "Ширина редактора",
+            toolbar_size: "Toolbar Size (requires restart)",
             editor_border: "Граница редактора",
             editor_spellcheck: "Проверка орфографии в редакторе",
             save_folder_location: "Место сохранения папок",
@@ -939,7 +1010,8 @@ export const locales: Record<SupportedLocales, Locale> = {
             export_page_pdf: "Экспорт страницы в PDF",
             export_page_md: "Экспорт страницы в MD",
             export_all_pages_pdf: "Экспорт всех страниц в PDF",
-            export_all_pages_md: "Экспорт всех страниц в MD"
+            export_all_pages_md: "Экспорт всех страниц в MD",
+            delete_multiple_items: (count) => `Удалить ${count} элементы`
         },
         home: {
             version: "Версия",
@@ -1042,7 +1114,10 @@ export const locales: Record<SupportedLocales, Locale> = {
             delete_item_title: "Удалить элемент",
             delete_page_text: (itemName: string) => `Вы уверены, что хотите удалить "${itemName}"?`,
             delete_folder_text: (itemName: string) =>
-                `Вы уверены, что хотите удалить "${itemName}" вместе со всеми его дочерними элементами?`
+                `Вы уверены, что хотите удалить "${itemName}" вместе со всеми его дочерними элементами?`,
+            delete_multiple_text: (count: number) =>
+                `Вы уверены, что хотите удалить эти ${count} элементов?`,
+            delete_from_disk_checkbox: "Также навсегда удалить с диска"
         },
         editor: {
             table_of_contents: "Оглавление",
@@ -1063,6 +1138,7 @@ export const locales: Record<SupportedLocales, Locale> = {
                 align_center: "Выровнять по центру",
                 align_justified: "Выравнивание по ширине",
                 image: "Вставить/заменить изображение",
+                crop: "Crop Image",
                 paragraph: "Установить на абзац",
                 blockquote: "Установить на блок цитаты",
                 heading: "Заголовок",
@@ -1131,7 +1207,22 @@ export const locales: Record<SupportedLocales, Locale> = {
                 create_link: "Создать ссылку",
                 url: "URL"
             },
-            code_block_collapse: "Свернуть"
+            cropModal: {
+                title: "Crop Image",
+                cancel: "Cancel",
+                save: "Save"
+            },
+            textFinder: {
+                find: "Find in document...",
+                next: "Next",
+                previous: "Previous",
+                no_results: "No results"
+            },
+            code_block_collapse: "Свернуть",
+            revision_notes: "Revision Notes",
+            no_revision_notes: "No revision notes found",
+            move_up: "Move Up",
+            move_down: "Move Down"
         },
         unsavedChangesDialog: {
             title: (name: string) => `Вы имеете несохранённые изменения в "${name}"`,

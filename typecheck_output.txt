@@ -1,0 +1,14 @@
+
+> codex@2.0.5 typecheck /home/federico/Scrivania/Codex
+> tsc && tsc -p packages/renderer/tsconfig.json
+
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(2,35): error TS2307: Cannot find module 'prosemirror-state' or its corresponding type declarations.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(3,43): error TS2307: Cannot find module 'prosemirror-view' or its corresponding type declarations.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(37,27): error TS7006: Parameter 'tr' implicitly has an 'any' type.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(37,31): error TS7006: Parameter 'oldState' implicitly has an 'any' type.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(57,45): error TS7006: Parameter 'node' implicitly has an 'any' type.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(57,51): error TS7006: Parameter 'pos' implicitly has an 'any' type.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(87,21): error TS7023: 'decorations' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(87,33): error TS7006: Parameter 'state' implicitly has an 'any' type.
+packages/renderer/src/components/Views/Editor/extensions/Search.ts(88,37): error TS2339: Property 'getState' does not exist on type '{ decorations(state: any): any; }'.
+ ELIFECYCLE  Command failed with exit code 2.

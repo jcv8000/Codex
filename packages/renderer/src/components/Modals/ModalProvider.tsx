@@ -5,6 +5,8 @@ import {
     EditModalState,
     EditorImageModal,
     EditorImageModalState,
+    EditorCropModal,
+    EditorCropModalState,
     EditorMathModal,
     EditorMathModalState,
     NewModal,
@@ -25,6 +27,7 @@ class ModalStore {
 
     // Editor modals
     openEditorImageModal: (options: Omit<EditorImageModalState, "opened">) => void = () => {};
+    openEditorCropModal: (options: Omit<EditorCropModalState, "opened">) => void = () => {};
     openEditorMathModal: (options: Omit<EditorMathModalState, "opened">) => void = () => {};
     openEditorLinkModal: (options: Omit<EditorLinkModalState, "opened">) => void = () => {};
 }
@@ -64,6 +67,12 @@ export function ModalProvider(props: { children?: React.ReactNode }) {
         editor: null
     });
 
+    const [editorCropModalState, setEditorCropModalState] = useState<EditorCropModalState>({
+        opened: false,
+        editor: null,
+        src: ""
+    });
+
     const [editorMathModalState, setEditorMathModalState] = useState<EditorMathModalState>({
         opened: false,
         editor: null,
@@ -100,6 +109,9 @@ export function ModalProvider(props: { children?: React.ReactNode }) {
                 // Editor modals
                 openEditorImageModal: (options) => {
                     setEditorImageModalState({ opened: true, editor: options.editor });
+                },
+                openEditorCropModal: (options) => {
+                    setEditorCropModalState({ opened: true, editor: options.editor, src: options.src });
                 },
                 openEditorMathModal: (options) => {
                     setEditorMathModalState({
@@ -142,6 +154,10 @@ export function ModalProvider(props: { children?: React.ReactNode }) {
                 onClose={() =>
                     setEditorImageModalState({ ...editorImageModalState, opened: false })
                 }
+            />
+            <EditorCropModal
+                state={editorCropModalState}
+                onClose={() => setEditorCropModalState({ ...editorCropModalState, opened: false })}
             />
             <EditorMathModal
                 state={editorMathModalState}

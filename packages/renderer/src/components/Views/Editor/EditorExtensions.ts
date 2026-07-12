@@ -26,8 +26,11 @@ import { CustomLink } from "./extensions/CustomLink";
 import { CustomCode } from "./extensions/CustomCode";
 import { CustomTable } from "./extensions/CustomTable";
 import { ResizableImage } from "./extensions/ResizableImage/ResizableImage";
+import { CustomStyle } from "./extensions/CustomStyle";
+import { Search } from "./extensions/Search";
+import { RevisionNote } from "./extensions/RevisionNote";
 
-export function extensions(options: { useTypography: boolean; tabSize: number }) {
+export function extensions(options: { useTypography: boolean; tabSize: number; customStyles: Record<string, Record<string, string>> }) {
     const e = [
         StarterKit.configure({
             codeBlock: false,
@@ -83,9 +86,16 @@ export function extensions(options: { useTypography: boolean; tabSize: number })
         MathInline,
         //Canvas,
         Markdown.configure({
-            html: true
+            html: true,
+            transformPastedText: false,
+            transformCopiedText: false
         }),
-        FontSize
+        FontSize,
+        Search,
+        RevisionNote,
+        CustomStyle.configure({
+            customStyles: options.customStyles
+        })
     ] as Extensions;
 
     if (options.useTypography) e.push(Typography);

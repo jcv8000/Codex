@@ -19,8 +19,21 @@ export function SidebarSearchResult({ page, nameMatch, textMatch }: Props) {
     const modalContext = useContext(ModalContext);
     const locale = locales[appContext.prefs.general.locale];
 
-    const onClick = () => {
-        appContext.setView("editor", page);
+    const onClick = (e: React.MouseEvent) => {
+        if (e.ctrlKey || e.metaKey) {
+            if (appContext.selectedPages.includes(page)) {
+                appContext.setSelectedPages(appContext.selectedPages.filter((p) => p !== page));
+            } else {
+                appContext.setSelectedPages([...appContext.selectedPages, page]);
+            }
+        } else if (e.shiftKey) {
+            if (!appContext.selectedPages.includes(page)) {
+                appContext.setSelectedPages([...appContext.selectedPages, page]);
+            }
+        } else {
+            appContext.setSelectedPages([page]);
+            appContext.setView("editor", page);
+        }
     };
 
     const onContextMenu: React.MouseEventHandler<HTMLDivElement> = (e) => {
@@ -28,7 +41,8 @@ export function SidebarSearchResult({ page, nameMatch, textMatch }: Props) {
         modalContext.openContextMenu({ item: page, x: e.clientX, y: e.clientY });
     };
 
-    const active = appContext.view == "editor" && appContext.activePage == page ? true : false;
+    const active = (appContext.view == "editor" && appContext.activePage == page) ||
+                   appContext.selectedPages.includes(page);
 
     const renderedName = [];
 

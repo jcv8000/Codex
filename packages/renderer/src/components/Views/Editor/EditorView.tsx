@@ -1,13 +1,15 @@
 import "./styles.scss";
 import { Container, Paper } from "@mantine/core";
 import { Page } from "common/Save";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "types/AppStore";
 import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import Toolbar from "./Toolbar/Toolbar";
 import { extensions } from "./EditorExtensions";
 import { TableOfContents } from "./TableOfContents";
+import { RevisionNotesList } from "./RevisionNotesList";
 import { EditorStyles } from "./EditorStyles";
+import { TextFinder } from "./TextFinder";
 
 type Props = {
     page: Page;
@@ -16,14 +18,16 @@ type Props = {
 
 export function EditorView({ page, setEditorRef }: Props) {
     const appContext = useContext(AppContext);
+    const [showTextFinder, setShowTextFinder] = useState(false);
 
     const _extensions = useMemo(
         () =>
             extensions({
                 useTypography: appContext.prefs.editor.useTypographyExtension,
-                tabSize: appContext.prefs.editor.tabSize
+                tabSize: appContext.prefs.editor.tabSize,
+                customStyles: appContext.prefs.editor.customTextStyles
             }),
-        [appContext.prefs.editor.tabSize, appContext.prefs.editor.useTypographyExtension]
+        [appContext.prefs.editor.tabSize, appContext.prefs.editor.useTypographyExtension, appContext.prefs.editor.customTextStyles]
     );
 
     const content = useMemo(() => JSON.parse(window.api.loadPage(page.fileName)), [page.fileName]);
@@ -58,12 +62,29 @@ export function EditorView({ page, setEditorRef }: Props) {
         );
     }, [appContext]);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "f") {
+                e.preventDefault();
+                setShowTextFinder(true);
+                setTimeout(() => {
+                    const input = document.getElementById("textfinder-input");
+                    if (input) input.focus();
+                }, 0);
+            }
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
     if (editor != null) {
         return (
             <EditorStyles>
+                <>{showTextFinder && <TextFinder editor={editor} onClose={() => setShowTextFinder(false)} />}</>
                 <Toolbar editor={editor} />
 
                 <TableOfContents editor={editor} />
+                <RevisionNotesList editor={editor} />
 
                 <Container
                     size={appContext.prefs.editor.width}

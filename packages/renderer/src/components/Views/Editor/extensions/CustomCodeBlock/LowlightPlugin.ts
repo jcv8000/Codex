@@ -65,17 +65,9 @@ function getDecorations({
                     class: node.classes.join(" ")
                 });*/
 
-                // HIGHLIGHT FIX
-                const hljsClasses = node.classes.filter((c) => c.startsWith("hljs-"));
-                const otherClasses = node.classes.filter((c) => !c.startsWith("hljs-"));
-
                 const decoration = Decoration.inline(from, to, {
-                    // Only include last 'hljs-' class, include all other
-                    // classes like 'class_', 'function_', or 'interface_'
-                    class:
-                        hljsClasses[hljsClasses.length - 1] + " " + otherClasses.map((c) => c + " ")
+                    class: node.classes.join(" ")
                 });
-                // HIGHLIGHT FIX
 
                 decorations.push(decoration);
             }

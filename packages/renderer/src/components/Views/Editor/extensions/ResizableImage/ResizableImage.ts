@@ -18,8 +18,5 @@ export const ResizableImage = Image.extend({
                 }
             }
         };
-    },
-    renderHTML() {
-        return ["span"];
     }
 });

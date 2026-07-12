@@ -11,11 +11,7 @@ export function truncate(input: string, maxLength: number): string {
 }
 
 export function pageNameToFileName(pageName: string) {
-    let answer = sanitizeFileName(pageName.replaceAll(" ", "-"));
-
-    if (answer.length > 30) answer = answer.substring(0, 29);
-
-    return answer.replace(/[^a-zA-Z0-9-]/g, "").trim();
+    return sanitizeFileName(pageName).trim();
 }
 
 export function sanitizeStringForFileName(input: string): string {

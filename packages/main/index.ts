@@ -1,5 +1,5 @@
 import { BrowserWindow, app, dialog, shell } from "electron";
-import { loadPrefs, loadSave, writePrefs, writeSave, loadPage, writePage } from "./data";
+import { loadPrefs, loadSave, writePrefs, writeSave, loadPage, writePage, renamePage, deletePage } from "./data";
 import { createWindow } from "./createWindow";
 import { TypedIpcMain } from "common/ipc";
 import { existsSync, readFileSync, writeFileSync } from "fs";
@@ -64,6 +64,14 @@ if (app.requestSingleInstanceLock()) {
 
         typedIpcMain.onWritePage((fileName, data) => {
             writePage(prefs.general.saveFolder, fileName, data);
+        });
+
+        typedIpcMain.onRenamePage((oldFileName, newFileName) => {
+            renamePage(prefs.general.saveFolder, oldFileName, newFileName);
+        });
+
+        typedIpcMain.onDeletePage((fileName) => {
+            deletePage(prefs.general.saveFolder, fileName);
         });
 
         typedIpcMain.onExportPagePDF(async (pageName) => {

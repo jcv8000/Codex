@@ -1,4 +1,4 @@
-import { Menu, Text, Title } from "@mantine/core";
+import { Menu, Text, Title, Checkbox, Stack } from "@mantine/core";
 import { useClickOutside, useElementSize } from "@mantine/hooks";
 import { openConfirmModal } from "@mantine/modals";
 import { Icon } from "components/Icon";
@@ -86,7 +86,33 @@ export function ContextMenu(props: { state: ContextMenuState; onClose: () => voi
                             {locale.contextMenu.edit_item}
                         </Menu.Item>
 
-                        {item instanceof Page && (
+                        {item instanceof Page && appContext.selectedPages.length > 1 && appContext.selectedPages.includes(item) && (
+                            <>
+                                <Menu.Divider />
+
+                                <Menu.Item
+                                    icon={<Icon icon="file-typography" />}
+                                    onClick={() => {
+                                        appContext.exportMultiplePages(appContext.selectedPages, "pdf");
+                                    }}
+                                >
+                                    Export {appContext.selectedPages.length} selected to PDF
+                                </Menu.Item>
+
+                                <Menu.Item
+                                    icon={<Icon icon="markdown" />}
+                                    onClick={() => {
+                                        appContext.exportMultiplePages(appContext.selectedPages, "md");
+                                    }}
+                                >
+                                    Export {appContext.selectedPages.length} selected to MD
+                                </Menu.Item>
+
+                                <Menu.Divider />
+                            </>
+                        )}
+
+                        {item instanceof Page && (!appContext.selectedPages.includes(item) || appContext.selectedPages.length <= 1) && (
                             <>
                                 <Menu.Item
                                     icon={<Icon icon="star" />}
@@ -104,7 +130,6 @@ export function ContextMenu(props: { state: ContextMenuState; onClose: () => voi
                                 <Menu.Item
                                     icon={<Icon icon="file-typography" />}
                                     onClick={() => {
-                                        //appContext.openExportModal({ item: item, type: "pdf" });
                                         appContext.exportPage(item, "pdf");
                                     }}
                                 >
@@ -155,6 +180,21 @@ export function ContextMenu(props: { state: ContextMenuState; onClose: () => voi
                             color="red"
                             icon={<Icon icon="trash" />}
                             onClick={() => {
+                                const isMultiSelect = appContext.selectedPages.includes(item as Page) && appContext.selectedPages.length > 1;
+                                const itemsToDelete: NoteItem[] = isMultiSelect ? appContext.selectedPages : [item];
+
+                                let deleteFromDisk = false;
+
+                                const deleteFromDiskRecursive = async (itemToDelete: NoteItem) => {
+                                    if (itemToDelete instanceof Page) {
+                                        await window.api.deletePage(itemToDelete.fileName);
+                                    } else if (itemToDelete instanceof Folder) {
+                                        for (const child of itemToDelete.children) {
+                                            await deleteFromDiskRecursive(child);
+                                        }
+                                    }
+                                };
+
                                 openConfirmModal({
                                     title: (
                                         <Title order={3}>
@@ -162,41 +202,64 @@ export function ContextMenu(props: { state: ContextMenuState; onClose: () => voi
                                         </Title>
                                     ),
                                     children: (
-                                        <Text>
-                                            {item instanceof Folder
-                                                ? locale.mutateModals.delete_folder_text(
-                                                      truncate(item.name, 25)
-                                                  )
-                                                : locale.mutateModals.delete_page_text(
-                                                      truncate(item.name, 25)
-                                                  )}
-                                        </Text>
+                                        <Stack spacing="md">
+                                            <Text>
+                                                {isMultiSelect
+                                                    ? locale.mutateModals.delete_multiple_text(itemsToDelete.length)
+                                                    : item instanceof Folder
+                                                    ? locale.mutateModals.delete_folder_text(
+                                                          truncate(item.name, 25)
+                                                      )
+                                                    : locale.mutateModals.delete_page_text(
+                                                          truncate(item.name, 25)
+                                                      )}
+                                            </Text>
+                                            <Checkbox
+                                                label={locale.mutateModals.delete_from_disk_checkbox}
+                                                onChange={(e) => deleteFromDisk = e.currentTarget.checked}
+                                                color="red"
+                                            />
+                                        </Stack>
                                     ),
                                     labels: {
                                         confirm: locale.mutateModals.delete,
                                         cancel: locale.mutateModals.cancel
                                     },
                                     confirmProps: { color: "red" },
-                                    onConfirm: () => {
-                                        if (appContext.activePage == item)
+                                    onConfirm: async () => {
+                                        if (deleteFromDisk) {
+                                            for (const target of itemsToDelete) {
+                                                await deleteFromDiskRecursive(target);
+                                            }
+                                        }
+
+                                        if (appContext.activePage && itemsToDelete.includes(appContext.activePage)) {
                                             appContext.setView("home");
+                                        }
 
                                         appContext.modifySave((s) => {
-                                            if (item.parent == null) {
-                                                s.items.splice(s.items.indexOf(item), 1);
-                                            } else {
-                                                const parent = item.parent as Folder;
-                                                parent.children.splice(
-                                                    parent.children.indexOf(item),
-                                                    1
-                                                );
+                                            for (const target of itemsToDelete) {
+                                                if (target.parent == null) {
+                                                    const idx = s.items.indexOf(target);
+                                                    if (idx !== -1) s.items.splice(idx, 1);
+                                                } else {
+                                                    const parent = target.parent as Folder;
+                                                    const idx = parent.children.indexOf(target);
+                                                    if (idx !== -1) parent.children.splice(idx, 1);
+                                                }
                                             }
                                         });
+
+                                        if (isMultiSelect) {
+                                            appContext.selectedPages = [];
+                                        }
                                     }
                                 });
                             }}
                         >
-                            {locale.contextMenu.delete_item}
+                            {appContext.selectedPages.includes(item as Page) && appContext.selectedPages.length > 1
+                                ? locale.contextMenu.delete_multiple_items(appContext.selectedPages.length)
+                                : locale.contextMenu.delete_item}
                         </Menu.Item>
                     </div>
                 </Menu.Dropdown>

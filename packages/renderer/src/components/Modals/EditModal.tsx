@@ -2,7 +2,8 @@ import { Button, Group, Modal, Text, TextInput, Title } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "types/AppStore";
 import { IconSelector } from "./IconSelector";
-import { NoteItem } from "common/Save";
+import { NoteItem, Page } from "common/Save";
+import { pageNameToFileName } from "common/Utils";
 import { locales } from "common/Locales";
 
 export type EditModalState = {
@@ -26,13 +27,30 @@ export function EditModal(props: { state: EditModalState; onClose: () => void })
     const [icon, setIcon] = useState(item.icon);
     const [color, setColor] = useState(item.color);
 
-    const submit = () => {
+    const submit = async () => {
         if (name != "") {
+            let renamedPage = false;
+            let oldFileName = "";
+            let newFileName = "";
+            if (item instanceof Page && item.name !== name) {
+                oldFileName = item.fileName;
+                newFileName = pageNameToFileName(name);
+                renamedPage = true;
+            }
+
             appContext.modifySave(() => {
                 item.name = name;
                 item.icon = icon;
                 item.color = color;
+                if (renamedPage && item instanceof Page) {
+                    item.fileName = newFileName;
+                }
             });
+
+            if (renamedPage) {
+                await window.api.renamePage(oldFileName, newFileName);
+            }
+
             props.onClose();
         }
     };

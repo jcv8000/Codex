@@ -73,6 +73,7 @@ export default function Toolbar({ editor }: Props) {
     return (
         <>
             <ToolbarToggler onClick={() => setShow(!show)} />
+            {/* scale/zoom changes according to toolbarSize setting */}
             <div
                 style={{
                     display: show ? "block" : "none",
@@ -80,7 +81,13 @@ export default function Toolbar({ editor }: Props) {
                     top: "0px",
                     zIndex: 200,
                     marginLeft: "64px",
-                    marginRight: "64px"
+                    marginRight: "64px",
+                    zoom:
+                        appContext.prefs.editor.toolbarSize === "sm"
+                            ? 0.85
+                            : appContext.prefs.editor.toolbarSize === "lg"
+                            ? 1.25
+                            : 1.0
                 }}
             >
                 <Paper
@@ -204,6 +211,20 @@ export default function Toolbar({ editor }: Props) {
                             icon="photo-plus"
                             onClick={() => modalContext.openEditorImageModal({ editor: editor })}
                         />
+                        <ToolbarButton
+                            title={texts.crop}
+                            icon="crop"
+                            onClick={() => {
+                                const imageAttrs = editor.getAttributes("image");
+                                if (imageAttrs.src) {
+                                    modalContext.openEditorCropModal({
+                                        editor,
+                                        src: imageAttrs.src
+                                    });
+                                }
+                            }}
+                            disabled={() => !editor.isActive("image")}
+                        />
 
                         <ToolbarButton
                             title={texts.paragraph}
@@ -217,27 +238,12 @@ export default function Toolbar({ editor }: Props) {
                             isActive={() => editor.isActive("blockQuote")}
                         />
 
-                        <ToolbarSplit
-                            title={texts.heading}
-                            icon="heading"
-                            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-                        >
-                            {[1, 2, 3, 4, 5, 6].map((i) => (
-                                <Menu.Item
-                                    key={i}
-                                    onClick={() =>
-                                        editor
-                                            .chain()
-                                            .focus()
-                                            .toggleHeading({ level: i as 1 | 2 | 3 | 4 | 5 | 6 })
-                                            .run()
-                                    }
-                                    icon={<Icon icon={`h-${i}`} />}
-                                >
-                                    {texts.heading_level} {i}
-                                </Menu.Item>
-                            ))}
-                        </ToolbarSplit>
+                        <ToolbarButton
+                            title={locales[appContext.prefs.general.locale].editor.revision_notes}
+                            icon="notes"
+                            onClick={() => editor.chain().focus().toggleRevisionNote().run()}
+                            isActive={() => editor.isActive("revisionNote")}
+                        />
 
                         <ToolbarButton
                             title={texts.horizontal_rule}
@@ -271,7 +277,7 @@ export default function Toolbar({ editor }: Props) {
                         <ToolbarSplit
                             title={texts.code_block}
                             icon="source-code"
-                            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                            onClick={() => editor.chain().focus().toggleCodeBlock({ language: "plaintext" }).run()}
                         >
                             <Menu.Label>{texts.codeBlockMenu.all_languages}</Menu.Label>
 
@@ -518,6 +524,43 @@ export default function Toolbar({ editor }: Props) {
                                 {texts.reset_highlight}
                             </Button>
                         </ToolbarDropdown>
+
+                        <Select
+                            size="xs"
+                            w={140}
+                            icon={<Icon icon="brush" />}
+                            placeholder="Text Style"
+                            data={[
+                                { value: "default", label: "Default" },
+                                ...Object.keys(appContext.prefs.editor.customTextStyles || {})
+                            ]}
+                            value={
+                                editor.getAttributes("textStyle").customStyleName ||
+                                editor.getAttributes("paragraph").customStyleName ||
+                                editor.getAttributes("heading").customStyleName ||
+                                "default"
+                            }
+                            onChange={(value) => {
+                                let chain = editor.chain().focus();
+                                if (value === "default" || value == null) {
+                                    chain = chain.setParagraph().unsetCustomStyle();
+                                } else {
+                                    const styleObj = appContext.prefs.editor.customTextStyles[value];
+                                    if (styleObj && styleObj.tag) {
+                                        if (styleObj.tag === "h1") chain = chain.setHeading({ level: 1 });
+                                        else if (styleObj.tag === "h2") chain = chain.setHeading({ level: 2 });
+                                        else if (styleObj.tag === "h3") chain = chain.setHeading({ level: 3 });
+                                        else if (styleObj.tag === "h4") chain = chain.setHeading({ level: 4 });
+                                        else if (styleObj.tag === "h5") chain = chain.setHeading({ level: 5 });
+                                        else if (styleObj.tag === "h6") chain = chain.setHeading({ level: 6 });
+                                        else if (styleObj.tag === "blockquote") chain = chain.setBlockquote();
+                                        else if (styleObj.tag === "p") chain = chain.setParagraph();
+                                    }
+                                    chain = chain.setCustomStyle(value);
+                                }
+                                chain.run();
+                            }}
+                        />
 
                         <Select
                             size="xs"

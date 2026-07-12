@@ -1,5 +1,5 @@
 import { app, dialog } from "electron";
-import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync, renameSync, unlinkSync } from "fs";
 import path from "path";
 import { Prefs } from "common/Prefs";
 import { exampleSave, Save } from "common/Save";
@@ -153,6 +153,21 @@ export function writePage(saveFolderPath: string, pageFileName: string, data: st
 
     const filePath = path.join(saveFolderPath, "/notes/", pageFileName);
     writeFileSync(filePath, data, "utf-8");
+}
+
+export function renamePage(saveFolderPath: string, oldFileName: string, newFileName: string) {
+    const oldPath = path.join(saveFolderPath, "/notes/", oldFileName);
+    const newPath = path.join(saveFolderPath, "/notes/", newFileName);
+    if (existsSync(oldPath)) {
+        renameSync(oldPath, newPath);
+    }
+}
+
+export function deletePage(saveFolderPath: string, fileName: string) {
+    const pagePath = path.join(saveFolderPath, "/notes/", fileName);
+    if (existsSync(pagePath)) {
+        unlinkSync(pagePath);
+    }
 }
 
 function fixPrefs(prefs: Prefs) {

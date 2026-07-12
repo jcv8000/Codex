@@ -21,6 +21,10 @@ export class AppStore {
 
     exportPage: (page: Page, type: "pdf" | "md") => void = () => {};
     exportAllPagesIn: (folder: Folder, type: "pdf" | "md") => void = () => {};
+    exportMultiplePages: (pages: Page[], type: "pdf" | "md") => void = () => {};
+
+    selectedPages: Page[] = [];
+    setSelectedPages: (pages: Page[]) => void = () => {};
 }
 
 export const AppContext = createContext<AppStore>(new AppStore());

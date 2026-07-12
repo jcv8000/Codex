@@ -26,7 +26,7 @@ export class Page extends NoteItem {
         super(name, parent);
         this.color = "#999999";
         this.icon = "file-text";
-        this.fileName = pageNameToFileName(name + "_" + this.id + ".json");
+        this.fileName = pageNameToFileName(name);
     }
 }
 

@@ -90,7 +90,20 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
                 }
             });
         } else if (item instanceof Page) {
-            appContext.setView("editor", item);
+            if (e.ctrlKey || e.metaKey) {
+                if (appContext.selectedPages.includes(item)) {
+                    appContext.setSelectedPages(appContext.selectedPages.filter((p) => p !== item));
+                } else {
+                    appContext.setSelectedPages([...appContext.selectedPages, item]);
+                }
+            } else if (e.shiftKey) {
+                if (!appContext.selectedPages.includes(item)) {
+                    appContext.setSelectedPages([...appContext.selectedPages, item]);
+                }
+            } else {
+                appContext.setSelectedPages([item]);
+                appContext.setView("editor", item);
+            }
         }
     };
 
@@ -122,7 +135,8 @@ export function SidebarNoteItem({ item, depth = 0 }: Props) {
         }
     }
 
-    const active = appContext.view == "editor" && appContext.activePage == item ? true : false;
+    const active = (appContext.view == "editor" && appContext.activePage == item) ||
+                   (item instanceof Page && appContext.selectedPages.includes(item));
 
     let borderTopColor = "transparent";
     let borderBottomColor = "transparent";

@@ -56,6 +56,18 @@ export class TypedIpcMain {
         });
     };
 
+    onRenamePage = (callback: (oldFileName: string, newFileName: string) => void) => {
+        ipcMain.handle("RENAME_PAGE", (e, args: any[]) => {
+            callback(args[0], args[1]);
+        });
+    };
+
+    onDeletePage = (callback: (fileName: string) => void) => {
+        ipcMain.handle("DELETE_PAGE", (e, args: any[]) => {
+            callback(args[0]);
+        });
+    };
+
     onExportPagePDF = (callback: (pageName: string) => void) => {
         ipcMain.handle("EXPORT_PAGE_PDF", (e, args: any[]) => callback(args[0]));
     };
@@ -138,6 +150,14 @@ export class TypedIpcRenderer {
 
     writePage = async (fileName: string, data: string) => {
         await ipcRenderer.invoke("WRITE_PAGE", [fileName, data]);
+    };
+
+    renamePage = async (oldFileName: string, newFileName: string) => {
+        await ipcRenderer.invoke("RENAME_PAGE", [oldFileName, newFileName]);
+    };
+
+    deletePage = async (fileName: string) => {
+        await ipcRenderer.invoke("DELETE_PAGE", [fileName]);
     };
 
     exportPagePDF = async (page: Page) => {
